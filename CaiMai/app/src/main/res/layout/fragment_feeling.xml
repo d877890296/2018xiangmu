@@ -1,0 +1,91 @@
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_f6f6f6"
+    android:orientation="vertical"
+    tools:context="com.xfkc.caimai.home.fragment.FeelingFragment">
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:background="@drawable/corner_bg"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="50dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/account_iv"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:clickable="true"
+                    android:src="@mipmap/ic_launcher"
+                    app:civ_border_color="@color/white"
+                    app:civ_border_width="2dp" />
+
+                <TextView
+                    android:id="@+id/feeling_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="昵称"
+                    android:textColor="@color/red"
+                    android:textSize="16sp" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/people_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:gravity="center"
+                    android:text="情怀链人数: 0"
+                    android:textColor="@color/text_color"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/get_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="情怀链收益: 0"
+                    android:textColor="@color/text_color"
+                    android:textSize="16sp" />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+        </com.zhy.autolayout.AutoLinearLayout>
+
+        <ImageView
+            android:id="@+id/share_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:src="@mipmap/ic_launcher" />
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+    <ListView
+        android:id="@+id/feelint_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+    </ListView>
+
+</com.zhy.autolayout.AutoLinearLayout>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:background="@color/white"
+    >
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/feeling_user_iv"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:clickable="true"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/feeling_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/feeling_user_iv"
+        android:text="爱吃猫的鱼"
+        android:textColor="@color/color_text"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/kb_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="10dp"
+        android:text="贡献康币数 00.0"
+        android:textColor="@color/c99333333"
+        android:textSize="14sp"
+
+        />
+
+    <TextView
+        android:id="@+id/feeling_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/feeling_user_iv"
+        android:text="2018-08-06"
+        android:textColor="@color/color_text"
+        android:textSize="12sp"
+        android:layout_alignBottom="@+id/feeling_user_iv"
+        />
+
+    <TextView
+        android:id="@+id/feeling_people_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="情怀链5人"
+        android:textColor="@color/color_text"
+        android:layout_alignParentEnd="true"
+        android:textSize="12sp"
+        android:layout_alignBottom="@+id/feeling_user_iv"
+        />
+</com.zhy.autolayout.AutoRelativeLayout>

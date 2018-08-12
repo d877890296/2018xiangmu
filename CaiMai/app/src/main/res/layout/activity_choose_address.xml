@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/add_address_btn"
+        android:orientation="vertical">
+
+        <include layout="@layout/widget_toolbar" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/bg_color" />
+
+        <com.xfkc.caimai.customview.CustomListView
+            android:id="@+id/choose_address_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/bg_color"
+            android:dividerHeight="10dp"
+
+            >
+
+        </com.xfkc.caimai.customview.CustomListView>
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <com.xfkc.caimai.customview.StateButton
+        android:id="@+id/add_address_btn"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:text="新增收货地址"
+        android:textSize="18sp"
+        app:normalBackgroundColor="@color/red"
+        app:normalTextColor="@color/white"
+        app:pressedBackgroundColor="@color/red_90"
+        app:pressedTextColor="@color/white" />
+
+</com.zhy.autolayout.AutoRelativeLayout>

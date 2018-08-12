@@ -1,0 +1,157 @@
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical"
+
+    >
+
+    <include layout="@layout/widget_toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!-- scrollview  总布局linearlayout-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <!--顶部头像图标  昵称-->
+            <LinearLayout
+                android:id="@+id/account_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/red"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/account_iv"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:clickable="true"
+                        android:src="@mipmap/ic_launcher"
+                        app:civ_border_color="@color/color_grey"
+                        app:civ_border_width="2dp" />
+
+                    <ImageView
+                        android:id="@+id/vip_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignRight="@+id/account_iv"
+                        android:src="@mipmap/ic_launcher"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/mine_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:text="昵称"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+
+
+            <!--会员专区-->
+            <com.allen.library.SuperTextView
+                android:id="@+id/vip_text"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                app:sDividerLineType="bottom"
+                app:sLeftIconRes="@mipmap/ic_launcher"
+                app:sLeftTextColor="@color/color_text"
+                app:sLeftTextString="会员专区"
+                app:sRightIconRes="@mipmap/icon_youjiantou"
+                app:sRightTextColor="@color/c999999"
+                app:sRightTextString="会员权益" />
+            <!--账户安全-->
+            <com.allen.library.SuperTextView
+                android:id="@+id/safe_text"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                app:sDividerLineType="bottom"
+                app:sLeftIconRes="@mipmap/ic_launcher"
+                app:sLeftTextColor="@color/color_text"
+                app:sLeftTextString="账户安全"
+                app:sRightIconRes="@mipmap/icon_youjiantou"
+                app:sRightTextColor="@color/c999999"
+                app:sRightTextString="密码管理" />
+            <!--个人信息-->
+            <com.allen.library.SuperTextView
+                android:id="@+id/mine_info_text"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                app:sDividerLineType="bottom"
+                app:sLeftIconRes="@mipmap/ic_launcher"
+                app:sLeftTextColor="@color/color_text"
+                app:sLeftTextString="个人信息"
+                app:sRightIconRes="@mipmap/icon_youjiantou"
+                app:sRightTextColor="@color/c999999"
+                app:sRightTextString="收货地址" />
+            <!--帮助中心-->
+            <com.allen.library.SuperTextView
+                android:id="@+id/help_text"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                app:sDividerLineType="bottom"
+                app:sLeftIconRes="@mipmap/ic_launcher"
+                app:sLeftTextColor="@color/color_text"
+                app:sLeftTextString="帮助中心"
+                app:sRightIconRes="@mipmap/icon_youjiantou"
+                app:sRightTextColor="@color/c999999"
+                app:sRightTextString="更多帮助" />
+            <!--版本更新-->
+            <com.allen.library.SuperTextView
+                android:id="@+id/bbgx_text"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                app:sDividerLineType="bottom"
+                app:sLeftIconRes="@mipmap/ic_launcher"
+                app:sLeftTextColor="@color/color_text"
+                app:sLeftTextString="版本更新"
+                app:sRightIconRes="@mipmap/icon_youjiantou"
+                app:sRightTextColor="@color/c999999"
+                app:sRightTextString="当前版本1.0" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:padding="25dp">
+
+                <com.xfkc.caimai.customview.StateButton
+                    android:id="@+id/quit_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:text="退出"
+                    android:textSize="20sp"
+                    app:normalBackgroundColor="@color/red"
+                    app:normalTextColor="@color/white"
+                    app:pressedBackgroundColor="@color/red_90"
+                    app:pressedTextColor="@color/white"
+                    app:radius="4dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+</com.zhy.autolayout.AutoLinearLayout>

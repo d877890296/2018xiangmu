@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
+
+    <include layout="@layout/widget_toolbar" />
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/day_line_color" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="30dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/logo"
+            />
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical">
+
+
+            <EditText
+                android:id="@+id/login_phone_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:hint="手机号码"
+                android:inputType="number"
+                android:maxLength="11"
+                android:paddingLeft="20dp"
+                android:textColor="@color/text_color"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/day_line_color" />
+
+        <LinearLayout
+            android:id="@+id/num_layout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="工号"
+                android:textColor="@color/text_color"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/login_num_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:hint="请输入您的工号"
+                android:inputType="number"
+                android:paddingLeft="20dp"
+                android:textColor="@color/text_color"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/num_line"
+            android:layout_width="fill_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/day_line_color"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical">
+
+
+            <EditText
+                android:id="@+id/login_password_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:hint="密码"
+                android:inputType="textPassword"
+                android:maxLength="20"
+                android:paddingLeft="20dp"
+                android:textColor="@color/text_color"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/day_line_color" />
+
+        <com.xfkc.caimai.customview.StateButton
+            android:id="@+id/login_btn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="30dp"
+            android:text="登录"
+            android:textSize="20dp"
+            app:normalBackgroundColor="@color/ff704d"
+            app:normalTextColor="@color/white"
+            app:pressedBackgroundColor="@color/red_90"
+            app:pressedTextColor="@color/white"
+            app:radius="20dp" />
+
+        <RelativeLayout
+            android:id="@+id/relative_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+
+
+            <TextView
+                android:id="@+id/forget_password_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="忘记密码?"
+                android:textColor="@color/forget_password"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="——还可以用以下方式登录——"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:visibility="gone"
+            />
+
+        <TextView
+            android:id="@+id/wx_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:drawablePadding="5dp"
+            android:drawableTop="@mipmap/ic_launcher"
+            android:gravity="center"
+            android:text="微信登录"
+            android:visibility="gone"
+            />
+
+    </LinearLayout>
+
+
+</com.zhy.autolayout.AutoLinearLayout>

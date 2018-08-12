@@ -1,0 +1,26 @@
+<com.zhy.autolayout.AutoLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.xfkc.caimai.home.fragment.BigLectureHallFragment"
+    android:orientation="vertical"
+    >
+
+    <include layout="@layout/widget_toolbar"/>
+
+    <net.lucode.hackware.magicindicator.MagicIndicator
+        android:id="@+id/magic_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:paddingLeft="5dp"
+        />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+
+</com.zhy.autolayout.AutoLinearLayout>

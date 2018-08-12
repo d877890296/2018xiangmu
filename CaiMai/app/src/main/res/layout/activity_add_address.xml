@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/widget_toolbar" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/time_text_color"
+
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="30px">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="收货人"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"
+
+            />
+
+        <EditText
+            android:id="@+id/shouhuoren_ed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:background="@color/white"
+            android:textColor="@color/text_color"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/bg_color" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="30px">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="联系电话"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"
+
+            />
+
+        <EditText
+            android:id="@+id/phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:background="@color/white"
+            android:inputType="phone"
+            android:textColor="@color/text_color"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/bg_color" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="30px"
+        android:visibility="gone"
+        >
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="邮编"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"
+
+            />
+
+        <EditText
+            android:id="@+id/code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:background="@color/white"
+            android:inputType="number"
+            android:textColor="@color/text_color"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/bg_color" />
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/address_quyu"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        app:sDividerLineType="none"
+        app:sLeftTextColor="@color/color_text"
+        app:sLeftTextSize="16sp"
+        app:sLeftTextString="所在地区"
+        app:sRightIconRes="@mipmap/icon_youjiantou"
+        android:padding="5dp"
+        />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="30px"
+        android:paddingLeft="30px"
+        android:paddingTop="30px"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/add_tv"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:gravity="center_vertical"
+            android:text="收货地址"
+            android:textColor="@color/text_color"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/add_tv"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <com.allen.library.SuperTextView
+                    android:id="@+id/choose_pro"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    app:sDividerLineType="none"
+                    app:sLeftTextColor="@color/color_text"
+                    app:sLeftTextSize="12sp"
+                    app:sLeftTextString="请选择省"
+
+                    />
+
+                <com.xfkc.caimai.customview.CustomListView
+                    android:id="@+id/pro_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:divider="@color/white"
+                    android:dividerHeight="0dp"
+                    android:visibility="gone">
+
+                </com.xfkc.caimai.customview.CustomListView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <com.allen.library.SuperTextView
+                    android:id="@+id/choose_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    app:sDividerLineType="none"
+                    app:sLeftTextColor="@color/color_text"
+                    app:sLeftTextSize="12sp"
+                    app:sLeftTextString="请选择市" />
+
+                <com.xfkc.caimai.customview.CustomListView
+                    android:id="@+id/city_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:divider="@color/white"
+                    android:dividerHeight="0dp"
+                    android:visibility="gone">
+
+                </com.xfkc.caimai.customview.CustomListView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <com.allen.library.SuperTextView
+                    android:id="@+id/choose_region"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    app:sDividerLineType="none"
+                    app:sLeftTextColor="@color/color_text"
+                    app:sLeftTextSize="12sp"
+                    app:sLeftTextString="请选择区县" />
+
+                <com.xfkc.caimai.customview.CustomListView
+                    android:id="@+id/region_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:divider="@color/white"
+                    android:dividerHeight="0dp"
+                    android:visibility="gone">
+
+                </com.xfkc.caimai.customview.CustomListView>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:background="@color/white"
+            android:hint="请选择收货地址"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/bg_color" />
+
+
+    <EditText
+        android:id="@+id/address_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30px"
+        android:layout_marginLeft="30px"
+        android:layout_marginRight="30px"
+        android:layout_marginTop="30px"
+        android:background="@color/white"
+        android:hint="详细地址   请输入地址详细信息，如:道路、门牌号、小区、楼栋号、单元室等"
+        android:textColor="@color/text_color"
+        android:textSize="16sp"
+
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/bg_color" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="选择地址类型"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"
+
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/order_tv_bg02"
+                android:paddingBottom="2dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="2dp"
+                android:text="家" />
+
+            <TextView
+                android:id="@+id/company"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/order_tv_bg02"
+                android:paddingBottom="2dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="2dp"
+                android:text="公司" />
+
+            <TextView
+                android:id="@+id/school"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/order_tv_bg02"
+                android:paddingBottom="2dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="2dp"
+                android:text="学校" />
+        </LinearLayout>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/time_text_color"
+
+        />
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/switch_bt"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        app:sDividerLineType="bottom"
+        app:sLeftTextColor="@color/color_text"
+        app:sLeftTextString="设为默认地址"
+        app:sRightIconRes="@drawable/icon_kaiguan_default"
+        android:padding="5dp"
+        />
+
+
+    <com.xfkc.caimai.customview.StateButton
+        android:id="@+id/quit_btn"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="60dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="保存"
+        android:textSize="20sp"
+        app:normalBackgroundColor="@color/ff704d"
+        app:normalTextColor="@color/white"
+        app:pressedBackgroundColor="@color/cf84701"
+        app:pressedTextColor="@color/white"
+        app:radius="10dp" />
+
+
+</com.zhy.autolayout.AutoLinearLayout>
