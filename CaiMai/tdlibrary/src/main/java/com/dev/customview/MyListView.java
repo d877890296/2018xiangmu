@@ -1,7 +1,8 @@
-package com.xfkc.caimai.customview;
+package com.dev.customview;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.widget.ListView;
 
 /**
@@ -41,5 +42,8 @@ public class MyListView extends ListView {
 				MeasureSpec.AT_MOST);
 		super.onMeasure(widthMeasureSpec, expandSpec);
 	}
+	
+
+
 	
 }

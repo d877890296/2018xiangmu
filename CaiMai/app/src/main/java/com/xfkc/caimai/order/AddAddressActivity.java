@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
+import com.dev.customview.CustomListView;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.StatusBarUtil;
 import com.hyf.tdlibrary.utils.ToastUtil;
@@ -16,7 +17,6 @@ import com.hyf.tdlibrary.utils.Tools;
 import com.lljjcoder.citypickerview.widget.CityPicker;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.config.SharedPref;
-import com.xfkc.caimai.customview.CustomListView;
 import com.xfkc.caimai.rx.activity.RxActivity;
 
 import butterknife.Bind;
