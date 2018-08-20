@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 设置dialog弹出，退出动画 -->
+<resources>
+    <style name="dialogWindowAnim" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/top_in_anim</item>
+        <item name="android:windowExitAnimation">@anim/buttom_exit_anim</item>
+    </style>
+    <style name="dialogWindowAnim1" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/dialog_down_anim</item>
+        <item name="android:windowExitAnimation">@anim/dialog_up_anim</item>
+    </style>
+    <style name="dialogWindowAnimlist" parent="android:Animation" mce_bogus="1">
+        <item name="android:windowEnterAnimation">@anim/dialoglist_enter_anim</item>
+        <item name="android:windowExitAnimation">@anim/dialoglist_exit_anim</item>
+    </style>
+</resources> 
