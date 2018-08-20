@@ -19,4 +19,14 @@
     <color name="blue_29A1F7">#29A1F7</color>
     <color name="forget_password">#305ba3</color>
 
+
+    <color name="red">#ffff0000</color>
+    <color name="vifrification">#00000000</color>
+    <color name="colorBackground">#FFFFFF</color>
+    <color name="rightcardcolor">#15b4eb</color>
+
+    <color name="pull_refresh_textview">#777</color>
+    <color name="gold">#000000</color>
+    <color name="black">#000000</color>
+    <color name="lightblack">#5f000000</color>
 </resources>
