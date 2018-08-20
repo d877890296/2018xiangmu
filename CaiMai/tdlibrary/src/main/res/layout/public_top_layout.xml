@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/public_top_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:visibility="visible" >
+
+    <!-- 普通标题 -->
+
+    <RelativeLayout
+        android:id="@+id/relative_topbg"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="#18B4ED" >
+
+        <ImageButton
+            android:id="@+id/back_img_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/btn_back_selector" />
+
+        <TextView
+            android:id="@+id/text_title_content"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/search_img_btn"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="40dp"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="content"
+            android:textColor="#f3f3f3"
+            android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/search_img_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/btn_back_selector"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+</LinearLayout>
