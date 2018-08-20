@@ -7,12 +7,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dev.customview.CustomListView;
+
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.StatusBarUtil;
 import com.orhanobut.logger.Logger;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.config.SharedPref;
-import com.xfkc.caimai.customview.CustomListView;
 import com.xfkc.caimai.customview.StateButton;
 import com.xfkc.caimai.rx.activity.RxActivity;
 

@@ -1,4 +1,4 @@
-package com.xfkc.caimai.customview;
+package com.dev.customview;
 
 import android.content.Context;
 import android.util.AttributeSet;

@@ -1,7 +1,17 @@
-package com.xfkc.caimai.customview;
+package com.dev.customview;
+
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
+
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,14 +30,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.xfkc.caimai.R;
-
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
+import com.hyf.tdlibrary.R;
 
 /***
  * 
@@ -112,8 +115,15 @@ public class CustomListView extends ListView implements OnScrollListener {
 	public int itemCurPosition = 5;
 	/** 当前Y值 */
 	public int offsetY;
-	/** 刷新是否加载更多数据 */
+	/** 刷新是否加载更多数据 */ 
 	public boolean isRefushLoadMore = false;
+
+	/** 是否显示刷新时间 true 显示 false 隐藏 **/
+	public boolean isShowRefushTime;
+
+	/** 加载动画 0是箭头 1 是 动画图 **/
+	public int loadingAnimStyle = 1;
+
 	public int getEnoughCount() {
 		return enoughCount;
 	}
@@ -204,9 +214,9 @@ public class CustomListView extends ListView implements OnScrollListener {
 			noMoreDataView.setFocusable(false);
 			noMoreDataView.setFocusableInTouchMode(false);
 			noMoreDataView.setEnabled(false);
-			noMoreDataView.setClickable(false);
 		}
 		this.addFooterView(noMoreDataView);
+
 	}
 
 	/***
@@ -243,6 +253,25 @@ public class CustomListView extends ListView implements OnScrollListener {
 		mIsMoveToFirstItemAfterRefresh = pIsMoveToFirstItemAfterRefresh;
 	}
 
+	/***
+	 * 是否显示刷新时间
+	 * 
+	 * @param isShowRefushTime
+	 */
+	public void setIsShowRefushTime(boolean isShowRefushTime) {
+		this.isShowRefushTime = isShowRefushTime;
+		setLastUpdatedTextView();
+	}
+
+	/***
+	 * 设置加载动画效果
+	 * 
+	 * @param animStyle
+	 */
+	public void setloadingAnimStyle(int animStyle) {
+		this.loadingAnimStyle = animStyle;
+	}
+
 	// ============================================================================
 
 	private LayoutInflater mInflater;
@@ -251,6 +280,8 @@ public class CustomListView extends ListView implements OnScrollListener {
 	private TextView mTipsTextView;
 	private TextView mLastUpdatedTextView;
 	private ImageView mArrowImageView;
+	private ImageView head_picImageView;
+	private AnimationDrawable headPicImageViewAnim;
 	private ProgressBar mProgressBar;
 
 	private View mEndRootView;
@@ -274,8 +305,7 @@ public class CustomListView extends ListView implements OnScrollListener {
 	private int mFirstItemIndex;
 	private int mLastItemIndex;
 	private int mCount;
-	private boolean mEnoughCount;// 足够数量充满屏幕？
-
+	private boolean mEnoughCount;// 足够数量充满屏幕
 	private OnRefreshListener mRefreshListener;
 	private OnLoadMoreListener mLoadMoreListener;
 
@@ -308,6 +338,7 @@ public class CustomListView extends ListView implements OnScrollListener {
 
 		addHeadView();
 		setOnScrollListener(this);
+
 		initPullImageAnimation(500);
 	}
 
@@ -322,9 +353,10 @@ public class CustomListView extends ListView implements OnScrollListener {
 		mHeadView = (LinearLayout) mInflater.inflate(R.layout.head, null);
 
 		mArrowImageView = (ImageView) mHeadView.findViewById(R.id.head_arrowImageView);
-		mArrowImageView.setMinimumWidth(70);
-		mArrowImageView.setMinimumHeight(50);
+		head_picImageView = (ImageView) mHeadView.findViewById(R.id.head_picImageView);
+
 		mProgressBar = (ProgressBar) mHeadView.findViewById(R.id.head_progressBar);
+
 		mTipsTextView = (TextView) mHeadView.findViewById(R.id.head_tipsTextView);
 		mLastUpdatedTextView = (TextView) mHeadView.findViewById(R.id.head_lastUpdatedTextView);
 
@@ -393,58 +425,73 @@ public class CustomListView extends ListView implements OnScrollListener {
 	 * @version 1.0
 	 */
 	private void initPullImageAnimation(final int pAnimDuration) {
-
 		int _Duration;
-
 		if (pAnimDuration > 0) {
 			_Duration = pAnimDuration;
 		} else {
 			_Duration = 500;
 		}
-		// Interpolator _Interpolator;
-		// switch (pAnimType) {
-		// case 0:
-		// _Interpolator = new AccelerateDecelerateInterpolator();
-		// break;
-		// case 1:
-		// _Interpolator = new AccelerateInterpolator();
-		// break;
-		// case 2:
-		// _Interpolator = new AnticipateInterpolator();
-		// break;
-		// case 3:
-		// _Interpolator = new AnticipateOvershootInterpolator();
-		// break;
-		// case 4:
-		// _Interpolator = new BounceInterpolator();
-		// break;
-		// case 5:
-		// _Interpolator = new CycleInterpolator(1f);
-		// break;
-		// case 6:
-		// _Interpolator = new DecelerateInterpolator();
-		// break;
-		// case 7:
-		// _Interpolator = new OvershootInterpolator();
-		// break;
-		// default:
-		// _Interpolator = new LinearInterpolator();
-		// break;
-		// }
+		switch (loadingAnimStyle) {
+		case 0:// 箭头动画
+			mArrowImageView.setVisibility(View.VISIBLE);
+			head_picImageView.setVisibility(View.GONE);
+			mArrowImageView.setMinimumWidth(70);
+			mArrowImageView.setMinimumHeight(50);
+			// Interpolator _Interpolator;
+			// switch (pAnimType) {
+			// case 0:
+			// _Interpolator = new AccelerateDecelerateInterpolator();
+			// break;
+			// case 1:
+			// _Interpolator = new AccelerateInterpolator();
+			// break;
+			// case 2:
+			// _Interpolator = new AnticipateInterpolator();
+			// break;
+			// case 3:
+			// _Interpolator = new AnticipateOvershootInterpolator();
+			// break;
+			// case 4:
+			// _Interpolator = new BounceInterpolator();
+			// break;
+			// case 5:
+			// _Interpolator = new CycleInterpolator(1f);
+			// break;
+			// case 6:
+			// _Interpolator = new DecelerateInterpolator();
+			// break;
+			// case 7:
+			// _Interpolator = new OvershootInterpolator();
+			// break;
+			// default:
+			// _Interpolator = new LinearInterpolator();
+			// break;
+			// }
 
-		Interpolator _Interpolator = new LinearInterpolator();
+			Interpolator _Interpolator = new LinearInterpolator();
+			mArrowAnim = new RotateAnimation(0, -180, RotateAnimation.RELATIVE_TO_SELF, 0.5f,
+					RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+			mArrowAnim.setInterpolator(_Interpolator);
+			mArrowAnim.setDuration(_Duration);
+			mArrowAnim.setFillAfter(true);
 
-		mArrowAnim = new RotateAnimation(0, -180, RotateAnimation.RELATIVE_TO_SELF, 0.5f,
-				RotateAnimation.RELATIVE_TO_SELF, 0.5f);
-		mArrowAnim.setInterpolator(_Interpolator);
-		mArrowAnim.setDuration(_Duration);
-		mArrowAnim.setFillAfter(true);
+			mArrowReverseAnim = new RotateAnimation(-180, 0, RotateAnimation.RELATIVE_TO_SELF, 0.5f,
+					RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+			mArrowReverseAnim.setInterpolator(_Interpolator);
+			mArrowReverseAnim.setDuration(_Duration);
+			mArrowReverseAnim.setFillAfter(true);
+			break;
 
-		mArrowReverseAnim = new RotateAnimation(-180, 0, RotateAnimation.RELATIVE_TO_SELF, 0.5f,
-				RotateAnimation.RELATIVE_TO_SELF, 0.5f);
-		mArrowReverseAnim.setInterpolator(_Interpolator);
-		mArrowReverseAnim.setDuration(_Duration);
-		mArrowReverseAnim.setFillAfter(true);
+		case 1:// 图片动画
+			mArrowImageView.setVisibility(View.GONE);
+			head_picImageView.setVisibility(View.VISIBLE);
+			headPicImageViewAnim = (AnimationDrawable) head_picImageView.getDrawable();
+			break;
+
+		default:
+			break;
+		}
+
 	}
 
 	/**
@@ -480,7 +527,7 @@ public class CustomListView extends ListView implements OnScrollListener {
 		mFirstItemIndex = pFirstVisibleItem;
 		mLastItemIndex = pFirstVisibleItem + pVisibleItemCount - 2;
 		mCount = pTotalItemCount - 2;
-		
+
 		if (pTotalItemCount > pVisibleItemCount) {
 			mEnoughCount = true;
 			// endingView.setVisibility(View.VISIBLE);
@@ -488,7 +535,7 @@ public class CustomListView extends ListView implements OnScrollListener {
 			mEnoughCount = false;
 		}
 		// 刷新加载更多数据
-		if (isRefushLoadMore ==true&&itemCurPosition<mCount) {
+		if (isRefushLoadMore == true && itemCurPosition < mCount) {
 			View v = pView.getChildAt(itemCurPosition);
 			if (v != null) {
 				// 比较笨的方法，取得firstVisibleItem所对应的view相对屏幕的高度
@@ -712,29 +759,44 @@ public class CustomListView extends ListView implements OnScrollListener {
 	 */
 	private void changeHeaderViewByState() {
 		switch (mHeadState) {
-		case RELEASE_TO_REFRESH:
-			mArrowImageView.setVisibility(View.VISIBLE);
-			mProgressBar.setVisibility(View.GONE);
-			mTipsTextView.setVisibility(View.VISIBLE);
-			mLastUpdatedTextView.setVisibility(View.VISIBLE);
+		case RELEASE_TO_REFRESH:// 松开刷新
+			if (loadingAnimStyle == 0) {
+				mProgressBar.setVisibility(View.GONE);
+				mArrowImageView.setVisibility(View.VISIBLE);
+				mArrowImageView.clearAnimation();
+				mArrowImageView.startAnimation(mArrowAnim);
+			} else if (loadingAnimStyle == 1) {
+				headPicImageViewAnim.stop();
 
-			mArrowImageView.clearAnimation();
-			mArrowImageView.startAnimation(mArrowAnim);
+			}
+
+			setLastUpdatedTextView();
+
+			mTipsTextView.setVisibility(View.VISIBLE);
 			// 松开刷新
 			mTipsTextView.setText(R.string.p2refresh_release_refresh);
 
 			break;
 		case PULL_TO_REFRESH:
-			mProgressBar.setVisibility(View.GONE);
+
+			setLastUpdatedTextView();
+			if (loadingAnimStyle == 0) {
+				mProgressBar.setVisibility(View.GONE);
+				mArrowImageView.clearAnimation();
+				mArrowImageView.setVisibility(View.VISIBLE);
+			} else if (loadingAnimStyle == 1) {
+				headPicImageViewAnim.start();
+
+			}
+
 			mTipsTextView.setVisibility(View.VISIBLE);
-			mLastUpdatedTextView.setVisibility(View.VISIBLE);
-			mArrowImageView.clearAnimation();
-			mArrowImageView.setVisibility(View.VISIBLE);
 			// 是由RELEASE_To_REFRESH状态转变来的
 			if (mIsBack) {
 				mIsBack = false;
-				mArrowImageView.clearAnimation();
-				mArrowImageView.startAnimation(mArrowReverseAnim);
+				if (loadingAnimStyle == 0) {
+					mArrowImageView.clearAnimation();
+					mArrowImageView.startAnimation(mArrowReverseAnim);
+				}
 				// 下拉刷新
 				mTipsTextView.setText(R.string.p2refresh_pull_to_refresh);
 			} else {
@@ -743,39 +805,57 @@ public class CustomListView extends ListView implements OnScrollListener {
 			}
 			break;
 
-		case REFRESHING:
+		case REFRESHING: // 正在刷新...
 			mHeadView.setPadding(0, 0, 0, 0);
-
 			// 实际上这个的setPadding可以用动画来代替。我没有试，但是我见过。其实有的人也用Scroller可以实现这个效果，
 			// 我没时间研究了，后期再扩展，这个工作交给小伙伴你们啦~ 如果改进了记得发到我邮箱噢~
 
-			mProgressBar.setVisibility(View.VISIBLE);
-			mArrowImageView.clearAnimation();
-			mArrowImageView.setVisibility(View.GONE);
+			if (loadingAnimStyle == 0) {
+				mProgressBar.setVisibility(View.VISIBLE);
+				mArrowImageView.clearAnimation();
+				mArrowImageView.setVisibility(View.GONE);
+			} else if (loadingAnimStyle == 1) {
+				headPicImageViewAnim.start();
+
+			}
+
 			// 正在刷新...
 			mTipsTextView.setText(R.string.p2refresh_doing_head_refresh);
-			mLastUpdatedTextView.setVisibility(View.VISIBLE);
+			setLastUpdatedTextView();
 
 			break;
-		case DONE:
+		case DONE:// 下拉刷新
 			mHeadView.setPadding(0, -1 * mHeadViewHeight, 0, 0);
-
 			// 此处可以改进，同上所述。
-
-			mProgressBar.setVisibility(View.GONE);
-			mArrowImageView.clearAnimation();
-			mArrowImageView.setImageResource(R.drawable.arrow);
+			if (loadingAnimStyle == 0) {
+				mProgressBar.setVisibility(View.GONE);
+				mArrowImageView.clearAnimation();
+				mArrowImageView.setImageResource(R.drawable.arrow);
+			} else if (loadingAnimStyle == 1) {
+				headPicImageViewAnim.stop();
+			}
 			// 下拉刷新
 			mTipsTextView.setText(R.string.p2refresh_pull_to_refresh);
-			mLastUpdatedTextView.setVisibility(View.VISIBLE);
+			setLastUpdatedTextView();
 
 			break;
 		}
 	}
 
+	/****
+	 * 
+	 * 头部刷新时间是否显示
+	 * 
+	 */
+	public void setLastUpdatedTextView() {
+		if (isShowRefushTime) {
+			mLastUpdatedTextView.setVisibility(View.VISIBLE);
+		} else {
+			mLastUpdatedTextView.setVisibility(View.GONE);
+		}
+	}
 
-
-    /**
+	/**
 	 * 下拉刷新监听接口
 	 * 
 	 * @date 2013-11-20 下午4:50:51
@@ -841,9 +921,11 @@ public class CustomListView extends ListView implements OnScrollListener {
 		mHeadState = DONE;
 		// 最近更新: Time
 		String time = new SimpleDateFormat(DATE_FORMAT_STR, Locale.CHINA).format(new Date());
-
-		mLastUpdatedTextView.setText(
-				getResources().getString(R.string.p2refresh_refresh_lasttime) + convertTime(getlongtime(time)));
+		setLastUpdatedTextView();
+		// mLastUpdatedTextView.setText(
+		// getResources().getString(R.string.p2refresh_refresh_lasttime) +
+		// convertTime(getlongtime(time)));
+		mLastUpdatedTextView.setText(getResources().getString(R.string.p2refresh_refresh_lasttime) + time);
 
 		changeHeaderViewByState();
 	}
@@ -893,9 +975,11 @@ public class CustomListView extends ListView implements OnScrollListener {
 	public void setAdapter(BaseAdapter adapter) {
 		// 最近更新: Time---2015年08月25日 15:47
 		String time = new SimpleDateFormat(DATE_FORMAT_STR, Locale.CHINA).format(new Date());
-
-		mLastUpdatedTextView.setText(
-				getResources().getString(R.string.p2refresh_refresh_lasttime) + convertTime(getlongtime(time)));
+		setLastUpdatedTextView();
+		// mLastUpdatedTextView.setText(
+		// getResources().getString(R.string.p2refresh_refresh_lasttime) +
+		// convertTime(getlongtime(time)));
+		mLastUpdatedTextView.setText(getResources().getString(R.string.p2refresh_refresh_lasttime) + time);
 
 		super.setAdapter(adapter);
 	}
