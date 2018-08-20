@@ -50,7 +50,10 @@ dependencies {
     //superTextView    原型图控件
     //城市选择器  三级联动
     //图片选择器
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    //支付
+    compile files('libs/alipaySdk-20180403.jar')
+    //顶部导航指示器
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.jakewharton:butterknife:7.0.1'
@@ -71,11 +74,7 @@ dependencies {
     compile 'com.foamtrace:photopicker:1.0'
     compile 'com.just.agentweb:agentweb:1.2.6'
     compile 'com.android.support:support-v4:25.3.1'
-    testCompile 'junit:junit:4.12'
-
-    //支付
-    compile files('libs/alipaySdk-20180403.jar')
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
-    //顶部导航指示器
     compile 'com.github.hackware1993:MagicIndicator:1.5.0'
+    testCompile 'junit:junit:4.12'
 }
