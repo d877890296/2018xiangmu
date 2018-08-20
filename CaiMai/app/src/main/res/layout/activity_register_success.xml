@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whilte"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.xfkc.caimai.loading.RegisterSuccessActivity">
+
+    <include layout="@layout/widget_toolbar" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/day_line_color" />
+
+    <ImageView
+        android:layout_width="209dp"
+        android:layout_height="129dp"
+        android:layout_marginTop="40dp"
+        android:src="@mipmap/logo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/register_success"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/register_complete"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+
+        />
+
+
+    <com.xfkc.caimai.customview.StateButton
+        android:id="@+id/login_btn"
+        android:layout_width="262dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/register_button_string"
+        android:textSize="20dp"
+        app:normalBackgroundColor="@color/ff704d"
+        app:normalTextColor="@color/white"
+        app:pressedBackgroundColor="@color/ff704d"
+        app:pressedTextColor="@color/white"
+        app:radius="20dp" />
+
+
+</com.zhy.autolayout.AutoLinearLayout>
