@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/EqTools/src/android/lyy/support/v4/view/LyyPagerAdapter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/EqTools/src/com/dev/album/AlbumsUtil.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eqtools/src/main/java/com/dev/album/AlbumsUtil.java" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

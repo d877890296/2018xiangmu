@@ -1,5 +1,6 @@
 package com.xfkc.caimai.loading;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -204,14 +205,14 @@ public class RegisterActivity extends BaseActivity {
 //                        ToastUtil.showToast("注册成功");
 //                        finish();
 //                        //展示注册成功对话框
-////                        showRegisterDialog();
+                        showRegisterDialog();
 //                    }
 //                });
     }
 
     /*展示注册成功的对话框*/
     private void showRegisterDialog() {
-
+            startActivity(new Intent(this,RegisterSuccessActivity.class));
     }
 
     /*获取验证码*/
