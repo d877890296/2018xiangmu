@@ -5,7 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.dev.mbprogress.MbProgress;
 import com.hyf.tdlibrary.utils.StatusBarUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.application.MyApplication;
@@ -26,6 +29,26 @@ public abstract class BaseActivity extends AppCompatActivity {
     public String token ;//用户登录
     public Context mContext;
     public MyApplication app;
+
+    public MbProgress mbProgress;
+
+    /** 没有数据 */
+    public TextView nodataview_textview;
+    public LinearLayout net_error_liner, progress_liner, loadfail_liner;
+
+    // 起始的下标
+    public int startIndex = 0, limit = 20;
+    // 是否第一次加载数据/是否有更多数据
+    public boolean isfristLoadData, isMoreData = true;
+    // 刷新数据和加载更多的数据
+    public int REFUSH_LOADMORE_DATA = -1;
+    public int REFRESH_OR_LOADMORE_STATE = -1, REFRESH_DATA_ISSUCCESS = -1, LOADMORE_DATA_ISSUCCESS = -1;
+    /** list刷新 **/
+    public static final int LIST_REFUSH_WHAT = 0;
+    /** list加载更多数据 **/
+    public static final int LIST_LOADMORE_WHAT = 1;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,4 +197,17 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
+    public void showMbProgress(String msg) {
+        if (mbProgress == null) {
+            mbProgress = new MbProgress(this, false);
+        }
+        mbProgress.showMbDialog(msg);
+    }
+
+    public void dissMbProgress() {
+        if (mbProgress != null) {
+            mbProgress.dismiss();
+        }
+
+    }
 }

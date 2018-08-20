@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ededed"
+    android:orientation="vertical" >
+
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#ededed"
+                        android:orientation="horizontal"
+                        android:padding="10dp" >
+
+                        <TextView
+                            android:id="@+id/all_textView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="综合"
+                            android:textColor="#000000"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/socle_textView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="销量"
+                            android:textColor="#525252"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/prace_textView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="价格"
+                            android:textColor="#525252"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/goods_grid_list_change"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_weight="0"
+                            android:background="@drawable/gd_goodscity_style"
+                            android:gravity="center" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:background="#50505050" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" >
+
+                        <com.recycle.refushView.RefreshLayout
+                            android:id="@+id/define_sliding_bga"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" >
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/goodsCitylist_recycler"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:scrollbars="none" />
+                        </com.recycle.refushView.RefreshLayout>
+
+                        <include layout="@layout/public_nodata_liner" />
+
+                        <include layout="@layout/progresslayout" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/background_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#77000000"
+                    android:visibility="gone" />
+            </RelativeLayout>
+</LinearLayout>
