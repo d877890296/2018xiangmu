@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/mbshape"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="25dp"
+    android:visibility="visible" >
+
+    <ProgressBar
+        android:id="@+id/mbpro_progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:indeterminateDrawable="@drawable/load_progress" />
+
+    <TextView
+        android:id="@+id/mbpro_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="数据加载中..."
+        android:textColor="#fff" />
+
+</LinearLayout>
