@@ -64,6 +64,7 @@
         <activity android:name=".loading.UpdatePassWordActivity" />
         <activity android:name=".pay.PaySuccessActivity" />
         <activity android:name=".info.PerfectInforActivity"></activity>
+        <activity android:name="com.goods.city.GoodsCityActivity"></activity>
     </application>
 
 </manifest>

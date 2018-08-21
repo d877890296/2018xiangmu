@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.goods.city.GoodsCityActivity;
 import com.hyf.tdlibrary.utils.ToastUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseFragment;
@@ -69,7 +70,8 @@ public class HomeFragment extends BaseFragment {
 
                 switch (position) {
                     case 0:
-                        ToastUtil.showToast("暂未开放");
+                      //  ToastUtil.showToast("暂未开放");
+                        skip_classView(GoodsCityActivity.class,extraMap,false,false);
                         break;
                     case 1:
                         startActivity(new Intent(mContext, ConfirmOrderActivity.class));

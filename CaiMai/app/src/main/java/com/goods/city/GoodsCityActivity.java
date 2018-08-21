@@ -16,6 +16,7 @@ import com.refushView.holder.DefineBAGRefreshWithLoadView;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -71,11 +72,11 @@ public class GoodsCityActivity  extends BaseActivity implements RefreshLayout.Re
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
-        viewInit();
+       viewInit();
     }
 
     public void viewInit() {
-
+        defaultDataInit();
 
 
         all_textView = (TextView) findViewById(R.id.all_textView);
@@ -112,13 +113,40 @@ public class GoodsCityActivity  extends BaseActivity implements RefreshLayout.Re
 //        app.netRequst.shoppingShowGoodtypesRequst(storeid, netRequstAjaxCallBack.shoppShowGoodsTypeCallback);
 //        app.netRequst.shoppingGoodsRequst(storeid, "1", "100", "", goodclassid,
 //                netRequstAjaxCallBack.shoppShowGoodsCallback);
+        for (int i=0;i<10;i++) {
+            String goodsStoreId = "1000";
+            String goodsId = "10001";
+            String image1 = "10001";
+            String title = "w我的衣服价格";
+            double goodsPrice = 234.0;
+            double storePrice = 234.9;
+            String goodsProperty = "1000dd";
 
+            GoodsModel model = new GoodsModel();
+            model.setGoodsStoreId(goodsStoreId);
+            model.setGoodsId(goodsId);
+            model.setGoodsName(title);
+            model.setGoodsPrice(goodsPrice);
+            model.setStorePrice(storePrice);
+            model.setGoodsProperty(goodsProperty);
+            model.setGoodsMainPhotoId(image1);
+            goodsData.add(model);
+        }
+
+        goodsCityListAdapter.setGoodsData(goodsData);
+
+        dissMbProgress();
+
+    }
+
+    public void defaultDataInit(){
+        goodsCityListAdapter = new GoodsCityListAdapter(this);
+        goodsData = new ArrayList<GoodsModel>();
+        textArray = new ArrayList<TextView>();
     }
 
     @Override
     protected void loadData() {
-
-
 
 
     }
