@@ -15,13 +15,20 @@
         android:layout_height="0.1dp"
         android:background="@color/day_line_color" />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/register_logo"
+        android:layout_marginTop="20dp"
+        />
+
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="262dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
         android:orientation="vertical"
-        android:padding="30dp">
+        android:paddingTop="10dp"
+        >
 
         <!--手机号-->
         <LinearLayout
@@ -29,6 +36,10 @@
             android:layout_height="50dp"
             android:gravity="center_vertical">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/register_phone_icon" />
 
             <EditText
                 android:id="@+id/login_phone_edit"
@@ -38,7 +49,7 @@
                 android:hint="手机号码"
                 android:inputType="number"
                 android:maxLength="11"
-                android:paddingLeft="20dp"
+                android:paddingLeft="15dp"
                 android:textColor="@color/text_color"
                 android:textSize="16sp" />
 
@@ -56,6 +67,11 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/register_yz_icon" />
+
             <EditText
                 android:id="@+id/login_num_edit"
                 android:layout_width="0dp"
@@ -64,7 +80,7 @@
                 android:background="@null"
                 android:hint="请输入验证码"
                 android:inputType="number"
-                android:paddingLeft="20dp"
+                android:paddingLeft="15dp"
                 android:textColor="@color/text_color"
                 android:textSize="16sp" />
 
@@ -94,6 +110,11 @@
             android:gravity="center_vertical">
 
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/register_password_icon1" />
+
             <EditText
                 android:id="@+id/login_password_edit"
                 android:layout_width="match_parent"
@@ -102,7 +123,7 @@
                 android:hint="请输入6-16位数字和字母组合"
                 android:inputType="textPassword"
                 android:maxLength="20"
-                android:paddingLeft="20dp"
+                android:paddingLeft="15dp"
                 android:textColor="@color/text_color"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -113,6 +134,11 @@
             android:layout_height="50dp"
             android:gravity="center_vertical">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/register_password_icon1" />
+
 
             <EditText
                 android:id="@+id/again_password_edit"
@@ -122,7 +148,7 @@
                 android:hint="请再次输入密码"
                 android:inputType="textPassword"
                 android:maxLength="20"
-                android:paddingLeft="20dp"
+                android:paddingLeft="15dp"
                 android:textColor="@color/text_color"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -134,6 +160,10 @@
             android:layout_height="50dp"
             android:gravity="center_vertical">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/register_yqm_icon" />
 
             <EditText
                 android:id="@+id/yaoqing_edit"
@@ -143,7 +173,7 @@
                 android:hint="请输入邀请码"
                 android:inputType="textPassword"
                 android:maxLength="20"
-                android:paddingLeft="20dp"
+                android:paddingLeft="15dp"
                 android:textColor="@color/text_color"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -183,14 +213,18 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="*点击“提交”即代表同意" />
+                android:text="*点击“提交”即代表同意"
+                android:textSize="12sp"
+                />
 
             <TextView
                 android:id="@+id/fwtk_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="《幸福康城用户协议》”"
-                android:textColor="@color/red" />
+                android:textColor="@color/red"
+                android:textSize="12sp"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
