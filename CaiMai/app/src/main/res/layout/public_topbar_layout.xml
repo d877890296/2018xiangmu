@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/top_nav_bar"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="#FF704D"
+    android:visibility="visible" >
+
+    <ImageButton
+        android:id="@+id/back_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/btn_back_selector"
+        android:gravity="center"
+        android:padding="5dp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/topbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:singleLine="true"
+        android:text="title"
+
+        android:textColor="#FFFFFF"
+        android:visibility="gone"
+        android:textSize="18sp" />
+    <TextView
+        android:id="@+id/topbar_img_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:singleLine="true"      android:drawableLeft="@mipmap/gs_location"
+        android:text="title"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+      >
+
+        <ImageButton
+            android:id="@+id/other_btn"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:background="@mipmap/gs_shoppingcar"
+            android:padding="5dp"
+
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/other_morbtn"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:gravity="center"
+            android:text="添加"
+            android:textColor="#fff"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -6,6 +6,7 @@ import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,7 +32,7 @@ public class GoodsCityActivity  extends BaseActivity implements RefreshLayout.Re
 
     private TextView all_textView, socle_textView, prace_textView;
     private List<TextView> textArray;
-    private int curSelectBarTextColor = 0xFF00bfff;
+    private int curSelectBarTextColor = 0xFFFF704D;
     // 默认bar字体颜色
     private int defaultBarTextColor = 0xFF323232;
 
@@ -78,7 +79,10 @@ public class GoodsCityActivity  extends BaseActivity implements RefreshLayout.Re
     public void viewInit() {
         defaultDataInit();
 
-
+        back_btn= (ImageButton) findViewById(R.id.back_btn);
+        back_btn.setVisibility(View.VISIBLE);
+        topbar_img_title= (TextView) findViewById(R.id.topbar_img_title);
+        topbar_img_title.setText("北京1店");
         all_textView = (TextView) findViewById(R.id.all_textView);
         socle_textView = (TextView) findViewById(R.id.socle_textView);
         prace_textView = (TextView) findViewById(R.id.prace_textView);
@@ -181,6 +185,13 @@ public class GoodsCityActivity  extends BaseActivity implements RefreshLayout.Re
                     showMbProgress("数据加载中...");
 //                    app.netRequst.shoppingGoodsRequst("1", "1", "100", "", goodclassid,
 //                            netRequstAjaxCallBack.shoppShowGoodsCallback);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    dissMbProgress();
                     break;
                 case R.id.socle_textView:
                     sidx = "";
@@ -189,6 +200,13 @@ public class GoodsCityActivity  extends BaseActivity implements RefreshLayout.Re
                     showMbProgress("数据加载中...");
 //                    app.netRequst.shoppingGoodsRequst("1", "1", "100", "", goodclassid,
 //                            netRequstAjaxCallBack.shoppShowGoodsCallback);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    dissMbProgress();
                     break;
                 case R.id.prace_textView:
                     sidx = "";
@@ -197,6 +215,13 @@ public class GoodsCityActivity  extends BaseActivity implements RefreshLayout.Re
                     showMbProgress("数据加载中...");
 //                    app.netRequst.shoppingGoodsRequst("1", "1", "100", "", goodclassid,
 //                            netRequstAjaxCallBack.shoppShowGoodsCallback);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    dissMbProgress();
                     break;
                 case R.id.goods_grid_list_change:
                     //myRecyclerView = null;
