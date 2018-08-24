@@ -9,7 +9,7 @@ package com.xfkc.caimai.config;
 public class Constant {
 
     public static final String TAG = "---幸福康城---";
-    public static final String BASE_URL = "";//
+    public static final String BASE_URL = "http://47.105.126.49:9999";
 
 
     //关于我们

@@ -1,5 +1,6 @@
 package com.xfkc.caimai.loading;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -12,7 +13,11 @@ import android.widget.TextView;
 import com.hyf.tdlibrary.utils.ToastUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
+import com.xfkc.caimai.bean.EmptyBean;
 import com.xfkc.caimai.customview.StateButton;
+import com.xfkc.caimai.net.PayFactory;
+import com.xfkc.caimai.net.RxHelper;
+import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -52,8 +57,6 @@ public class ForgetPassWordActivity extends BaseActivity {
 
     @Override
     protected void loadData() {
-        //获取验证码加密的key
-//        getAeskey();
     }
 
 
@@ -68,64 +71,38 @@ public class ForgetPassWordActivity extends BaseActivity {
                 break;
             case R.id.login_btn:
                 //提交修改密码
-                getForgetPassWord();
+                String verCode = loginNumEdit.getText().toString();
+                extraMap.put("verCode",verCode);
+                extraMap.put("phone",phone);
+                skip_classView(UpdatePassWordActivity.class,extraMap,false,1001);
                 break;
         }
     }
 
-    /*获取验证码加密key*/
-    private void getAeskey() {
-//        HashMap<String, String> map = new HashMap<>();
-//        PayFactory.getPayService()
-//                .getAESKey(map)
-//                .compose(RxHelper.<GetAESKey>io_main())
-//                .subscribe(new Subscriber<GetAESKey>() {
-//                    @Override
-//                    public void onCompleted() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(GetAESKey getAESKey) {
-//                        key = Aes.aesDecrypt(getAESKey.key);
-//                    }
-//                });
-    }
 
     /*获取验证码*/
     public void getVerificationCode() {
-        try {
             phone = loginPhoneEdit.getText().toString().trim();
             if (TextUtils.isEmpty(phone)) {
                 ToastUtil.showToast("手机号码不能为空");
                 return;
             }
-//            String date = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-//            sign = Aes.aesEncrypt(date + phone, key);
-//            PayFactory.getPayService()
-//                    .getValidateCode(new GetValdateCodeApi("02", phone, date, StringUtils.replaceSpecialStr(sign)))
-//                    .compose(RxHelper.<ValidateCode>io_main())
-//                    .subscribe(new ProgressSubscriber<ValidateCode>(this) {
-//                        @Override
-//                        public void onNext(ValidateCode validateCode) {
-//                            getYanzhengBtn.setClickable(false);
-//                            timer.start();
-//                        }
-//
-//                        @Override
-//                        public void onError(Throwable e) {
-//                            super.onError(e);
-//                            timer.cancel();
-//                        }
-//                    });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+              PayFactory.getPayService()
+                .getSmsCode(phone)
+                    .compose(RxHelper.<EmptyBean>io_main())
+                    .subscribe(new ProgressSubscriber<EmptyBean>(this) {
+                        @Override
+                        public void onNext(EmptyBean emptyBean) {
+                            getYanzhengBtn.setClickable(false);
+                            timer.start();
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            super.onError(e);
+                            timer.cancel();
+                        }
+                    });
 
     }
 
@@ -147,45 +124,21 @@ public class ForgetPassWordActivity extends BaseActivity {
         }
     };
 
-    /*提交修改密码*/
-    public void getForgetPassWord() {
-        phone = loginPhoneEdit.getText().toString().trim();
-        password = loginPasswordEdit.getText().toString().trim();
-        String msgcode = loginNumEdit.getText().toString().trim();
-        if (TextUtils.isEmpty(phone)) {
-            ToastUtil.showToast("手机号码不能为空");
-            return;
-        }
-        if (TextUtils.isEmpty(password)) {
-            ToastUtil.showToast("密码不能为空");
-            return;
-        }
-        if (TextUtils.isEmpty(msgcode)) {
-            ToastUtil.showToast("验证码不能为空");
-            return;
-        }
 
-//        UpdatePassword updatePassword=new UpdatePassword();
-//        updatePassword.setCustMobile(phone);
-//        updatePassword.setUserPwd(MD5Util.generatePassword(password));
-//        updatePassword.setMsgCode(msgcode);
-//        updatePassword.setPwdType("1");
-//        PayFactory.getPayService()
-//                .userUpdate(updatePassword)
-//                .compose(RxHelper.<EmptyBean>io_main())
-//                .subscribe(new ProgressSubscriber<EmptyBean>(this) {
-//            @Override
-//            public void onNext(EmptyBean emptyBean) {
-                ToastUtil.showToast("密码修改成功");
-//                finish();
-//            }
-//        });
-
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         timer.cancel();
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1001 && resultCode == 1002) {
+            finish();
+        }
     }
 }

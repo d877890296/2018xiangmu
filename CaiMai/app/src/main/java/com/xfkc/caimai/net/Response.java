@@ -10,9 +10,14 @@ import java.io.Serializable;
 
 public class Response implements Serializable {
   //public static final String SUCCESS = "000000";
-  @SerializedName("RSPCOD")
+//  @SerializedName("RSPCOD")
+//  private String rspCod;
+//  @SerializedName("RSPMSG")
+//  private String rspMsg;
+
+  @SerializedName("retCode")
   private String rspCod;
-  @SerializedName("RSPMSG")
+  @SerializedName("message")
   private String rspMsg;
 
 

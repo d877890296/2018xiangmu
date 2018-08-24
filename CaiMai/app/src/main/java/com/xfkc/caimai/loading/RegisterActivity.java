@@ -15,11 +15,11 @@ import android.widget.TextView;
 import com.hyf.tdlibrary.utils.ToastUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
+import com.xfkc.caimai.bean.EmptyBean;
 import com.xfkc.caimai.customview.StateButton;
-import com.xfkc.caimai.util.Aes;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.xfkc.caimai.net.PayFactory;
+import com.xfkc.caimai.net.RxHelper;
+import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -51,11 +51,16 @@ public class RegisterActivity extends BaseActivity {
     TextView privacyTv;
     @Bind(R.id.have_tv)
     TextView haveTv;
+    @Bind(R.id.again_password_edit)
+    EditText againPasswordEdit;
+    @Bind(R.id.yaoqing_edit)
+    EditText yaoqingEdit;
 
-    private String key = "";
-    private String sign = "";
     private String phone = "";//手机号码
     private String password = "";//用户密码
+    private String msgcode;
+    private String again_password;
+    private String yq_code;
 
     @Override
     protected int getLayoutResource() {
@@ -87,33 +92,9 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     protected void loadData() {
-        //获取验证码加密key
-//        getAeskey();
+
     }
 
-    /*获取验证码加密key*/
-    private void getAeskey() {
-//        HashMap<String, String> map = new HashMap<>();
-//        PayFactory.getPayService()
-//                .getAESKey(map)
-//                .compose(RxHelper.<GetAESKey>io_main())
-//                .subscribe(new Subscriber<GetAESKey>() {
-//                    @Override
-//                    public void onCompleted() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(GetAESKey getAESKey) {
-//                        key = Aes.aesDecrypt(getAESKey.key);
-//                    }
-//                });
-    }
 
     @OnClick({R.id.toolbar_left_img, R.id.get_yanzheng_btn, R.id.login_btn, R.id.fwtk_tv, R.id.privacy_tv, R.id.have_tv})
     public void onViewClicked(View view) {
@@ -126,8 +107,8 @@ public class RegisterActivity extends BaseActivity {
                 getVerificationCode();
                 break;
             case R.id.login_btn:
-                //校验手机号码是否可以注册
-                getValidateMobile();
+                //注册
+                userRegist();
                 break;
             case R.id.fwtk_tv:
 //                startActivity(new Intent(mContext, TDWebViewActivity.class)
@@ -143,107 +124,87 @@ public class RegisterActivity extends BaseActivity {
         }
     }
 
-    /*校验手机号码是否可以注册*/
-    private void getValidateMobile() {
+
+    /*用户注册*/
+    private void userRegist() {
         phone = loginPhoneEdit.getText().toString().trim();
         password = loginPasswordEdit.getText().toString().trim();
+        msgcode = loginNumEdit.getText().toString().trim();
+        again_password = againPasswordEdit.getText().toString().trim();
+        yq_code = yaoqingEdit.getText().toString().trim();
+
         if (TextUtils.isEmpty(phone)) {
-            ToastUtil.showToast("手机号码不能为空");
+            ToastUtil.showToast("手机号码不能为空!");
             return;
         }
         if (TextUtils.isEmpty(password)) {
-            ToastUtil.showToast("密码不能为空");
+            ToastUtil.showToast("密码不能为空!");
             return;
         }
+        if (TextUtils.isEmpty(msgcode)) {
+            ToastUtil.showToast("验证码不能为空!");
+            return;
+        }
+        if (TextUtils.isEmpty(again_password) || !again_password.equals(password)) {
+            ToastUtil.showToast("俩次输入密码不符!");
+            return;
+        }
+        if (TextUtils.isEmpty(yq_code)) {
+            ToastUtil.showToast("邀请码不能为空!");
+            return;
+        }
+
         if (password.length() >= 6 && password.length() <= 16) {
-//            PayFactory.getPayService()
-//                    .getValidateMobile(new GetValidateMobileApi(phone))
-//                    .compose(RxHelper.<EmptyBean>io_main())
-//                    .subscribe(new Subscriber<EmptyBean>() {
-//                        @Override
-//                        public void onCompleted() {
-//
-//                        }
-//
-//                        @Override
-//                        public void onError(Throwable e) {
-//                            ToastUtil.showToast("该手机号已注册", 0);
-//                        }
-//
-//                        @Override
-//                        public void onNext(EmptyBean emptyBean) {
-//                            //用户注册
-//                            userRegist(phone, password);
-//                        }
-//                    });
+            userRegistData();//注册数据提交
         } else {
             ToastUtil.showToast("密码长度不符");
         }
-
     }
 
-    /*用户注册*/
-    private void userRegist(String phone, String password) {
-        String msgcode = loginNumEdit.getText().toString().trim();
-        if (TextUtils.isEmpty(msgcode)) {
-            ToastUtil.showToast("验证码不能为空");
-            return;
-        }
-//        UserRegistApi userRegistApi = new UserRegistApi();
-//        userRegistApi.setCustMobile(phone);
-//        userRegistApi.setUserPwd(MD5Util.generatePassword(password));
-//        userRegistApi.setMsgCode(msgcode);
-//        PayFactory.getPayService()
-//                .userRegist(userRegistApi)
-//                .compose(RxHelper.<LoginInfoBean>io_main())
-//                .subscribe(new ProgressSubscriber<LoginInfoBean>(this) {
-//                    @Override
-//                    public void onNext(LoginInfoBean userInfoBean) {
-//                        SharedPrefUtil.put(mContext, SharedPref.USER_ID, userInfoBean.userId);
-//                        SharedPrefUtil.put(mContext, SharedPref.TOKEN, userInfoBean.token);
-//                        SharedPrefUtil.put(mContext, SharedPref.ISVIP, userInfoBean.isVip);
-//                        ToastUtil.showToast("注册成功");
-//                        finish();
+    /*注册数据提交*/
+    private void userRegistData() {
+        PayFactory.getPayService()
+                .registerInfo(phone,msgcode,password,yq_code)
+                .compose(RxHelper.<EmptyBean>io_main())
+                .subscribe(new ProgressSubscriber<EmptyBean>(this) {
+                    @Override
+                    public void onNext(EmptyBean userInfoBean) {
 //                        //展示注册成功对话框
                         showRegisterDialog();
-//                    }
-//                });
+                    }
+                });
+
     }
 
     /*展示注册成功的对话框*/
     private void showRegisterDialog() {
-            startActivity(new Intent(this,RegisterSuccessActivity.class));
+        startActivity(new Intent(this, RegisterSuccessActivity.class));
+        finish();
     }
 
     /*获取验证码*/
     public void getVerificationCode() {
-        try {
-            phone = loginPhoneEdit.getText().toString().trim();
-            if (TextUtils.isEmpty(phone)) {
-                ToastUtil.showToast("手机号码不能为空");
-                return;
-            }
-            String date = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-            sign = Aes.aesEncrypt(date + phone, key);
-//            PayFactory.getPayService()
-//                    .getValidateCode(new GetValdateCodeApi("01", phone, date, StringUtils.replaceSpecialStr(sign)))
-//                    .compose(RxHelper.<ValidateCode>io_main())
-//                    .subscribe(new ProgressSubscriber<ValidateCode>(this) {
-//                        @Override
-//                        public void onNext(ValidateCode validateCode) {
-//                            getYanzhengBtn.setClickable(false);
-//                            timer.start();
-//                        }
-//
-//                        @Override
-//                        public void onError(Throwable e) {
-//                            super.onError(e);
-//                            timer.cancel();
-//                        }
-//                    });
-        } catch (Exception e) {
-            e.printStackTrace();
+        phone = loginPhoneEdit.getText().toString().trim();
+        if (TextUtils.isEmpty(phone)) {
+            ToastUtil.showToast("手机号码不能为空");
+            return;
         }
+        PayFactory.getPayService()
+                .getSmsCode(phone)
+                .compose(RxHelper.<EmptyBean>io_main())
+                .subscribe(new ProgressSubscriber<EmptyBean>(this) {
+                    @Override
+                    public void onNext(EmptyBean emptyBean) {
+                        getYanzhengBtn.setClickable(false);
+                        timer.start();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        timer.cancel();
+                    }
+                });
 
     }
 
@@ -268,6 +229,4 @@ public class RegisterActivity extends BaseActivity {
         super.onDestroy();
         timer.cancel();
     }
-
-
 }

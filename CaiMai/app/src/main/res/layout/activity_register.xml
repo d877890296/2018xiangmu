@@ -93,7 +93,7 @@
                 android:textSize="14dp"
                 app:normalBackgroundColor="@color/ff704d"
                 app:normalTextColor="@color/white"
-                app:pressedBackgroundColor="@color/ff704d"
+                app:pressedBackgroundColor="@color/ff704d_90"
                 app:pressedTextColor="@color/white"
                 app:radius="4dp" />
         </LinearLayout>

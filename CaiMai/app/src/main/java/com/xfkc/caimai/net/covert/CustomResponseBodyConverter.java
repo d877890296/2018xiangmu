@@ -36,7 +36,7 @@ final class CustomResponseBodyConverter<T> implements Converter<ResponseBody, T>
         Utils.debug("接口返回结果---->" + response);
         Response rs = (Response) adapter.fromJson(response);
 
-        if (!rs.getRspCod().equals("000000")) {
+        if (!rs.getRspCod().equals("1")) {
 //            if (rs.getRspCod().equals("888887")) {
 //                throw new ApiException(rs.getRspCod(), "0");
 //            }

@@ -10,11 +10,17 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.ToastUtil;
 import com.xfkc.caimai.MainActivity;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
+import com.xfkc.caimai.bean.LoginInfo;
+import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.customview.StateButton;
+import com.xfkc.caimai.net.PayFactory;
+import com.xfkc.caimai.net.RxHelper;
+import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -64,64 +70,7 @@ public class LoadingActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        String code = intent.getStringExtra("code");
-//        获取用户信息
-//        getUserInfo(code);
-    }
 
-    /*获取用户信息*/
-    private void getUserInfo(String code) {
-//        String url = wx_url + code;
-//        OkGo.get(url)                            // 请求方式和请求url
-//                .tag(this)                       // 请求的 tag, 主要用于取消对应的请求
-//                .cacheKey("cacheKey")            // 设置当前请求的缓存key,建议每个不同功能的请求设置一个
-//                .cacheMode(CacheMode.DEFAULT)    // 缓存模式，详细请看缓存介绍
-//                .execute(new StringCallback() {
-//                    @Override
-//                    public void onSuccess(String s, Call call, Response response) {
-//                        Gson gson = new Gson();
-//                        WXLoginBean wxLoginBean = gson.fromJson(s, WXLoginBean.class);
-//                        getToken(wxLoginBean);
-//                    }
-//                });
-
-    }
-
-    /*请求获取本地*/
-//    private void getToken(final WXLoginBean wxLoginBean) {
-//        GetAllId getAllId = new GetAllId();
-//        getAllId.code = wxLoginBean.openid;
-//        PayFactory.getPayService().wxCodeValidate(getAllId)
-//                .compose(RxHelper.<LoginInfoBean>io_main())
-//                .subscribe(new ProgressSubscriber<LoginInfoBean>(this) {
-//                    @Override
-//                    public void onNext(LoginInfoBean loginInfoBean) {
-//                        SharedPrefUtil.put(mContext, SharedPref.USER_ID, loginInfoBean.userId);
-//                        SharedPrefUtil.put(mContext, SharedPref.TOKEN, loginInfoBean.token);
-//                        SharedPrefUtil.put(mContext, SharedPref.ISVIP, loginInfoBean.isVip);
-//                        SharedPrefUtil.put(mContext, SharedPref.CUST_NAME, loginInfoBean.name);
-//                        SharedPrefUtil.put(mContext, SharedPref.CUST_MOBILE, loginInfoBean.userPhone);
-//                        backHistory(104, true, true, extraMap);
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        dismissProgressDialog();
-//                        ApiException apiException = (ApiException) e;
-//                        if (apiException.getErrorCode().equals("888887")) {
-//                            startActivityForResult(new Intent(LoadingActivity.this, RegistPhoneActivity.class)
-//                                    .putExtra("openid", wxLoginBean.openid)
-//                                    .putExtra("access_token", wxLoginBean.access_token), 107);
-//                        } else {
-//                            super.onError(e);
-//                        }
-//
-//                    }
-//                });
-//    }
 
     @OnClick({R.id.toolbar_left_img, R.id.login_btn, R.id.toolbar_right_text, R.id.forget_password_text, R.id.wx_tv})
     public void onViewClicked(View view) {
@@ -140,16 +89,10 @@ public class LoadingActivity extends BaseActivity {
                 startActivity(new Intent(LoadingActivity.this, ForgetPassWordActivity.class));
                 break;
             case R.id.wx_tv:
-                getWXLoad();
                 break;
         }
     }
 
-    /*获取登陆请求*/
-    private void getWXLoad() {
-//        ShareRequst.getInstance().register(this);
-//        ShareRequst.getInstance().LoadWX();
-    }
 
     /*登录信息*/
     private void login() {
@@ -163,7 +106,7 @@ public class LoadingActivity extends BaseActivity {
             ToastUtil.showToast("登录密码不能为空");
             return;
         } else if (password.length() < 6) {
-            ToastUtil.showToast("登录密码为6-20位数字、字母");
+            ToastUtil.showToast("登录密码为6-16位数字、字母");
             return;
         }
         //登陆请求
@@ -173,33 +116,18 @@ public class LoadingActivity extends BaseActivity {
     /*登陆请求*/
     private void request(String phone, String password) {
 
-//        PayFactory.getPayService()
-//                .getLogin(new LoginApi(phone, MD5Util.generatePassword(password)))
-//                .compose(RxHelper.<LoginInfoBean>io_main())
-//                .subscribe(new ProgressSubscriber<LoginInfoBean>(this) {
-//                    @Override
-//                    public void onNext(LoginInfoBean userInfoBean) {
-//                        SharedPrefUtil.put(mContext, SharedPref.USER_ID, userInfoBean.userId);
-//                        SharedPrefUtil.put(mContext, SharedPref.TOKEN, userInfoBean.token);
-//                        SharedPrefUtil.put(mContext, SharedPref.ISVIP, userInfoBean.isVip);
-//                        SharedPrefUtil.put(mContext, SharedPref.CUST_NAME, userInfoBean.name);
-//                        SharedPrefUtil.put(mContext, SharedPref.CUST_MOBILE, userInfoBean.userPhone);
-//                        backHistory(104, true, true, extraMap);
-//                    }
-//
-//                });
-        startActivity(new Intent(this, MainActivity.class));
-        finish();
+        PayFactory.getPayService()
+                .login(phone,password)
+                .compose(RxHelper.<LoginInfo>io_main())
+                .subscribe(new ProgressSubscriber<LoginInfo>(this) {
+                    @Override
+                    public void onNext(LoginInfo loginInfo) {
+                        SharedPrefUtil.put(mContext, SharedPref.TOKEN,loginInfo.data);
+                        skip_classView(MainActivity.class,extraMap,true);
+                    }
+                });
     }
 
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 107 && resultCode == 106) {
-            backHistory(104, true, true, extraMap);
-        }
-    }
 
 
 }
