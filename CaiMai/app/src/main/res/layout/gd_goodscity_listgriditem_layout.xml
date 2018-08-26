@@ -14,7 +14,7 @@
         android:id="@+id/goods_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="1dp"
+        android:layout_margin="2dp"
         android:layout_weight="1"
         android:scaleType="fitXY"
         android:src="@drawable/gd_goodscity_model_img" />

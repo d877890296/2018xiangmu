@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+ 
+    
+      <style name="checkBoxgreen" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/checkboxgreen_selector</item>
+       
+    </style>
+
+</resources>

@@ -13,6 +13,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.cookie.store.PersistentCookieStore;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
@@ -35,6 +36,8 @@ public class MyApplication extends RootApplication {
     //内存泄漏自检
     private RefWatcher refWatcher;
 
+    public ImageLoader imageLoader;
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
@@ -47,7 +50,7 @@ public class MyApplication extends RootApplication {
         super.onCreate();
         refWatcher = LeakCanary.install(this);
         queueList = new ArrayList<Activity>();
-
+        imageLoader=ImageLoader.getInstance();
         //okGo 配置
         initOkGo();
         //初始化分享

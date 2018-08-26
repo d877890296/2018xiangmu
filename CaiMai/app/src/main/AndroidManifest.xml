@@ -64,7 +64,13 @@
         <activity android:name=".loading.UpdatePassWordActivity" />
         <activity android:name=".pay.PaySuccessActivity" />
         <activity android:name=".info.PerfectInforActivity"></activity>
-        <activity android:name="com.goods.city.GoodsCityActivity"></activity>
+        <activity android:name="com.goods.city.GoodsCityActivity">
+
+
+        </activity>
+        <activity android:name="com.goods.details.GoodsDetailsActivity">      </activity>
+
+        <activity android:name="com.goods.shoppingcar.ShoppingCarActivity">      </activity>
     </application>
 
 </manifest>

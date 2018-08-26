@@ -66,19 +66,43 @@
                             android:text="物尽其用"
                             android:textColor="#525252"
                             android:textSize="16sp" />
+
+                    </LinearLayout>
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:background="#50505050" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+                        <com.dev.customview.ClearEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/searchshape"
+                            android:hint="搜索"
+                            android:drawablePadding="5dp"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:textColor="#000000"
+                            android:drawableLeft="@drawable/icon_search_img"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:textSize="12.0dip" />
                         <TextView
                             android:id="@+id/goods_grid_list_change"
                             android:layout_width="25dp"
                             android:layout_height="25dp"
                             android:layout_weight="0"
+                            android:layout_margin="5dp"
+                            android:layout_gravity="center"
                             android:background="@drawable/gd_goodscity_style"
                             android:gravity="center" />
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="1dp"
-                        android:background="#50505050" />
+
 
                     <RelativeLayout
                         android:layout_width="match_parent"

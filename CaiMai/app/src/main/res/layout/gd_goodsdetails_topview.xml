@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F1F1F1"
+    android:orientation="vertical" >
+
+    <!-- //======================最顶部=========== 轮播图=====开始======================= -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="260dp" >
+
+        <com.dev.customview.AdViewPaper
+            android:id="@+id/adViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="280dp" />
+
+        <!-- ////////////////////默认顶部视图开始//////////////// -->
+
+        <FrameLayout
+            android:id="@+id/top_frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="#00000000"
+            android:orientation="horizontal"
+            android:visibility="visible" >
+
+            <TextView
+                android:id="@+id/back_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:background="@drawable/circle_gray_shape"
+                android:drawableRight="@drawable/gd_back_btn"
+                android:padding="4dp"
+                android:textColor="#fff"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/shoppingcar_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="@drawable/circle_gray_shape"
+                android:drawableRight="@drawable/gd_shopingcar_btn"
+                android:padding="4dp"
+                android:textColor="#fff"
+                android:textSize="15sp" />
+        </FrameLayout>
+        <!-- //////////////////////////默认顶部视图结束//////////////////////////////// -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="10dp"
+            android:background="#00000000"
+            android:gravity="right"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/point_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="@drawable/touming_shape"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:text="1/3"
+                android:textColor="#fff"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- //======================最顶部=========== 轮播图=====结束======================= -->
+
+
+    <!-- ======================商品价格位置==开始===================== -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/goodsTitle_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="我们的宝贝都是好的，没有坏的"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+        <TextView
+              android:id="@+id/goodsPrace_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="bottom"
+            android:text="￥ 99.0"
+            android:textColor="#ff0000"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="快递：0.0"
+                android:textColor="#525252"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="月销8笔"
+                android:textColor="#525252"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+    <!-- ======================商品价格位置==结束===================== -->
+
+</LinearLayout>
