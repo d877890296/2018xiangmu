@@ -64,8 +64,8 @@
         <activity android:name=".loading.UpdatePassWordActivity" />
         <activity android:name=".pay.PaySuccessActivity" />
         <activity android:name=".info.PerfectInforActivity"></activity>
-<<<<<<< HEAD
-        <activity android:name="com.goods.city.GoodsCityActivity"></activity>
+
+
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -91,7 +91,7 @@
             android:exported="false"
             android:screenOrientation="behind" />
 
-=======
+
         <activity android:name="com.goods.city.GoodsCityActivity">
 
 
@@ -99,7 +99,7 @@
         <activity android:name="com.goods.details.GoodsDetailsActivity">      </activity>
 
         <activity android:name="com.goods.shoppingcar.ShoppingCarActivity">      </activity>
->>>>>>> 4dda0f4595e3b490a1f4c1e7fe304357945e446e
+
     </application>
 
 </manifest>
