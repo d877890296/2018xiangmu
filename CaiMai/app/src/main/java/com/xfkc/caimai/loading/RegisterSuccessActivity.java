@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 import com.xfkc.caimai.customview.StateButton;
+import com.xfkc.caimai.info.PerfectInforActivity;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -48,7 +49,7 @@ public class RegisterSuccessActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.login_btn:
-
+                skip_classView(PerfectInforActivity.class,extraMap,true);
                 break;
         }
     }
