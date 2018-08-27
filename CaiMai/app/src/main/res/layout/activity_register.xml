@@ -128,6 +128,10 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/day_line_color" />
         <!--确认密码-->
         <LinearLayout
             android:layout_width="match_parent"
@@ -152,9 +156,11 @@
                 android:textColor="@color/text_color"
                 android:textSize="16sp" />
         </LinearLayout>
-
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/day_line_color" />
         <!--请输入邀请码-->
-        <!--确认密码-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -171,7 +177,7 @@
                 android:layout_height="match_parent"
                 android:background="@null"
                 android:hint="请输入邀请码"
-                android:inputType="textPassword"
+                android:inputType="phone"
                 android:maxLength="20"
                 android:paddingLeft="15dp"
                 android:textColor="@color/text_color"
@@ -188,13 +194,11 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="30dp"
-            android:clickable="false"
-            android:focusable="false"
             android:text="提交"
             android:textSize="20dp"
             app:normalBackgroundColor="@color/ff704d"
             app:normalTextColor="@color/white"
-            app:pressedBackgroundColor="@color/ff704d"
+            app:pressedBackgroundColor="@color/ff704d_90"
             app:pressedTextColor="@color/white"
             app:radius="20dp" />
 
