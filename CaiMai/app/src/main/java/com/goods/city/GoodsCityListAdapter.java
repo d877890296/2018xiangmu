@@ -78,7 +78,7 @@ public class GoodsCityListAdapter extends RecyclerView.Adapter<GoodsCityListAdap
 		holder.goods_name.setText(model.getGoodsName());
 		holder.goods_prace.setText("￥" + model.getGoodsPrice());
 		//app.imageLoader.displayImage(model.getGoodsMainPhotoId(), holder.goods_image,app.options);
-
+	//	app.imageLoader.displayImage(model.getImage(),holder.goods_image);
 	}
 
 	@Override

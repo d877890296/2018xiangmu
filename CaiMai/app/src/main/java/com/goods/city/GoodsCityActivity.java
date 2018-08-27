@@ -10,13 +10,14 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.goods.details.GoodsDetailsActivity;
 import com.goods.model.GoodsModel;
 import com.recycle.view.MyRecyclerView;
 import com.refushView.RefreshLayout;
 import com.refushView.holder.DefineBAGRefreshWithLoadView;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
-
+import com.goods.city.GoodsCityListAdapter.OnListViewClickLinstener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,16 +80,21 @@ public class GoodsCityActivity  extends BaseActivity implements RefreshLayout.Re
     public void viewInit() {
         defaultDataInit();
 
+
         back_btn= (ImageButton) findViewById(R.id.back_btn);
         back_btn.setVisibility(View.VISIBLE);
+
         topbar_img_title= (TextView) findViewById(R.id.topbar_img_title);
         topbar_img_title.setText("北京1店");
+        other_btn= (ImageButton) findViewById(R.id.other_btn);
         all_textView = (TextView) findViewById(R.id.all_textView);
         socle_textView = (TextView) findViewById(R.id.socle_textView);
         prace_textView = (TextView) findViewById(R.id.prace_textView);
         textArray.add(all_textView);
         textArray.add(socle_textView);
         textArray.add(prace_textView);
+        back_btn.setOnClickListener(onClickListener);
+        other_btn.setOnClickListener(onClickListener);
         all_textView.setOnClickListener(onClickListener);
         socle_textView.setOnClickListener(onClickListener);
         prace_textView.setOnClickListener(onClickListener);
@@ -101,7 +107,7 @@ public class GoodsCityActivity  extends BaseActivity implements RefreshLayout.Re
 
         mBGARefreshLayout = (RefreshLayout) findViewById(R.id.define_sliding_bga);
         recyclerView = (RecyclerView) findViewById(R.id.goodsCitylist_recycler);
-      //  goodsCityListAdapter.setOnListViewClickLinstener(OnListViewClickLinstener);
+      goodsCityListAdapter.setOnListViewClickLinstener(onListViewClickLinstener);
         // 设置刷新和加载监听
         mBGARefreshLayout.setDelegate(this);
         setBgaRefreshLayout();
@@ -117,6 +123,7 @@ public class GoodsCityActivity  extends BaseActivity implements RefreshLayout.Re
 //        app.netRequst.shoppingShowGoodtypesRequst(storeid, netRequstAjaxCallBack.shoppShowGoodsTypeCallback);
 //        app.netRequst.shoppingGoodsRequst(storeid, "1", "100", "", goodclassid,
 //                netRequstAjaxCallBack.shoppShowGoodsCallback);
+        String []img={"",""};
         for (int i=0;i<10;i++) {
             String goodsStoreId = "1000";
             String goodsId = "10001";
@@ -130,6 +137,7 @@ public class GoodsCityActivity  extends BaseActivity implements RefreshLayout.Re
             model.setGoodsStoreId(goodsStoreId);
             model.setGoodsId(goodsId);
             model.setGoodsName(title);
+            model.setImage(image1);
             model.setGoodsPrice(goodsPrice);
             model.setStorePrice(storePrice);
             model.setGoodsProperty(goodsProperty);
@@ -154,22 +162,22 @@ public class GoodsCityActivity  extends BaseActivity implements RefreshLayout.Re
 
 
     }
-//    private OnListViewClickLinstener OnListViewClickLinstener = new OnListViewClickLinstener() {
-//
-//        @Override
-//        public void itemClick(int position, ViewHolder holder) {
-//            // TODO Auto-generated method stub
-//            GoodsModel model = goodsData.get(position);
-//            extraMap.put("goodsStoreId", model.getGoodsStoreId());
-//            extraMap.put("goodsId", model.getGoodsId());
-//            extraMap.put("price", model.getGoodsPrice());
-//            extraMap.put("goodsProperty", model.getGoodsProperty());
-//            extraMap.put("goodsImg", model.getGoodsMainPhotoId());
-//            extraMap.put("goodsName", model.getGoodsName());
-//            skip_classView(GoodsDetailsActivity2.class, extraMap, false, false);
-//        }
-//
-//    };
+    private OnListViewClickLinstener onListViewClickLinstener = new OnListViewClickLinstener() {
+
+        @Override
+        public void itemClick(int position, GoodsCityListAdapter.ViewHolder holder) {
+            // TODO Auto-generated method stub
+            GoodsModel model = goodsData.get(position);
+            extraMap.put("goodsStoreId", model.getGoodsStoreId());
+            extraMap.put("goodsId", model.getGoodsId());
+            extraMap.put("price", model.getGoodsPrice());
+            extraMap.put("goodsProperty", model.getGoodsProperty());
+            extraMap.put("goodsImg", model.getGoodsMainPhotoId());
+            extraMap.put("goodsName", model.getGoodsName());
+            skip_classView(GoodsDetailsActivity.class, extraMap, false);
+        }
+
+    };
 //
     private View.OnClickListener onClickListener = new View.OnClickListener() {
 
@@ -177,7 +185,12 @@ public class GoodsCityActivity  extends BaseActivity implements RefreshLayout.Re
         public void onClick(View v) {
             // TODO Auto-generated method stubs
             switch (v.getId()) {
-
+                case R.id.back_btn:
+                    backHistory(-1,true,false,extraMap);
+                    break;
+                case R.id.other_btn:
+                  skip_classView(GoodsDetailsActivity.class,extraMap,false);
+                    break;
                 case R.id.all_textView:
                     sidx = "";
                     setBarTextColor(0);
@@ -185,13 +198,12 @@ public class GoodsCityActivity  extends BaseActivity implements RefreshLayout.Re
                     showMbProgress("数据加载中...");
 //                    app.netRequst.shoppingGoodsRequst("1", "1", "100", "", goodclassid,
 //                            netRequstAjaxCallBack.shoppShowGoodsCallback);
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    dissMbProgress();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            dissMbProgress();
+                        }
+                    },2000);
                     break;
                 case R.id.socle_textView:
                     sidx = "";
@@ -200,13 +212,12 @@ public class GoodsCityActivity  extends BaseActivity implements RefreshLayout.Re
                     showMbProgress("数据加载中...");
 //                    app.netRequst.shoppingGoodsRequst("1", "1", "100", "", goodclassid,
 //                            netRequstAjaxCallBack.shoppShowGoodsCallback);
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    dissMbProgress();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            dissMbProgress();
+                        }
+                    },2000);
                     break;
                 case R.id.prace_textView:
                     sidx = "";
@@ -215,13 +226,14 @@ public class GoodsCityActivity  extends BaseActivity implements RefreshLayout.Re
                     showMbProgress("数据加载中...");
 //                    app.netRequst.shoppingGoodsRequst("1", "1", "100", "", goodclassid,
 //                            netRequstAjaxCallBack.shoppShowGoodsCallback);
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+              new Handler().postDelayed(new Runnable() {
+                  @Override
+                  public void run() {
+                      dissMbProgress();
+                  }
+              },2000);
 
-                    dissMbProgress();
+
                     break;
                 case R.id.goods_grid_list_change:
                     //myRecyclerView = null;

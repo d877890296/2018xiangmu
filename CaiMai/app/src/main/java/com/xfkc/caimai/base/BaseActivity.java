@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -50,7 +51,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public static final int LIST_LOADMORE_WHAT = 1;
     public TextView topbar_img_title,topbar_title;
 public ImageButton back_btn,other_btn;
-
+public Button other_morbtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
