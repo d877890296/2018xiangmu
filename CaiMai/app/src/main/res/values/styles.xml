@@ -38,4 +38,13 @@
         <item name="android:colorBackground">@color/white</item>
         <item name="android:textColorPrimary">@color/grey</item>
     </style>
+
+    <style name="NavPage">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center_horizontal</item>
+        <!-- <item name="android:background">@drawable/nav_page</item> -->
+        <item name="android:background">@color/c99999999</item>
+    </style>
 </resources>

@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:background="@color/bg_color"
     android:orientation="vertical"
-
     >
 
     <include layout="@layout/widget_toolbar" />
@@ -47,7 +46,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignRight="@+id/account_iv"
                         android:src="@mipmap/ic_launcher"
-                        android:visibility="gone" />
+                         />
                 </RelativeLayout>
 
                 <TextView
@@ -63,6 +62,214 @@
 
             </LinearLayout>
 
+            <!-- 收藏 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/news_cang_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/text_black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/news_cang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="资讯收藏"
+                        android:textColor="@color/text_black"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/gray" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/goods_cang_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/text_black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/goods_cang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="好礼收藏"
+                        android:textColor="@color/text_black"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+            <!--我的订单-->
+            <com.allen.library.SuperTextView
+                android:id="@+id/order_tv"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="10dp"
+                app:sDividerLineHeight="1dp"
+                app:sDividerLineType="both"
+                app:sLeftTextColor="@color/color_text"
+                app:sLeftTextSize="16sp"
+                app:sLeftTextString="我的订单"
+                app:sRightIconRes="@mipmap/icon_youjiantou"
+                app:sRightMaxEms="11"
+                app:sRightTextColor="@color/c999999"
+                app:sRightTextString="查看更多订单" />
+            <!--我的订单    待发货  待付款  评价等-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                <!--待发货-->
+                <com.zhy.autolayout.AutoRelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/wait_goods_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="15dp"
+                        android:drawableTop="@mipmap/ic_launcher"
+                        android:gravity="center"
+                        android:padding="4dp"
+                        android:text="待发货" />
+
+                    <TextView
+                        android:id="@+id/wait_goods_number_tv"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignRight="@+id/wait_goods_tv"
+                        android:layout_alignTop="@+id/wait_goods_tv"
+                        android:background="@drawable/text_bg_radius"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@color/red"
+                        android:textSize="10sp"
+                        android:visibility="gone" />
+                </com.zhy.autolayout.AutoRelativeLayout>
+                <!--待收货-->
+                <com.zhy.autolayout.AutoRelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/dsh_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="15dp"
+                        android:drawableTop="@mipmap/ic_launcher"
+                        android:gravity="center"
+                        android:padding="4dp"
+                        android:text="待收货" />
+
+                    <TextView
+                        android:id="@+id/dsh_number_tv"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignRight="@+id/dsh_tv"
+                        android:background="@drawable/text_bg_radius"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@color/red"
+                        android:textSize="10sp"
+                        android:visibility="gone" />
+                </com.zhy.autolayout.AutoRelativeLayout>
+                <!--退款售后-->
+                <com.zhy.autolayout.AutoRelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tk_sh_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="15dp"
+                        android:drawableTop="@mipmap/ic_launcher"
+                        android:gravity="center"
+                        android:padding="4dp"
+                        android:text="退款/售后" />
+
+                    <TextView
+                        android:id="@+id/tksh_number_tv"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignRight="@+id/tk_sh_tv"
+                        android:layout_marginRight="14dp"
+                        android:background="@drawable/text_bg_radius"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@color/red"
+                        android:textSize="10sp"
+                        android:visibility="gone" />
+                </com.zhy.autolayout.AutoRelativeLayout>
+                <!--待评价-->
+                <com.zhy.autolayout.AutoRelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/dpj_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="15dp"
+                        android:drawableTop="@mipmap/ic_launcher"
+                        android:gravity="center"
+                        android:padding="4dp"
+                        android:text="待评价" />
+
+                    <TextView
+                        android:id="@+id/dpj_number_tv"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignRight="@+id/dpj_tv"
+                        android:layout_alignTop="@+id/dpj_tv"
+                        android:background="@drawable/text_bg_radius"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@color/red"
+                        android:textSize="10sp"
+                        android:visibility="gone" />
+                </com.zhy.autolayout.AutoRelativeLayout>
+
+            </LinearLayout>
 
             <!--会员专区-->
             <com.allen.library.SuperTextView
@@ -112,6 +319,18 @@
                 app:sRightIconRes="@mipmap/icon_youjiantou"
                 app:sRightTextColor="@color/c999999"
                 app:sRightTextString="更多帮助" />
+            <!--推荐分享-->
+            <com.allen.library.SuperTextView
+                android:id="@+id/share_text"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                app:sDividerLineType="bottom"
+                app:sLeftIconRes="@mipmap/ic_launcher"
+                app:sLeftTextColor="@color/color_text"
+                app:sLeftTextString="推荐分享"
+                app:sRightIconRes="@mipmap/icon_youjiantou"
+                app:sRightTextColor="@color/c999999"
+                app:sRightTextString="赚取返利" />
             <!--版本更新-->
             <com.allen.library.SuperTextView
                 android:id="@+id/bbgx_text"
@@ -142,7 +361,7 @@
                     android:maxLines="1"
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
-                    android:text="退出"
+                    android:text="拨打电话 "
                     android:textSize="20sp"
                     app:normalBackgroundColor="@color/red"
                     app:normalTextColor="@color/white"

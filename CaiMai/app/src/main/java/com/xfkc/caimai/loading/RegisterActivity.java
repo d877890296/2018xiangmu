@@ -71,8 +71,8 @@ public class RegisterActivity extends BaseActivity {
     protected void initViews(Bundle savedInstanceState) {
         toolbarLeftImg.setImageResource(R.mipmap.back_white);
         toolbarTitle.setText("注册");
-        loginBtn.setFocusable(false);
-        loginBtn.setClickable(false);
+//        loginBtn.setFocusable(false);
+//        loginBtn.setClickable(false);
         agreeCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
