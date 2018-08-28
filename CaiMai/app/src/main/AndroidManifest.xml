@@ -93,12 +93,11 @@
 
 
         <activity android:name="com.goods.city.GoodsCityActivity">
-
-
         </activity>
-        <activity android:name="com.goods.details.GoodsDetailsActivity">      </activity>
+        <activity android:name="com.goods.details.GoodsDetailsActivity"></activity>
 
-        <activity android:name="com.goods.shoppingcar.ShoppingCarActivity">      </activity>
+        <activity android:name="com.goods.shoppingcar.ShoppingCarActivity"></activity>
+        <activity android:name=".order.OrderActivity"/>
 
     </application>
 

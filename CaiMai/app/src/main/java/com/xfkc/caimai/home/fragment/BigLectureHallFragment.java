@@ -2,12 +2,8 @@ package com.xfkc.caimai.home.fragment;
 
 
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.xfkc.caimai.R;
@@ -16,7 +12,6 @@ import com.xfkc.caimai.base.BaseFragment;
 import net.lucode.hackware.magicindicator.MagicIndicator;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * 大讲堂
@@ -90,17 +85,4 @@ public class BigLectureHallFragment extends BaseFragment {
         }*/
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
 }
