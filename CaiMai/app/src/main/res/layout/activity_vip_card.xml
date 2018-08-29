@@ -1,21 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
 <com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/f1f1f1"
-    tools:context="com.xfkc.caimai.home.fragment.BigLectureHallFragment">
+    tools:context="com.xfkc.caimai.home.vipcard.VipCardActivity">
 
-    <include layout="@layout/widget_toolbar" />
+    <include layout="@layout/widget_toolbar"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         >
-        <!--往期视频-->
+        <!--注册会员卡-->
         <LinearLayout
-            android:id="@+id/wqsp"
+            android:id="@+id/zchyk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -24,10 +26,10 @@
             >
 
             <TextView
-                android:id="@+id/wqsp_tv"
+                android:id="@+id/zchyk_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="往期视频"
+                android:text="注册会员"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:textSize="16sp"
@@ -35,16 +37,16 @@
                 />
 
             <View
-                android:id="@+id/wqsp_line"
+                android:id="@+id/zchyk_line"
                 android:layout_width="50dp"
                 android:layout_height="2dp"
                 android:background="@color/ff704d"
 
                 />
         </LinearLayout>
-        <!--PPT-->
+        <!--健康会员卡-->
         <LinearLayout
-            android:id="@+id/ppt"
+            android:id="@+id/jkhyk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -53,10 +55,10 @@
             >
 
             <TextView
-                android:id="@+id/ppt_tv"
+                android:id="@+id/jkhyk_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="PPT"
+                android:text="健康会员卡"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:textSize="16sp"
@@ -64,42 +66,14 @@
                 />
 
             <View
-                android:id="@+id/ppt_line"
+                android:id="@+id/jkhyk_line"
                 android:layout_width="50dp"
                 android:layout_height="2dp"
                 android:background="@color/whilte"
 
                 />
         </LinearLayout>
-        <!--我的收藏-->
-        <LinearLayout
-            android:id="@+id/mine_colect"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:layout_weight="1"
-            >
 
-            <TextView
-                android:id="@+id/mine_colect_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="我的收藏"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                />
-
-            <View
-                android:id="@+id/mine_colect_line"
-                android:layout_width="50dp"
-                android:layout_height="2dp"
-                android:background="@color/whilte"
-
-                />
-        </LinearLayout>
     </LinearLayout>
 
     <com.dev.customview.CustomListView
@@ -111,9 +85,5 @@
         android:dividerHeight="10dp"
         android:divider="@color/f1f1f1"
         android:layout_marginTop="10dp"
-        >
-
-    </com.dev.customview.CustomListView>
-
-
+        />
 </com.zhy.autolayout.AutoLinearLayout>

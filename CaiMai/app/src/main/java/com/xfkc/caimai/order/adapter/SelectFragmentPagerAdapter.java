@@ -1,4 +1,5 @@
-package com.xfkc.caimai.home.adapter;
+package com.xfkc.caimai.order.adapter;
+
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

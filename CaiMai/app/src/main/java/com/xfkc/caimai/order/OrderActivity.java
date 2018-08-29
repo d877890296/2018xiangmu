@@ -14,7 +14,7 @@ import com.xfkc.caimai.R;
 import com.xfkc.caimai.bean.EmptyBean;
 import com.xfkc.caimai.config.Constant;
 import com.xfkc.caimai.config.SharedPref;
-import com.xfkc.caimai.home.adapter.SelectFragmentPagerAdapter;
+import com.xfkc.caimai.order.adapter.SelectFragmentPagerAdapter;
 import com.xfkc.caimai.rx.activity.RxActivity;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -31,6 +31,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 
 
+
 /***
  * 订单列表
  */
@@ -45,10 +46,8 @@ public class OrderActivity extends RxActivity {
     MagicIndicator magicIndicator;
     @Bind(R.id.view_pager)
     ViewPager viewPager;
-    //订单类别
-    private int orderClass;
     //设置订单类型
-    private String[] order = {"全部", "待支付", "待发货","配送中", "待评价"};
+    private String[] order = {"全部", "待支付", "待发货", "配送中", "待评价"};
     //订单类型  编号
     private String[] order_staus = {"0", "1", "2", "3", "4"};
 
@@ -66,7 +65,6 @@ public class OrderActivity extends RxActivity {
     @Override
     protected void initViews(Bundle savedInstanceState) {
         token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
-        orderClass = getIntent().getIntExtra(Constant.ORDER_CLASS, 0);
         toolbarTitle.setText("我的订单");
         toolbarTitle.setTextColor(Color.BLACK);
         toolbarLeftImg.setImageResource(R.mipmap.back_white);
@@ -92,6 +90,7 @@ public class OrderActivity extends RxActivity {
         viewPager.setAdapter(selectFragmentPagerAdapter);
 
         mCommonNavigator = new CommonNavigator(this);
+        mCommonNavigator.setAdjustMode(false);
         mCommonNavigator.setSkimOver(true);
         mCommonNavigator.setAdapter(new CommonNavigatorAdapter() {
             @Override
@@ -104,7 +103,7 @@ public class OrderActivity extends RxActivity {
                 ClipPagerTitleView clipPagerTitleView = new ClipPagerTitleView(context);
                 clipPagerTitleView.setText(order[index]);
                 clipPagerTitleView.setTextColor(Color.BLACK);
-                clipPagerTitleView.setClipColor(Color.RED);
+                clipPagerTitleView.setClipColor(Color.parseColor("#ff704d"));
                 clipPagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -122,8 +121,8 @@ public class OrderActivity extends RxActivity {
         magicIndicator.setNavigator(mCommonNavigator);
         ViewPagerHelper.bind(magicIndicator, viewPager);
 
-        for (int i=0;i<order.length;i++) {
-            if (category_id.equals(order[i])){
+        for (int i = 0; i < order.length; i++) {
+            if (category_id.equals(order_staus[i])) {
                 viewPager.setCurrentItem(i);
             }
         }

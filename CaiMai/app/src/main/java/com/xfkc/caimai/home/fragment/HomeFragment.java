@@ -12,6 +12,7 @@ import com.hyf.tdlibrary.utils.ToastUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseFragment;
 import com.xfkc.caimai.home.adapter.ModuleAdapter;
+import com.xfkc.caimai.home.vipcard.VipCardActivity;
 import com.xfkc.caimai.order.ConfirmOrderActivity;
 
 import java.util.ArrayList;
@@ -75,6 +76,9 @@ public class HomeFragment extends BaseFragment {
                         break;
                     case 1:
                         startActivity(new Intent(mContext, ConfirmOrderActivity.class));
+                        break;
+                    case 2:
+                        skip_classView(VipCardActivity.class,extraMap,false,false);
                         break;
                     default:
                         ToastUtil.showToast(position + "");

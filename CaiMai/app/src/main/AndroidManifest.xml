@@ -63,9 +63,7 @@
         <activity android:name=".loading.RegisterSuccessActivity" />
         <activity android:name=".loading.UpdatePassWordActivity" />
         <activity android:name=".pay.PaySuccessActivity" />
-        <activity android:name=".info.PerfectInforActivity"></activity>
-
-
+        <activity android:name=".info.PerfectInforActivity" />
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -90,15 +88,12 @@
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind" />
-
-
-        <activity android:name="com.goods.city.GoodsCityActivity">
-        </activity>
-        <activity android:name="com.goods.details.GoodsDetailsActivity"></activity>
-
-        <activity android:name="com.goods.shoppingcar.ShoppingCarActivity"></activity>
-        <activity android:name=".order.OrderActivity"/>
-
+        <activity android:name="com.goods.city.GoodsCityActivity" />
+        <activity android:name="com.goods.details.GoodsDetailsActivity" />
+        <activity android:name="com.goods.shoppingcar.ShoppingCarActivity" />
+        <activity android:name=".order.OrderActivity" />
+        <activity android:name=".order.OrderContentActivity" />
+        <activity android:name=".home.vipcard.VipCardActivity"></activity>
     </application>
 
 </manifest>
