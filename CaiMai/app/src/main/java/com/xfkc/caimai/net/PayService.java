@@ -3,6 +3,7 @@ package com.xfkc.caimai.net;
 
 import com.xfkc.caimai.bean.EmptyBean;
 import com.xfkc.caimai.bean.LoginInfo;
+import com.xfkc.caimai.bean.VipCardBean;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -33,8 +34,17 @@ public interface PayService {
     @GET("/api/memUser/login")
     Observable<LoginInfo> login(@Query("phone") String phone, @Query("userPwd") String userPwd);
 
+
     //修改密码
     @GET("/api/memUser/updateUserPwd")
     Observable<EmptyBean> updatePwd(@Query("phone") String phone, @Query("userPwd") String userPwd,@Query("verCode") String verCode);
+
+    //查询用户购买的会员卡
+    @GET("/api/memUser/findMemCardByUserId")
+    Observable<EmptyBean> getUserVipCard(@Query("token") String token);
+
+    //查询用户购买的会员卡
+    @GET("/api/memCard/findAll")
+    Observable<VipCardBean> findAllVipCard(@Query("pageNum") String pageNum, @Query("pageSize") String pageSize);
 
 }

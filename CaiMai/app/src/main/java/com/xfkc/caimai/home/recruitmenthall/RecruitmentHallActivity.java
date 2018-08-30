@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -61,6 +62,8 @@ public class RecruitmentHallActivity extends BaseActivity {
     private RecruHallListAdapter recruHallListAdapter;
     private RecruedHallListAdapter recruedHallListAdapter;
 
+    private int TYPE=0;
+
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_recruitment_hall;
@@ -83,6 +86,23 @@ public class RecruitmentHallActivity extends BaseActivity {
 
         recruHallListAdapter =new RecruHallListAdapter(this);
         recruedHallListAdapter = new RecruedHallListAdapter(this);
+
+        setClick();
+
+    }
+
+    /*设置监听*/
+    private void setClick() {
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (TYPE==0){
+
+                }else {
+
+                }
+            }
+        });
     }
 
     @Override
@@ -102,9 +122,11 @@ public class RecruitmentHallActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.zming:
+                TYPE =0;
                 updateShow(0);
                 break;
             case R.id.zm_complete:
+                TYPE=1;
                 updateShow(1);
                 break;
         }

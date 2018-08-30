@@ -84,4 +84,19 @@
         android:paddingRight="15dp"
         />
 
+    <com.xfkc.caimai.customview.StateButton
+        android:id="@+id/commit"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="30dp"
+        android:text="退出当前登录"
+        android:textSize="20dp"
+        app:normalBackgroundColor="@color/ff704d"
+        app:normalTextColor="@color/white"
+        app:pressedBackgroundColor="@color/ff704d_90"
+        app:pressedTextColor="@color/white"
+        app:radius="20dp"
+        android:layout_margin="20dp"
+        />
+
 </com.zhy.autolayout.AutoLinearLayout>

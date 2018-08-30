@@ -131,7 +131,7 @@
             android:textSize="20dp"
             app:normalBackgroundColor="@color/ff704d"
             app:normalTextColor="@color/white"
-            app:pressedBackgroundColor="@color/red_90"
+            app:pressedBackgroundColor="@color/ff704d_90"
             app:pressedTextColor="@color/white"
             app:radius="20dp" />
 

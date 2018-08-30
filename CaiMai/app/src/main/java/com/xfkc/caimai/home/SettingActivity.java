@@ -64,7 +64,9 @@ public class SettingActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.toolbar_left_img, R.id.update_password_tv, R.id.yjfk_text, R.id.gy_mine_tv, R.id.use_xy_tv, R.id.lxwm_tv, R.id.vertion_num})
+    @OnClick({R.id.toolbar_left_img, R.id.update_password_tv,
+            R.id.yjfk_text, R.id.gy_mine_tv, R.id.use_xy_tv, R.id.lxwm_tv,
+            R.id.vertion_num ,R.id.commit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_left_img:
@@ -82,6 +84,8 @@ public class SettingActivity extends BaseActivity {
             case R.id.lxwm_tv://联系我们
                 break;
             case R.id.vertion_num://版本号
+                break;
+            case R.id.commit://退出登录
                 break;
         }
     }

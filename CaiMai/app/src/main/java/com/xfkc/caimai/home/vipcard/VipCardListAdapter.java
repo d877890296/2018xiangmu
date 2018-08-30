@@ -7,10 +7,10 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.xfkc.caimai.R;
-import com.xfkc.caimai.bean.EmptyBean;
+import com.xfkc.caimai.bean.VipCardBean;
 import com.zhy.autolayout.AutoLinearLayout;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,7 +24,8 @@ import butterknife.ButterKnife;
 public class VipCardListAdapter extends BaseAdapter {
 
     private final Context context;
-    private ArrayList<EmptyBean> list;
+    private List<VipCardBean.DataBean.ListBean> list;
+    private int type;
 
 
     public VipCardListAdapter(Context context) {
@@ -32,11 +33,15 @@ public class VipCardListAdapter extends BaseAdapter {
     }
 
     /*设置数据*/
-    public void setData(ArrayList<EmptyBean> list) {
+    public void setData(List<VipCardBean.DataBean.ListBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
 
+    public void setType(int type){
+        this.type =type;
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getCount() {
@@ -66,26 +71,36 @@ public class VipCardListAdapter extends BaseAdapter {
         }
 
 
-        switch (position){
-            case 0:
-                viewHodler.days.setText("有效期: 365天" );
-                viewHodler.title.setText("初级会员");
-                viewHodler.price.setText("￥36.5" );
-               viewHodler.imageBg.setBackgroundResource(R.mipmap.vip01);
-                break;
-            case 1:
-                viewHodler.days.setText("有效期: 365天" );
-                viewHodler.title.setText("中级会员");
-                viewHodler.price.setText("￥365" );
-                viewHodler.imageBg.setBackgroundResource(R.mipmap.vip03);
-                break;
-            case 2:
-                viewHodler.days.setText("有效期: 365天" );
-                viewHodler.title.setText("高级会员");
-                viewHodler.price.setText("￥3650" );
-                viewHodler.imageBg.setBackgroundResource(R.mipmap.vip02);
-                break;
+        VipCardBean.DataBean.ListBean listBean = list.get(position);
+
+        if (listBean.carTypeId == type){
+            viewHodler.days.setText("有效期: 365天" );
+            viewHodler.title.setText(listBean.cardName);
+            viewHodler.price.setText("￥" + listBean.cardPrice);
+            viewHodler.imageBg.setBackgroundResource(R.mipmap.vip01);
         }
+
+
+//        switch (position){
+//            case 0:
+//                viewHodler.days.setText("有效期: 365天" );
+//                viewHodler.title.setText("初级会员");
+//                viewHodler.price.setText("￥36.5" );
+//               viewHodler.imageBg.setBackgroundResource(R.mipmap.vip01);
+//                break;
+//            case 1:
+//                viewHodler.days.setText("有效期: 365天" );
+//                viewHodler.title.setText("中级会员");
+//                viewHodler.price.setText("￥365" );
+//                viewHodler.imageBg.setBackgroundResource(R.mipmap.vip03);
+//                break;
+//            case 2:
+//                viewHodler.days.setText("有效期: 365天" );
+//                viewHodler.title.setText("高级会员");
+//                viewHodler.price.setText("￥3650" );
+//                viewHodler.imageBg.setBackgroundResource(R.mipmap.vip02);
+//                break;
+//        }
 
 
         return convertView;

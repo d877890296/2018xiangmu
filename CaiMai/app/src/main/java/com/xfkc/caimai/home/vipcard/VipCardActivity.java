@@ -12,7 +12,10 @@ import android.widget.TextView;
 import com.dev.customview.CustomListView;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
-import com.xfkc.caimai.bean.EmptyBean;
+import com.xfkc.caimai.bean.VipCardBean;
+import com.xfkc.caimai.net.PayFactory;
+import com.xfkc.caimai.net.RxHelper;
+import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
 
 import java.util.ArrayList;
 
@@ -48,10 +51,11 @@ public class VipCardActivity extends BaseActivity {
     //下划线
     private ArrayList<View> list_view = new ArrayList<>();
 
-    private ArrayList<EmptyBean> list = new ArrayList<>();
+    private ArrayList<VipCardBean.DataBean.ListBean> list = new ArrayList<>();
 
     private VipCardListAdapter vipCardListAdapter;
 
+    private String pageNum = "0", pageSize = "20";
 
     @Override
     protected int getLayoutResource() {
@@ -72,7 +76,8 @@ public class VipCardActivity extends BaseActivity {
         list_view.clear();
         list_view.add(zchykLine);
         list_view.add(jkhykLine);
-        updateShow(0);
+        vipCardListAdapter = new VipCardListAdapter(this);
+        listview.setAdapter(vipCardListAdapter);
         setListViewClick();
     }
 
@@ -80,23 +85,37 @@ public class VipCardActivity extends BaseActivity {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                extraMap.put("type",position);
-                skip_classView(VipContentActivity.class,extraMap,false);
+                VipCardBean.DataBean.ListBean listBean = list.get(position);
+                extraMap.put("price", listBean.cardPrice);
+                extraMap.put("name", listBean.cardName);
+                extraMap.put("carid", listBean.createTime);
+                skip_classView(VipContentActivity.class, extraMap, false);
             }
         });
     }
 
     @Override
     protected void loadData() {
-        if (list.size() != 0){
+        if (list.size() != 0) {
             list.clear();
         }
-        for (int i = 0; i < 3; i++) {
-            list.add(new EmptyBean());
-        }
-        vipCardListAdapter = new VipCardListAdapter(this);
-        vipCardListAdapter.setData(list);
-        listview.setAdapter(vipCardListAdapter);
+//        for (int i = 0; i < 3; i++) {
+//            list.add(new EmptyBean());
+//        }
+
+        PayFactory.getPayService()
+                .findAllVipCard(pageNum, pageSize)
+                .compose(RxHelper.<VipCardBean>io_main())
+                .subscribe(new ProgressSubscriber<VipCardBean>(this) {
+                    @Override
+                    public void onNext(VipCardBean vipCardBean) {
+                        if (vipCardBean.data.list != null && vipCardBean.data.list.size() != 0) {
+                            list.addAll(vipCardBean.data.list);
+                            vipCardListAdapter.setData(list);
+                        }
+                    }
+                });
+
     }
 
 
@@ -127,12 +146,10 @@ public class VipCardActivity extends BaseActivity {
                 list_view.get(i).setBackgroundColor(Color.WHITE);
             }
         }
-        if (id==1){
-            loadData();
-        }else {
-            list.clear();
-            vipCardListAdapter.setData(list);
-        }
-
+        vipCardListAdapter.setData(list);
+        if (id == 0)
+            vipCardListAdapter.setType(1);
+        else
+            vipCardListAdapter.setType(2);
     }
 }

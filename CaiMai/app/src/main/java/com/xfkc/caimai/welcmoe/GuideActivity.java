@@ -79,7 +79,7 @@ public class GuideActivity extends AppCompatActivity {
      * 初始化ViewPager数据
      */
     private void initData() {
-        int[] imageResIDs = {R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher};
+        int[] imageResIDs = {R.mipmap.guide1, R.mipmap.guide2, R.mipmap.guide3,R.mipmap.guide4};
         imageViewList = new ArrayList<>();
 
         ImageView iv;// 图片

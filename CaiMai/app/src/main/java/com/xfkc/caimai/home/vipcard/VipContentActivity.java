@@ -50,6 +50,8 @@ public class VipContentActivity extends BaseActivity {
     //会员卡类别
     private int TYPE = 0;
 
+    private String name = "", car_price="" , carid="";
+
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_vip_content;
@@ -65,28 +67,31 @@ public class VipContentActivity extends BaseActivity {
         list_radio.add(zhifubaoRb);
 
         TYPE = getIntent().getIntExtra("type", 0);
+
+        name = getIntent().getStringExtra("name");
+        car_price = getIntent().getStringExtra("price");
+        carid = getIntent().getStringExtra("carid");
+
         setVipCardType();
     }
 
     /*设置会员卡类别*/
     private void setVipCardType() {
+
+        days.setText("有效期: 365天");
+        title.setText(name);
+        price.setText("￥ "+car_price);
+        vipCardNo.setText("VIP "+carid);
+
+
         switch (TYPE) {
             case 0:
-                days.setText("有效期: 365天");
-                title.setText("初级会员");
-                price.setText("￥36.5");
                 imageBg.setBackgroundResource(R.mipmap.vip01);
                 break;
             case 1:
-                days.setText("有效期: 365天");
-                title.setText("中级会员");
-                price.setText("￥365");
                 imageBg.setBackgroundResource(R.mipmap.vip03);
                 break;
             case 2:
-                days.setText("有效期: 365天");
-                title.setText("高级会员");
-                price.setText("￥3650");
                 imageBg.setBackgroundResource(R.mipmap.vip02);
                 break;
         }

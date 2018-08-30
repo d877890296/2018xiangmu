@@ -17,7 +17,7 @@ import com.xfkc.caimai.config.Constant;
 import com.xfkc.caimai.home.SettingActivity;
 import com.xfkc.caimai.home.adapter.MyGridAdapter;
 import com.xfkc.caimai.home.mineinfo.MineInfoActivity;
-import com.xfkc.caimai.home.vipcard.MineVipContentActivity;
+import com.xfkc.caimai.home.vipcard.MineVipCardActivity;
 import com.xfkc.caimai.home.wallet.WalletActivity;
 import com.xfkc.caimai.order.OrderActivity;
 
@@ -108,8 +108,7 @@ public class SocialCentreFragment extends BaseFragment {
                         skip_classView(WalletActivity.class,extraMap,false,true);
                         break;
                     case 1://我的会员卡
-                        extraMap.put("type",0);
-                        skip_classView(MineVipContentActivity.class,extraMap,false,true);
+                        skip_classView(MineVipCardActivity.class,extraMap,false,true);
                         break;
                     case 2://我的收益
 
