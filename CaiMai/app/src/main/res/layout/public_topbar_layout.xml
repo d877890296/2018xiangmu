@@ -35,7 +35,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:singleLine="true"      android:drawableLeft="@mipmap/gs_location"
+        android:singleLine="true"
+        android:drawableLeft="@mipmap/gs_location"
         android:text="title"
         android:textColor="#FFFFFF"
         android:textSize="18sp" />

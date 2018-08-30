@@ -50,11 +50,7 @@
         <activity android:name=".loading.ForgetPassWordActivity" />
         <activity android:name=".loading.RegistPhoneActivity" />
         <activity android:name=".welcmoe.WelcomeActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".welcmoe.GuideActivity" />
         <activity android:name=".order.ConfirmOrderActivity" />
@@ -88,9 +84,23 @@
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind" />
-        <activity android:name="com.goods.city.GoodsCityActivity" />
+        <activity android:name="com.goods.city.GoodsCityActivity" >
+
+
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+        <activity android:name="com.goods.city.GoodsStyleActivity" />
+
+        <activity android:name="com.goods.city.GoodsStyleDetailsActivity" />
         <activity android:name="com.goods.details.GoodsDetailsActivity" />
         <activity android:name="com.goods.shoppingcar.ShoppingCarActivity" />
+        <activity android:name="com.goods.sortlsitview.GoodsChooseCityActivity"></activity>
+
+
         <activity android:name=".order.OrderActivity" />
         <activity android:name=".order.OrderContentActivity" />
         <activity android:name=".home.vipcard.VipCardActivity" />
