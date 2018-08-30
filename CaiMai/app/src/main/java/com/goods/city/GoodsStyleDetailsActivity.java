@@ -10,16 +10,14 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.goods.city.GoodsCityListAdapter.OnListViewClickLinstener;
 import com.goods.details.GoodsDetailsActivity;
 import com.goods.model.GoodsModel;
-import com.goods.shoppingcar.ShoppingCarActivity;
-import com.goods.sortlsitview.GoodsChooseCityActivity;
 import com.recycle.view.MyRecyclerView;
 import com.refushView.RefreshLayout;
 import com.refushView.holder.DefineBAGRefreshWithLoadView;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
-import com.goods.city.GoodsCityListAdapter.OnListViewClickLinstener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,15 +28,11 @@ import java.util.List;
  * 商城列表
  */
 
-public class GoodsCityActivity extends BaseActivity implements RefreshLayout.RefreshLayoutDelegate {
+public class GoodsStyleDetailsActivity extends BaseActivity implements RefreshLayout.RefreshLayoutDelegate {
 
     private Button class_btn;
 
-    private TextView all_textView, socle_textView, prace_textView;
-    private List<TextView> textArray;
-    private int curSelectBarTextColor = 0xFFFF704D;
-    // 默认bar字体颜色
-    private int defaultBarTextColor = 0xFF323232;
+
 
     private RecyclerView recyclerView;
     private RefreshLayout mBGARefreshLayout;
@@ -49,26 +43,17 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
     private MyRecyclerView myRecyclerView;
     private GoodsCityListAdapter goodsCityListAdapter;
 
-    private TextView goods_grid_list_change;
-    private int curStyle = 0;
+
 
     private List<GoodsModel> goodsData;
-    private boolean isFristLoadData;
-    private String sidx = "";
 
-    private String storeid = "1";
 
-//    private TextView background_view;
-//    private List<GoodsClassModel> goodsTypeData;
-//    private ListView choose_class_list;
-//    private GoodsTypeAdapter goodsTypeAdapter;
-//    private String goodclassid = "";
-//
+
 
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.gd_goodscity_fragment_layout;
+        return R.layout.gd_goodsstyle_details_layout;
     }
 
     @Override
@@ -83,24 +68,17 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
         back_btn = (ImageButton) findViewById(R.id.back_btn);
         back_btn.setVisibility(View.VISIBLE);
 
-        topbar_img_title = (TextView) findViewById(R.id.topbar_img_title);
-        topbar_img_title.setText("北京1店");
-        topbar_img_title.setOnClickListener(onClickListener);
+        topbar_img_title= (TextView) findViewById(R.id.topbar_img_title);
+        topbar_img_title.setVisibility(View.GONE);
+        topbar_title= (TextView) findViewById(R.id.topbar_title);
+        topbar_title.setVisibility(View.VISIBLE);
+        topbar_title.setText("清凉解暑");
+
         other_btn = (ImageButton) findViewById(R.id.other_btn);
-        all_textView = (TextView) findViewById(R.id.all_textView);
-        socle_textView = (TextView) findViewById(R.id.socle_textView);
-        prace_textView = (TextView) findViewById(R.id.prace_textView);
-        textArray.add(all_textView);
-        textArray.add(socle_textView);
-        textArray.add(prace_textView);
+        other_btn.setVisibility(View.GONE);
+
         back_btn.setOnClickListener(onClickListener);
         other_btn.setOnClickListener(onClickListener);
-        all_textView.setOnClickListener(onClickListener);
-        socle_textView.setOnClickListener(onClickListener);
-        prace_textView.setOnClickListener(onClickListener);
-
-        goods_grid_list_change = (TextView) findViewById(R.id.goods_grid_list_change);
-        goods_grid_list_change.setOnClickListener(onClickListener);
 
         progress_liner = (LinearLayout) findViewById(R.id.progress_liner);
         nodataview_textview = (TextView) findViewById(R.id.nodataview_textview);
@@ -117,7 +95,7 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
         // myRecyclerView.setListView(true);
         myRecyclerView.setGridView(false, 2);
         recyclerView.setAdapter(goodsCityListAdapter);
-        setBarTextColor(0);
+
         showMbProgress("数据加载中...");
 
 //        app.netRequst.shoppingShowGoodtypesRequst(storeid, netRequstAjaxCallBack.shoppShowGoodsTypeCallback);
@@ -154,7 +132,7 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
     public void defaultDataInit() {
         goodsCityListAdapter = new GoodsCityListAdapter(this);
         goodsData = new ArrayList<GoodsModel>();
-        textArray = new ArrayList<TextView>();
+
     }
 
     @Override
@@ -189,71 +167,10 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
                 case R.id.back_btn:
                     backHistory(-1, true, false, extraMap);
                     break;
-                case R.id.topbar_img_title:
-                    skip_classView(GoodsChooseCityActivity.class, extraMap, false);
-                    break;
-                case R.id.other_btn:
-                    skip_classView(ShoppingCarActivity.class, extraMap, false);
-                    break;
-                case R.id.all_textView:
-                    sidx = "";
-                    setBarTextColor(0);
-                    isFristLoadData = true;
-                    showMbProgress("数据加载中...");
-//                    app.netRequst.shoppingGoodsRequst("1", "1", "100", "", goodclassid,
-//                            netRequstAjaxCallBack.shoppShowGoodsCallback);
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            dissMbProgress();
-                        }
-                    }, 2000);
-                    break;
-                case R.id.socle_textView:
-                    sidx = "";
-                    isFristLoadData = true;
-                    setBarTextColor(1);
-                    showMbProgress("数据加载中...");
-//                    app.netRequst.shoppingGoodsRequst("1", "1", "100", "", goodclassid,
-//                            netRequstAjaxCallBack.shoppShowGoodsCallback);
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            dissMbProgress();
-                        }
-                    }, 2000);
-                    break;
-                case R.id.prace_textView:
-                    sidx = "";
-                    isFristLoadData = true;
-                    setBarTextColor(2);
-                    showMbProgress("数据加载中...");
-//                    app.netRequst.shoppingGoodsRequst("1", "1", "100", "", goodclassid,
-//                            netRequstAjaxCallBack.shoppShowGoodsCallback);
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            dissMbProgress();
-                        }
-                    }, 2000);
 
 
-                    break;
-                case R.id.goods_grid_list_change:
-                    //myRecyclerView = null;
-//                    if (curStyle == 0) {
-//                        //myRecyclerView = new MyRecyclerView(context, recyclerView);
-//                        myRecyclerView.setListView(true);
-//                        goodsCityListAdapter.setBaseType(1);
-//                        curStyle = 1;
-//                    } else {
-//                        //myRecyclerView = new MyRecyclerView(context, recyclerView);
-//                        myRecyclerView.setGridView(false, 2);
-//                        goodsCityListAdapter.setBaseType(0);
-//                        curStyle = 0;
-//                    }
-                    skip_classView(GoodsStyleActivity.class, extraMap, false);
-                    break;
+
+
 
                 default:
                     break;
@@ -262,25 +179,6 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
         }
 
     };
-
-    /***
-     * 设置bar字体颜色
-     *
-     * @param pager
-     */
-    public void setBarTextColor(int pager) {
-        int size = textArray.size();
-        for (int i = 0; i < size; i++) {
-            TextView rb = textArray.get(i);
-            if (i == pager) {
-                rb.setTextColor(curSelectBarTextColor);
-
-            } else {
-                rb.setTextColor(defaultBarTextColor);
-
-            }
-        }
-    }
 
     /**
      * 设置 BGARefreshLayout刷新和加载
