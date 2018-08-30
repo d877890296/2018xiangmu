@@ -26,7 +26,9 @@ public class MyGridAdapter extends BaseAdapter {
     private ArrayList<EmptyBean> list;
 
     private String[] bt_name ={"康币钱包","我的会员卡","我的收益","我加入的店铺","我发布的服务","我提供的服务"};
-
+    private int[] bt_icons={R.mipmap.mine_wallet_icon,R.mipmap.mine_vipcard_icon,
+            R.mipmap.mine_sy_icon,R.mipmap.mine_jrdp_icon,R.mipmap.mine_fbfw_icon,
+            R.mipmap.mine_tgfu_icon,};
 
     public MyGridAdapter(Context context) {
 
@@ -65,7 +67,7 @@ public class MyGridAdapter extends BaseAdapter {
 
 
         viewHodler.tvIconTitle.setText(bt_name[position]);
-        Glide.with(context).load(R.mipmap.ic_launcher)
+        Glide.with(context).load(bt_icons[position])
                 .placeholder(R.mipmap.ic_launcher)//占位符
                 .error(R.mipmap.ic_launcher)//加载错误时
                 .into(viewHodler.imgIcon);

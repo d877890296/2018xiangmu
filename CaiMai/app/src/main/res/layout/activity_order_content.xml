@@ -9,9 +9,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_above="@+id/bt_layout"
-        >
+        android:orientation="vertical">
 
         <include layout="@layout/widget_toolbar" />
 
@@ -118,7 +117,14 @@
                     android:layout_height="1dp"
                     android:background="@color/bg_color" />
 
-                <include layout="@layout/module_shop_item" />
+                <com.dev.customview.MyListView
+                    android:id="@+id/list_shop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/whilte">
+
+                </com.dev.customview.MyListView>
+
                 <!--取货方式-->
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -192,10 +198,10 @@
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </RelativeLayout>
+
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    />
+                    android:layout_height="1dp" />
                 <!--运费-->
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -219,10 +225,10 @@
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </RelativeLayout>
+
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    />
+                    android:layout_height="1dp" />
                 <!--商品实付-->
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -249,6 +255,7 @@
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/bt_layout"
         android:layout_width="match_parent"
@@ -256,67 +263,66 @@
         android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:orientation="horizontal"
-        android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        >
+        android:paddingTop="10dp">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="合计:"
-            android:textSize="16sp"
             android:textColor="@color/black"
-            />
+            android:textSize="16sp" />
+
         <TextView
             android:id="@+id/all_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0.00康币"
-            android:textSize="16sp"
-            android:textColor="@color/ff704d"
             android:layout_marginLeft="10dp"
-            />
+            android:text="0.00康币"
+            android:textColor="@color/ff704d"
+            android:textSize="16sp" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <com.xfkc.caimai.customview.StateButton
                 android:id="@+id/pay_bt"
                 android:layout_width="wrap_content"
                 android:layout_height="34dp"
-                android:text="立即支付"
-                app:normalBackgroundColor="@color/ff704d"
-                app:unableBackgroundColor="@color/ff704d"
-                android:textColor="@color/white"
-                app:radius="4dp"
                 android:layout_alignParentEnd="true"
-                />
+                android:text="立即支付"
+                android:textColor="@color/white"
+                app:normalBackgroundColor="@color/ff704d"
+                app:radius="4dp"
+                app:unableBackgroundColor="@color/ff704d" />
 
             <com.xfkc.caimai.customview.StateButton
                 android:id="@+id/cancle_pay_bt"
                 android:layout_width="wrap_content"
                 android:layout_height="34dp"
-                android:text="取消订单"
-                app:normalBackgroundColor="@color/c4c4c4"
-                app:unableBackgroundColor="@color/c4c4c4"
-                android:textColor="@color/white"
-                app:radius="4dp"
-                android:layout_toLeftOf="@+id/pay_bt"
                 android:layout_marginRight="10dp"
-                />
+                android:layout_toLeftOf="@+id/pay_bt"
+                android:text="取消订单"
+                android:textColor="@color/white"
+                app:normalBackgroundColor="@color/c4c4c4"
+                app:radius="4dp"
+                app:unableBackgroundColor="@color/c4c4c4" />
+
             <com.xfkc.caimai.customview.StateButton
                 android:id="@+id/look_wl"
                 android:layout_width="wrap_content"
                 android:layout_height="34dp"
-                android:text="查看物流"
-                app:normalBackgroundColor="@color/ff704d"
-                app:unableBackgroundColor="@color/ff704d"
-                android:textColor="@color/white"
-                app:radius="4dp"
-                android:layout_toLeftOf="@+id/pay_bt"
                 android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/pay_bt"
+                android:text="查看物流"
+                android:textColor="@color/white"
                 android:visibility="gone"
-                />
+                app:normalBackgroundColor="@color/ff704d"
+                app:radius="4dp"
+                app:unableBackgroundColor="@color/ff704d" />
         </RelativeLayout>
     </LinearLayout>
 </com.zhy.autolayout.AutoRelativeLayout>

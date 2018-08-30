@@ -7,9 +7,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.dev.customview.MyListView;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
+import com.xfkc.caimai.bean.EmptyBean;
 import com.xfkc.caimai.customview.StateButton;
+import com.xfkc.caimai.order.adapter.OrderContentListAdapter;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -38,18 +43,8 @@ public class OrderContentActivity extends BaseActivity {
     TextView addressIconTv;
     @Bind(R.id.address_content)
     TextView addressContent;
-    @Bind(R.id.shop_image)
-    ImageView shopImage;
-    @Bind(R.id.shop_title)
-    TextView shopTitle;
-    @Bind(R.id.shop_content)
-    TextView shopContent;
     @Bind(R.id.shop_price)
     TextView shopPrice_tv;
-    @Bind(R.id.shop_unit_price)
-    TextView shopUnitPrice;
-    @Bind(R.id.shop_number)
-    TextView shopNumber;
     @Bind(R.id.qh_way)
     TextView qhWay;
     @Bind(R.id.pay_way)
@@ -68,6 +63,11 @@ public class OrderContentActivity extends BaseActivity {
     LinearLayout btLayout;
     @Bind(R.id.look_wl)
     StateButton lookWl;
+    @Bind(R.id.list_shop)
+    MyListView listShop;
+
+    private OrderContentListAdapter orderContentListAdapter;
+    private ArrayList<EmptyBean> list_data =new ArrayList<>();
 
     @Override
     protected int getLayoutResource() {
@@ -79,10 +79,15 @@ public class OrderContentActivity extends BaseActivity {
         toolbarTitle.setText("订单详情");
         toolbarTitle.setTextColor(Color.BLACK);
         toolbarLeftImg.setImageResource(R.mipmap.back_white);
+
+        list_data.add(new EmptyBean());
+        orderContentListAdapter.setData(list_data);
+        listShop.setAdapter(orderContentListAdapter);
     }
 
     @Override
     protected void loadData() {
+
 
     }
 
@@ -100,5 +105,6 @@ public class OrderContentActivity extends BaseActivity {
                 break;
         }
     }
+
 
 }

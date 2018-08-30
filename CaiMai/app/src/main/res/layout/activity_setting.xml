@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context="com.xfkc.caimai.home.SettingActivity">
+
+    <include layout="@layout/widget_toolbar"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/f1f1f1"
+        />
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/update_password_tv"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        app:sDividerLineType="bottom"
+        app:sLeftTextColor="@color/color_text"
+        app:sLeftTextString="修改密码"
+        app:sRightIconRes="@mipmap/icon_youjiantou"
+        app:sRightTextColor="@color/c999999"
+         />
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/yjfk_text"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        app:sDividerLineType="bottom"
+        app:sLeftTextColor="@color/color_text"
+        app:sLeftTextString="意见反馈"
+        app:sRightIconRes="@mipmap/icon_youjiantou"
+        app:sRightTextColor="@color/c999999"
+         />
+
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/gy_mine_tv"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        app:sDividerLineType="bottom"
+        app:sLeftTextColor="@color/color_text"
+        app:sLeftTextString="关于我们"
+        app:sRightIconRes="@mipmap/icon_youjiantou"
+        app:sRightTextColor="@color/c999999"
+         />
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/use_xy_tv"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        app:sDividerLineType="bottom"
+        app:sLeftTextColor="@color/color_text"
+        app:sLeftTextString="用户协议"
+        app:sRightIconRes="@mipmap/icon_youjiantou"
+        app:sRightTextColor="@color/c999999"
+        />
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/lxwm_tv"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        app:sDividerLineType="bottom"
+        app:sLeftTextColor="@color/color_text"
+        app:sLeftTextString="联系我们"
+        app:sRightTextColor="#007aff"
+        app:sRightTextString="400-12345678"
+        android:paddingRight="15dp"
+        />
+    <com.allen.library.SuperTextView
+        android:id="@+id/vertion_num"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        app:sDividerLineType="bottom"
+        app:sLeftTextColor="@color/color_text"
+        app:sLeftTextString="版本号"
+        app:sRightTextColor="@color/c999999"
+        app:sRightTextString="1.0"
+        android:paddingRight="15dp"
+        />
+
+</com.zhy.autolayout.AutoLinearLayout>

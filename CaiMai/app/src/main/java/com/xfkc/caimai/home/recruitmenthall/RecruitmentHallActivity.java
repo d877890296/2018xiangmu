@@ -1,10 +1,9 @@
-package com.xfkc.caimai.home.vipcard;
+package com.xfkc.caimai.home.recruitmenthall;
 
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,27 +18,36 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-/*会员卡*/
-public class VipCardActivity extends BaseActivity {
+/**
+ * 招募大厅
+ */
+public class RecruitmentHallActivity extends BaseActivity {
+
 
     @Bind(R.id.toolbar_left_img)
     ImageView toolbarLeftImg;
     @Bind(R.id.toolbar_title)
     TextView toolbarTitle;
+    @Bind(R.id.toolbar_title_image)
+    ImageView toolbarTitleImage;
+    @Bind(R.id.toolbar_right_text)
+    TextView toolbarRightText;
+    @Bind(R.id.toolbar_right_img)
+    ImageView toolbarRightImg;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.zchyk_tv)
-    TextView zchykTv;
-    @Bind(R.id.zchyk_line)
-    View zchykLine;
-    @Bind(R.id.zchyk)
-    LinearLayout zchyk;
-    @Bind(R.id.jkhyk_tv)
-    TextView jkhykTv;
-    @Bind(R.id.jkhyk_line)
-    View jkhykLine;
-    @Bind(R.id.jkhyk)
-    LinearLayout jkhyk;
+    @Bind(R.id.zming_tv)
+    TextView zmingTv;
+    @Bind(R.id.zming_line)
+    View zmingLine;
+    @Bind(R.id.zming)
+    LinearLayout zming;
+    @Bind(R.id.zm_complete_tv)
+    TextView zmCompleteTv;
+    @Bind(R.id.zm_complete_line)
+    View zmCompleteLine;
+    @Bind(R.id.zm_complete)
+    LinearLayout zmComplete;
     @Bind(R.id.listview)
     CustomListView listview;
 
@@ -50,71 +58,57 @@ public class VipCardActivity extends BaseActivity {
 
     private ArrayList<EmptyBean> list = new ArrayList<>();
 
-    private VipCardListAdapter vipCardListAdapter;
-
+    private RecruHallListAdapter recruHallListAdapter;
+    private RecruedHallListAdapter recruedHallListAdapter;
 
     @Override
     protected int getLayoutResource() {
-        return R.layout.activity_vip_card;
+        return R.layout.activity_recruitment_hall;
     }
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
-        toolbarTitle.setText("大讲堂");
+        toolbarTitle.setText("招募大厅");
         toolbarTitle.setTextColor(Color.WHITE);
         toolbar.setBackgroundColor(Color.parseColor("#ff704d"));
         toolbarLeftImg.setImageResource(R.mipmap.back_orage);
 
         list_tv.clear();
-        list_tv.add(zchykTv);
-        list_tv.add(jkhykTv);
+        list_tv.add(zmingTv);
+        list_tv.add(zmCompleteTv);
 
         list_view.clear();
-        list_view.add(zchykLine);
-        list_view.add(jkhykLine);
-        updateShow(0);
-        setListViewClick();
-    }
+        list_view.add(zmingLine);
+        list_view.add(zmCompleteLine);
 
-    private void setListViewClick() {
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                extraMap.put("type",position);
-                skip_classView(VipContentActivity.class,extraMap,false);
-            }
-        });
+        recruHallListAdapter =new RecruHallListAdapter(this);
+        recruedHallListAdapter = new RecruedHallListAdapter(this);
     }
 
     @Override
     protected void loadData() {
-        if (list.size() != 0){
-            list.clear();
-        }
-        for (int i = 0; i < 3; i++) {
-            list.add(new EmptyBean());
-        }
-        vipCardListAdapter = new VipCardListAdapter(this);
-        vipCardListAdapter.setData(list);
-        listview.setAdapter(vipCardListAdapter);
+
+        list.add(new EmptyBean());
+        list.add(new EmptyBean());
+
+
     }
 
 
-    @OnClick({R.id.toolbar_left_img, R.id.zchyk, R.id.jkhyk})
+    @OnClick({R.id.toolbar_left_img, R.id.zming, R.id.zm_complete})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_left_img:
                 finish();
                 break;
-            case R.id.zchyk:
+            case R.id.zming:
                 updateShow(0);
                 break;
-            case R.id.jkhyk:
+            case R.id.zm_complete:
                 updateShow(1);
                 break;
         }
     }
-
 
     /*查询线条变化*/
     private void updateShow(int id) {
@@ -128,11 +122,13 @@ public class VipCardActivity extends BaseActivity {
             }
         }
         if (id==1){
-            loadData();
+            recruHallListAdapter.setData(list);
+            listview.setAdapter(recruHallListAdapter);
         }else {
-            list.clear();
-            vipCardListAdapter.setData(list);
+            recruedHallListAdapter.setData(list);
+            listview.setAdapter(recruedHallListAdapter);
         }
 
     }
+
 }

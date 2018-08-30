@@ -12,8 +12,8 @@ import com.hyf.tdlibrary.utils.ToastUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseFragment;
 import com.xfkc.caimai.home.adapter.ModuleAdapter;
+import com.xfkc.caimai.home.recruitmenthall.RecruitmentHallActivity;
 import com.xfkc.caimai.home.vipcard.VipCardActivity;
-import com.xfkc.caimai.order.ConfirmOrderActivity;
 
 import java.util.ArrayList;
 
@@ -44,9 +44,6 @@ public class HomeFragment extends BaseFragment {
         toolbarTitle.setText("幸福康城");
 
         listData.clear();
-//        for (int i = 0; i < 8; i++) {
-//            listData.add("" + i);
-//        }
 
         listData.add("幸福公社");
         listData.add("招募大厅");
@@ -75,13 +72,17 @@ public class HomeFragment extends BaseFragment {
                         skip_classView(GoodsCityActivity.class,extraMap,false,false);
                         break;
                     case 1:
-                        startActivity(new Intent(mContext, ConfirmOrderActivity.class));
+//                        startActivity(new Intent(mContext, ConfirmOrderActivity.class));
+                        startActivity(new Intent(mContext, RecruitmentHallActivity.class));
                         break;
                     case 2:
                         skip_classView(VipCardActivity.class,extraMap,false,false);
                         break;
+                    case 3:
+                        ToastUtil.showToast("该功能暂未开放");
+                        break;
                     default:
-                        ToastUtil.showToast(position + "");
+
                         break;
                 }
             }

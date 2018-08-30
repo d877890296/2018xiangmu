@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.xfkc.caimai.home.wallet.WalletActivity">
+
+    <include layout="@layout/widget_toolbar" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/f1f1f1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/wallet_bg"
+            android:gravity="end"
+            android:orientation="vertical"
+            android:paddingRight="30dp"
+            android:paddingTop="15dp">
+
+            <TextView
+                android:id="@+id/kbye_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/ff704d"
+                android:textSize="20sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/whilte"
+                android:textSize="14sp"
+                android:text="康币余额"
+                android:background="@drawable/wallet_tv_bg"
+                android:padding="2dp"
+                android:layout_marginTop="5dp"
+                />
+
+            <TextView
+                android:id="@+id/djb_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#2250e0"
+                android:textSize="20sp"
+                android:layout_marginTop="20dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/whilte"
+                android:textSize="14sp"
+                android:text="定级币"
+                android:background="@drawable/wallet_tv_bg02"
+                android:padding="2dp"
+                android:layout_marginTop="5dp"
+                />
+        </LinearLayout>
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/zhcz_text"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            app:sDividerLineType="bottom"
+            app:sLeftTextColor="@color/color_text"
+            app:sLeftTextString="账户充值"
+            app:sRightIconRes="@mipmap/icon_youjiantou"
+            app:sRightTextColor="@color/c999999"
+            android:layout_marginTop="40dp"
+            />
+        <com.allen.library.SuperTextView
+            android:id="@+id/szmx_text"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            app:sDividerLineType="bottom"
+            app:sLeftTextColor="@color/color_text"
+            app:sLeftTextString="收支明细"
+            app:sRightIconRes="@mipmap/icon_youjiantou"
+            app:sRightTextColor="@color/c999999"
+            />
+        <com.allen.library.SuperTextView
+            android:id="@+id/update_paypassword_tv"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            app:sDividerLineType="bottom"
+            app:sLeftTextColor="@color/color_text"
+            app:sLeftTextString="修改支付密码"
+            app:sRightIconRes="@mipmap/icon_youjiantou"
+            app:sRightTextColor="@color/c999999"
+            />
+    </LinearLayout>
+</com.zhy.autolayout.AutoLinearLayout>

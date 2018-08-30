@@ -93,7 +93,17 @@
         <activity android:name="com.goods.shoppingcar.ShoppingCarActivity" />
         <activity android:name=".order.OrderActivity" />
         <activity android:name=".order.OrderContentActivity" />
-        <activity android:name=".home.vipcard.VipCardActivity"></activity>
+        <activity android:name=".home.vipcard.VipCardActivity" />
+        <activity android:name=".home.vipcard.VipContentActivity" />
+        <activity android:name=".home.vipcard.MineVipContentActivity" />
+        <activity android:name=".home.comment.CommentActivity" />
+        <activity android:name=".home.wallet.WalletActivity" />
+        <activity android:name=".home.wallet.AccountRechargeActivity" />
+        <activity android:name=".home.mineinfo.MineInfoActivity" />
+        <activity android:name=".home.SettingActivity" />
+        <activity android:name=".pay.SettingPayPasswordActivity" />
+        <activity android:name=".pay.PayWAyActivity" />
+        <activity android:name=".home.recruitmenthall.RecruitmentHallActivity"></activity>
     </application>
 
 </manifest>

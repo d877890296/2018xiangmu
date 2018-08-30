@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/widget_toolbar" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20px"
+        android:background="@color/bg_color" />
+
+    <!--头像-->
+    <RelativeLayout
+        android:id="@+id/person_title_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="头像"
+            android:textColor="@color/text_color"
+            android:textSize="15sp" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/account_iv"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@+id/title_youjiantou"
+            android:clickable="true"
+            android:src="@mipmap/heart_icon"
+             />
+
+        <ImageView
+            android:id="@+id/title_youjiantou"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/icon_youjiantou"
+
+            />
+    </RelativeLayout>
+
+
+    <!--昵称-->
+    <com.allen.library.SuperTextView
+        android:id="@+id/person_name"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:sDividerLineType="both"
+        app:sLeftTextColor="@color/color_text"
+        app:sLeftTextString="个人昵称"
+        app:sRightTextColor="@color/color_text"
+        app:sRightTextString="昵称"
+        android:paddingRight="15dp"
+        />
+    <!--实名认证-->
+    <com.allen.library.SuperTextView
+        android:id="@+id/real_name"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:sDividerLineType="both"
+        app:sLeftTextColor="@color/color_text"
+        app:sLeftTextString="实名认证"
+        app:sRightTextColor="@color/time_text_color"
+        app:sRightTextString="**"
+        android:paddingRight="15dp"
+        />
+    <!--手机号-->
+    <com.allen.library.SuperTextView
+        android:id="@+id/phone"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:sDividerLineType="both"
+        app:sLeftTextColor="@color/color_text"
+        app:sLeftTextString="手机号"
+        app:sRightTextColor="@color/color_text"
+        app:sRightTextString=""
+        android:paddingRight="15dp"
+        />
+    <!--注册地址-->
+    <com.allen.library.SuperTextView
+        android:id="@+id/person_regist_address"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:clickable="false"
+        android:paddingRight="15dp"
+        app:sDividerLineType="both"
+        app:sLeftTextColor="@color/color_text"
+        app:sLeftTextString="注册地址"
+        app:sRightTextColor="@color/color_text"
+        app:sRightTextString="北京市朝阳区" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/f1f1f1"
+        />
+    <!--收货地址-->
+    <com.allen.library.SuperTextView
+        android:id="@+id/get_goods_address"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:sDividerLineType="both"
+        app:sLeftTextColor="@color/color_text"
+        app:sLeftTextString="我的收货地址"
+        app:sRightIconRes="@mipmap/icon_youjiantou"
+        app:sRightTextColor="@color/time_text_color"
+        app:sRightTextString="北京市朝阳区...." />
+
+
+</com.zhy.autolayout.AutoLinearLayout>

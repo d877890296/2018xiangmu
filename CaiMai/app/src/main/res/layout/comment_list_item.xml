@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="15dp"
+    >
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/pinglun_user_iv"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:clickable="true"
+            android:src="@mipmap/heart_icon" />
+
+        <TextView
+            android:id="@+id/pinglun_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/pinglun_user_iv"
+            android:text="爱吃猫的鱼"
+            android:textColor="@color/color_text"
+            android:textSize="16sp" />
+
+
+        <TextView
+            android:id="@+id/pinglun_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pinglun_user_name"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/pinglun_user_iv"
+            android:textColor="@color/time_text_color"
+            android:textSize="14sp" />
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+    <TextView
+        android:id="@+id/comment_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        />
+
+        <com.dev.customview.MyGridView
+            android:id="@+id/comment_gridview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="3"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            >
+
+        </com.dev.customview.MyGridView>
+</com.zhy.autolayout.AutoLinearLayout>

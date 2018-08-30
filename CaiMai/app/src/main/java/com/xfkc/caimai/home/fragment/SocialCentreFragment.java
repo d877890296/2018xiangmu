@@ -2,8 +2,6 @@ package com.xfkc.caimai.home.fragment;
 
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -16,7 +14,11 @@ import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseFragment;
 import com.xfkc.caimai.bean.EmptyBean;
 import com.xfkc.caimai.config.Constant;
+import com.xfkc.caimai.home.SettingActivity;
 import com.xfkc.caimai.home.adapter.MyGridAdapter;
+import com.xfkc.caimai.home.mineinfo.MineInfoActivity;
+import com.xfkc.caimai.home.vipcard.MineVipContentActivity;
+import com.xfkc.caimai.home.wallet.WalletActivity;
 import com.xfkc.caimai.order.OrderActivity;
 
 import java.util.ArrayList;
@@ -31,10 +33,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class SocialCentreFragment extends BaseFragment {
 
 
-    @Bind(R.id.toolbar_title)
-    TextView toolbarTitle;
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
+//    @Bind(R.id.toolbar_title)
+//    TextView toolbarTitle;
+//    @Bind(R.id.toolbar)
+//    Toolbar toolbar;
     @Bind(R.id.account_iv)
     CircleImageView accountIv;
     @Bind(R.id.setting_iv)
@@ -84,9 +86,9 @@ public class SocialCentreFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        toolbarTitle.setTextColor(Color.WHITE);
-        toolbar.setBackgroundColor(Color.parseColor("#d51628"));
-        toolbarTitle.setText("社员中心");
+//        toolbarTitle.setTextColor(Color.WHITE);
+//        toolbar.setBackgroundColor(Color.parseColor("#d51628"));
+//        toolbarTitle.setText("社员中心");
 
         myGridAdapter = new MyGridAdapter(mContext);
         for (int i = 0; i < 7; i++) {
@@ -102,7 +104,21 @@ public class SocialCentreFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
-                    case 0:
+                    case 0://康币钱包
+                        skip_classView(WalletActivity.class,extraMap,false,true);
+                        break;
+                    case 1://我的会员卡
+                        extraMap.put("type",0);
+                        skip_classView(MineVipContentActivity.class,extraMap,false,true);
+                        break;
+                    case 2://我的收益
+
+                        break;
+                    case 3://我加入的店铺
+                        break;
+                    case 4://我发布的服务
+                        break;
+                    case 5://我提供的服务
                         break;
                 }
             }
@@ -114,8 +130,10 @@ public class SocialCentreFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.account_iv:
+                skip_classView(MineInfoActivity.class,extraMap,false,true);
                 break;
             case R.id.setting_iv:
+                skip_classView(SettingActivity.class,extraMap,false,true);
                 break;
             case R.id.order_tv:
                 startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"0"));

@@ -11,7 +11,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:clickable="true"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/heart_icon" />
 
     <TextView
         android:id="@+id/feeling_user_name"

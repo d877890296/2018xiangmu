@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/whilte"
+    tools:context="com.xfkc.caimai.home.comment.CommentActivity">
+
+    <include layout="@layout/widget_toolbar"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/f1f1f1"
+        />
+    <com.dev.customview.CustomListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:dividerHeight="15dp"
+        android:divider="@color/f1f1f1"
+        >
+
+    </com.dev.customview.CustomListView>
+</com.zhy.autolayout.AutoLinearLayout>
