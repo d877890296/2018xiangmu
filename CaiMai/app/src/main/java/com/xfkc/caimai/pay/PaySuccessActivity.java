@@ -41,8 +41,10 @@ public class PaySuccessActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.commit:
+                finish();
                 break;
             case R.id.look_order:
+                
                 break;
         }
     }
