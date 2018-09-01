@@ -45,18 +45,18 @@
             android:value="1280" />
 
         <activity android:name=".MainActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".loading.LoadingActivity" />
         <activity android:name=".loading.RegisterActivity" />
         <activity android:name=".loading.ForgetPassWordActivity" />
         <activity android:name=".loading.RegistPhoneActivity" />
         <activity android:name=".welcmoe.WelcomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".welcmoe.GuideActivity" />
         <activity android:name=".order.ConfirmOrderActivity" />

@@ -58,7 +58,7 @@ public interface PayService {
 
     //会员购买创建订单
     @GET("/api/appPay/crateMemOrder")
-    Observable<ZfbBean> zfbPay(@Query("memCardId") String memCardId);
+    Observable<ZfbBean> zfbPay(@Query("memCardId") String memCardId ,@Query("token") String token);
 
     //获取轮播图
     @GET("/api/banner/findAll")

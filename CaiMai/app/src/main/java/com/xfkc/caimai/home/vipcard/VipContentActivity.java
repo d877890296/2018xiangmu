@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -15,9 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
+import com.hyf.tdlibrary.utils.SharedPrefUtil;
+import com.hyf.tdlibrary.utils.ToastUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 import com.xfkc.caimai.bean.ZfbBean;
+import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.customview.StateButton;
 import com.xfkc.caimai.net.PayFactory;
 import com.xfkc.caimai.net.RxHelper;
@@ -87,6 +89,8 @@ public class VipContentActivity extends BaseActivity {
         car_price = getIntent().getStringExtra("price");
         carid = getIntent().getStringExtra("carid");
 
+        token = SharedPrefUtil.get(this, SharedPref.TOKEN);
+
         setVipCardType();
     }
 
@@ -131,7 +135,11 @@ public class VipContentActivity extends BaseActivity {
                 setRadioButton(1);
                 break;
             case R.id.pay_btn:
-                getPayData();
+                if (PAY_WAY == 0){
+                    ToastUtil.showToast("该功能暂未开放!");
+                }else {
+                    getPayData();
+                }
                 break;
             case R.id.toolbar_left_img:
                 finish();
@@ -141,15 +149,13 @@ public class VipContentActivity extends BaseActivity {
 
     /*获取订单信息*/
     private void getPayData() {
-
-        Log.e("=======",carid+"-----");
         PayFactory.getPayService()
-                .zfbPay(carid)
+                .zfbPay(carid , token)
                 .compose(RxHelper.<ZfbBean>io_main())
                 .subscribe(new ProgressSubscriber<ZfbBean>(this) {
                     @Override
                     public void onNext(ZfbBean zfbBean) {
-
+                        getPay(zfbBean.data.sign);
                     }
                 });
 
