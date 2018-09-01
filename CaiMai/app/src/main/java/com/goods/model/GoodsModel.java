@@ -6,7 +6,6 @@ import java.util.List;
 
 public class GoodsModel {
 public String image,image2;
-
 public String title;
 public String goodsName;
 public  double goodsPrice,storePrice;

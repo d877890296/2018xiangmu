@@ -8,18 +8,29 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.dev.customview.BarLineSetting;
 import com.goods.details.GoodsDetailsActivity;
 import com.goods.model.GoodsModel;
 import com.goods.shoppingcar.ShoppingCarActivity;
 import com.goods.sortlsitview.GoodsChooseCityActivity;
+import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.recycle.view.MyRecyclerView;
 import com.refushView.RefreshLayout;
 import com.refushView.holder.DefineBAGRefreshWithLoadView;
+import com.xfkc.caimai.MainActivity;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 import com.goods.city.GoodsCityListAdapter.OnListViewClickLinstener;
+import com.xfkc.caimai.bean.GoodsCityModel;
+import com.xfkc.caimai.bean.GoodsKey;
+import com.xfkc.caimai.bean.LoginInfo;
+import com.xfkc.caimai.config.SharedPref;
+import com.xfkc.caimai.net.PayFactory;
+import com.xfkc.caimai.net.RxHelper;
+import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +45,13 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
 
     private Button class_btn;
 
-    private TextView all_textView, socle_textView, prace_textView;
-    private List<TextView> textArray;
+    private RadioButton all_textView, socle_textView, prace_textView, more_textView;
+
+    private TextView barLine;
+    // bar相关配置
+    private List<RadioButton> barView;
+    private BarLineSetting barLineSetting;
+
     private int curSelectBarTextColor = 0xFFFF704D;
     // 默认bar字体颜色
     private int defaultBarTextColor = 0xFF323232;
@@ -63,11 +79,17 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
 //    private ListView choose_class_list;
 //    private GoodsTypeAdapter goodsTypeAdapter;
 //    private String goodclassid = "";
+
+
+    public GoodsKey goodsKey;
 //
 
 
     @Override
     protected int getLayoutResource() {
+        setSoftInputMode();
+        hindKey();
+
         return R.layout.gd_goodscity_fragment_layout;
     }
 
@@ -87,17 +109,32 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
         topbar_img_title.setText("北京1店");
         topbar_img_title.setOnClickListener(onClickListener);
         other_btn = (ImageButton) findViewById(R.id.other_btn);
-        all_textView = (TextView) findViewById(R.id.all_textView);
-        socle_textView = (TextView) findViewById(R.id.socle_textView);
-        prace_textView = (TextView) findViewById(R.id.prace_textView);
-        textArray.add(all_textView);
-        textArray.add(socle_textView);
-        textArray.add(prace_textView);
+        all_textView = (RadioButton) findViewById(R.id.all_textView);
+        socle_textView = (RadioButton) findViewById(R.id.socle_textView);
+        prace_textView = (RadioButton) findViewById(R.id.prace_textView);
+        more_textView = (RadioButton) findViewById(R.id.more_textView);
+        barLine = (TextView) findViewById(R.id.barLine);
+        barView.add(all_textView);
+        barView.add(socle_textView);
+        barView.add(prace_textView);
+        barView.add(more_textView);
+
+
+        // 设置barline
+        barLineSetting = new BarLineSetting(barLine);
+        barLineSetting.setCurSelectBarTextColor(curSelectBarTextColor);
+        barLineSetting.setDefaultBarTextColor(defaultBarTextColor);
+        // 设置barView
+        barLineSetting.setBarView(barView, app.phoneResolution_w);
+        // 设置参考的view视图
+        barLineSetting.setReferenceView(all_textView);
+
         back_btn.setOnClickListener(onClickListener);
         other_btn.setOnClickListener(onClickListener);
         all_textView.setOnClickListener(onClickListener);
         socle_textView.setOnClickListener(onClickListener);
         prace_textView.setOnClickListener(onClickListener);
+        more_textView.setOnClickListener(onClickListener);
 
         goods_grid_list_change = (TextView) findViewById(R.id.goods_grid_list_change);
         goods_grid_list_change.setOnClickListener(onClickListener);
@@ -154,7 +191,7 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
     public void defaultDataInit() {
         goodsCityListAdapter = new GoodsCityListAdapter(this);
         goodsData = new ArrayList<GoodsModel>();
-        textArray = new ArrayList<TextView>();
+        barView = new ArrayList<RadioButton>();
     }
 
     @Override
@@ -162,6 +199,37 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
 
 
     }
+
+    /****
+     *
+     * 请求数据
+     */
+    public void requstNetData() {
+        GoodsKey goodsKey = new GoodsKey();
+        goodsKey.pageNum = pageNum + "";
+        goodsKey.pageSize = pageSize + "";
+        goodsKey.shopId = "";
+        PayFactory.getPayService()
+                .getGoodsCityListData(goodsKey)
+                .compose(RxHelper.<GoodsCityModel>io_main())
+                .subscribe(new ProgressSubscriber<GoodsCityModel>(this) {
+                    @Override
+                    public void onNext(GoodsCityModel loginInfo) {
+//                        SharedPrefUtil.put(mContext, SharedPref.TOKEN,loginInfo.data);
+//                        skip_classView(MainActivity.class,extraMap,true);
+
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+
+
+                    }
+                });
+    }
+
 
     private OnListViewClickLinstener onListViewClickLinstener = new OnListViewClickLinstener() {
 
@@ -198,6 +266,9 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
                 case R.id.all_textView:
                     sidx = "";
                     setBarTextColor(0);
+                    barLineSetting.Amination(0);
+
+
                     isFristLoadData = true;
                     showMbProgress("数据加载中...");
 //                    app.netRequst.shoppingGoodsRequst("1", "1", "100", "", goodclassid,
@@ -213,6 +284,7 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
                     sidx = "";
                     isFristLoadData = true;
                     setBarTextColor(1);
+                    barLineSetting.Amination(1);
                     showMbProgress("数据加载中...");
 //                    app.netRequst.shoppingGoodsRequst("1", "1", "100", "", goodclassid,
 //                            netRequstAjaxCallBack.shoppShowGoodsCallback);
@@ -227,6 +299,24 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
                     sidx = "";
                     isFristLoadData = true;
                     setBarTextColor(2);
+                    barLineSetting.Amination(2);
+                    showMbProgress("数据加载中...");
+//                    app.netRequst.shoppingGoodsRequst("1", "1", "100", "", goodclassid,
+//                            netRequstAjaxCallBack.shoppShowGoodsCallback);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            dissMbProgress();
+                        }
+                    }, 2000);
+
+
+                    break;
+                case R.id.more_textView:
+                    sidx = "";
+                    isFristLoadData = true;
+                    setBarTextColor(3);
+                    barLineSetting.Amination(3);
                     showMbProgress("数据加载中...");
 //                    app.netRequst.shoppingGoodsRequst("1", "1", "100", "", goodclassid,
 //                            netRequstAjaxCallBack.shoppShowGoodsCallback);
@@ -269,9 +359,9 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
      * @param pager
      */
     public void setBarTextColor(int pager) {
-        int size = textArray.size();
+        int size = barView.size();
         for (int i = 0; i < size; i++) {
-            TextView rb = textArray.get(i);
+            RadioButton rb = barView.get(i);
             if (i == pager) {
                 rb.setTextColor(curSelectBarTextColor);
 

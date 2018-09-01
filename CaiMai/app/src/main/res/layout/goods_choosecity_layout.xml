@@ -2,34 +2,38 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
+
     <include layout="@layout/public_topbar_layout" />
+
     <com.dev.customview.ClearEditText
         android:id="@+id/filter_edit"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_gravity="center"
+        android:layout_margin="5dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/searchshape"
-        android:hint="搜索"
+        android:drawableLeft="@drawable/icon_search_img"
         android:drawablePadding="5dp"
+        android:hint="搜索"
         android:paddingLeft="10dp"
+
         android:paddingRight="10dp"
         android:textColor="#000000"
-        android:drawableLeft="@drawable/icon_search_img"
-        android:layout_margin="5dp"
 
         android:textSize="12.0dip" />
+
     <FrameLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="fill_parent">
 
         <ListView
             android:id="@+id/country_lvcountry"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_gravity="center"
-            />
+            android:divider="@null"
+            android:layout_gravity="center" />
 
         <TextView
             android:id="@+id/dialog"
@@ -46,6 +50,7 @@
             android:id="@+id/sidrbar"
             android:layout_width="30.0dip"
             android:layout_height="fill_parent"
+
             android:layout_gravity="right|center" />
     </FrameLayout>
 

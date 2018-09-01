@@ -56,6 +56,7 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer {
 		if (view == null) {
 			viewHolder = new ViewHolder();
 			view = LayoutInflater.from(mContext).inflate(R.layout.item, null);
+			viewHolder.catalogView = (View) view.findViewById(R.id.catalogView);
 			viewHolder.tvTitle = (TextView) view.findViewById(R.id.title);
 			viewHolder.tvLetter = (TextView) view.findViewById(R.id.catalog);
 			view.setTag(viewHolder);
@@ -68,9 +69,15 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer {
 
 		// 如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
 		if (position == getPositionForSection(section)) {
+			if(position==0){
+				viewHolder.catalogView.setVisibility(View.GONE);
+			}else {
+				viewHolder.catalogView.setVisibility(View.VISIBLE);
+			}
 			viewHolder.tvLetter.setVisibility(View.VISIBLE);
 			viewHolder.tvLetter.setText(mContent.getSortLetters());
 		} else {
+			viewHolder.catalogView.setVisibility(View.GONE);
 			viewHolder.tvLetter.setVisibility(View.GONE);
 		}
 
@@ -81,6 +88,7 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer {
 	}
 
 	final static class ViewHolder {
+		View catalogView;
 		TextView tvLetter;
 		TextView tvTitle;
 	}

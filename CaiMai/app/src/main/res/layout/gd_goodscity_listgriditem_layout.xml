@@ -6,7 +6,7 @@
 
     android:layout_marginTop="10dp"
     android:background="@drawable/bg_writecolor"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/goods_image"
@@ -22,11 +22,12 @@
         android:layout_height="wrap_content"
         android:layout_weight="0"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:orientation="horizontal">
 
             <TextView
@@ -34,22 +35,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="袁咏仪同款衣服喜欢"
+                android:text="袁咏仪同款衣"
                 android:textColor="#000000"
-                android:textSize="14sp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/goods_new"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
                 android:layout_weight="0"
-                android:text="新品"
-                android:paddingTop="2dp"
+                android:background="@drawable/orange_shape"
                 android:paddingBottom="2dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-
-                android:background="@drawable/orange_shape"
+                android:paddingTop="2dp"
+                android:text="新品"
                 android:textColor="@color/ff704d"
                 android:textSize="12sp" />
 

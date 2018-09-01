@@ -38,6 +38,11 @@ public class MyApplication extends RootApplication {
 
     public ImageLoader imageLoader;
 
+    // 手机分辨率的宽
+    public int phoneResolution_w = 320, phoneResolution_h = 480;
+   /**商店ID**/
+    public String shopId;
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
