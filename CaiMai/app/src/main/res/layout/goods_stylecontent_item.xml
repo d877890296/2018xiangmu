@@ -47,7 +47,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/adi" />
+                    android:src="@mipmap/error_icon" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

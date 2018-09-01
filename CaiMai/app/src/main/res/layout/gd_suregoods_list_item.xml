@@ -31,7 +31,7 @@
             android:layout_height="80dp"
             android:layout_margin="2dp"
             android:scaleType="fitXY"
-            android:src="@drawable/gd_goodscity_model_img" />
+            android:src="@mipmap/error_icon" />
 
         <FrameLayout
             android:layout_width="match_parent"

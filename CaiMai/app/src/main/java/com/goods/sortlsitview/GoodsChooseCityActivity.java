@@ -32,12 +32,14 @@ import com.dev.customview.ClearEditText;
 import com.goods.city.GoodsStyleActivity;
 import com.goods.shoppingcar.ShoppingCarActivity;
 import com.goods.sortlsitview.SideBar.OnTouchingLetterChangedListener;
+import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.Tools;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 import com.xfkc.caimai.bean.AllShopsModel;
 import com.xfkc.caimai.bean.GoodsCityModel;
 import com.xfkc.caimai.bean.GoodsKey;
+import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.net.PayFactory;
 import com.xfkc.caimai.net.RxHelper;
 import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
@@ -195,11 +197,11 @@ import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
      * 请求数据
      */
     public void requstNetData() {
-
+        userToken= SharedPrefUtil.get(mContext, SharedPref.TOKEN);
         GoodsKey goodsKey = new GoodsKey();
-        goodsKey.token=userToken;
-        goodsKey.longitude = "115.5690304";
-        goodsKey.latitude =  "33.99969373";
+        goodsKey.token="887d8eee-f5d5-4873-a0c4-6ba9dbff052d";
+        goodsKey.longitude = "115.569030";
+        goodsKey.latitude =  "33.9996937";
 
         PayFactory.getPayService()
                 .getAllShopsAndNearshop(goodsKey)

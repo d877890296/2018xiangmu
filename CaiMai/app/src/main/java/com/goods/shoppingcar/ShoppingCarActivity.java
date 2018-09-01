@@ -14,6 +14,7 @@ import com.dev.customview.MyToast;
 
 import com.goods.details.GoodsDetailsActivity;
 import com.goods.details.ShoppingCarModel;
+import com.goods.order.SureOrderActivity;
 import com.goods.shoppingcar.ShoppingCarAdapter.OnCheckBoxBack;
 
 
@@ -512,7 +513,7 @@ public class ShoppingCarActivity extends BaseActivity {
 						MyToast.showMyToast(mContext, "请选择商品", -1);
 					} else {
 						extraMap.put("allPrace", "90");
-					skip_classView(OrderActivity.class, extraMap, false);
+					skip_classView(SureOrderActivity.class, extraMap, false);
 					}
 
 				}
