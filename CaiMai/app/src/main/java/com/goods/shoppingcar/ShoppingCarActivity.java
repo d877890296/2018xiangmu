@@ -19,6 +19,7 @@ import com.goods.shoppingcar.ShoppingCarAdapter.OnCheckBoxBack;
 
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
+import com.xfkc.caimai.order.OrderActivity;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -511,7 +512,7 @@ public class ShoppingCarActivity extends BaseActivity {
 						MyToast.showMyToast(mContext, "请选择商品", -1);
 					} else {
 						extraMap.put("allPrace", allPrace);
-						//skip_classView(SureOrderforgoodsActivity.class, extraMap, false);
+					skip_classView(OrderActivity.class, extraMap, false);
 					}
 
 				}
