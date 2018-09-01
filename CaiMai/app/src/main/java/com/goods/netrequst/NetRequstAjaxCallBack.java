@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import android.content.Context;
 
 import com.dev.customview.MyToast;
+import com.goods.city.GoodsListModel;
 import com.goods.sortlsitview.AjaxShopModel;
 import com.goods.sortlsitview.CharacterParser;
 import com.goods.sortlsitview.ShopsList;
@@ -54,7 +55,7 @@ public class NetRequstAjaxCallBack {
             // 失败的handler回调
             MyToast.showMyToast(mContext, "服务异常", -1);
             if (onNetRequstAjaxCallBack != null) {
-                onNetRequstAjaxCallBack.MsgCallBack(false, "error:" + strMsg, "登录失败");
+                onNetRequstAjaxCallBack.MsgCallBack(false, "error:" + strMsg, "数据获取失败");
             }
         }
 
@@ -63,9 +64,9 @@ public class NetRequstAjaxCallBack {
             // TODO Auto-generated method stub
             super.onSuccess(t);
             if (t == null) {
-                MyToast.showMyToast(mContext, "登录失败", -1);
+                MyToast.showMyToast(mContext, "数据获取失败", -1);
                 if (onNetRequstAjaxCallBack != null) {
-                    onNetRequstAjaxCallBack.MsgCallBack(false, "", "登录失败");
+                    onNetRequstAjaxCallBack.MsgCallBack(false, "", "数据获取失败");
                 }
                 return;
             }
@@ -96,7 +97,6 @@ public class NetRequstAjaxCallBack {
             // 汉字转换成拼音
             String pinyin = characterParser.getSelling(shopName);
             String sortString = pinyin.substring(0, 1).toUpperCase();
-
             String provinceId = convert.getString("provinceId");
             SortModel model = new SortModel();
             model.setName(shopName);
@@ -140,6 +140,87 @@ public class NetRequstAjaxCallBack {
 
     }
 
+
+
+
+
+
+    /***
+     * 注销登录回调
+     */
+    public AjaxCallBack<AjaxShopModel> getProductBySearch = new AjaxCallBack<AjaxShopModel>() {
+        @Override
+        public void onFailure(Throwable t, int errorNo, String strMsg) {
+            // TODO Auto-generated method stub
+            super.onFailure(t, errorNo, strMsg);
+            // 失败的handler回调
+            MyToast.showMyToast(mContext, "服务异常", -1);
+            if (onNetRequstAjaxCallBack != null) {
+                onNetRequstAjaxCallBack.MsgCallBack(false, "error:" + strMsg, "数据获取失败");
+            }
+        }
+
+        @Override
+        public void onSuccess(AjaxShopModel t) {
+            // TODO Auto-generated method stub
+            super.onSuccess(t);
+            if (t == null) {
+                MyToast.showMyToast(mContext, "数据获取失败", -1);
+                if (onNetRequstAjaxCallBack != null) {
+                    onNetRequstAjaxCallBack.MsgCallBack(false, "", "数据获取失败");
+                }
+                return;
+            }
+
+
+            ArrayList<GoodsListModel> shopsList = t.list;
+            if (onNetRequstAjaxCallBack != null&&shopsList!=null&&shopsList.size()>0) {
+                onNetRequstAjaxCallBack.MsgCallBack(true, "", shopsList);
+            }else{
+                onNetRequstAjaxCallBack.MsgCallBack(false, "", shopsList);
+            }
+
+        }
+    };
+    /***
+     * 一级列表数据返回
+     */
+    public AjaxCallBack<AjaxShopModel> getAllCategory = new AjaxCallBack<AjaxShopModel>() {
+        @Override
+        public void onFailure(Throwable t, int errorNo, String strMsg) {
+            // TODO Auto-generated method stub
+            super.onFailure(t, errorNo, strMsg);
+            // 失败的handler回调
+            MyToast.showMyToast(mContext, "服务异常", -1);
+            if (onNetRequstAjaxCallBack != null) {
+                onNetRequstAjaxCallBack.MsgCallBack(false, "error:" + strMsg, "数据获取失败");
+            }
+        }
+
+        @Override
+        public void onSuccess(AjaxShopModel t) {
+            // TODO Auto-generated method stub
+            super.onSuccess(t);
+            if (t == null) {
+                MyToast.showMyToast(mContext, "数据获取失败", -1);
+                if (onNetRequstAjaxCallBack != null) {
+                    onNetRequstAjaxCallBack.MsgCallBack(false, "", "数据获取失败");
+                }
+                return;
+            }
+//
+//            obj = new JSONObject(jsonObj);
+//            CommonConvert convert = new CommonConvert(obj);
+//            jsonObj = convert.getString("data");
+            ArrayList<GoodsListModel> shopsList = t.list;
+            if (onNetRequstAjaxCallBack != null&&shopsList!=null&&shopsList.size()>0) {
+                onNetRequstAjaxCallBack.MsgCallBack(true, "", shopsList);
+            }else{
+                onNetRequstAjaxCallBack.MsgCallBack(false, "", shopsList);
+            }
+
+        }
+    };
 
     public interface OnNetRequstAjaxCallBack {
         public void MsgCallBack(boolean isSuccess, String errorMsg, Object object);

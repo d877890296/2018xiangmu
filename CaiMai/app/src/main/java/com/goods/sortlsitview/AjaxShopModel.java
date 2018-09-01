@@ -1,5 +1,6 @@
 package com.goods.sortlsitview;
 
+import com.goods.city.GoodsListModel;
 import com.json.NetJsonFiled;
 
 import java.util.ArrayList;
@@ -13,4 +14,8 @@ public class AjaxShopModel {
     public String shops;
     @NetJsonFiled(objClassName = "com.goods.sortlsitview.ShopsList")
     public ArrayList<ShopsList> shopsList;//学习列表信息
+
+    @NetJsonFiled(objClassName = "com.goods.city.GoodsListModel")
+    public ArrayList<GoodsListModel> list;//学习列表信息
+
 }

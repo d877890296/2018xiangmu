@@ -6,6 +6,8 @@ import android.os.Message;
 import android.widget.Toast;
 
 import com.goods.sortlsitview.AjaxShopModel;
+import com.goods.sortlsitview.CharacterParser;
+import com.goods.sortlsitview.ShopsList;
 import com.goods.sortlsitview.SortAdapter;
 import com.goods.sortlsitview.SortModel;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
@@ -78,6 +80,7 @@ private Context mContext;
         }
 
     };
+
     private Handler handler = new Handler() {
 
         @Override
@@ -111,6 +114,7 @@ private Context mContext;
             }
         }
     };
+
 
     public interface OnLocationCallBack {
         public void locationCallBack(boolean isSuccess, String errorMsg, SortModel object);

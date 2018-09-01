@@ -123,7 +123,7 @@ public class GoodsStyleDetailsActivity extends BaseActivity implements RefreshLa
             goodsData.add(model);
         }
 
-        goodsCityListAdapter.setGoodsData(goodsData);
+       // goodsCityListAdapter.setGoodsData(goodsData);
 
         dissMbProgress();
 

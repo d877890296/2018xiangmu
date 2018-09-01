@@ -35,6 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:maxLines="1"
                 android:text="袁咏仪同款衣"
                 android:textColor="#000000"
                 android:textSize="15sp" />
@@ -43,16 +44,16 @@
                 android:id="@+id/goods_new"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="2dp"
+                android:layout_marginBottom="3dp"
                 android:layout_weight="0"
                 android:background="@drawable/orange_shape"
                 android:paddingBottom="2dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:paddingTop="2dp"
                 android:text="新品"
                 android:textColor="@color/ff704d"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
         </LinearLayout>
 
@@ -64,6 +65,7 @@
             android:maxLines="1"
             android:text="袁咏仪同款衣服喜欢"
             android:textColor="#6f000000"
+
             android:textSize="14sp" />
 
         <TextView

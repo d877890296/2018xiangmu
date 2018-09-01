@@ -18,6 +18,7 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.goods.netrequst.DefaultRequstLocation;
+import com.goods.sortlsitview.SortModel;
 import com.hyf.tdlibrary.utils.ActivityUtil;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.ToastUtil;
@@ -110,9 +111,17 @@ public class MainActivity extends RxActivity {
         mLocationClient.startLocation();
         //初始化获取商店信息
         defaultRequstLocation=new DefaultRequstLocation(mContext);
+        defaultRequstLocation.setOnLocationCallBack(onLocationCallBack);
 
     }
-
+private DefaultRequstLocation.OnLocationCallBack onLocationCallBack=new DefaultRequstLocation.OnLocationCallBack(){
+    @Override
+    public void locationCallBack(boolean isSuccess, String errorMsg, SortModel object) {
+        if (isSuccess){
+            app.shopModel=object;
+        }
+    }
+};
     //可以通过类implement方式实现AMapLocationListener接口，也可以通过创造接口类对象的方法实现
 //以下为后者的举例：
     AMapLocationListener mAMapLocationListener = new AMapLocationListener() {
@@ -125,6 +134,8 @@ public class MainActivity extends RxActivity {
                     //获取经度
                     app.latitude = amapLocation.getLatitude()+"";
                     app.longitude ="" +amapLocation.getLongitude();
+                    //开始请求商店信息
+                    defaultRequstLocation.startLocation( app.longitude , app.latitude);
                     mLocationClient.stopLocation();//停止定位后，本地定位服务并不会被销毁
                     mLocationClient.onDestroy();//销毁定位客户端，同时销毁本地定位服务。
                 } else {

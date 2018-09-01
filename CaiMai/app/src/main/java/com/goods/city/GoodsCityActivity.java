@@ -1,5 +1,6 @@
 package com.goods.city;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,13 +11,22 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dev.customview.BarLineSetting;
 import com.goods.details.GoodsDetailsActivity;
 import com.goods.model.GoodsModel;
+import com.goods.netrequst.Logger;
+import com.goods.netrequst.NetRequstAjaxCallBack;
+import com.goods.netrequst.PostRequst;
 import com.goods.shoppingcar.ShoppingCarActivity;
+import com.goods.sortlsitview.AjaxShopModel;
 import com.goods.sortlsitview.GoodsChooseCityActivity;
+import com.goods.sortlsitview.SortAdapter;
+import com.goods.sortlsitview.SortModel;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
+import com.hyf.tdlibrary.utils.Tools;
+import com.json.CommonConvert;
 import com.recycle.view.MyRecyclerView;
 import com.refushView.RefreshLayout;
 import com.refushView.holder.DefineBAGRefreshWithLoadView;
@@ -32,8 +42,14 @@ import com.xfkc.caimai.net.PayFactory;
 import com.xfkc.caimai.net.RxHelper;
 import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import static com.goods.netrequst.PostRequst.UPSUCCESS;
 
 /**
  * Created by 10835 on 2018/8/20.
@@ -68,7 +84,7 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
     private TextView goods_grid_list_change;
     private int curStyle = 0;
 
-    private List<GoodsModel> goodsData;
+    private List<GoodsListModel> goodsData;
     private boolean isFristLoadData;
     private String sidx = "";
 
@@ -82,8 +98,9 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
 
 
     public GoodsKey goodsKey;
-//
-
+    //
+    private PostRequst postRequst;
+    private NetRequstAjaxCallBack ajaxCallBack;
 
     @Override
     protected int getLayoutResource() {
@@ -95,18 +112,24 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
+        postRequst = new PostRequst(handler);
+        ajaxCallBack = new NetRequstAjaxCallBack(mContext);
+        ajaxCallBack.setOnNetRequstAjaxCallBack(onNetRequstAjaxCallBack);
         viewInit();
     }
 
     public void viewInit() {
         defaultDataInit();
 
-
         back_btn = (ImageButton) findViewById(R.id.back_btn);
         back_btn.setVisibility(View.VISIBLE);
 
         topbar_img_title = (TextView) findViewById(R.id.topbar_img_title);
-        topbar_img_title.setText("北京1店");
+        if(app.shopModel!=null) {
+            topbar_img_title.setText(app.shopModel.getName());
+        }else{
+            topbar_img_title.setText("点击获取");
+        }
         topbar_img_title.setOnClickListener(onClickListener);
         other_btn = (ImageButton) findViewById(R.id.other_btn);
         all_textView = (RadioButton) findViewById(R.id.all_textView);
@@ -157,30 +180,28 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
         setBarTextColor(0);
         showMbProgress("数据加载中...");
 
-//        app.netRequst.shoppingShowGoodtypesRequst(storeid, netRequstAjaxCallBack.shoppShowGoodsTypeCallback);
-//        app.netRequst.shoppingGoodsRequst(storeid, "1", "100", "", goodclassid,
-//                netRequstAjaxCallBack.shoppShowGoodsCallback);
-        String[] img = {"", ""};
-        for (int i = 0; i < 10; i++) {
-            String goodsStoreId = "1000";
-            String goodsId = "10001";
-            String image1 = "10001";
-            String title = "w我的衣服价格";
-            double goodsPrice = 234.0;
-            double storePrice = 234.9;
-            String goodsProperty = "1000dd";
 
-            GoodsModel model = new GoodsModel();
-            model.setGoodsStoreId(goodsStoreId);
-            model.setGoodsId(goodsId);
-            model.setGoodsName(title);
-            model.setImage(image1);
-            model.setGoodsPrice(goodsPrice);
-            model.setStorePrice(storePrice);
-            model.setGoodsProperty(goodsProperty);
-            model.setGoodsMainPhotoId(image1);
-            goodsData.add(model);
-        }
+//        String[] img = {"", ""};
+//        for (int i = 0; i < 10; i++) {
+//            String goodsStoreId = "1000";
+//            String goodsId = "10001";
+//            String image1 = "10001";
+//            String title = "w我的衣服价格";
+//            double goodsPrice = 234.0;
+//            double storePrice = 234.9;
+//            String goodsProperty = "1000dd";
+//
+//            GoodsModel model = new GoodsModel();
+//            model.setGoodsStoreId(goodsStoreId);
+//            model.setGoodsId(goodsId);
+//            model.setGoodsName(title);
+//            model.setImage(image1);
+//            model.setGoodsPrice(goodsPrice);
+//            model.setStorePrice(storePrice);
+//            model.setGoodsProperty(goodsProperty);
+//            model.setGoodsMainPhotoId(image1);
+//            goodsData.add(model);
+//        }
 
         goodsCityListAdapter.setGoodsData(goodsData);
         requstNetData();
@@ -190,7 +211,7 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
 
     public void defaultDataInit() {
         goodsCityListAdapter = new GoodsCityListAdapter(this);
-        goodsData = new ArrayList<GoodsModel>();
+        goodsData = new ArrayList<GoodsListModel>();
         barView = new ArrayList<RadioButton>();
     }
 
@@ -205,34 +226,16 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
      * 请求数据
      */
     public void requstNetData() {
-        userToken= SharedPrefUtil.get(mContext, SharedPref.TOKEN);
-        GoodsKey goodsKey = new GoodsKey();
-        goodsKey.token=userToken;
-        goodsKey.pageNum = pageNum + "";
-        goodsKey.pageSize = pageSize + "";
-        goodsKey.shopId = "12";
+        if (app.shopModel != null) {
+            userToken = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
+            GoodsKey goodsKey = new GoodsKey();
+            goodsKey.token = userToken;
+            goodsKey.pageNum = pageNum + "";
+            goodsKey.pageSize = pageSize + "";
+            goodsKey.shopId = app.shopModel.getShopId();
+            postRequst.getProductBySearch(handler, goodsKey);
+        }
 
-
-
-//        PayFactory.getPayService()
-//                .getGoodsCityListData(goodsKey)
-//                .compose(RxHelper.<GoodsCityModel>io_main())
-//                .subscribe(new ProgressSubscriber<GoodsCityModel>(this) {
-//                    @Override
-//                    public void onNext(GoodsCityModel loginInfo) {
-////                        SharedPrefUtil.put(mContext, SharedPref.TOKEN,loginInfo.data);
-////                        skip_classView(MainActivity.class,extraMap,true);
-//
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        super.onError(e);
-//
-//
-//                    }
-//                });
     }
 
 
@@ -241,13 +244,13 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
         @Override
         public void itemClick(int position, GoodsCityListAdapter.ViewHolder holder) {
             // TODO Auto-generated method stub
-            GoodsModel model = goodsData.get(position);
-            extraMap.put("goodsStoreId", model.getGoodsStoreId());
-            extraMap.put("goodsId", model.getGoodsId());
-            extraMap.put("price", model.getGoodsPrice());
-            extraMap.put("goodsProperty", model.getGoodsProperty());
-            extraMap.put("goodsImg", model.getGoodsMainPhotoId());
-            extraMap.put("goodsName", model.getGoodsName());
+            GoodsListModel model = goodsData.get(position);
+//            extraMap.put("goodsStoreId", model.getGoodsStoreId());
+//            extraMap.put("goodsId", model.getGoodsId());
+//            extraMap.put("price", model.getGoodsPrice());
+//            extraMap.put("goodsProperty", model.getGoodsProperty());
+//            extraMap.put("goodsImg", model.getGoodsMainPhotoId());
+//            extraMap.put("goodsName", model.getGoodsName());
             skip_classView(GoodsDetailsActivity.class, extraMap, false);
         }
 
@@ -263,7 +266,7 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
                     backHistory(-1, true, false, extraMap);
                     break;
                 case R.id.topbar_img_title:
-                    skip_classView(GoodsChooseCityActivity.class, extraMap, false);
+                    skip_classView(GoodsChooseCityActivity.class, extraMap, false,1000);
                     break;
                 case R.id.other_btn:
                     skip_classView(ShoppingCarActivity.class, extraMap, false);
@@ -432,4 +435,78 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
             }
         }
     };
+
+
+    private NetRequstAjaxCallBack.OnNetRequstAjaxCallBack onNetRequstAjaxCallBack = new NetRequstAjaxCallBack.OnNetRequstAjaxCallBack() {
+
+        @Override
+        public void MsgCallBack(boolean isSuccess, String errorMsg, Object object) {
+            // TODO Auto-generated method stub
+            dissMbProgress();
+            if (isSuccess){
+
+                ArrayList<GoodsListModel> shopsList=(ArrayList)object;
+                goodsData.addAll(shopsList);
+                goodsCityListAdapter.setGoodsData(goodsData);
+                nodataview_textview.setVisibility(View.GONE);
+            }else{
+                nodataview_textview.setVisibility(View.VISIBLE);
+            }
+
+
+
+
+        }
+
+    };
+    private Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case UPSUCCESS://数据获取成功
+                    if (msg.arg1 == 1) {//成功
+                        String jsonObj = msg.obj.toString();
+                        if (Tools.IsEmpty(jsonObj)) {
+                            android.widget.Toast.makeText(mContext,
+                                    "数据错误", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        JSONObject obj = null;
+                        try {
+                            obj = new JSONObject(jsonObj);
+
+                            CommonConvert convert = new CommonConvert(obj);
+                            jsonObj = convert.getString("data");
+                            Logger.e("jsonObj:---",jsonObj);
+                            app.jsonHttp.getJsonObj(jsonObj, AjaxShopModel.class,
+                                    ajaxCallBack.getProductBySearch);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    } else {//失败
+                        android.widget.Toast.makeText(mContext,
+                                "加载数据失败", Toast.LENGTH_LONG).show();
+                    }
+
+                    break;
+            }
+        }
+    };
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==1000){
+            if(app.shopModel!=null) {
+                topbar_img_title.setText(app.shopModel.getName());
+                requstNetData();
+            }else{
+                topbar_img_title.setText("点击获取");
+            }
+        }
+    }
 }

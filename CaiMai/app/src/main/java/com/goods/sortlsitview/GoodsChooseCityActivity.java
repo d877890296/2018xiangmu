@@ -4,9 +4,9 @@ package com.goods.sortlsitview;
  * Created by 10835 on 2018/8/30.
  */
 
-<<<<<<< HEAD
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -17,8 +17,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-=======
->>>>>>> d6bf3f6255991080d9b8b47c2f8cf2f3aceb187e
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -27,31 +25,28 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-<<<<<<< HEAD
-=======
+
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
->>>>>>> d6bf3f6255991080d9b8b47c2f8cf2f3aceb187e
+
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dev.customview.ClearEditText;
-<<<<<<< HEAD
+
 import com.goods.netrequst.NetRequstAjaxCallBack;
 import com.goods.netrequst.PostRequst;
-=======
->>>>>>> d6bf3f6255991080d9b8b47c2f8cf2f3aceb187e
+
 import com.goods.sortlsitview.SideBar.OnTouchingLetterChangedListener;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.Tools;
 import com.json.CommonConvert;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
-<<<<<<< HEAD
-=======
+
 import com.xfkc.caimai.bean.AllShopsModel;
->>>>>>> d6bf3f6255991080d9b8b47c2f8cf2f3aceb187e
+
 import com.xfkc.caimai.bean.GoodsKey;
 import com.xfkc.caimai.config.SharedPref;
 
@@ -107,7 +102,6 @@ public class GoodsChooseCityActivity extends BaseActivity {
     protected int getLayoutResource() {
         setSoftInputMode();
         hindKey();
-
 
 
         return R.layout.goods_choosecity_layout;
@@ -180,13 +174,15 @@ public class GoodsChooseCityActivity extends BaseActivity {
                 Toast.makeText(getApplication(),
                         ((SortModel) adapter.getItem(position - 1)).getName(),
                         Toast.LENGTH_SHORT).show();
+                app.shopModel=(SortModel) adapter.getItem(position - 1);
+                backHistory(1000, true, false, extraMap);
             }
         });
 
         headView = getLayoutInflater().inflate(R.layout.goods_chooseshop_head_layout, null);
-        firstShopName=(TextView)headView.findViewById(R.id.firstShopName);
+        firstShopName = (TextView) headView.findViewById(R.id.firstShopName);
         sortListView.addHeaderView(headView);
-        SourceDateList=new ArrayList<SortModel>();
+        SourceDateList = new ArrayList<SortModel>();
 
 //        SourceDateList = filledData(getResources().getStringArray(R.array.date));
 //
@@ -225,71 +221,15 @@ public class GoodsChooseCityActivity extends BaseActivity {
      * 请求数据
      */
     public void requstNetData() {
-<<<<<<< HEAD
-
         showMbProgress("数据加载中");
         userToken = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
-=======
-<<<<<<< HEAD
-        userToken = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
-        GoodsKey goodsKey = new GoodsKey();
-        goodsKey.token=userToken;
-        goodsKey.longitude = app.longitude;
-        goodsKey.latitude =  app.latitude;
-        Log.e("---", userToken+"---"+app.longitude+"---"+app.latitude);
-=======
-        userToken= SharedPrefUtil.get(mContext, SharedPref.TOKEN);
->>>>>>> d6bf3f6255991080d9b8b47c2f8cf2f3aceb187e
         GoodsKey goodsKey = new GoodsKey();
         goodsKey.token = userToken;
-        goodsKey.longitude = "115.569030";
-<<<<<<< HEAD
-        goodsKey.latitude = "33.9996937";
+        goodsKey.longitude = app.longitude;
+        goodsKey.latitude =app.latitude;
         postRequst.getAllShopsAndNearshop(handler, goodsKey);
 
-//        PayFactory.getPayService()
-//                .getAllShopsAndNearshop(goodsKey)
-//                .compose(RxHelper.<AllShopsModel>io_main())
-//                .subscribe(new ProgressSubscriber<AllShopsModel>(this) {
-//                    @Override
-//                    public void onNext(AllShopsModel loginInfo) {
-////                        SharedPrefUtil.put(mContext, SharedPref.TOKEN,loginInfo.data);
-////                        skip_classView(MainActivity.class,extraMap,true);
-//
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        super.onError(e);
-//
-//
-//                    }
-//                });
-=======
-        goodsKey.latitude =  "33.9996937";
 
->>>>>>> 52fdb13965afef9f796a9d9785c020722b9808a8
-        PayFactory.getPayService()
-//                .getAllShopsAndNearshop(app.latitude,app.longitude,userToken)
-                .getAllShopsAndNearshop(goodsKey)
-                .compose(RxHelper.<AllShopsModel>io_main())
-                .subscribe(new ProgressSubscriber<AllShopsModel>(this) {
-                    @Override
-                    public void onNext(AllShopsModel loginInfo) {
-//                        SharedPrefUtil.put(mContext, SharedPref.TOKEN,loginInfo.data);
-//                        skip_classView(MainActivity.class,extraMap,true);
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-
-
-                    }
-                });
->>>>>>> d6bf3f6255991080d9b8b47c2f8cf2f3aceb187e
     }
 
 
@@ -356,7 +296,7 @@ public class GoodsChooseCityActivity extends BaseActivity {
             // TODO Auto-generated method stubs
             switch (v.getId()) {
                 case R.id.other_morbtn:
-                    backHistory(-1, true, false, extraMap);
+                    backHistory(1000, true, false, extraMap);
                     break;
 
 
@@ -368,6 +308,16 @@ public class GoodsChooseCityActivity extends BaseActivity {
 
     };
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            backHistory(1000, true, false, extraMap);
+            return true;
+        }
+        return false;
+    }
+
+
     private NetRequstAjaxCallBack.OnNetRequstAjaxCallBack onNetRequstAjaxCallBack = new NetRequstAjaxCallBack.OnNetRequstAjaxCallBack() {
 
         @Override
@@ -375,9 +325,9 @@ public class GoodsChooseCityActivity extends BaseActivity {
             // TODO Auto-generated method stub
             dissMbProgress();
 
-            ArrayList<SortModel> sortData=(ArrayList)object;
-            for (int i=1;i<sortData.size();i++){
-                SourceDateList.add( sortData.get(i));
+            ArrayList<SortModel> sortData = (ArrayList) object;
+            for (int i = 1; i < sortData.size(); i++) {
+                SourceDateList.add(sortData.get(i));
             }
             firstShopName.setText(sortData.get(0).getName());
             // 根据a-z进行排序源数据
@@ -400,14 +350,14 @@ public class GoodsChooseCityActivity extends BaseActivity {
                         String jsonObj = msg.obj.toString();
                         if (Tools.IsEmpty(jsonObj)) {
                             android.widget.Toast.makeText(mContext,
-                                  "数据错误", Toast.LENGTH_LONG).show();
+                                    "数据错误", Toast.LENGTH_LONG).show();
                             return;
                         }
                         JSONObject obj = null;
                         try {
                             obj = new JSONObject(jsonObj);
                             CommonConvert convert = new CommonConvert(obj);
-                            jsonObj= convert.getString("data");
+                            jsonObj = convert.getString("data");
                             app.jsonHttp.getJsonObj(jsonObj, AjaxShopModel.class,
                                     ajaxCallBack.getAllShopsAndNearshopCallBack);
                         } catch (JSONException e) {
