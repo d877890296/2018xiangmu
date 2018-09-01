@@ -28,18 +28,18 @@ public class GoodsCityListAdapter extends RecyclerView.Adapter<GoodsCityListAdap
 	private MyApplication app;
 
 	private OnListViewClickLinstener onListViewClickLinstener;
-	private List<GoodsModel> goodsData;
+	private List<GoodsListModel> goodsData;
 
 	public GoodsCityListAdapter(Context mContext) {
 		this.mContext = mContext;
 		mLayoutInflater = LayoutInflater.from(this.mContext);
-		goodsData = new ArrayList<GoodsModel>();
+		goodsData = new ArrayList<GoodsListModel>();
 		app=MyApplication.getInstance();
 
 	}
 	
 
-	public void setGoodsData(List<GoodsModel> goodsData) {
+	public void setGoodsData(List<GoodsListModel> goodsData) {
 		this.goodsData = goodsData;
 		this.notifyDataSetChanged();
 	}
@@ -76,12 +76,18 @@ public class GoodsCityListAdapter extends RecyclerView.Adapter<GoodsCityListAdap
 			}
 		});
 
-		GoodsModel model = goodsData.get(curtentIndex);
-		holder.goods_name.setText(model.getGoodsName());
-		holder.goods_prace.setText( model.getGoodsPrice()+"康币");
+		GoodsListModel model = goodsData.get(curtentIndex);
+		holder.goods_name.setText(model.title);
+		holder.goods_discroubTitle.setText(model.content);
+		holder.goods_prace.setText( model.itemPrice+"康币");
 		setSitis(holder.goods_prace);
 		//app.imageLoader.displayImage(model.getGoodsMainPhotoId(), holder.goods_image,app.options);
-	//	app.imageLoader.displayImage(model.getImage(),holder.goods_image);
+		if (!Tools.IsEmpty(model.pic)){
+			app.imageLoader.displayImage(model.pic,holder.goods_image);
+		}else{
+			holder.goods_image.setImageResource(R.mipmap.error_icon);
+		}
+
 	}
 
 
@@ -114,7 +120,7 @@ public class GoodsCityListAdapter extends RecyclerView.Adapter<GoodsCityListAdap
 
 		public LinearLayout listitem_liner;
 		public ImageView goods_image;
-		public TextView goods_name, goods_prace;
+		public TextView goods_name, goods_discroubTitle,goods_prace;
 
 		public ViewHolder(View itemView) {
 			super(itemView);
@@ -122,6 +128,7 @@ public class GoodsCityListAdapter extends RecyclerView.Adapter<GoodsCityListAdap
 			listitem_liner = (LinearLayout) itemView.findViewById(R.id.listitem_liner);
 			goods_image = (ImageView) itemView.findViewById(R.id.goods_image);
 			goods_name = (TextView) itemView.findViewById(R.id.goods_name);
+			goods_discroubTitle = (TextView) itemView.findViewById(R.id.goods_discroubTitle);
 			goods_prace = (TextView) itemView.findViewById(R.id.goods_prace);
 		}
 	}

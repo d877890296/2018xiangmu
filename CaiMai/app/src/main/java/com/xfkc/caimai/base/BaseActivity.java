@@ -47,7 +47,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public LinearLayout net_error_liner, progress_liner, loadfail_liner;
 
     // 起始的下标
-    public int pageNum = 0, pageSize = 20;
+    public int pageNum = 0, pageSize =20;
 
     // 是否第一次加载数据/是否有更多数据
     public boolean isfristLoadData, isMoreData = true;

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    android:clickable="true" >
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,7 +11,10 @@
         android:orientation="vertical">
 
         <include layout="@layout/public_topbar_layout" />
-        <LinearLayout
+    <RelativeLayout  android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
@@ -23,10 +26,7 @@
                 android:background="#ededed"
                 android:cacheColorHint="#00000000"
                 android:divider="#ededed"
-
-                android:focusable="false"
                 android:listSelector="#00000000"
-                android:paddingTop="5dp"
                 android:scrollbars="none" />
 
             <ListView
@@ -36,15 +36,15 @@
                 android:background="#fff"
                 android:cacheColorHint="#00000000"
                 android:divider="#ededed"
-                android:focusable="false"
+
                 android:listSelector="#00000000"
-                android:paddingTop="5dp"
                 android:scrollbars="none" />
 
-
-
         </LinearLayout>
+    <include layout="@layout/public_nodata_liner" />
 
+    <include layout="@layout/progresslayout" />
+</RelativeLayout>
     </LinearLayout>
 
 

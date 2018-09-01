@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.xfkc.caimai.MainActivity;
 import com.xfkc.caimai.R;
@@ -26,12 +28,18 @@ public abstract class BaseFragment extends Fragment {
     public Context mContext;
     public MyApplication app;
     public String userId, userCode, userName;
+    public View rootView;
       public MainActivity mainActivity;
     //传值
     public Map<String, Object> extraMap;
     public Map<String, String> sExtraMap;
     //    public String token;
     public int start = 0, pageSize = 20;
+    public int baseType;
+    public boolean  isMoreData;
+
+    public LinearLayout progress_liner;
+    public TextView nodataview_textview;
 
     @Nullable
     @Override
@@ -43,8 +51,7 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(getLayoutResource(), container, false);
-
+        rootView = inflater.inflate(getLayoutResource(), container, false);
         ButterKnife.bind(this, rootView);
         initData();
         return rootView;
@@ -133,5 +140,14 @@ public abstract class BaseFragment extends Fragment {
 
         }
     }
+    /** list刷新 **/
+    public static final int LIST_REFUSH_WHAT = 0;
+    /** list加载更多数据 **/
+    public static final int LIST_LOADMORE_WHAT = 1;
+    /** 显示底部bar **/
+    public static final int SHOW_BOTTOM_BAR = 200;
+    /** 隐藏底部bar **/
+    public static final int HIDE_BOTTOM_BAR = 201;
+    public static final int PHOTOZOOM = 0; // 相册/拍照
 
 }

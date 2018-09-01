@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF" >
+
+        <com.refushView.RefreshLayout
+        android:id="@+id/define_sliding_bga"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/ordergoodslist_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scrollbars="none" />
+    </com.refushView.RefreshLayout>
+
+    <include layout="@layout/public_nodata_liner" />
+
+    <include layout="@layout/progresslayout" />
+
+</RelativeLayout>

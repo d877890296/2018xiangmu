@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff">
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/public_top_layout" />
+        <!-- 最下面的布局 -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/bar_liner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#FEFEFE"
+                android:orientation="vertical">
+
+                <RadioGroup
+                    android:id="@+id/radioGroup_ordergoods"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FEFEFE"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/allOrder_table"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:drawablePadding="3dp"
+                        android:gravity="center"
+                        android:paddingBottom="2dp"
+                        android:paddingTop="8.5dp"
+                        android:text="全部"
+                        android:textColor="#18B4ED"
+                        android:textSize="15dp" />
+
+                    <RadioButton
+                        android:id="@+id/radio_1"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:drawablePadding="3dp"
+                        android:gravity="center"
+                        android:paddingBottom="2dp"
+                        android:paddingTop="8.5dp"
+                        android:text="待付款"
+                        android:textColor="#818181"
+                        android:textSize="15dp" />
+
+                    <RadioButton
+                        android:id="@+id/radio_2"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:drawablePadding="3dp"
+                        android:gravity="center"
+                        android:paddingBottom="2dp"
+                        android:paddingTop="8.5dp"
+                        android:text="待发货"
+                        android:textColor="#818181"
+                        android:textSize="15dp" />
+
+                    <RadioButton
+                        android:id="@+id/radio_3"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:drawablePadding="3dp"
+                        android:gravity="center"
+                        android:paddingBottom="2dp"
+                        android:paddingTop="8.5dp"
+                        android:text="待收货"
+                        android:textColor="#818181"
+                        android:textSize="15dp" />
+
+                    <RadioButton
+                        android:id="@+id/radio_4"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:drawablePadding="3dp"
+                        android:gravity="center"
+                        android:paddingBottom="2dp"
+                        android:paddingTop="8.5dp"
+                        android:text="待评价"
+                        android:textColor="#818181"
+                        android:textSize="15dp" />
+
+                    <RadioButton
+                        android:id="@+id/radio_5"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:drawablePadding="3dp"
+                        android:gravity="center"
+                        android:paddingBottom="2dp"
+                        android:paddingTop="8.5dp"
+                        android:text="已完成"
+                        android:textColor="#818181"
+                        android:textSize="15dp" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/barLine"
+                    android:layout_width="50dp"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#18B4ED" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="#ededed" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/orderGoods_pager"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#FEFEFE"></android.support.v4.view.ViewPager>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,7 +1,6 @@
 package com.xfkc.caimai.home.fragment;
 
 
-import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -11,12 +10,12 @@ import android.widget.TextView;
 import com.allen.library.SuperTextView;
 import com.bumptech.glide.Glide;
 import com.dev.customview.MyGridView;
+import com.goods.mineOrderforgoods.OrderforgoodsActivity;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseFragment;
 import com.xfkc.caimai.bean.EmptyBean;
 import com.xfkc.caimai.bean.UserInfoBean;
-import com.xfkc.caimai.config.Constant;
 import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.home.SettingActivity;
 import com.xfkc.caimai.home.adapter.MyGridAdapter;
@@ -26,13 +25,13 @@ import com.xfkc.caimai.home.wallet.WalletActivity;
 import com.xfkc.caimai.net.PayFactory;
 import com.xfkc.caimai.net.RxHelper;
 import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
-import com.xfkc.caimai.order.OrderActivity;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+
 
 /**
  * 社员中心
@@ -175,19 +174,33 @@ public class SocialCentreFragment extends BaseFragment {
                 skip_classView(SettingActivity.class, extraMap, false, true);
                 break;
             case R.id.order_tv:
-                startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID, "0"));
+
+
+                extraMap.put("baseType", -1);
+                skip_classView(OrderforgoodsActivity.class, extraMap, false, false);
+               // startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"0"));
                 break;
             case R.id.wait_pay_tv:
-                startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID, "1"));
+           //     startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"1"));
+                extraMap.put("baseType", 1);
+                skip_classView(OrderforgoodsActivity.class, extraMap, false, false);
                 break;
             case R.id.psz_tv:
-                startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID, "2"));
+
+               // startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"2"));
+                extraMap.put("baseType", 2);
+                skip_classView(OrderforgoodsActivity.class, extraMap, false, false);
                 break;
             case R.id.dpj_tv:
-                startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID, "3"));
+               // startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"3"));
+                extraMap.put("baseType", 3);
+                skip_classView(OrderforgoodsActivity.class, extraMap, false, false);
                 break;
             case R.id.tk_sh_tv:
-                startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID, "4"));
+             //   startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"4"));
+                extraMap.put("baseType", 4);
+                skip_classView(OrderforgoodsActivity.class, extraMap, false, false);
+
                 break;
         }
     }

@@ -8,12 +8,16 @@ import android.os.Build;
 import android.os.StrictMode;
 import android.support.multidex.MultiDex;
 
+import com.goods.netrequst.GetJson;
+import com.goods.sortlsitview.SortModel;
 import com.hyf.tdlibrary.RootApplication;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.cookie.store.PersistentCookieStore;
+import com.net.JsonHttp;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
@@ -35,15 +39,19 @@ public class MyApplication extends RootApplication {
     public List<Activity> queueList;
     //内存泄漏自检
     private RefWatcher refWatcher;
-
+    // 全局的网络请求
+    public JsonHttp jsonHttp;
+    public  GetJson getJson;
     public ImageLoader imageLoader;
 
     // 手机分辨率的宽
     public int phoneResolution_w = 320, phoneResolution_h = 480;
-   /**商店ID**/
-    public String shopId;
+
+    public SortModel shopModel;
+
     /*经纬度*/
     public  String longitude = "",latitude="";
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
@@ -56,7 +64,11 @@ public class MyApplication extends RootApplication {
         super.onCreate();
         refWatcher = LeakCanary.install(this);
         queueList = new ArrayList<Activity>();
-        imageLoader=ImageLoader.getInstance();
+       imageLoader=ImageLoader.getInstance();
+        imageLoader.init(ImageLoaderConfiguration.createDefault(getApplicationContext()));
+        jsonHttp = new JsonHttp();
+        getJson = GetJson.getInstance();
+        getJson.init(getApplicationContext());
         //okGo 配置
         initOkGo();
         //初始化分享

@@ -45,7 +45,7 @@
                     android:layout_width="96dp"
                     android:layout_height="80dp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="5dp"
                     android:scaleType="fitXY"
                     android:src="@mipmap/error_icon" />
 
@@ -54,12 +54,14 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center"
                     android:orientation="vertical" >
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:orientation="horizontal" >
 
                         <TextView
@@ -68,8 +70,9 @@
                             android:layout_height="wrap_content"
                             android:layout_toRightOf="@+id/isnews"
                             android:layout_weight="1"
-                            android:maxLines="2"
+                            android:maxLines="1"
                             android:text="在线测评试卷001fffffffff"
+
                             android:textColor="#000000"
                             android:textSize="15sp" />
 
@@ -82,7 +85,7 @@
                          android:layout_marginLeft="10dp"
                             android:text="140-180g*5个"
                             android:textColor="#8f000000"
-                            android:textSize="15sp" />
+                            android:textSize="12sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -108,7 +111,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left|center"
-                            android:text="16.9康比"
+                            android:text="16.9康币"
                             android:textColor="#ff0000"
                             android:layout_marginTop="5dp"
                             android:textSize="15sp"
