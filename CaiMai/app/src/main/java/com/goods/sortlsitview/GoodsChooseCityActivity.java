@@ -4,6 +4,7 @@ package com.goods.sortlsitview;
  * Created by 10835 on 2018/8/30.
  */
 
+<<<<<<< HEAD
 import android.os.Handler;
 import android.os.Message;
 import android.widget.Button;
@@ -16,25 +17,41 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+=======
+>>>>>>> d6bf3f6255991080d9b8b47c2f8cf2f3aceb187e
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+<<<<<<< HEAD
+=======
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ListView;
+>>>>>>> d6bf3f6255991080d9b8b47c2f8cf2f3aceb187e
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dev.customview.ClearEditText;
+<<<<<<< HEAD
 import com.goods.netrequst.NetRequstAjaxCallBack;
 import com.goods.netrequst.PostRequst;
+=======
+>>>>>>> d6bf3f6255991080d9b8b47c2f8cf2f3aceb187e
 import com.goods.sortlsitview.SideBar.OnTouchingLetterChangedListener;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.Tools;
 import com.json.CommonConvert;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
+<<<<<<< HEAD
+=======
+import com.xfkc.caimai.bean.AllShopsModel;
+>>>>>>> d6bf3f6255991080d9b8b47c2f8cf2f3aceb187e
 import com.xfkc.caimai.bean.GoodsKey;
 import com.xfkc.caimai.config.SharedPref;
 
@@ -42,6 +59,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import static com.goods.netrequst.PostRequst.UPSUCCESS;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * 为了使用者方便，一进入主布局就能看懂大致思路的指导，免得花太多时间去看源码
@@ -204,12 +225,25 @@ public class GoodsChooseCityActivity extends BaseActivity {
      * 请求数据
      */
     public void requstNetData() {
+<<<<<<< HEAD
 
         showMbProgress("数据加载中");
         userToken = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
+=======
+<<<<<<< HEAD
+        userToken = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
+        GoodsKey goodsKey = new GoodsKey();
+        goodsKey.token=userToken;
+        goodsKey.longitude = app.longitude;
+        goodsKey.latitude =  app.latitude;
+        Log.e("---", userToken+"---"+app.longitude+"---"+app.latitude);
+=======
+        userToken= SharedPrefUtil.get(mContext, SharedPref.TOKEN);
+>>>>>>> d6bf3f6255991080d9b8b47c2f8cf2f3aceb187e
         GoodsKey goodsKey = new GoodsKey();
         goodsKey.token = userToken;
         goodsKey.longitude = "115.569030";
+<<<<<<< HEAD
         goodsKey.latitude = "33.9996937";
         postRequst.getAllShopsAndNearshop(handler, goodsKey);
 
@@ -232,6 +266,30 @@ public class GoodsChooseCityActivity extends BaseActivity {
 //
 //                    }
 //                });
+=======
+        goodsKey.latitude =  "33.9996937";
+
+>>>>>>> 52fdb13965afef9f796a9d9785c020722b9808a8
+        PayFactory.getPayService()
+//                .getAllShopsAndNearshop(app.latitude,app.longitude,userToken)
+                .getAllShopsAndNearshop(goodsKey)
+                .compose(RxHelper.<AllShopsModel>io_main())
+                .subscribe(new ProgressSubscriber<AllShopsModel>(this) {
+                    @Override
+                    public void onNext(AllShopsModel loginInfo) {
+//                        SharedPrefUtil.put(mContext, SharedPref.TOKEN,loginInfo.data);
+//                        skip_classView(MainActivity.class,extraMap,true);
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+
+
+                    }
+                });
+>>>>>>> d6bf3f6255991080d9b8b47c2f8cf2f3aceb187e
     }
 
 

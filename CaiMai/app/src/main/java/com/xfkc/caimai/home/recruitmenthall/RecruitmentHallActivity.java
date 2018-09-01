@@ -10,9 +10,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dev.customview.CustomListView;
+import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 import com.xfkc.caimai.bean.EmptyBean;
+import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.net.PayFactory;
 import com.xfkc.caimai.net.RxHelper;
 import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
@@ -67,7 +69,7 @@ public class RecruitmentHallActivity extends BaseActivity {
 
     private int TYPE = 0;
 
-    private String pageNum = "0", pageSize = "20";
+    private int pageNum = 0, pageSize = 20;
 
     @Override
     protected int getLayoutResource() {
@@ -76,6 +78,7 @@ public class RecruitmentHallActivity extends BaseActivity {
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
+        token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
         toolbarTitle.setText("招募大厅");
         toolbarTitle.setTextColor(Color.WHITE);
         toolbar.setBackgroundColor(Color.parseColor("#ff704d"));
@@ -117,7 +120,7 @@ public class RecruitmentHallActivity extends BaseActivity {
         list.add(new EmptyBean());
 
         PayFactory.getPayService()
-                .recruitmentHall(pageNum, pageSize)
+                .recruitmentHall(pageNum, pageSize,token)
                 .compose(RxHelper.<EmptyBean>io_main())
                 .subscribe(new ProgressSubscriber<EmptyBean>(this) {
                     @Override

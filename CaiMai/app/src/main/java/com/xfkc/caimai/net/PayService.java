@@ -54,7 +54,7 @@ public interface PayService {
 
     //正在招募，已完成招募列表
     @GET("/api/recruite/inrecruitment")
-    Observable<EmptyBean> recruitmentHall(@Query("pageNum") String pageNum, @Query("pageSize") String pageSize);
+    Observable<EmptyBean> recruitmentHall(@Query("pageNum") int pageNum, @Query("pageSize") int pageSize, @Query("token") String token);
 
     //会员购买创建订单
     @GET("/api/appPay/crateMemOrder")

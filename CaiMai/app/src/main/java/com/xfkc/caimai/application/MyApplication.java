@@ -43,10 +43,17 @@ public class MyApplication extends RootApplication {
 
     // 手机分辨率的宽
     public int phoneResolution_w = 320, phoneResolution_h = 480;
+<<<<<<< HEAD
 
 
     public SortModel shopModel;
 
+=======
+   /**商店ID**/
+    public String shopId;
+    /*经纬度*/
+    public  String longitude = "",latitude="";
+>>>>>>> d6bf3f6255991080d9b8b47c2f8cf2f3aceb187e
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
