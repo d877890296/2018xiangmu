@@ -13,6 +13,9 @@ import com.dev.customview.CustomListView;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 import com.xfkc.caimai.bean.EmptyBean;
+import com.xfkc.caimai.net.PayFactory;
+import com.xfkc.caimai.net.RxHelper;
+import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
 
 import java.util.ArrayList;
 
@@ -62,7 +65,9 @@ public class RecruitmentHallActivity extends BaseActivity {
     private RecruHallListAdapter recruHallListAdapter;
     private RecruedHallListAdapter recruedHallListAdapter;
 
-    private int TYPE=0;
+    private int TYPE = 0;
+
+    private String pageNum = "0", pageSize = "20";
 
     @Override
     protected int getLayoutResource() {
@@ -84,7 +89,7 @@ public class RecruitmentHallActivity extends BaseActivity {
         list_view.add(zmingLine);
         list_view.add(zmCompleteLine);
 
-        recruHallListAdapter =new RecruHallListAdapter(this);
+        recruHallListAdapter = new RecruHallListAdapter(this);
         recruedHallListAdapter = new RecruedHallListAdapter(this);
 
         setClick();
@@ -96,9 +101,9 @@ public class RecruitmentHallActivity extends BaseActivity {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (TYPE==0){
+                if (TYPE == 0) {
 
-                }else {
+                } else {
 
                 }
             }
@@ -111,6 +116,17 @@ public class RecruitmentHallActivity extends BaseActivity {
         list.add(new EmptyBean());
         list.add(new EmptyBean());
 
+        PayFactory.getPayService()
+                .recruitmentHall(pageNum, pageSize)
+                .compose(RxHelper.<EmptyBean>io_main())
+                .subscribe(new ProgressSubscriber<EmptyBean>(this) {
+                    @Override
+                    public void onNext(EmptyBean emptyBean) {
+
+
+                    }
+                });
+
 
     }
 
@@ -122,11 +138,11 @@ public class RecruitmentHallActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.zming:
-                TYPE =0;
+                TYPE = 0;
                 updateShow(0);
                 break;
             case R.id.zm_complete:
-                TYPE=1;
+                TYPE = 1;
                 updateShow(1);
                 break;
         }
@@ -143,10 +159,10 @@ public class RecruitmentHallActivity extends BaseActivity {
                 list_view.get(i).setBackgroundColor(Color.WHITE);
             }
         }
-        if (id==1){
+        if (id == 1) {
             recruHallListAdapter.setData(list);
             listview.setAdapter(recruHallListAdapter);
-        }else {
+        } else {
             recruedHallListAdapter.setData(list);
             listview.setAdapter(recruedHallListAdapter);
         }

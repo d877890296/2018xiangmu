@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.xfkc.caimai.R;
+import com.xfkc.caimai.bean.BannerBean;
 import com.xfkc.caimai.customview.RecyclingPagerAdapter;
 
 import java.util.ArrayList;
@@ -20,7 +21,8 @@ import java.util.List;
 
 public class TubatuAdapter extends RecyclingPagerAdapter {
 
-    private final List<Integer> mList;
+//    private final List<Integer> mList;
+    private final List<BannerBean.DataBean.ListBean> mList;
     private final Context mContext;
 
 
@@ -29,7 +31,7 @@ public class TubatuAdapter extends RecyclingPagerAdapter {
         mContext = context;
     }
 
-    public void addAll(List<Integer> list) {
+    public void addAll(List<BannerBean.DataBean.ListBean> list) {
         mList.addAll(list);
         notifyDataSetChanged();
     }
@@ -51,18 +53,16 @@ public class TubatuAdapter extends RecyclingPagerAdapter {
 //        imageView.setTag(position);
 
 //        imageView.setImageResource(mList.get(position));
-//        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        Glide.with(mContext).load(mList.get(position))
-                .placeholder(R.mipmap.ic_launcher)//占位符
-                .error(R.mipmap.ic_launcher)//加载错误时
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        Glide.with(mContext).load(mList.get(position).image)
+                .placeholder(R.mipmap.error_icon)//占位符
+                .error(R.mipmap.error_icon)//加载错误时
                 .into(imageView);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                //企业网址链接
-//                mContext.startActivity(new Intent(mContext, TDWebViewActivity.class)
-//                        .putExtra(Constant.WEB_URL, list.get(position).reqPath));
+
             }
         });
         return imageView;

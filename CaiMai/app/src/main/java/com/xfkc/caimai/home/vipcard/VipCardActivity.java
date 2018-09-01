@@ -77,6 +77,8 @@ public class VipCardActivity extends BaseActivity {
         list_view.add(zchykLine);
         list_view.add(jkhykLine);
         vipCardListAdapter = new VipCardListAdapter(this);
+        vipCardListAdapter.setData(list);
+        vipCardListAdapter.setType(1);
         listview.setAdapter(vipCardListAdapter);
         setListViewClick();
     }
@@ -85,10 +87,10 @@ public class VipCardActivity extends BaseActivity {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                VipCardBean.DataBean.ListBean listBean = list.get(position);
+                VipCardBean.DataBean.ListBean listBean = list.get(position-1);
                 extraMap.put("price", listBean.cardPrice);
                 extraMap.put("name", listBean.cardName);
-                extraMap.put("carid", listBean.createTime);
+                extraMap.put("carid", listBean.id);
                 skip_classView(VipContentActivity.class, extraMap, false);
             }
         });

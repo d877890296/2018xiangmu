@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
@@ -19,13 +18,12 @@
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="110px"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/order_tv_bg"
         android:gravity="center"
         android:text="立即体验"
-        android:textColor="@color/f1f1f1"
+        android:textColor="@color/c4c4c4"
         android:textSize="16sp"
-        android:visibility="gone"
-         />
+        android:visibility="gone" />
 
 </com.zhy.autolayout.AutoRelativeLayout>

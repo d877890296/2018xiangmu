@@ -9,11 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xfkc.caimai.R;
+import com.xfkc.caimai.bean.BannerBean;
 import com.xfkc.caimai.customview.ClipViewPager;
 import com.xfkc.caimai.customview.ScalePageTransformer;
 import com.zhy.autolayout.AutoRelativeLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -40,13 +40,15 @@ public class ModuleAdapter extends BaseAdapter {
 //    private OthersModuleAdapter othersModuleAdapter;
 
     private int[] images={R.mipmap.xingfu,R.mipmap.zhaomudating,R.mipmap.vip_car,R.mipmap.every_8};
+    private List<BannerBean.DataBean.ListBean> list_banner;
 
     public ModuleAdapter(Context context) {
         this.context = context;
     }
 
-    public void setData(List<String> moduleList) {
+    public void setData(List<String> moduleList, List<BannerBean.DataBean.ListBean> list) {
         this.moduleList = moduleList;
+        this.list_banner = list;
     }
 
     @Override
@@ -127,15 +129,15 @@ public class ModuleAdapter extends BaseAdapter {
 
     /*设置左右滑动图片可见数据*/
     private void setClipInitData(ViewHolder01 viewHolder01) {
-        List<Integer> list = new ArrayList<>();
-        list.add(R.mipmap.ic_launcher);
-        list.add(R.mipmap.ic_launcher);
-        list.add(R.mipmap.ic_launcher);
-        list.add(R.mipmap.ic_launcher);
+//        List<Integer> list = new ArrayList<>();
+//        list.add(R.mipmap.ic_launcher);
+//        list.add(R.mipmap.ic_launcher);
+//        list.add(R.mipmap.ic_launcher);
+//        list.add(R.mipmap.ic_launcher);
 
         //设置OffscreenPageLimit
-        viewHolder01.clipViewpager.setOffscreenPageLimit(list.size());
-        tubatuAdapter.addAll(list);
+        viewHolder01.clipViewpager.setOffscreenPageLimit(list_banner.size());
+        tubatuAdapter.addAll(list_banner);
     }
 
 

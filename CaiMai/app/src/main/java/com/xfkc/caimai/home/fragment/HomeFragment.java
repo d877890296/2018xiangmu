@@ -11,9 +11,13 @@ import com.goods.city.GoodsCityActivity;
 import com.hyf.tdlibrary.utils.ToastUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseFragment;
+import com.xfkc.caimai.bean.BannerBean;
 import com.xfkc.caimai.home.adapter.ModuleAdapter;
 import com.xfkc.caimai.home.recruitmenthall.RecruitmentHallActivity;
 import com.xfkc.caimai.home.vipcard.VipCardActivity;
+import com.xfkc.caimai.net.PayFactory;
+import com.xfkc.caimai.net.RxHelper;
+import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
 
 import java.util.ArrayList;
 
@@ -50,12 +54,26 @@ public class HomeFragment extends BaseFragment {
         listData.add("会员卡");
         listData.add("每晚8点直播");
 
-        moduleAdapter = new ModuleAdapter(mContext);
-        moduleAdapter.setData(listData);
-        homeList.setAdapter(moduleAdapter);
 
+        getBanner();//获取轮播图
         setListClick();
 
+    }
+
+    /*获取轮播图*/
+    private void getBanner() {
+        PayFactory.getPayService()
+                .getBannerData("0","10")
+                .compose(RxHelper.<BannerBean>io_main())
+                .subscribe(new ProgressSubscriber<BannerBean>(mContext) {
+                    @Override
+                    public void onNext(BannerBean bannerBean) {
+
+                        moduleAdapter = new ModuleAdapter(mContext);
+                        moduleAdapter.setData(listData,bannerBean.data.list);
+                        homeList.setAdapter(moduleAdapter);
+                    }
+                });
     }
 
     /*设置首页列表点击*/

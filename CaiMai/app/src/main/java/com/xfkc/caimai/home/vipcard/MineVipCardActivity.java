@@ -3,6 +3,8 @@ package com.xfkc.caimai.home.vipcard;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -10,7 +12,7 @@ import com.dev.customview.CustomListView;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
-import com.xfkc.caimai.bean.EmptyBean;
+import com.xfkc.caimai.bean.VipCardBean;
 import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.net.PayFactory;
 import com.xfkc.caimai.net.RxHelper;
@@ -37,7 +39,7 @@ public class MineVipCardActivity extends BaseActivity {
     CustomListView listview;
 
     private MineVipCardListAdapter mineVipCardListAdapter;
-    private ArrayList<EmptyBean> list = new ArrayList<>();
+    private ArrayList<VipCardBean.DataBean.ListBean> list = new ArrayList<>();
 
     private String token;
 
@@ -53,28 +55,37 @@ public class MineVipCardActivity extends BaseActivity {
         toolbarLeftImg.setImageResource(R.mipmap.back_white);
 
         mineVipCardListAdapter = new MineVipCardListAdapter(this);
-
+        listview.setAdapter(mineVipCardListAdapter);
         token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
 
+        setClick();
+    }
+
+    /*设置list监听*/
+    private void setClick() {
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                VipCardBean.DataBean.ListBean listBean = list.get(position);
+
+                skip_classView(MineVipContentActivity.class,extraMap,false);
+            }
+        });
     }
 
     @Override
     protected void loadData() {
 
-        list.add(new EmptyBean());
-        list.add(new EmptyBean());
-        list.add(new EmptyBean());
-
-        mineVipCardListAdapter.setData(list);
-        listview.setAdapter(mineVipCardListAdapter);
-
         PayFactory.getPayService()
                 .getUserVipCard(token)
-                .compose(RxHelper.<EmptyBean>io_main())
-                .subscribe(new ProgressSubscriber<EmptyBean>(this) {
+                .compose(RxHelper.<VipCardBean>io_main())
+                .subscribe(new ProgressSubscriber<VipCardBean>(this) {
                     @Override
-                    public void onNext(EmptyBean emptyBean) {
-
+                    public void onNext(VipCardBean vipCardBean) {
+                        if (vipCardBean.data.list != null && vipCardBean.data.list.size() != 0) {
+                            list.addAll(vipCardBean.data.list);
+                            mineVipCardListAdapter.setData(list);
+                        }
 
                     }
                 });

@@ -44,7 +44,13 @@
             android:name="design_height"
             android:value="1280" />
 
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".loading.LoadingActivity" />
         <activity android:name=".loading.RegisterActivity" />
         <activity android:name=".loading.ForgetPassWordActivity" />
@@ -87,11 +93,7 @@
         <activity android:name="com.goods.city.GoodsCityActivity" >
 
 
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
     </activity>
         <activity android:name="com.goods.city.GoodsStyleActivity" />
 

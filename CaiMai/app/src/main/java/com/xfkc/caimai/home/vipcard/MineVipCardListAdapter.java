@@ -7,7 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.xfkc.caimai.R;
-import com.xfkc.caimai.bean.EmptyBean;
+import com.xfkc.caimai.bean.VipCardBean;
 import com.zhy.autolayout.AutoLinearLayout;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 public class MineVipCardListAdapter extends BaseAdapter {
 
     private final Context context;
-    private ArrayList<EmptyBean> list;
+    private ArrayList<VipCardBean.DataBean.ListBean> list;
 
 
     public MineVipCardListAdapter(Context context) {
@@ -32,7 +32,7 @@ public class MineVipCardListAdapter extends BaseAdapter {
     }
 
     /*设置数据*/
-    public void setData(ArrayList<EmptyBean> list) {
+    public void setData(ArrayList<VipCardBean.DataBean.ListBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -65,27 +65,12 @@ public class MineVipCardListAdapter extends BaseAdapter {
             viewHodler = (ViewHolder) convertView.getTag();
         }
 
+        VipCardBean.DataBean.ListBean listBean = list.get(position);
 
-        switch (position) {
-            case 0:
-                viewHodler.days.setText("剩余有效期: 365天");
-                viewHodler.title.setText("初级会员");
-                viewHodler.price.setText("");
-                viewHodler.imageBg.setBackgroundResource(R.mipmap.vip01);
-                break;
-            case 1:
-                viewHodler.days.setText("剩余有效期: 365天");
-                viewHodler.title.setText("中级会员");
-                viewHodler.price.setText("");
-                viewHodler.imageBg.setBackgroundResource(R.mipmap.vip03);
-                break;
-            case 2:
-                viewHodler.days.setText("剩余有效期: 365天");
-                viewHodler.title.setText("高级会员");
-                viewHodler.price.setText("");
-                viewHodler.imageBg.setBackgroundResource(R.mipmap.vip02);
-                break;
-        }
+        viewHodler.days.setText("剩余有效期: 365天");
+        viewHodler.title.setText(listBean.cardName);
+        viewHodler.price.setText("");
+        viewHodler.imageBg.setBackgroundResource(R.mipmap.vip01);
 
 
         return convertView;
