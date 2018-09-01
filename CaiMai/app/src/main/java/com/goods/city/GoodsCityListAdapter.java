@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import com.dev.customview.TextViewUtils;
 import com.goods.model.GoodsModel;
+import com.hyf.tdlibrary.utils.Tools;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.application.MyApplication;
 
@@ -76,9 +78,17 @@ public class GoodsCityListAdapter extends RecyclerView.Adapter<GoodsCityListAdap
 
 		GoodsModel model = goodsData.get(curtentIndex);
 		holder.goods_name.setText(model.getGoodsName());
-		holder.goods_prace.setText("￥" + model.getGoodsPrice());
+		holder.goods_prace.setText( model.getGoodsPrice()+"康币");
+		setSitis(holder.goods_prace);
 		//app.imageLoader.displayImage(model.getGoodsMainPhotoId(), holder.goods_image,app.options);
 	//	app.imageLoader.displayImage(model.getImage(),holder.goods_image);
+	}
+
+
+	public void setSitis(TextView goods_prace){
+		String content=goods_prace.getText().toString();
+
+		TextViewUtils.setContentTextSize(goods_prace,content,(int)Tools.dip2px(mContext,20),0,content.length()-2);
 	}
 
 	@Override

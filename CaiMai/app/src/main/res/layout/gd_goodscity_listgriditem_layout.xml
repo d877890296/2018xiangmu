@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    
     android:id="@+id/listitem_liner"
-    android:layout_width="220dp"
+    android:layout_width="170dp"
     android:layout_height="280dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
+
     android:layout_marginTop="10dp"
     android:background="@drawable/bg_writecolor"
     android:orientation="vertical" >
@@ -14,7 +12,7 @@
         android:id="@+id/goods_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="2dp"
+        android:layout_margin="1dp"
         android:layout_weight="1"
         android:scaleType="fitXY"
         android:src="@drawable/gd_goodscity_model_img" />
@@ -24,14 +22,47 @@
         android:layout_height="wrap_content"
         android:layout_weight="0"
         android:orientation="vertical"
-        android:padding="10dp" >
+        android:padding="10dp">
 
-        <TextView
-            android:id="@+id/goods_name"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="袁咏仪同款衣服喜欢就去买哦"
-            android:textColor="#000000"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/goods_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="袁咏仪同款衣服喜欢"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/goods_new"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:text="新品"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+
+                android:background="@drawable/orange_shape"
+                android:textColor="@color/ff704d"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/goods_discroubTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:maxLines="1"
+            android:text="袁咏仪同款衣服喜欢"
+            android:textColor="#6f000000"
             android:textSize="14sp" />
 
         <TextView
@@ -39,8 +70,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="￥998.00"
-            android:textColor="#525252"
+            android:text="16.9康币"
+            android:textColor="@color/ff704d"
             android:textSize="12sp" />
     </LinearLayout>
 
