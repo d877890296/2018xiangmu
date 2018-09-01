@@ -67,11 +67,11 @@ public class BigListAdapter extends BaseAdapter {
         }
 
 
-        viewHodler.titleTv.setText("===="+position);
+        viewHodler.titleTv.setText("往期视频"+position);
         viewHodler.timeTv.setText("2018-08-0"+position);
-        Glide.with(context).load(R.mipmap.ic_launcher)
-                .placeholder(R.mipmap.ic_launcher)//占位符
-                .error(R.mipmap.ic_launcher)//加载错误时
+        Glide.with(context).load(R.mipmap.error_icon)
+                .placeholder(R.mipmap.error_icon)//占位符
+                .error(R.mipmap.error_icon)//加载错误时
                 .into(viewHodler.imgIcon);
         Glide.with(context).load(R.mipmap.nocollect_btn)
                 .placeholder(R.mipmap.nocollect_btn)//占位符

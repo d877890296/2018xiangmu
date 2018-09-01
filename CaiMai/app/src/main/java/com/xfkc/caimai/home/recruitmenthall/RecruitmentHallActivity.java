@@ -13,7 +13,7 @@ import com.dev.customview.CustomListView;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
-import com.xfkc.caimai.bean.EmptyBean;
+import com.xfkc.caimai.bean.RecruiHallBean;
 import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.net.PayFactory;
 import com.xfkc.caimai.net.RxHelper;
@@ -56,13 +56,15 @@ public class RecruitmentHallActivity extends BaseActivity {
     LinearLayout zmComplete;
     @Bind(R.id.listview)
     CustomListView listview;
+    @Bind(R.id.listview_ed)
+    CustomListView listviewEd;
 
     //标题集合
     private ArrayList<TextView> list_tv = new ArrayList<>();
     //下划线
     private ArrayList<View> list_view = new ArrayList<>();
 
-    private ArrayList<EmptyBean> list = new ArrayList<>();
+    private ArrayList<RecruiHallBean.DataBean.ListBean> list = new ArrayList<>();
 
     private RecruHallListAdapter recruHallListAdapter;
     private RecruedHallListAdapter recruedHallListAdapter;
@@ -70,6 +72,7 @@ public class RecruitmentHallActivity extends BaseActivity {
     private int TYPE = 0;
 
     private int pageNum = 0, pageSize = 20;
+    private String shopStatus = "2";//(2,"招募中") (3,"完成招募")
 
     @Override
     protected int getLayoutResource() {
@@ -104,6 +107,7 @@ public class RecruitmentHallActivity extends BaseActivity {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                position = position - 1;
                 if (TYPE == 0) {
 
                 } else {
@@ -115,18 +119,42 @@ public class RecruitmentHallActivity extends BaseActivity {
 
     @Override
     protected void loadData() {
-
-        list.add(new EmptyBean());
-        list.add(new EmptyBean());
-
+        if (list != null && list.size() != 0) {
+            list.clear();
+        }
         PayFactory.getPayService()
-                .recruitmentHall(pageNum, pageSize,token)
-                .compose(RxHelper.<EmptyBean>io_main())
-                .subscribe(new ProgressSubscriber<EmptyBean>(this) {
+                .recruitmentHall(pageNum, pageSize, token, shopStatus)
+                .compose(RxHelper.<RecruiHallBean>io_main())
+                .subscribe(new ProgressSubscriber<RecruiHallBean>(this) {
                     @Override
-                    public void onNext(EmptyBean emptyBean) {
+                    public void onNext(RecruiHallBean recruiHallBean) {
 
-
+                        if (recruiHallBean.data.list != null && recruiHallBean.data.list.size() != 0) {
+                            list.addAll(recruiHallBean.data.list);
+                            if (TYPE == 0) {
+                                listviewEd.setVisibility(View.GONE);
+                                listview.setVisibility(View.VISIBLE);
+                                recruHallListAdapter.setData(list);
+                                listview.setAdapter(recruHallListAdapter);
+                            } else {
+                                listviewEd.setVisibility(View.VISIBLE);
+                                listview.setVisibility(View.GONE);
+                                recruedHallListAdapter.setData(list);
+                                listviewEd.setAdapter(recruedHallListAdapter);
+                            }
+                        }else {
+                            if (TYPE == 0) {
+                                listviewEd.setVisibility(View.GONE);
+                                listview.setVisibility(View.VISIBLE);
+                                recruHallListAdapter.setData(list);
+                                listview.setAdapter(recruHallListAdapter);
+                            } else {
+                                listviewEd.setVisibility(View.VISIBLE);
+                                listview.setVisibility(View.GONE);
+                                recruedHallListAdapter.setData(list);
+                                listviewEd.setAdapter(recruedHallListAdapter);
+                            }
+                        }
                     }
                 });
 
@@ -142,10 +170,12 @@ public class RecruitmentHallActivity extends BaseActivity {
                 break;
             case R.id.zming:
                 TYPE = 0;
+                shopStatus = "2";
                 updateShow(0);
                 break;
             case R.id.zm_complete:
                 TYPE = 1;
+                shopStatus = "3";
                 updateShow(1);
                 break;
         }
@@ -162,14 +192,7 @@ public class RecruitmentHallActivity extends BaseActivity {
                 list_view.get(i).setBackgroundColor(Color.WHITE);
             }
         }
-        if (id == 1) {
-            recruHallListAdapter.setData(list);
-            listview.setAdapter(recruHallListAdapter);
-        } else {
-            recruedHallListAdapter.setData(list);
-            listview.setAdapter(recruedHallListAdapter);
-        }
-
+        loadData();
     }
 
 }

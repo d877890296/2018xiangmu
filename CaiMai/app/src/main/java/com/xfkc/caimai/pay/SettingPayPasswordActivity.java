@@ -11,7 +11,11 @@ import android.widget.TextView;
 import com.hyf.tdlibrary.utils.ToastUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
+import com.xfkc.caimai.bean.EmptyBean;
 import com.xfkc.caimai.customview.StateButton;
+import com.xfkc.caimai.net.PayFactory;
+import com.xfkc.caimai.net.RxHelper;
+import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -99,6 +103,16 @@ public class SettingPayPasswordActivity extends BaseActivity {
      */
     private void request() {
 
+        PayFactory.getPayService()
+                .setPayPwd(password)
+                .compose(RxHelper.<EmptyBean>io_main())
+                .subscribe(new ProgressSubscriber<EmptyBean>(this) {
+                    @Override
+                    public void onNext(EmptyBean emptyBean) {
+                        ToastUtil.showToast("支付密码设置成功!");
+                        finish();
+                    }
+                });
 
     }
 

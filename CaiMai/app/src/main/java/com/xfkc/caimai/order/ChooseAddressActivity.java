@@ -4,18 +4,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dev.customview.CustomListView;
-
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.StatusBarUtil;
-import com.orhanobut.logger.Logger;
 import com.xfkc.caimai.R;
+import com.xfkc.caimai.bean.AddressBean;
 import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.customview.StateButton;
+import com.xfkc.caimai.net.PayFactory;
+import com.xfkc.caimai.net.RxHelper;
+import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
+import com.xfkc.caimai.order.adapter.AddAddressListAdapter;
 import com.xfkc.caimai.rx.activity.RxActivity;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -37,10 +43,10 @@ public class ChooseAddressActivity extends RxActivity {
     @Bind(R.id.add_address_btn)
     StateButton addAddressBtn;
 
-//    private AddressListAdapter addressListAdapter;
+    private AddAddressListAdapter addressListAdapter;
 
     //地址集合
-//    private ArrayList<AddressListBean.AddressBean> list_address = new ArrayList();
+    private ArrayList<AddressBean.DataBean> list_address = new ArrayList();
 
     @Override
     protected int getLayoutResource() {
@@ -55,26 +61,44 @@ public class ChooseAddressActivity extends RxActivity {
         toolbarTitle.setText("选择收货地址");
         toolbarLeftImg.setImageResource(R.mipmap.back_white);
 
-        Logger.e("ChooseAddressActivity", "============" + isShow);
-//        addressListAdapter = new AddressListAdapter(this);
-//        addressListAdapter.showRightButton(isShow);
-//        addressListAdapter.setActivity(this);
+        addressListAdapter = new AddAddressListAdapter(this);
+        addressListAdapter.setData(list_address);
+        chooseAddressListview.setAdapter(addressListAdapter);
+
+        setlistClick();
+    }
+
+    private void setlistClick() {
+
+        chooseAddressListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                AddressBean.DataBean dataBean = list_address.get(position - 1);
+                extraMap.put("name",dataBean.receiveName);
+                extraMap.put("phone",dataBean.phone);
+                extraMap.put("address",dataBean.detailAdress);
+                backHistory(1005,true,true,extraMap);
+            }
+        });
     }
 
     @Override
     protected void loadData() {
-
-//        GetAllId getAllId = new GetAllId();
-//        getAllId.setToken(token);
-//        PayFactory.getPayService().getWstAddress(getAllId)
-//                .compose(RxHelper.<AddressListBean>io_main())
-//                .subscribe(new ProgressSubscriber<AddressListBean>(this) {
-//                    @Override
-//                    public void onNext(AddressListBean addressListBean) {
-//                        //设置地址集合
-//                        setListData(addressListBean.addressList);
-//                    }
-//                });
+        if (list_address.size()!=0){
+            list_address.clear();
+        }
+        token = SharedPrefUtil.get(mContext,SharedPref.TOKEN);
+        PayFactory.getPayService().getReceiveAdress(token)
+                .compose(RxHelper.<AddressBean>io_main())
+                .subscribe(new ProgressSubscriber<AddressBean>(this) {
+                    @Override
+                    public void onNext(AddressBean addressBean) {
+                        if ( addressBean.data !=null && addressBean.data.size()!=0){
+                            list_address.addAll(addressBean.data);
+                            addressListAdapter.setData(list_address);
+                        }
+                    }
+                });
 
 
 

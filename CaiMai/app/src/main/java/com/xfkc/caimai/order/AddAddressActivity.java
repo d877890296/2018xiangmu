@@ -9,15 +9,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
-import com.dev.customview.CustomListView;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.StatusBarUtil;
 import com.hyf.tdlibrary.utils.ToastUtil;
 import com.hyf.tdlibrary.utils.Tools;
 import com.lljjcoder.citypickerview.widget.CityPicker;
 import com.xfkc.caimai.R;
+import com.xfkc.caimai.bean.EmptyBean;
 import com.xfkc.caimai.config.SharedPref;
+import com.xfkc.caimai.net.PayFactory;
+import com.xfkc.caimai.net.RxHelper;
+import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
 import com.xfkc.caimai.rx.activity.RxActivity;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -47,18 +52,16 @@ public class AddAddressActivity extends RxActivity {
     EditText address;
     @Bind(R.id.address_content)
     EditText addressContent;
-    @Bind(R.id.choose_pro)
-    SuperTextView choosePro;
-    @Bind(R.id.pro_list)
-    CustomListView proList;
-    @Bind(R.id.choose_city)
-    SuperTextView chooseCity;
-    @Bind(R.id.city_list)
-    CustomListView cityList;
+//    @Bind(R.id.choose_pro)
+//    SuperTextView choosePro;
+//    @Bind(R.id.pro_list)
+//    CustomListView proList;
+//    @Bind(R.id.choose_city)
+//    SuperTextView chooseCity;
+//    @Bind(R.id.city_list)
+//    CustomListView cityList;
     //    @Bind(choose_region)
 //    SuperTextView chooseRegion;
-    @Bind(R.id.region_list)
-    CustomListView regionList;
 
 
     public String province = "北京市";//省份
@@ -80,17 +83,18 @@ public class AddAddressActivity extends RxActivity {
     TextView school;
     @Bind(R.id.switch_bt)
     SuperTextView switchBt;
+//    @Bind(R.id.choose_region)
+//    SuperTextView chooseRegion;
+//    @Bind(R.id.region_list)
+//    CustomListView regionList;
 
     private boolean isSwitch = false;//指纹手势开关  默认false
 
     private int TYPE;// 0 添加收货地址   1修改收货地址
-//    private ChinaBean foodCategoryBean;
-//    private ProListAdapter proListAdapter;
-//    private CityListAdapter cityListAdapter;
-//    private RegionListAdapter regionListAdapter;
-//    private ArrayList<ChinaBean.ProvListBean> proListInfo = new ArrayList();
-//    private ArrayList<ChinaBean.ProvListBean.CityListBean> cityListInfo = new ArrayList();
-//    private ArrayList<ChinaBean.ProvListBean.CityListBean.RegionListBean> regionListInfo = new ArrayList();
+
+    private ArrayList<TextView> list_location = new ArrayList<>();
+    private int location = 0;//0家  1公司  2学校
+    private int MOREN = 1; //1默认  2非默认
 
     @Override
     protected int getLayoutResource() {
@@ -106,145 +110,19 @@ public class AddAddressActivity extends RxActivity {
             toolbarTitle.setText("新增收货地址");
         } else if (TYPE == 1) {
             toolbarTitle.setText("编辑收货地址");
-//            setAddressInfo();//设置编辑收货地址信息
         }
         toolbarTitle.setTextColor(Color.BLACK);
         toolbarLeftImg.setImageResource(R.mipmap.back_white);
-//        toolbarRightText.setVisibility(View.VISIBLE);
-//        toolbarRightText.setText("保存");
-//        toolbarRightText.setTextColor(Color.RED);
 
         address.setFocusable(false);
 
-        //解析地址本地数据
-//        getLocalData();
-        //设置省份数据
-//        setProData();
+        list_location.add(home);
+        list_location.add(company);
+        list_location.add(school);
+
 
     }
 
-//    /*设置省份数据*/
-//    private void setProData() {
-//        proListAdapter = new ProListAdapter(this);
-//        proListAdapter.setData(proListInfo);
-//        proList.setAdapter(proListAdapter);
-//
-//        proList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                position = position - 1;
-//                ChinaBean.ProvListBean pro = proListInfo.get(position);
-//
-//                province = pro.provName;
-//                provinceId = pro.provId;
-//
-////                address.setText(province);
-//                choosePro.setLeftString(province);
-//                cityList.setVisibility(View.GONE);
-//                proList.setVisibility(View.GONE);
-//                regionList.setVisibility(View.GONE);
-//                disshow(choosePro, proList);
-//                //设置  城市列表数据
-//                setCityData(pro.cityList);
-//
-//            }
-//        });
-//    }
-//
-//    /*设置城市列表数据*/
-//    private void setCityData(List<ChinaBean.ProvListBean.CityListBean> List) {
-//        cityListInfo.clear();
-//        cityListInfo.addAll(List);
-//        cityListAdapter = new CityListAdapter(this);
-//        cityListAdapter.setData(cityListInfo);
-//        cityList.setAdapter(cityListAdapter);
-//
-//        cityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                position = position - 1;
-//                ChinaBean.ProvListBean.CityListBean cityBean = cityListInfo.get(position);
-//                city = cityBean.cityName;
-//                cityId = cityBean.cityId;
-//                cityList.setVisibility(View.GONE);
-//                proList.setVisibility(View.GONE);
-//                regionList.setVisibility(View.GONE);
-//                disshow(chooseCity, cityList);
-////                address.setText(province + "-" + city);
-//                chooseCity.setLeftString(city);
-//                //设置 区县数据
-//                setRegionData(cityBean.regionList);
-//            }
-//        });
-//    }
-//
-//    /*设置区县数据*/
-//    private void setRegionData(List<ChinaBean.ProvListBean.CityListBean.RegionListBean> list) {
-//        regionListInfo.clear();
-//        regionListInfo.addAll(list);
-//        regionListAdapter = new RegionListAdapter(this);
-//        regionListAdapter.setData(regionListInfo);
-//        regionList.setAdapter(regionListAdapter);
-//
-//        regionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                position = position - 1;
-//                ChinaBean.ProvListBean.CityListBean.RegionListBean regison = regionListInfo.get(position);
-//                district = regison.regionName;
-//                districtId = regison.regionId;
-//                cityList.setVisibility(View.GONE);
-//                proList.setVisibility(View.GONE);
-//                regionList.setVisibility(View.GONE);
-//                disshow(chooseRegion, regionList);
-////                address.setText(province + "-" + city + "-" + district);
-//                chooseRegion.setLeftString(district);
-//            }
-//        });
-//    }
-//
-//    /*解析本地  地址数据*/
-//    private void getLocalData() {
-//        //得到本地json文本内容
-//        String fileName = "chinaJSON.json";
-//        String foodJson = LocalJsonResolutionUtils.getJson(this, fileName);
-//        //转换为对象
-//        foodCategoryBean = LocalJsonResolutionUtils.JsonToObject(foodJson, ChinaBean.class);
-//
-//        proListInfo.addAll(foodCategoryBean.provList);
-//    }
-
-    /*设置编辑收货地址信息*/
-    private String addressId;
-
-//    private void setAddressInfo() {
-//        addressId = getIntent().getStringExtra("addressId");
-//        String userName = getIntent().getStringExtra("userName");
-//        String userPhone = getIntent().getStringExtra("userPhone");
-//        String usAddress = getIntent().getStringExtra("usAddress");
-//        String postCode = getIntent().getStringExtra("postCode");
-//
-//        shouhuorenEd.setText(userName);
-//        phone.setText(userPhone);
-//        if (Tools.IsEmpty(postCode)) {
-//            postCode = "";
-//        }
-//        code.setText(postCode);
-//        String[] strs = usAddress.split(" ");
-////        address.setText(strs[0] + "-" + strs[1] + "-" + strs[2]);
-//        choosePro.setLeftString(strs[0]);
-//        chooseCity.setLeftString(strs[1]);
-//        chooseRegion.setLeftString(strs[2]);
-//        String str = "";
-//        for (int i = 3; i < strs.length; i++) {
-//            str += strs[i];
-//        }
-//        addressContent.setText(str);
-//        province = strs[0];//省份
-//        city = strs[1];//城市
-//        district = strs[2];//区县
-//    }
 
     @Override
     protected void loadData() {
@@ -258,8 +136,8 @@ public class AddAddressActivity extends RxActivity {
 
 
     @OnClick({R.id.toolbar_left_img, R.id.toolbar_right_text,
-            R.id.address, R.id.choose_pro, R.id.choose_city,R.id.address_quyu, R.id.switch_bt, R.id.quit_btn
-//            choose_region
+            R.id.address, R.id.address_quyu, R.id.switch_bt, R.id.quit_btn
+            , R.id.home, R.id.company, R.id.school
     })
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -271,51 +149,46 @@ public class AddAddressActivity extends RxActivity {
                 //获取所填写信息
                 getEditInfo();
                 break;
-//            case R.id.address:
-//                //判断输入法的隐藏状态
-//                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//                if (imm.isActive()) {
-//                    imm.hideSoftInputFromWindow(view.getWindowToken(),
-//                            InputMethodManager.HIDE_NOT_ALWAYS);
-//                    selectAddress();//调用CityPicker选取区域
-//                }
-//                break;
-//            case R.id.choose_pro://选择省份
-//                if (proList.getVisibility() == View.GONE) {
-//                    show(choosePro, proList);
-//                } else {
-//                    disshow(choosePro, proList);
-//                }
-//                break;
-//            case R.id.choose_city:
-//                if (cityListInfo.size() != 0) {
-//                    showChooseCity();//展示城市选择框
-//                } else {
-//                    ToastUtil.showToast("请选择省份");
-//                }
-//                break;
-//            case choose_region:
-//                if (regionListInfo.size() != 0) {
-//                    showChooseRegison();//展示区县选择框
-//                } else {
-//                    ToastUtil.showToast("请选择城市");
-//                }
-//                break;
             case R.id.address_quyu:
                 selectAddress();
                 break;
             case R.id.switch_bt:
                 if (isSwitch) {//关
                     isSwitch = false;
+                    MOREN = 2;
                     switchBt.setRightIcon(R.drawable.icon_kaiguan_default);
                 } else {//开
                     isSwitch = true;
+                    MOREN = 1;
                     switchBt.setRightIcon(R.drawable.icon_kaiguan_pre);
                 }
                 break;
-
+            case R.id.home:
+                location = 0;
+                setLocation(0);
+                break;
+            case R.id.company:
+                location = 1;
+                setLocation(1);
+                break;
+            case R.id.school:
+                location = 2;
+                setLocation(2);
+                break;
         }
     }
+
+    private void setLocation(int id) {
+        for (int i = 0; i < list_location.size(); i++) {
+            if (id == i) {
+                list_location.get(i).setBackgroundResource(R.drawable.wallet_tv_bg);
+            } else {
+                list_location.get(i).setBackgroundResource(R.drawable.order_tv_bg02);
+            }
+        }
+    }
+
+
 
     /*展示区县列表*/
 //    private void showChooseRegison() {
@@ -352,8 +225,8 @@ public class AddAddressActivity extends RxActivity {
     private void getEditInfo() {
         String name = shouhuorenEd.getText().toString();
         String phone_number = phone.getText().toString();
-        String address_code = code.getText().toString();
-        String addr = address.getText().toString();
+//        String address_code = code.getText().toString();
+//        String addr = address.getText().toString();
         String addr_content = addressContent.getText().toString();
         if (Tools.IsEmpty(name)) {
             ToastUtil.showToast("姓名不能为空");
@@ -363,31 +236,11 @@ public class AddAddressActivity extends RxActivity {
             ToastUtil.showToast("手机号不能为空");
             return;
         }
-        if (Tools.IsEmpty(address_code)) {
-            ToastUtil.showToast("邮编不能为空");
-            return;
-        }
-        if (Tools.IsEmpty(provinceId)) {
-            ToastUtil.showToast("请选择省份");
-            return;
-        }
-        if (Tools.IsEmpty(cityId)) {
-            ToastUtil.showToast("请选择城市");
-            return;
-        }
-        if (Tools.IsEmpty(districtId)) {
-            ToastUtil.showToast("请选择区县");
-            return;
-        }
-        if (Tools.IsEmpty(addr_content)) {
-            ToastUtil.showToast("请填写详细收货地址");
-            return;
-        }
-//        if (TYPE == 0) {
-//            addAddress(name, phone_number, address_code, addr, addr_content);
-//        } else if (TYPE == 1) {
+        if (TYPE == 0) {
+            addAddress(name, phone_number, addr_content);
+        } else if (TYPE == 1) {
 //            editAddress(name, phone_number, address_code, addr, addr_content);
-//        }
+        }
 
     }
 
@@ -416,28 +269,23 @@ public class AddAddressActivity extends RxActivity {
 //    }
 
     /*新增收货地址*/
-//    private void addAddress(String name, String phone_number, String address_code, String addr, String addr_content) {
-//        NewAddAddressId newAddAddressId = new NewAddAddressId();
-//        newAddAddressId.token = token;
-//        newAddAddressId.userName = name;
-//        newAddAddressId.userPhone = phone_number;
-//        newAddAddressId.provinceId = provinceId;
-//        newAddAddressId.cityId = cityId;
-//        newAddAddressId.regionId = districtId;
-//        newAddAddressId.postCode = address_code;
-//        newAddAddressId.usAddress = addr_content;
-//        newAddAddressId.isDefault = "1";
-//        PayFactory.getPayService().AddWstAddress(newAddAddressId)
-//                .compose(RxHelper.<EmptyBean>io_main())
-//                .subscribe(new ProgressSubscriber<EmptyBean>(this) {
-//                    @Override
-//                    public void onNext(EmptyBean emptyBean) {
-//                        ToastUtil.showToast("添加成功");
-//                        backHistory(10002, true, true, extraMap);
-//                    }
-//                });
-//    }
-//
+    private void addAddress(String name, String phone_number, String addr_content) {
+        token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
+
+        PayFactory.getPayService()
+                .AddWstAddress(name, phone_number, token, province, city, district, addr_content, MOREN)
+                .compose(RxHelper.<EmptyBean>io_main())
+                .subscribe(new ProgressSubscriber<EmptyBean>(this) {
+                    @Override
+                    public void onNext(EmptyBean emptyBean) {
+                        ToastUtil.showToast("添加成功");
+//                        finish();
+                        backHistory(10002, true, true, extraMap);
+                    }
+                });
+    }
+
+    //
     private void selectAddress() {
         CityPicker cityPicker = new CityPicker.Builder(AddAddressActivity.this)
                 .textSize(14)
@@ -480,7 +328,5 @@ public class AddAddressActivity extends RxActivity {
             }
         });
     }
-
-
 
 }

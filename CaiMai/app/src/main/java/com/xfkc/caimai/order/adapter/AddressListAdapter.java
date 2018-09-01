@@ -9,17 +9,15 @@
 //import android.widget.RelativeLayout;
 //import android.widget.TextView;
 //
-//import com.jinpinhui.jph.R;
-//import com.jinpinhui.jph.bean.AddressListBean;
-//import com.jinpinhui.jph.mine.infomation.AddressGetLoad;
-//import com.jinpinhui.jph.mine.infomation.ChooseAddressActivity;
+//import com.xfkc.caimai.R;
+//import com.xfkc.caimai.bean.EmptyBean;
+//import com.xfkc.caimai.order.ChooseAddressActivity;
 //
 //import java.util.List;
 //
 //import butterknife.Bind;
 //import butterknife.ButterKnife;
 //
-//import static com.jinpinhui.jph.R.id.moren_checkbox;
 //
 ///**
 // * 1.地址列表 适配器
@@ -30,7 +28,7 @@
 //
 //
 //    private final Context context;
-//    private List<AddressListBean.AddressBean> list;
+//    private List<EmptyBean> list;
 //    private boolean isShow;
 //    private ChooseAddressActivity activity;
 //    private AddressGetLoad addressGetLoad;//编辑地址请求数据

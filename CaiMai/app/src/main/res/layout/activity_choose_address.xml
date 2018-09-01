@@ -19,7 +19,7 @@
             android:layout_height="1dp"
             android:background="@color/bg_color" />
 
-        <com.xfkc.caimai.customview.CustomListView
+        <com.dev.customview.CustomListView
             android:id="@+id/choose_address_listview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,8 +27,7 @@
             android:dividerHeight="10dp"
 
             >
-
-        </com.xfkc.caimai.customview.CustomListView>
+        </com.dev.customview.CustomListView>
     </com.zhy.autolayout.AutoLinearLayout>
 
     <com.xfkc.caimai.customview.StateButton
@@ -39,9 +38,9 @@
         android:gravity="center"
         android:text="新增收货地址"
         android:textSize="18sp"
-        app:normalBackgroundColor="@color/red"
+        app:normalBackgroundColor="@color/ff704d"
         app:normalTextColor="@color/white"
-        app:pressedBackgroundColor="@color/red_90"
+        app:pressedBackgroundColor="@color/ff704d_90"
         app:pressedTextColor="@color/white" />
 
 </com.zhy.autolayout.AutoRelativeLayout>

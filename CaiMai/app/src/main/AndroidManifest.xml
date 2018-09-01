@@ -22,27 +22,27 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
-    <!--用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
-    <!--用于访问GPS定位-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
-    <!--用于获取运营商信息，用于支持提供运营商信息相关的接口-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
-    <!--用于访问wifi网络信息，wifi信息会用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
-    <!--用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
-    <!--用于访问网络，网络定位需要上网-->
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-    <!--用于读取手机当前的状态-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
-    <!--用于写入缓存数据到扩展存储卡-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-    <!--用于申请调用A-GPS模块-->
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"></uses-permission>
-    <!--用于申请获取蓝牙信息进行室内定位-->
-    <uses-permission android:name="android.permission.BLUETOOTH"></uses-permission>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"></uses-permission>
+    <!-- 用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 用于获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 用于访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 用于写入缓存数据到扩展存储卡 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 用于申请调用A-GPS模块 -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <!-- 用于申请获取蓝牙信息进行室内定位 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <supports-screens
         android:anyDensity="true"
@@ -66,9 +66,7 @@
             android:name="design_height"
             android:value="1280" />
 
-        <activity android:name=".MainActivity" >
-
-        </activity>
+        <activity android:name=".MainActivity"></activity>
         <activity android:name=".loading.LoadingActivity" />
         <activity android:name=".loading.RegisterActivity" />
         <activity android:name=".loading.ForgetPassWordActivity" />
@@ -112,19 +110,13 @@
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind" />
-        <activity android:name="com.goods.city.GoodsCityActivity" >
-
-
-
-    </activity>
+        <activity android:name="com.goods.city.GoodsCityActivity"></activity>
         <activity android:name="com.goods.city.GoodsStyleActivity" />
-
         <activity android:name="com.goods.city.GoodsStyleDetailsActivity" />
         <activity android:name="com.goods.details.GoodsDetailsActivity" />
         <activity android:name="com.goods.shoppingcar.ShoppingCarActivity" />
-        <activity android:name="com.goods.sortlsitview.GoodsChooseCityActivity"></activity>
-        <activity android:name="com.goods.order.SureOrderActivity"></activity>
-
+        <activity android:name="com.goods.sortlsitview.GoodsChooseCityActivity" />
+        <activity android:name="com.goods.order.SureOrderActivity" />
         <activity android:name=".order.OrderActivity" />
         <activity android:name=".order.OrderContentActivity" />
         <activity android:name=".home.vipcard.VipCardActivity" />
@@ -138,13 +130,16 @@
         <activity android:name=".pay.SettingPayPasswordActivity" />
         <activity android:name=".pay.PayWAyActivity" />
         <activity android:name=".home.recruitmenthall.RecruitmentHallActivity" />
-        <activity android:name=".home.vipcard.MineVipCardActivity"></activity>
+        <activity android:name=".home.vipcard.MineVipCardActivity" />
 
-        <!--高德地图-->
-        <service android:name="com.amap.api.location.APSService"></service>
-        <meta-data android:name="com.amap.api.v2.apikey" android:value="2bfe30c8f9b03b20a80ace9b2ee4686f">
+        <!-- 高德地图 -->
+        <service android:name="com.amap.api.location.APSService" />
 
-        </meta-data>
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="2bfe30c8f9b03b20a80ace9b2ee4686f"></meta-data>
+
+        <activity android:name=".pay.UpdatePayPasswordActivity"></activity>
     </application>
 
 </manifest>

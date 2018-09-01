@@ -86,4 +86,15 @@
         android:divider="@color/f1f1f1"
         android:layout_marginTop="10dp"
         />
+    <com.dev.customview.CustomListView
+        android:id="@+id/listview_ed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:dividerHeight="10dp"
+        android:divider="@color/f1f1f1"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        />
 </com.zhy.autolayout.AutoLinearLayout>

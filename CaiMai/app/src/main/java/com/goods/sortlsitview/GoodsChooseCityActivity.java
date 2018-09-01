@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -188,21 +187,12 @@ import java.util.List;
      * 请求数据
      */
     public void requstNetData() {
-<<<<<<< HEAD
         userToken = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
         GoodsKey goodsKey = new GoodsKey();
         goodsKey.token=userToken;
         goodsKey.longitude = app.longitude;
         goodsKey.latitude =  app.latitude;
-        Log.e("---", userToken+"---"+app.longitude+"---"+app.latitude);
-=======
-        userToken= SharedPrefUtil.get(mContext, SharedPref.TOKEN);
-        GoodsKey goodsKey = new GoodsKey();
-        goodsKey.token="887d8eee-f5d5-4873-a0c4-6ba9dbff052d";
-        goodsKey.longitude = "115.569030";
-        goodsKey.latitude =  "33.9996937";
 
->>>>>>> 52fdb13965afef9f796a9d9785c020722b9808a8
         PayFactory.getPayService()
 //                .getAllShopsAndNearshop(app.latitude,app.longitude,userToken)
                 .getAllShopsAndNearshop(goodsKey)

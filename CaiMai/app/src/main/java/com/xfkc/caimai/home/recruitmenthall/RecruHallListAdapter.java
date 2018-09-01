@@ -7,7 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.xfkc.caimai.R;
-import com.xfkc.caimai.bean.EmptyBean;
+import com.xfkc.caimai.bean.RecruiHallBean;
 import com.xfkc.caimai.customview.StateButton;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 public class RecruHallListAdapter extends BaseAdapter {
 
     private final Context context;
-    private ArrayList<EmptyBean> list;
+    private ArrayList<RecruiHallBean.DataBean.ListBean> list;
 
 
     public RecruHallListAdapter(Context context) {
@@ -32,7 +32,7 @@ public class RecruHallListAdapter extends BaseAdapter {
     }
 
     /*设置数据*/
-    public void setData(ArrayList<EmptyBean> list) {
+    public void setData(ArrayList<RecruiHallBean.DataBean.ListBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -65,6 +65,9 @@ public class RecruHallListAdapter extends BaseAdapter {
             viewHodler = (ViewHolder) convertView.getTag();
         }
 
+        RecruiHallBean.DataBean.ListBean listBean = list.get(position);
+
+        viewHodler.dianpuTitle.setText(listBean.shopName);
 
         viewHodler.payBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,4 +1,4 @@
-package com.xfkc.caimai.home.recruitmenthall;
+package com.xfkc.caimai.order.adapter;
 
 import android.content.Context;
 import android.view.View;
@@ -7,7 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.xfkc.caimai.R;
-import com.xfkc.caimai.bean.RecruiHallBean;
+import com.xfkc.caimai.bean.AddressBean;
 
 import java.util.ArrayList;
 
@@ -15,23 +15,23 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * 1.招募大厅 列表展示类
+ * 1.地址信息展示 列表展示类
  * 2.@dongjinxu
  * 3.@2018/4/11.
  */
 
-public class RecruedHallListAdapter extends BaseAdapter {
+public class AddAddressListAdapter extends BaseAdapter {
 
     private final Context context;
-    private ArrayList<RecruiHallBean.DataBean.ListBean> list;
+    private ArrayList<AddressBean.DataBean> list;
 
 
-    public RecruedHallListAdapter(Context context) {
+    public AddAddressListAdapter(Context context) {
         this.context = context;
     }
 
     /*设置数据*/
-    public void setData(ArrayList<RecruiHallBean.DataBean.ListBean> list) {
+    public void setData(ArrayList<AddressBean.DataBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -57,39 +57,38 @@ public class RecruedHallListAdapter extends BaseAdapter {
 
         ViewHolder viewHodler;
         if (convertView == null) {
-            convertView = View.inflate(context, R.layout.recruing_hall_item02, null);
+            convertView = View.inflate(context, R.layout.address_item, null);
             viewHodler = new ViewHolder(convertView);
             convertView.setTag(viewHodler);
         } else {
             viewHodler = (ViewHolder) convertView.getTag();
         }
 
-        RecruiHallBean.DataBean.ListBean listBean = list.get(position);
+        AddressBean.DataBean dataBean = list.get(position);
 
-        viewHodler.dianpuTitle.setText(listBean.shopName);
+        viewHodler.name.setText(dataBean.receiveName);
+        viewHodler.phone.setText(dataBean.phone);
+        viewHodler.addressContent.setText(dataBean.detailAdress);
 
+        if (dataBean.acquiesce == 1){
+            viewHodler.status.setVisibility(View.VISIBLE);
+        }else {
+            viewHodler.status.setVisibility(View.GONE);
+        }
 
         return convertView;
     }
 
 
     static class ViewHolder {
-        @Bind(R.id.dianpu_title)
-        TextView dianpuTitle;
-        @Bind(R.id.recru_status)
-        TextView recruStatus;
-        @Bind(R.id.a_type)
-        TextView aType;
-        @Bind(R.id.a_type_des)
-        TextView aTypeDes;
-        @Bind(R.id.b_type)
-        TextView bType;
-        @Bind(R.id.b_type_des)
-        TextView bTypeDes;
-        @Bind(R.id.c_type)
-        TextView cType;
-        @Bind(R.id.c_type_des)
-        TextView cTypeDes;
+        @Bind(R.id.name)
+        TextView name;
+        @Bind(R.id.phone)
+        TextView phone;
+        @Bind(R.id.status)
+        TextView status;
+        @Bind(R.id.address_content)
+        TextView addressContent;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

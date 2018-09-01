@@ -1,12 +1,15 @@
 package com.xfkc.caimai.net;
 
 
+import com.xfkc.caimai.bean.AddressBean;
 import com.xfkc.caimai.bean.AllShopsModel;
 import com.xfkc.caimai.bean.BannerBean;
 import com.xfkc.caimai.bean.EmptyBean;
 import com.xfkc.caimai.bean.GoodsCityModel;
 import com.xfkc.caimai.bean.GoodsKey;
 import com.xfkc.caimai.bean.LoginInfo;
+import com.xfkc.caimai.bean.RecruiHallBean;
+import com.xfkc.caimai.bean.UserInfoBean;
 import com.xfkc.caimai.bean.VipCardBean;
 import com.xfkc.caimai.bean.ZfbBean;
 
@@ -54,11 +57,12 @@ public interface PayService {
 
     //正在招募，已完成招募列表
     @GET("/api/recruite/inrecruitment")
-    Observable<EmptyBean> recruitmentHall(@Query("pageNum") int pageNum, @Query("pageSize") int pageSize, @Query("token") String token);
+    Observable<RecruiHallBean> recruitmentHall(@Query("pageNum") int pageNum, @Query("pageSize") int pageSize,
+                                               @Query("token") String token, @Query("shopStatus") String shopStatus);
 
     //会员购买创建订单
     @GET("/api/appPay/crateMemOrder")
-    Observable<ZfbBean> zfbPay(@Query("memCardId") String memCardId ,@Query("token") String token);
+    Observable<ZfbBean> zfbPay(@Query("memCardId") String memCardId, @Query("token") String token);
 
     //获取轮播图
     @GET("/api/banner/findAll")
@@ -69,11 +73,37 @@ public interface PayService {
      * 商城列表
      */
     @POST("/api/happycommune/getProductBySearch")
-    Observable<GoodsCityModel> getGoodsCityListData(@Body GoodsKey id );
+    Observable<GoodsCityModel> getGoodsCityListData(@Body GoodsKey id);
+
     /****
      *
      * 所以商店列表
      */
     @POST("/api/happycommune/getAllShopsAndNearshop")
-    Observable<AllShopsModel> getAllShopsAndNearshop(@Body GoodsKey id );
+    Observable<AllShopsModel> getAllShopsAndNearshop(@Body GoodsKey id);
+
+    //首次设置支付密码
+    @GET("/api/memUser/addPayPwd")
+    Observable<EmptyBean> setPayPwd(@Query("payPwd") String payPwd);
+
+    //修改支付密码
+    @GET("/api/memUser/updatePayPwd")
+    Observable<EmptyBean> updatePayPwd(@Query("phone") String phone, @Query("verCode") String verCode,
+                                       @Query("payPwd") String payPwd);
+
+    //获取用户信息
+    @GET("/api/memUser/findUserDetByPhone")
+    Observable<UserInfoBean> findUserDetByPhone(@Query("token") String token);
+
+    //添加收货地址
+    @GET("/api/receiveAdress/addReceiveAdressOrUpdate")
+    Observable<EmptyBean> AddWstAddress(@Query("name") String name, @Query("phone") String phone,
+                                        @Query("token") String token, @Query("province") String province
+            , @Query("city") String city, @Query("area") String area
+            , @Query("detailAdress") String detailAdress, @Query("acquiesce") int acquiesce);
+
+    //查询用户收货地址
+    @GET("/api/receiveAdress/getReceiveAdress")
+    Observable<AddressBean> getReceiveAdress(@Query("token") String token);
+
 }
