@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
 import com.dev.customview.MyGridView;
+import com.goods.mineOrderforgoods.OrderforgoodsActivity;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseFragment;
 import com.xfkc.caimai.bean.EmptyBean;
@@ -135,19 +136,30 @@ public class SocialCentreFragment extends BaseFragment {
                 skip_classView(SettingActivity.class,extraMap,false,true);
                 break;
             case R.id.order_tv:
-                startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"0"));
+                extraMap.put("baseType", -1);
+                skip_classView(OrderforgoodsActivity.class, extraMap, false, false);
+               // startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"0"));
                 break;
             case R.id.wait_pay_tv:
-                startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"1"));
+           //     startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"1"));
+                extraMap.put("baseType", 1);
+                skip_classView(OrderforgoodsActivity.class, extraMap, false, false);
                 break;
             case R.id.psz_tv:
-                startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"2"));
+
+               // startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"2"));
+                extraMap.put("baseType", 2);
+                skip_classView(OrderforgoodsActivity.class, extraMap, false, false);
                 break;
             case R.id.dpj_tv:
-                startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"3"));
+               // startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"3"));
+                extraMap.put("baseType", 3);
+                skip_classView(OrderforgoodsActivity.class, extraMap, false, false);
                 break;
             case R.id.tk_sh_tv:
-                startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"4"));
+             //   startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"4"));
+                extraMap.put("baseType", 4);
+                skip_classView(OrderforgoodsActivity.class, extraMap, false, false);
                 break;
         }
     }

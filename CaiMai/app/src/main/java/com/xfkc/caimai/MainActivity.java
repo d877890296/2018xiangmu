@@ -17,6 +17,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.goods.netrequst.DefaultRequstLocation;
 import com.hyf.tdlibrary.utils.ActivityUtil;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.ToastUtil;
@@ -45,6 +46,8 @@ public class MainActivity extends RxActivity {
     public AMapLocationClient mLocationClient = null;
     //声明定位回调监听器
 //    public AMapLocationListener mLocationListener = new AMapLocationListener();
+    /***第一次进入商店定位并获取当前商品信息*/
+    public DefaultRequstLocation defaultRequstLocation;
 
     @Override
     protected int getLayoutResource() {
@@ -105,6 +108,9 @@ public class MainActivity extends RxActivity {
         mLocationClient.setLocationOption(mLocationOption);
         //启动定位
         mLocationClient.startLocation();
+        //初始化获取商店信息
+        defaultRequstLocation=new DefaultRequstLocation(mContext);
+
     }
 
     //可以通过类implement方式实现AMapLocationListener接口，也可以通过创造接口类对象的方法实现

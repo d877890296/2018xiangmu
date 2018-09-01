@@ -8,11 +8,13 @@ import android.os.Build;
 import android.os.StrictMode;
 import android.support.multidex.MultiDex;
 
+import com.goods.sortlsitview.SortModel;
 import com.hyf.tdlibrary.RootApplication;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.cookie.store.PersistentCookieStore;
+import com.net.JsonHttp;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
@@ -35,13 +37,15 @@ public class MyApplication extends RootApplication {
     public List<Activity> queueList;
     //内存泄漏自检
     private RefWatcher refWatcher;
-
+    // 全局的网络请求
+    public JsonHttp jsonHttp;
     public ImageLoader imageLoader;
 
     // 手机分辨率的宽
     public int phoneResolution_w = 320, phoneResolution_h = 480;
-   /**商店ID**/
-    public String shopId;
+
+
+    public SortModel shopModel;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -56,6 +60,7 @@ public class MyApplication extends RootApplication {
         refWatcher = LeakCanary.install(this);
         queueList = new ArrayList<Activity>();
         imageLoader=ImageLoader.getInstance();
+        jsonHttp = new JsonHttp();
         //okGo 配置
         initOkGo();
         //初始化分享

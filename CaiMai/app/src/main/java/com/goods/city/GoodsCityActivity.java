@@ -211,25 +211,28 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
         goodsKey.pageNum = pageNum + "";
         goodsKey.pageSize = pageSize + "";
         goodsKey.shopId = "12";
-        PayFactory.getPayService()
-                .getGoodsCityListData(goodsKey)
-                .compose(RxHelper.<GoodsCityModel>io_main())
-                .subscribe(new ProgressSubscriber<GoodsCityModel>(this) {
-                    @Override
-                    public void onNext(GoodsCityModel loginInfo) {
-//                        SharedPrefUtil.put(mContext, SharedPref.TOKEN,loginInfo.data);
-//                        skip_classView(MainActivity.class,extraMap,true);
 
 
-                    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-
-
-                    }
-                });
+//        PayFactory.getPayService()
+//                .getGoodsCityListData(goodsKey)
+//                .compose(RxHelper.<GoodsCityModel>io_main())
+//                .subscribe(new ProgressSubscriber<GoodsCityModel>(this) {
+//                    @Override
+//                    public void onNext(GoodsCityModel loginInfo) {
+////                        SharedPrefUtil.put(mContext, SharedPref.TOKEN,loginInfo.data);
+////                        skip_classView(MainActivity.class,extraMap,true);
+//
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        super.onError(e);
+//
+//
+//                    }
+//                });
     }
 
 

@@ -125,6 +125,9 @@
         <activity android:name="com.goods.sortlsitview.GoodsChooseCityActivity"></activity>
         <activity android:name="com.goods.order.SureOrderActivity"></activity>
 
+        <activity android:name="com.goods.mineOrderforgoods.OrderforgoodsActivity"></activity>
+
+
         <activity android:name=".order.OrderActivity" />
         <activity android:name=".order.OrderContentActivity" />
         <activity android:name=".home.vipcard.VipCardActivity" />
