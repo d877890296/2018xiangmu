@@ -32,8 +32,15 @@ import com.dev.customview.ClearEditText;
 import com.goods.city.GoodsStyleActivity;
 import com.goods.shoppingcar.ShoppingCarActivity;
 import com.goods.sortlsitview.SideBar.OnTouchingLetterChangedListener;
+import com.hyf.tdlibrary.utils.Tools;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
+import com.xfkc.caimai.bean.AllShopsModel;
+import com.xfkc.caimai.bean.GoodsCityModel;
+import com.xfkc.caimai.bean.GoodsKey;
+import com.xfkc.caimai.net.PayFactory;
+import com.xfkc.caimai.net.RxHelper;
+import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
 
 /**
      * 为了使用者方便，一进入主布局就能看懂大致思路的指导，免得花太多时间去看源码
@@ -60,6 +67,7 @@ import com.xfkc.caimai.base.BaseActivity;
         private TextView dialog;
         private SortAdapter adapter;
         private ClearEditText mClearEditText;
+    private View headView;
 
         /**
          * 汉字转换成拼音的类
@@ -73,12 +81,16 @@ import com.xfkc.caimai.base.BaseActivity;
         private PinyinComparator pinyinComparator;
     @Override
     protected int getLayoutResource() {
+        setSoftInputMode();
+        hindKey();
         return R.layout.goods_choosecity_layout;
     }
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
         initViews();
+
+
     }
 
     @Override
@@ -89,18 +101,20 @@ import com.xfkc.caimai.base.BaseActivity;
 
         private void initViews() {
             back_btn = (ImageButton) findViewById(R.id.back_btn);
-            back_btn.setVisibility(View.VISIBLE);
+            back_btn.setVisibility(View.GONE);
             back_btn.setOnClickListener(onClickListener);
             topbar_img_title= (TextView) findViewById(R.id.topbar_img_title);
             topbar_img_title.setVisibility(View.GONE);
             topbar_title= (TextView) findViewById(R.id.topbar_title);
             topbar_title.setVisibility(View.VISIBLE);
-            topbar_title.setText("选择城市");
+            topbar_title.setText("选择店铺");
 
             other_btn= (ImageButton) findViewById(R.id.other_btn);
             other_btn.setVisibility(View.GONE);
             other_morbtn= (Button) findViewById(R.id.other_morbtn);
-            other_morbtn.setVisibility(View.GONE);
+            other_morbtn.setVisibility(View.VISIBLE);
+            other_morbtn.setText("取消");
+            other_morbtn  .setOnClickListener(onClickListener);
             // 实例化汉字转拼音类
             characterParser = CharacterParser.getInstance();
 
@@ -109,6 +123,7 @@ import com.xfkc.caimai.base.BaseActivity;
             sideBar = (SideBar) findViewById(R.id.sidrbar);
             dialog = (TextView) findViewById(R.id.dialog);
             sideBar.setTextView(dialog);
+            sideBar.setTextSize((int)Tools.dip2px(mContext,10));
 
             // 设置右侧触摸监听
             sideBar.setOnTouchingLetterChangedListener(new OnTouchingLetterChangedListener() {
@@ -131,11 +146,17 @@ import com.xfkc.caimai.base.BaseActivity;
                 public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {
                     // 这里要利用adapter.getItem(position)来获取当前position所对应的对象
+                    if (position==0){
+                        return;
+                    }
                     Toast.makeText(getApplication(),
-                            ((SortModel) adapter.getItem(position)).getName(),
+                            ((SortModel) adapter.getItem(position-1)).getName(),
                             Toast.LENGTH_SHORT).show();
                 }
             });
+
+            headView=getLayoutInflater().inflate(R.layout.goods_chooseshop_head_layout,null);
+            sortListView.addHeaderView(headView);
 
             SourceDateList = filledData(getResources().getStringArray(R.array.date));
 
@@ -166,9 +187,43 @@ import com.xfkc.caimai.base.BaseActivity;
                 public void afterTextChanged(Editable s) {
                 }
             });
+            requstNetData();
         }
 
-        /**
+    /****
+     *
+     * 请求数据
+     */
+    public void requstNetData() {
+
+        GoodsKey goodsKey = new GoodsKey();
+        goodsKey.token=userToken;
+        goodsKey.longitude = "115.5690304";
+        goodsKey.latitude =  "33.99969373";
+
+        PayFactory.getPayService()
+                .getAllShopsAndNearshop(goodsKey)
+                .compose(RxHelper.<AllShopsModel>io_main())
+                .subscribe(new ProgressSubscriber<AllShopsModel>(this) {
+                    @Override
+                    public void onNext(AllShopsModel loginInfo) {
+//                        SharedPrefUtil.put(mContext, SharedPref.TOKEN,loginInfo.data);
+//                        skip_classView(MainActivity.class,extraMap,true);
+
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+
+
+                    }
+                });
+    }
+
+
+    /**
          * 为ListView填充数据
          *
          * @param date
@@ -229,7 +284,7 @@ import com.xfkc.caimai.base.BaseActivity;
         public void onClick(View v) {
             // TODO Auto-generated method stubs
             switch (v.getId()) {
-                case R.id.back_btn:
+                case R.id.other_morbtn:
                     backHistory(-1, true, false, extraMap);
                     break;
 

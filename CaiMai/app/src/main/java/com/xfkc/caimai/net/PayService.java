@@ -1,8 +1,11 @@
 package com.xfkc.caimai.net;
 
 
+import com.xfkc.caimai.bean.AllShopsModel;
 import com.xfkc.caimai.bean.BannerBean;
 import com.xfkc.caimai.bean.EmptyBean;
+import com.xfkc.caimai.bean.GoodsCityModel;
+import com.xfkc.caimai.bean.GoodsKey;
 import com.xfkc.caimai.bean.LoginInfo;
 import com.xfkc.caimai.bean.VipCardBean;
 import com.xfkc.caimai.bean.ZfbBean;
@@ -61,4 +64,16 @@ public interface PayService {
     @GET("/api/banner/findAll")
     Observable<BannerBean> getBannerData(@Query("pageNum") String pageNum, @Query("pageSize") String pageSize);
 
+    /****
+     *
+     * 商城列表
+     */
+    @POST("/api/happycommune/getProductBySearch")
+    Observable<GoodsCityModel> getGoodsCityListData(@Body GoodsKey id );
+    /****
+     *
+     * 所以商店列表
+     */
+    @POST("/api/happycommune/getAllShopsAndNearshop")
+    Observable<AllShopsModel> getAllShopsAndNearshop(@Body GoodsKey id );
 }

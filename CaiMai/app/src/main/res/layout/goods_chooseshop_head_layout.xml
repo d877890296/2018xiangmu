@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFF"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFF"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFF"
+            android:padding="10dp"
+
+            android:text="最近店铺"
+            android:textColor="#454545"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+
+            android:drawableLeft="@drawable/gd_shop_litter_img"
+            android:gravity="center_vertical"
+            android:padding="8dp"
+            android:text="北京一店"
+            android:textColor="#FF704D"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#ededed" />
+
+    <TextView
+
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFF"
+        android:padding="10dp"
+
+        android:text="全部店铺"
+        android:textColor="#454545"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ededed" />
+
+</LinearLayout>

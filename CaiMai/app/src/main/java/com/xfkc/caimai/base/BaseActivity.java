@@ -3,9 +3,15 @@ package com.xfkc.caimai.base;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,8 +32,8 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity extends AppCompatActivity {
 
     public Map<String, Object> extraMap;
-    public String userid, usercode, username;
-    public int start = 0, pageSize = 20;
+    public String userToken, userid, usercode, username;
+
     public String token ;//用户登录
     public Context mContext;
     public MyApplication app;
@@ -39,7 +45,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     public LinearLayout net_error_liner, progress_liner, loadfail_liner;
 
     // 起始的下标
-    public int startIndex = 0, limit = 20;
+    public int pageNum = 0, pageSize = 20;
+
     // 是否第一次加载数据/是否有更多数据
     public boolean isfristLoadData, isMoreData = true;
     // 刷新数据和加载更多的数据
@@ -50,8 +57,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     /** list加载更多数据 **/
     public static final int LIST_LOADMORE_WHAT = 1;
     public TextView topbar_img_title,topbar_title;
-public ImageButton back_btn,other_btn;
-public Button other_morbtn;
+    public ImageButton back_btn,other_btn;
+    public Button other_morbtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +79,14 @@ public Button other_morbtn;
         app = MyApplication.getInstance();
 
         app.queueList.add(this);
+        userToken="78799507-5fa0-4d84-8fdf-0c925b7ce77c";
+        // 手机分辨率的宽度
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        app.phoneResolution_w = metrics.widthPixels;
+        // 手机分辨率的宽度
+        app.phoneResolution_h = metrics.heightPixels;
+
         //跳转传值
         extraMap = new HashMap<String, Object>();
     }
@@ -197,7 +212,65 @@ public Button other_morbtn;
         }
 
     }
+    /** 设置输入法弹起时页面不动 */
+    public void setSoftInputMode() {
+        // 设置输入法弹起时页面不动
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
+    }
+    /**
+     * 判断是否是平板
+     *
+     * @param context
+     * @return
+     */
+    public boolean isTablet(Context context) {
+        return (context.getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
+    /***
+     * 影藏键盘
+     */
+    public void hindKey() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
+        }
+    }
+
+    /****
+     * 自动弹起输入键盘
+     *
+     * 显示隐藏键盘
+     *
+     * searchfilter_edit编辑的输入
+     *
+     * @param ishide
+     */
+    public void openKey(final int ishide, final EditText searchfilter_edit) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                searchfilter_edit.requestFocus();
+                // 强制使输入框弹出来
+                searchfilter_edit.setFocusable(true);
+                InputMethodManager imm = (InputMethodManager) searchfilter_edit.getContext()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+                if (ishide == 0) {
+                    imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                } else {
+                    // 隐藏键盘
+                    ((InputMethodManager) searchfilter_edit.getContext().getSystemService(Context.INPUT_METHOD_SERVICE))
+                            .hideSoftInputFromWindow(searchfilter_edit.getWindowToken(),
+                                    InputMethodManager.HIDE_NOT_ALWAYS);
+
+                }
+            }
+        }, 400);
+
+    }
 
     public void showMbProgress(String msg) {
         if (mbProgress == null) {

@@ -511,7 +511,7 @@ public class ShoppingCarActivity extends BaseActivity {
 					if (allPrace == 0) {
 						MyToast.showMyToast(mContext, "请选择商品", -1);
 					} else {
-						extraMap.put("allPrace", allPrace);
+						extraMap.put("allPrace", "90");
 					skip_classView(OrderActivity.class, extraMap, false);
 					}
 
