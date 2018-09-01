@@ -6,12 +6,17 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.hyf.tdlibrary.utils.ActivityUtil;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.ToastUtil;
@@ -36,6 +41,10 @@ public class MainActivity extends RxActivity {
     FragmentTabHost mTabHost;
 
 
+    //声明AMapLocationClient类对象
+    public AMapLocationClient mLocationClient = null;
+    //声明定位回调监听器
+//    public AMapLocationListener mLocationListener = new AMapLocationListener();
 
     @Override
     protected int getLayoutResource() {
@@ -67,10 +76,59 @@ public class MainActivity extends RxActivity {
             }
         }
 
-
+        setLocation();
 
     }
 
+
+    //声明AMapLocationClientOption对象
+    public AMapLocationClientOption mLocationOption = null;
+
+    /*设置定位*/
+    private void setLocation() {
+        //初始化AMapLocationClientOption对象
+        mLocationOption = new AMapLocationClientOption();
+        //初始化定位
+        mLocationClient = new AMapLocationClient(getApplicationContext());
+        //设置定位回调监听
+        mLocationClient.setLocationListener(mAMapLocationListener);
+
+        //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        //设置定位间隔,单位毫秒,默认为2000ms，最低1000ms。
+        mLocationOption.setInterval(1000);
+        //设置是否返回地址信息（默认返回地址信息）
+        mLocationOption.setNeedAddress(true);
+        //单位是毫秒，默认30000毫秒，建议超时时间不要低于8000毫秒。
+        mLocationOption.setHttpTimeOut(20000);
+        //给定位客户端对象设置定位参数
+        mLocationClient.setLocationOption(mLocationOption);
+        //启动定位
+        mLocationClient.startLocation();
+    }
+
+    //可以通过类implement方式实现AMapLocationListener接口，也可以通过创造接口类对象的方法实现
+//以下为后者的举例：
+    AMapLocationListener mAMapLocationListener = new AMapLocationListener() {
+        @Override
+        public void onLocationChanged(AMapLocation amapLocation) {
+            if (amapLocation != null) {
+                if (amapLocation.getErrorCode() == 0) {
+                    //可在其中解析amapLocation获取相应内容。
+                    //获取纬度
+                    //获取经度
+                    Log.e("====", amapLocation.getLatitude()+"------" +amapLocation.getLongitude());
+                    mLocationClient.stopLocation();//停止定位后，本地定位服务并不会被销毁
+                    mLocationClient.onDestroy();//销毁定位客户端，同时销毁本地定位服务。
+                } else {
+                    //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                    Log.e("AmapError", "location Error, ErrCode:"
+                            + amapLocation.getErrorCode() + ", errInfo:"
+                            + amapLocation.getErrorInfo());
+                }
+            }
+        }
+    };
 
     @Override
     protected void loadData() {
@@ -152,9 +210,9 @@ public class MainActivity extends RxActivity {
 
         TAB_ONE(0, "大仓库", R.drawable.tab_icon_one, HomeFragment.class),
 
-        TAB_TWO(1, "大讲堂",R.drawable.tab_icon_two, BigLectureHallFragment.class),
+        TAB_TWO(1, "大讲堂", R.drawable.tab_icon_two, BigLectureHallFragment.class),
 
-        TAB_THREE(2, "情怀链",R.drawable.tab_icon_three, FeelingFragment.class),
+        TAB_THREE(2, "情怀链", R.drawable.tab_icon_three, FeelingFragment.class),
 
         TAB_FOUR(3, "社员中心", R.drawable.tab_icon_four, SocialCentreFragment.class);
 
@@ -213,5 +271,6 @@ public class MainActivity extends RxActivity {
         }
 
     }
+
 
 }

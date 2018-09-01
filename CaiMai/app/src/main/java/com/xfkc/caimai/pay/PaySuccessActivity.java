@@ -44,7 +44,7 @@ public class PaySuccessActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.look_order:
-                
+
                 break;
         }
     }

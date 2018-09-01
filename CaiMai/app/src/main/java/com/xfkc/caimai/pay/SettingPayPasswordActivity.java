@@ -79,10 +79,25 @@ public class SettingPayPasswordActivity extends BaseActivity {
             ToastUtil.showToast("密码不能为空!");
             return;
         }
+        if (password.length() != 6 ){
+            ToastUtil.showToast("密码长度不对!");
+            return;
+        }
+
         if (TextUtils.isEmpty(again_password) || !password.equals(again_password)) {
             ToastUtil.showToast("俩次密码不一致!");
             return;
         }
+
+
+        request();
+
+    }
+
+    /**
+     * 设置密码
+     */
+    private void request() {
 
 
     }
