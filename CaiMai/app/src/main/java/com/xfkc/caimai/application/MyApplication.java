@@ -38,6 +38,7 @@ public class MyApplication extends RootApplication {
 
     public ImageLoader imageLoader;
 
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
