@@ -183,7 +183,7 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
         }
 
         goodsCityListAdapter.setGoodsData(goodsData);
-
+        requstNetData();
         dissMbProgress();
 
     }
@@ -205,10 +205,12 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
      * 请求数据
      */
     public void requstNetData() {
+        userToken= SharedPrefUtil.get(mContext, SharedPref.TOKEN);
         GoodsKey goodsKey = new GoodsKey();
+        goodsKey.token=userToken;
         goodsKey.pageNum = pageNum + "";
         goodsKey.pageSize = pageSize + "";
-        goodsKey.shopId = "";
+        goodsKey.shopId = "12";
         PayFactory.getPayService()
                 .getGoodsCityListData(goodsKey)
                 .compose(RxHelper.<GoodsCityModel>io_main())

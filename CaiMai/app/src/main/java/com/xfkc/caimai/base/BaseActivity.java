@@ -17,9 +17,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dev.mbprogress.MbProgress;
+import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.StatusBarUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.application.MyApplication;
+import com.xfkc.caimai.config.SharedPref;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -79,7 +81,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         app = MyApplication.getInstance();
 
         app.queueList.add(this);
-        userToken="78799507-5fa0-4d84-8fdf-0c925b7ce77c";
+
         // 手机分辨率的宽度
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);

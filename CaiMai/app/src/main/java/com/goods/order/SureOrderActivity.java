@@ -23,7 +23,7 @@ import java.util.List;
  * Created by 10835 on 2018/9/1.
  */
 
-public class OrderActivity extends BaseActivity {
+public class SureOrderActivity extends BaseActivity {
 
 
     private String allPrace;
