@@ -42,7 +42,8 @@ public class MyApplication extends RootApplication {
     public int phoneResolution_w = 320, phoneResolution_h = 480;
    /**商店ID**/
     public String shopId;
-
+    /*经纬度*/
+    public  String longitude = "",latitude="";
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);

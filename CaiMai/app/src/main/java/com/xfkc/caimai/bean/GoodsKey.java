@@ -17,4 +17,5 @@ public class GoodsKey {
     public String longitude;
     public String latitude;
 
+
 }

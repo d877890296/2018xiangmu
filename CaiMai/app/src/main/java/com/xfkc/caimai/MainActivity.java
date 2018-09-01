@@ -117,7 +117,8 @@ public class MainActivity extends RxActivity {
                     //可在其中解析amapLocation获取相应内容。
                     //获取纬度
                     //获取经度
-                    Log.e("====", amapLocation.getLatitude()+"------" +amapLocation.getLongitude());
+                    app.latitude = amapLocation.getLatitude()+"";
+                    app.longitude ="" +amapLocation.getLongitude();
                     mLocationClient.stopLocation();//停止定位后，本地定位服务并不会被销毁
                     mLocationClient.onDestroy();//销毁定位客户端，同时销毁本地定位服务。
                 } else {
