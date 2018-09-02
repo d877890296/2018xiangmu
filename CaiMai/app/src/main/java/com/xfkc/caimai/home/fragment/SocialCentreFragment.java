@@ -145,8 +145,8 @@ public class SocialCentreFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0://康币钱包
-                        extraMap.put("payPwd",payPwd);
-                        extraMap.put("kbAmount",kbAmount);
+                        extraMap.put("payPwd",payPwd+"");
+                        extraMap.put("kbAmount",kbAmount+"");
                         skip_classView(WalletActivity.class, extraMap, false, true);
                         break;
                     case 1://我的会员卡

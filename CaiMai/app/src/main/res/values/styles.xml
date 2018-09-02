@@ -47,4 +47,19 @@
         <!-- <item name="android:background">@drawable/nav_page</item> -->
         <item name="android:background">@color/c99999999</item>
     </style>
+
+
+    <style name="BottomDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item><!--activity不变暗-->
+        <item name="android:background">@color/transparent</item>
+        <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
+    </style>
+
+    <style name="BottomDialog.Animation" parent="Animation.AppCompat.Dialog">
+        <item name="android:windowEnterAnimation">@anim/translate_dialog_in</item>
+        <item name="android:windowExitAnimation">@anim/translate_dialog_out</item>
+    </style>
+
 </resources>
