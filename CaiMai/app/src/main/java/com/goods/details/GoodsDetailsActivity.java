@@ -3,6 +3,7 @@ package com.goods.details;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -202,7 +203,8 @@ public class GoodsDetailsActivity extends BaseActivity {
     public void setBaseContent() {
         if (goodsListModel != null) {
             goodsTitle_textView.setText(goodsListModel.title);
-            goods_discroubTitle_textView.setText(goodsListModel.content);
+
+            goods_discroubTitle_textView.setText(Html.fromHtml(goodsListModel.content));
             goodsPrace_textView.setText(goodsListModel.itemPrice + "康币");
             setSitis(goodsPrace_textView);
         }
