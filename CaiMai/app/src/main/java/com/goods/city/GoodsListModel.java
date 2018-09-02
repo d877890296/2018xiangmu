@@ -35,5 +35,10 @@ public class GoodsListModel {
     @NetJsonFiled
     public int rank;//": 1,
 
+    //二级列表数据
+    @NetJsonFiled
+    public String sname;
+    @NetJsonFiled
+    public  int categoryId;
 
 }

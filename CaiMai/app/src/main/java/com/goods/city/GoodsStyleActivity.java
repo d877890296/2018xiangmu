@@ -51,7 +51,10 @@ public class GoodsStyleActivity extends BaseActivity  {
     private List<GoodsListModel> goodsData;
 
     public List<GoodsStyleModel> data;
+
     private GoodsStyleContentAdapter goodsStyleContentAdapter;
+
+    private  TextView second_nodataview_textview;
 
     private NetRequst netRequst;
     private NetRequstAjaxCallBack ajaxCallBack;
@@ -59,6 +62,9 @@ public class GoodsStyleActivity extends BaseActivity  {
   private String style[]={"水果","蔬菜"};
 
     private String content[]={"水果2","蔬2菜","水fs果2","蔬2菜","水果csa2"};
+
+    private  int requstType=0;
+    private String firstTitle="";
 
     @Override
     protected int getLayoutResource() {
@@ -69,6 +75,7 @@ public class GoodsStyleActivity extends BaseActivity  {
     protected void initViews(Bundle savedInstanceState) {
 
         goodsData=new ArrayList<GoodsListModel>();
+
         netRequst = NetRequst.getInstance();
         ajaxCallBack = new NetRequstAjaxCallBack(mContext);
         ajaxCallBack.setOnNetRequstAjaxCallBack(onNetRequstAjaxCallBack);
@@ -92,7 +99,7 @@ public class GoodsStyleActivity extends BaseActivity  {
         other_morbtn.setOnClickListener(onClickListener);
         progress_liner = (LinearLayout) findViewById(R.id.progress_liner);
         nodataview_textview = (TextView) findViewById(R.id.nodataview_textview);
-
+        second_nodataview_textview= (TextView) findViewById(R.id.second_nodataview_textview);
 
         goods_styleListView=(ListView) findViewById(R.id.goods_styleListView);
         goodsStyleAdapter.setData(goodsData);
@@ -113,29 +120,38 @@ public class GoodsStyleActivity extends BaseActivity  {
         goodsStyleContentAdapter=new GoodsStyleContentAdapter(mContext);
 
         data=new ArrayList<GoodsStyleModel>();
-        for (int i=0;i<content.length;i++){
-            GoodsStyleModel model=new GoodsStyleModel();
-            model.setStyleName(style[0]);
-            model.setGoodsName(content[i]);
-            data.add(model);
-        }
-        for (int i=0;i<content.length;i++){
-            GoodsStyleModel model=new GoodsStyleModel();
-            model.setStyleName(style[1]);
-            model.setGoodsName(content[i]);
-            data.add(model);
-        }
+//        for (int i=0;i<content.length;i++){
+//            GoodsStyleModel model=new GoodsStyleModel();
+//            model.setStyleName(style[0]);
+//            model.setGoodsName(content[i]);
+//            data.add(model);
+//        }
+//        for (int i=0;i<content.length;i++){
+//            GoodsStyleModel model=new GoodsStyleModel();
+//            model.setStyleName(style[1]);
+//            model.setGoodsName(content[i]);
+//            data.add(model);
+//        }
     }
 
     public void  requstNetData(){
+        requstType=0;
         showMbProgress("数据加载中");
         netRequst.getAllCategory(ajaxCallBack.getAllCategory);
+    }
+
+
+    public void requstNetDataFor(String categoryId){
+        requstType=1;
+        netRequst.getSecoCategory(ajaxCallBack.getSecoCategory,pageNum+"",pageSize+"",categoryId);
     }
     private AdapterView.OnItemClickListener onItemClickListener1=new AdapterView.OnItemClickListener(){
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 goodsStyleAdapter.setCurrentIndex(position);
+            showMbProgress("数据加载中");
+            firstTitle=goodsData.get(position).cname;
+            requstNetDataFor(goodsData.get(position).id+"");
 
         }
     };
@@ -144,6 +160,9 @@ public class GoodsStyleActivity extends BaseActivity  {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                    extraMap.put("id",  data.get(position).getStyleId());
+            extraMap.put("categoryId",  data.get(position).getCategoryId());
+            extraMap.put("goodsName",  data.get(position).getGoodsName());
                 skip_classView(GoodsStyleDetailsActivity.class, extraMap, false);
 
         }
@@ -186,53 +205,44 @@ public class GoodsStyleActivity extends BaseActivity  {
             // TODO Auto-generated method stub
             dissMbProgress();
             if (isSuccess){
-                ArrayList<GoodsListModel> shopsList=(ArrayList)object;
-                goodsData.addAll(shopsList);
-                goodsStyleAdapter.setData(goodsData);
-                nodataview_textview.setVisibility(View.GONE);
-            }else{
-                nodataview_textview.setVisibility(View.VISIBLE);
-            }
-
-        }
-
-    };
-    private Handler handler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case UPSUCCESS://数据获取成功
-                    if (msg.arg1 == 1) {//成功
-                        String jsonObj = msg.obj.toString();
-                        if (Tools.IsEmpty(jsonObj)) {
-                            android.widget.Toast.makeText(mContext,
-                                    "数据错误", Toast.LENGTH_LONG).show();
-                            return;
+                if (requstType==0) {
+                    ArrayList<GoodsListModel> shopsList = (ArrayList) object;
+                    goodsData.addAll(shopsList);
+                    goodsStyleAdapter.setData(goodsData);
+                    nodataview_textview.setVisibility(View.GONE);
+                    second_nodataview_textview .setVisibility(View.GONE);
+                    firstTitle=goodsData.get(0).cname;
+                    requstNetDataFor(shopsList.get(0).id+"");
+                }else{
+                    ArrayList<GoodsListModel> shopsList = (ArrayList) object;
+                    if (shopsList!=null&&shopsList.size()>0) {
+                        data.clear();
+                        second_nodataview_textview .setVisibility(View.GONE);
+                        for (int i=0;i<shopsList.size();i++){
+                            GoodsStyleModel model=new GoodsStyleModel();
+                            model.setStyleName(firstTitle);
+                            model.setGoodsName(shopsList.get(i).sname);
+                            model.setStyleId(shopsList.get(i).id+"");
+                            model.setCategoryId(shopsList.get(i).categoryId+"");
+                            data.add(model);
                         }
-                        JSONObject obj = null;
-                        try {
-                            obj = new JSONObject(jsonObj);
-
-                            CommonConvert convert = new CommonConvert(obj);
-                            jsonObj = convert.getString("data");
-                            Logger.e("jsonObj:---",jsonObj);
-                            app.jsonHttp.getJsonObj(jsonObj, AjaxShopModel.class,
-                                    ajaxCallBack.getAllCategory);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    } else {//失败
-                        android.widget.Toast.makeText(mContext,
-                                "加载数据失败", Toast.LENGTH_LONG).show();
+                        goodsStyleContentAdapter.setData(data);
+                    }else{
+                        second_nodataview_textview .setVisibility(View.VISIBLE);
                     }
 
-                    break;
+                }
+            }else{
+                if (requstType==0) {
+                    nodataview_textview.setVisibility(View.VISIBLE);
+                }else{
+                   second_nodataview_textview .setVisibility(View.VISIBLE);
+                }
             }
         }
+
     };
+
 
 
 

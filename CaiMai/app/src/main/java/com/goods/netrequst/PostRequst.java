@@ -72,6 +72,23 @@ public class PostRequst {
         uploadMethod(params, url);
     }
 
+    /****
+     *通过店铺+二级类别展示所有商品
+     * @param handler
+     * @param goodsKey
+     */
+    public void getProductBySecoCate(Handler handler, GoodsKey goodsKey
+    ) {
+        this.handler = handler;
+        url = Constant.BASE_URL + "/api/happycommune/getProductBySecoCate?";
+        params = new RequestParams();
+        params.addBodyParameter("token", goodsKey.token);
+        params.addBodyParameter("pageNum", goodsKey.pageNum);
+        params.addBodyParameter("pageSize", goodsKey.pageSize);
+        params.addBodyParameter("shopId", goodsKey.shopId);
+        params.addBodyParameter("secoCategory", goodsKey.categoryId);
+        uploadMethod(params, url);
+    }
 
     /***
      *

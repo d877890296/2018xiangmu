@@ -81,8 +81,10 @@ public class GoodsStyleAdapter extends LzBaseAdapter {
         }
         if (currentIndex==position){
             viewHolder.curchooseView.setVisibility(View.VISIBLE);
+            viewHolder.styleTitle.setBackgroundColor(0xffffffff);
         }else{
             viewHolder.curchooseView.setVisibility(View.GONE);
+            viewHolder.styleTitle.setBackgroundColor(0xffededed);
         }
         GoodsListModel model=data.get(position);
         viewHolder.styleTitle.setText(model.cname);
