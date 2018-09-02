@@ -186,7 +186,7 @@ public class MyApplication extends RootApplication {
 
     /*获取版本号*/
     public int GetVersionCode() {
-        String pName = "com.jinpinhui.hn";
+        String pName = "com.xfkc.caimai";
         int versionCode = 0;
         try {
             PackageInfo pinfo = this.getPackageManager().getPackageInfo(pName, PackageManager.GET_CONFIGURATIONS);
@@ -199,7 +199,7 @@ public class MyApplication extends RootApplication {
 
     /*获取版本名称*/
     public String GetVersionName() {
-        String pName = "com.jinpinhui.hn";
+        String pName = "com.xfkc.caimai";
         String versionName = "";
 
         try {
