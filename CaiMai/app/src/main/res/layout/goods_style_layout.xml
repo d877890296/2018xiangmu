@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
-    >
+    android:background="#ffffff">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,40 +10,57 @@
         android:orientation="vertical">
 
         <include layout="@layout/public_topbar_layout" />
-    <RelativeLayout  android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-    <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="match_parent">
 
-            <ListView
-                android:id="@+id/goods_styleListView"
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:background="#ededed"
-                android:cacheColorHint="#00000000"
-                android:divider="#ededed"
-                android:listSelector="#00000000"
-                android:scrollbars="none" />
-
-            <ListView
-                android:id="@+id/goodsListView"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#fff"
-                android:cacheColorHint="#00000000"
-                android:divider="#ededed"
+                android:orientation="horizontal">
 
-                android:listSelector="#00000000"
-                android:scrollbars="none" />
+                <ListView
+                    android:id="@+id/goods_styleListView"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:background="#ededed"
+                    android:cacheColorHint="#00000000"
+                    android:divider="#ededed"
+                    android:listSelector="#00000000"
+                    android:scrollbars="none" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <ListView
+                    android:id="@+id/goodsListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#fff"
+                    android:cacheColorHint="#00000000"
+                    android:divider="#ededed"
 
-        </LinearLayout>
-    <include layout="@layout/public_nodata_liner" />
+                    android:listSelector="#00000000"
+                    android:scrollbars="none" />
+                 <TextView
+                    android:id="@+id/second_nodataview_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:background="#fff"
+                    android:gravity="center"
+                    android:text="该分类暂无数据！"
+                    android:textColor="#D2852B"
 
-    <include layout="@layout/progresslayout" />
-</RelativeLayout>
+                    android:textSize="15sp"
+                    android:visibility="gone" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <include layout="@layout/public_nodata_liner" />
+
+            <include layout="@layout/progresslayout" />
+        </RelativeLayout>
     </LinearLayout>
 
 

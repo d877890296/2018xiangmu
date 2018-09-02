@@ -9,6 +9,7 @@ public class GoodsStyleModel {
     public String styleName;
     /** 店id **/
     public String styleId;
+    public String categoryId;
     /** 店中分类 **/
     public String goodsName;
     public String headImg;
@@ -44,5 +45,13 @@ public class GoodsStyleModel {
 
     public String getStyleName() {
         return styleName;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 }

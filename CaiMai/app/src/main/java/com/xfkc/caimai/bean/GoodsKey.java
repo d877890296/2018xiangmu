@@ -12,7 +12,7 @@ public class GoodsKey {
     public String pageSize;
     public String shopId;
     public String recordName;
-
+    public String  categoryId;
 
     public String longitude;
     public String latitude;

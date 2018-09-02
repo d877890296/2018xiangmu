@@ -42,9 +42,9 @@ public class NetRequst {
 	 * @param callback
 	 * @return
 	 */
-	public String getSecoCategory(AjaxCallBack<AjaxShopModel> callback,String categoryId) {
+	public String getSecoCategory(AjaxCallBack<AjaxShopModel> callback,String pageNum,String pageSize,String categoryId) {
 		String TAG = "getAllCategory";
-		String url = UrlFactory.GetUrl("/api/happycommune/getSecoCategory","categoryId",categoryId);
+		String url = UrlFactory.GetUrl("/api/happycommune/getSecoCategory","pageNum",pageNum,"pageSize",pageSize,"categoryId",categoryId);
 		Logger.e(TAG, url);
 		MyApplication.getInstance().getJson.getJson(url, AjaxShopModel.class, callback);
 		return url;
