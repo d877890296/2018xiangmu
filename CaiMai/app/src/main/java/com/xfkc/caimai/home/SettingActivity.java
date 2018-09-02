@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
+import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 import com.xfkc.caimai.loading.UpdatePassWordActivity;
@@ -86,6 +87,8 @@ public class SettingActivity extends BaseActivity {
             case R.id.vertion_num://版本号
                 break;
             case R.id.commit://退出登录
+                SharedPrefUtil.clear(mContext);
+                backHistory(1006,true,true,extraMap);
                 break;
         }
     }

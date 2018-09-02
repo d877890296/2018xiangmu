@@ -1,6 +1,7 @@
 package com.xfkc.caimai.home.fragment;
 
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -22,6 +23,7 @@ import com.xfkc.caimai.home.adapter.MyGridAdapter;
 import com.xfkc.caimai.home.mineinfo.MineInfoActivity;
 import com.xfkc.caimai.home.vipcard.MineVipCardActivity;
 import com.xfkc.caimai.home.wallet.WalletActivity;
+import com.xfkc.caimai.loading.LoadingActivity;
 import com.xfkc.caimai.net.PayFactory;
 import com.xfkc.caimai.net.RxHelper;
 import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
@@ -171,7 +173,7 @@ public class SocialCentreFragment extends BaseFragment {
                 skip_classView(MineInfoActivity.class, extraMap, false, true);
                 break;
             case R.id.setting_iv:
-                skip_classView(SettingActivity.class, extraMap, false, true);
+                skip_classView(SettingActivity.class,extraMap,false,1005);
                 break;
             case R.id.order_tv:
 
@@ -202,6 +204,14 @@ public class SocialCentreFragment extends BaseFragment {
                 skip_classView(OrderforgoodsActivity.class, extraMap, false, false);
 
                 break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1005 && resultCode == 1006){
+            skip_classView(LoadingActivity.class,extraMap,true,true);
         }
     }
 }
