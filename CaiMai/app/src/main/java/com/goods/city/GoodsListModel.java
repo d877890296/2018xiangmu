@@ -28,7 +28,6 @@ public class GoodsListModel {
     @NetJsonFiled
     public String  content;
 
-
     //一级列表数据
     @NetJsonFiled
     public String cname;//": "水果",

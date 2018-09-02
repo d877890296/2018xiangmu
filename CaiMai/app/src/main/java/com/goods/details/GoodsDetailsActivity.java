@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.dev.customview.AdViewPaper;
 import com.dev.customview.MyToast;
 import com.dev.customview.ObservableScrollView;
+import com.goods.city.GoodsListModel;
+import com.goods.city.GoodsValue;
 import com.goods.shoppingcar.ShoppingCarActivity;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
@@ -34,15 +36,11 @@ import java.util.List;
  */
 
 public class GoodsDetailsActivity extends BaseActivity {
+    public GoodsListModel goodsListModel;
     private String goodsImg, goodsName, goodsStoreId, goodsId;
-
     private String count, specInfo, price;
-
-
     private LinearLayout public_top_layout;
-
     private ListView goodsListView;
-
     private GoodsDetailsAdapter adapter;
     private FrameLayout top_frameLayout;
     private ImageButton search_img_btn;
@@ -78,7 +76,7 @@ public class GoodsDetailsActivity extends BaseActivity {
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
-
+        goodsListModel= GoodsValue.getInstance().getGoodsListModel();
         locationImg = new ArrayList<ImageView>();
 
         viewInit();
@@ -219,30 +217,7 @@ public class GoodsDetailsActivity extends BaseActivity {
 
     }
 
-//    private OnNetRequstAjaxCallBack onNetRequstAjaxCallBack = new OnNetRequstAjaxCallBack() {
-//
-//        @Override
-//        public void MsgCallBack(boolean isSuccess, String errorMsg, Object object) {
-//            // TODO Auto-generated method stub
-//            dissMbProgress();
-//            if (isSuccess) {
-//                if (errorMsg.equals("0")) {
-//                    GoodsModel model = (GoodsModel) object;
-//                    String goodsDetails = model.getGoodsDetails();
-//                    String goodsDetailsImg[] = goodsDetails.split(",");
-//                    goodsDetailsHeader.setImgArray(goodsDetailsImg);
-//                    goodsTitle_textView.setText(model.getGoodsName());
-//                    goodsPrace_textView.setText("￥" + model.getGoodsPrice());
-//                } else {
-//                    if (isShow) {
-//                        MyToast.showMyToast(mContext, "添加购物车成功", -1);
-//                    }
-//                }
-//            } else {
-//                MyToast.showMyToast(mContext, errorMsg, -1);
-//            }
-//        }
-//    };
+
 
     public boolean isShow;
 
@@ -322,4 +297,9 @@ public class GoodsDetailsActivity extends BaseActivity {
         return false;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        GoodsValue.getInstance().reSet();
+    }
 }

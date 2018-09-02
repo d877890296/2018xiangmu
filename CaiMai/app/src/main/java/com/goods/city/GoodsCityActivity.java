@@ -106,7 +106,7 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
     protected int getLayoutResource() {
         setSoftInputMode();
         hindKey();
-
+        GoodsValue.getInstance().init();
         return R.layout.gd_goodscity_fragment_layout;
     }
 
@@ -251,6 +251,7 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
 //            extraMap.put("goodsProperty", model.getGoodsProperty());
 //            extraMap.put("goodsImg", model.getGoodsMainPhotoId());
 //            extraMap.put("goodsName", model.getGoodsName());
+            GoodsValue.getInstance().setGoodsListModel(model);
             skip_classView(GoodsDetailsActivity.class, extraMap, false);
         }
 
