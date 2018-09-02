@@ -6,120 +6,49 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#fff"
-    android:orientation="vertical" >
-
-    <LinearLayout
+    android:orientation="vertical">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="#ededed"/>
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#fff"
-        android:gravity="center"
-        android:orientation="horizontal" >
 
-        <View
-            android:layout_width="100dp"
-            android:layout_height="1dp"
-            android:layout_gravity="center"
-            android:background="#ededed" />
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:layout_marginLeft="10dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:gravity="center|left"
+            android:text="评论"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center"
             android:layout_marginRight="10dp"
-            android:gravity="center"
-            android:text="评价" />
+            android:text="查看更多"
 
-        <View
-            android:layout_width="100dp"
-            android:layout_height="1dp"
-            android:layout_gravity="center"
-            android:background="#ededed" />
-    </LinearLayout>
+            android:textColor="#fd8300"
+            android:textSize="15sp" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="宝贝评价（2000）"
-        android:textColor="#000000" />
+    </FrameLayout>
 
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:layout_marginLeft="5dp"
+    android:background="#ededed"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/good_hp_shape"
-            android:padding="10dp"
-            android:text="口感不错（2000）"
-            android:textColor="#000000" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/good_hp_shape"
-            android:padding="10dp"
-            android:text="味道不错（2000）"
-            android:textColor="#000000" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/good_hp_shape"
-            android:padding="10dp"
-            android:text="包装很好（2000）"
-            android:textColor="#000000" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/good_hp_shape"
-            android:padding="10dp"
-            android:text="很便宜（2000）"
-            android:textColor="#000000" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/good_hp_shape"
-            android:padding="10dp"
-            android:text="新鲜（2000）"
-            android:textColor="#000000" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/good_hp_shape"
-            android:padding="10dp"
-            android:text="口感不错（2000）"
-            android:textColor="#000000" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <com.dev.customview.MyImageView
             android:layout_width="40dp"
@@ -135,22 +64,14 @@
             android:text="myfr"
             android:textColor="#000000" />
     </LinearLayout>
-      <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:padding="10dp"
-            android:text="很甜，不错。喜欢这个味道，下次继续卖买 。送朋友，送亲人。"
-            android:textColor="#000000" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/good_hp_shape"
-            android:padding="10dp"
-            android:layout_gravity="center"
-            android:text="查看全部评价"
-            
-            android:textColor="#000000" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:padding="10dp"
+        android:text="很甜，不错。喜欢这个味道，下次继续卖买 。送朋友，送亲人。"
+        android:textColor="#000000" />
+
+
 </LinearLayout>

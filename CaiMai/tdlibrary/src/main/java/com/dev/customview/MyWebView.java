@@ -8,7 +8,7 @@ import android.webkit.WebView;
  * 
  * 我的viewpager
  * 
- * @author Lyy com.pull.list.custom.MyWebView
+ * @author com.dev.customview.MyWebView
  */
 public class MyWebView extends WebView {
 	// 控制滑动的boolean锁

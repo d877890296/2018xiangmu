@@ -154,19 +154,15 @@ public class GoodsDetailsActivity extends BaseActivity {
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 // TODO Auto-generated method stub
-
                 // 在onScroll方法中判断：
                 showLocation(firstVisibleItem);
                 if ((firstVisibleItem + visibleItemCount) == totalItemCount) {
-
                     View lastVisibleItemView = view.getChildAt(view.getChildCount() - 1);
                     if (lastVisibleItemView != null && lastVisibleItemView.getBottom() == view.getHeight()) {
                         // Log.d("ListView", "##### 滚动到底部 ######");
                         showLocation(locationImg.size() - 1);
                     }
-
                 } else {
-
                     View firstView = view.getChildAt(firstVisibleItem);
                     if (firstView != null) {
                         if (firstView.getTop() == 0) { // 判断第一个item到顶部的距离

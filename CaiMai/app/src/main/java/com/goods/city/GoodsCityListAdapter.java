@@ -76,10 +76,9 @@ public class GoodsCityListAdapter extends RecyclerView.Adapter<GoodsCityListAdap
 
 			}
 		});
-
 		GoodsListModel model = goodsData.get(curtentIndex);
 		holder.goods_name.setText(model.title);
-		holder.goods_discroubTitle.setText(Html.fromHtml(model.content));
+		holder.goods_discroubTitle.setText(model.sellPoint+"");
 		holder.goods_prace.setText( model.itemPrice+"康币");
 		setSitis(holder.goods_prace);
 		//app.imageLoader.displayImage(model.getGoodsMainPhotoId(), holder.goods_image,app.options);
@@ -88,13 +87,11 @@ public class GoodsCityListAdapter extends RecyclerView.Adapter<GoodsCityListAdap
 		}else{
 			holder.goods_image.setImageResource(R.mipmap.error_icon);
 		}
-
 	}
 
 
 	public void setSitis(TextView goods_prace){
 		String content=goods_prace.getText().toString();
-
 		TextViewUtils.setContentTextSize(goods_prace,content,(int)Tools.dip2px(mContext,20),0,content.length()-2);
 	}
 
