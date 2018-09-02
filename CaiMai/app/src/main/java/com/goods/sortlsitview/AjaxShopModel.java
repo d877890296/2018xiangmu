@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class AjaxShopModel {
     @NetJsonFiled
     public String shops;
+
     @NetJsonFiled(objClassName = "com.goods.sortlsitview.ShopsList")
     public ArrayList<ShopsList> shopsList;//学习列表信息
 

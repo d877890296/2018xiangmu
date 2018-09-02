@@ -42,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="280dp"
         android:scaleType="fitXY"
-        android:src="@drawable/gd_model2_img"
+        android:src="@drawable/default_shuig"
        />
  
     <TextView

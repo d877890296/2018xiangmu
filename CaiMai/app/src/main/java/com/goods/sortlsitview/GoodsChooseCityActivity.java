@@ -153,9 +153,9 @@ public class GoodsChooseCityActivity extends BaseActivity {
                 if (position == 0) {
                     return;
                 }
-                Toast.makeText(getApplication(),
-                        ((SortModel) adapter.getItem(position - 1)).getName(),
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplication(),
+//                        ((SortModel) adapter.getItem(position - 1)).getName(),
+//                        Toast.LENGTH_SHORT).show();
                 app.shopModel=(SortModel) adapter.getItem(position - 1);
                 backHistory(1000, true, false, extraMap);
             }
@@ -340,8 +340,8 @@ public class GoodsChooseCityActivity extends BaseActivity {
                         JSONObject obj = null;
                         try {
                             obj = new JSONObject(jsonObj);
-                            CommonConvert convert = new CommonConvert(obj);
-                            jsonObj = convert.getString("data");
+                          //  CommonConvert convert = new CommonConvert(obj);
+                            jsonObj = obj.getString("data");
                             app.jsonHttp.getJsonObj(jsonObj, AjaxShopModel.class,
                                     ajaxCallBack.getAllShopsAndNearshopCallBack);
                         } catch (JSONException e) {
