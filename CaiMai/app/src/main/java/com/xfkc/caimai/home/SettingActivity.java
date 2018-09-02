@@ -11,6 +11,7 @@ import com.allen.library.SuperTextView;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
+import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.loading.UpdatePassWordActivity;
 
 import butterknife.Bind;
@@ -87,7 +88,7 @@ public class SettingActivity extends BaseActivity {
             case R.id.vertion_num://版本号
                 break;
             case R.id.commit://退出登录
-                SharedPrefUtil.clear(mContext);
+                SharedPrefUtil.put(mContext, SharedPref.TOKEN,"");
                 backHistory(1006,true,true,extraMap);
                 break;
         }
