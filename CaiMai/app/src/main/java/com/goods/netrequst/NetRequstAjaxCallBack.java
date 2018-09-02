@@ -86,30 +86,40 @@ public class NetRequstAjaxCallBack {
         try {
             // 实例化汉字转拼音类
             characterParser = CharacterParser.getInstance();
-            JSONObject obj = new JSONObject(shops);
-            CommonConvert convert = new CommonConvert(obj);
-            int shopId = convert.getInt("shopId");
-            String shopName = convert.getString("shopName");
-            if (Tools.IsEmpty(shopName)) {
-                shopName = "空";
+            if (Tools.IsEmpty(shops)){
+                SortModel model = new SortModel();
+                model.setName("定位商店失败");
+                model.setProvinceId("20000");
+                model.setShopId( "9");
+                model.setSortLetters("A");
+                sortData.add(model);
+            }else{
+                JSONObject obj = new JSONObject(shops);
+                CommonConvert convert = new CommonConvert(obj);
+                int shopId = convert.getInt("shopId");
+                String shopName = convert.getString("shopName");
+                if (Tools.IsEmpty(shopName)) {
+                    shopName = "空";
+                }
+
+                // 汉字转换成拼音
+                String pinyin = characterParser.getSelling(shopName);
+                String sortString = pinyin.substring(0, 1).toUpperCase();
+                String provinceId = convert.getString("provinceId");
+                SortModel model = new SortModel();
+                model.setName(shopName);
+                model.setProvinceId(provinceId);
+                model.setShopId(shopId + "");
+                model.setSortLetters(sortString);
+                sortData.add(model);
             }
 
-            // 汉字转换成拼音
-            String pinyin = characterParser.getSelling(shopName);
-            String sortString = pinyin.substring(0, 1).toUpperCase();
-            String provinceId = convert.getString("provinceId");
-            SortModel model = new SortModel();
-            model.setName(shopName);
-            model.setProvinceId(provinceId);
-            model.setShopId(shopId + "");
-            model.setSortLetters(sortString);
-            sortData.add(model);
 
             for (int i=0;i<shopsList.size();i++){
                 int shopId_ = shopsList.get(i).shopId;
                 String shopName_ =  shopsList.get(i).shopName;
-                if (Tools.IsEmpty(shopName)) {
-                    shopName = "空";
+                if (Tools.IsEmpty(shopName_)) {
+                    shopName_ = "空";
                 }
                 // 汉字转换成拼音
                 String pinyin_ = characterParser.getSelling(shopName_);

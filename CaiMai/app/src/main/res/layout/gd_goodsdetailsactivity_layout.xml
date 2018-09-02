@@ -2,13 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff" >
+
+    android:background="#fff"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#F1F1F1"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <!-- 普通标题 -->
 
@@ -16,14 +19,15 @@
             android:id="@+id/public_top_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#18B4ED"
+            android:background="#fd8300"
             android:orientation="vertical"
-            android:visibility="visible" >
+            android:visibility="visible">
 
             <RelativeLayout
                 android:id="@+id/relative_topbg"
                 android:layout_width="fill_parent"
-                android:layout_height="50dp" >
+
+                android:layout_height="50dp">
 
                 <ImageButton
                     android:id="@+id/back_img_btn"
@@ -60,21 +64,21 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/gd_shopingcar_btn"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
             </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:gravity="center"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/gs_img"
@@ -99,7 +103,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/xq_img"
@@ -124,7 +128,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/pj_img"
@@ -149,7 +153,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="horizontal" >
+                    android:visibility="gone"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/tj_img"
@@ -185,18 +190,41 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_weight="0"
-            android:orientation="horizontal" >
 
-            <TextView
-                android:layout_width="50dp"
+            android:background="#FFF"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:background="#ededed"
-                android:drawablePadding="5dp"
-                android:drawableTop="@drawable/btn_fav"
-                android:gravity="center"
-                android:text="搜藏"
-                android:textColor="#000000"
-                android:textSize="10sp" />
+                android:layout_gravity="center"
+                android:layout_marginRight="10dp">
+
+                <TextView
+                    android:id="@+id/botoom_shopCarTtv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/gd_shopingcar_btn_pro"
+                    android:drawablePadding="5dp"
+                    android:gravity="center"
+                    android:textColor="#000000"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/botoom_shopNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@drawable/circle"
+                    android:drawablePadding="5dp"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="#FFF"
+                    android:textSize="10sp" />
+
+
+            </FrameLayout>
 
             <TextView
                 android:layout_width="45dp"
@@ -207,20 +235,21 @@
                 android:gravity="center"
                 android:text="客服"
                 android:textColor="#000000"
-                android:textSize="10sp" />
+                android:textSize="10sp"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#000000"
-                android:orientation="horizontal" >
+                android:background="#fff"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/addShoppingCar_textView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="#000000"
+                    android:background="#fd8300"
                     android:gravity="center"
                     android:text="加入购物车"
                     android:textColor="#fff"

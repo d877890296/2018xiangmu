@@ -23,7 +23,7 @@ public Context context;
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 3;
+		return 2;
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public Context context;
 	@Override
 	public int getViewTypeCount() {
 		// TODO Auto-generated method stub
-		return 3;
+		return 2;
 	}
 
 	@Override

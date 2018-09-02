@@ -43,8 +43,8 @@ public class GoodsDetailsHeader {
 	private List<AdTopPicModel> topPicData;
 	private List<View> viewadata;
 	private ViewPagerAdapter viewPagerAdapter;
-	private int imges[] = { R.drawable.gd_model2_img, R.drawable.gd_model1_img, R.drawable.gd_goodscity_model_img,
-			R.drawable.gd_model2_img };
+	private int imges[] = { R.drawable.default_shuig, R.drawable.gd_model1_img, R.drawable.default_shuig,
+			R.mipmap.error_icon };
 	private Timer timer = new Timer();
 	private Context context;
 	private AdViewPaper adViewPaper;

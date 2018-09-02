@@ -106,7 +106,7 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
     protected int getLayoutResource() {
         setSoftInputMode();
         hindKey();
-
+        GoodsValue.getInstance().init();
         return R.layout.gd_goodscity_fragment_layout;
     }
 
@@ -251,6 +251,7 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
 //            extraMap.put("goodsProperty", model.getGoodsProperty());
 //            extraMap.put("goodsImg", model.getGoodsMainPhotoId());
 //            extraMap.put("goodsName", model.getGoodsName());
+            GoodsValue.getInstance().setGoodsListModel(model);
             skip_classView(GoodsDetailsActivity.class, extraMap, false);
         }
 
@@ -476,9 +477,9 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
                         JSONObject obj = null;
                         try {
                             obj = new JSONObject(jsonObj);
-
-                            CommonConvert convert = new CommonConvert(obj);
-                            jsonObj = convert.getString("data");
+                         //   CommonConvert convert = new CommonConvert(obj);
+                         //   jsonObj = convert.getString("data");
+                            jsonObj =     obj.getString("data");
                             Logger.e("jsonObj:---",jsonObj);
                             app.jsonHttp.getJsonObj(jsonObj, AjaxShopModel.class,
                                     ajaxCallBack.getProductBySearch);

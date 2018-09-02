@@ -12,6 +12,7 @@ import com.xfkc.caimai.application.MyApplication;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -78,7 +79,7 @@ public class GoodsCityListAdapter extends RecyclerView.Adapter<GoodsCityListAdap
 
 		GoodsListModel model = goodsData.get(curtentIndex);
 		holder.goods_name.setText(model.title);
-		holder.goods_discroubTitle.setText(model.content);
+		holder.goods_discroubTitle.setText(Html.fromHtml(model.content));
 		holder.goods_prace.setText( model.itemPrice+"康币");
 		setSitis(holder.goods_prace);
 		//app.imageLoader.displayImage(model.getGoodsMainPhotoId(), holder.goods_image,app.options);
