@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import com.dev.customview.TextViewUtils;
 import com.goods.details.ShoppingCarModel;
+import com.hyf.tdlibrary.utils.Tools;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.application.MyApplication;
@@ -97,6 +99,8 @@ public class ShoppingCarAdapter extends BaseAdapter {
 			viewHoder.fristWord = (TextView) convertView.findViewById(R.id.fristWord);
 
 			viewHoder.testTitle = (TextView) convertView.findViewById(R.id.testTitle);
+			viewHoder.discroub_textview= (TextView) convertView.findViewById(R.id.discroub_textview);
+
 			viewHoder.checkBox = (CheckBox) convertView.findViewById(R.id.checkBox);
 
 			viewHoder.learntime_textview = (TextView) convertView.findViewById(R.id.learntime_textview);
@@ -126,11 +130,11 @@ public class ShoppingCarAdapter extends BaseAdapter {
 			if (ch1.equals(ch2)) {
 				viewHoder.fristWord.setVisibility(View.GONE);
 			} else {
-				viewHoder.fristWord.setVisibility(View.VISIBLE);
+				viewHoder.fristWord.setVisibility(View.GONE);
 				viewHoder.fristWord.setText(ch2);
 			}
 		} else {
-			viewHoder.fristWord.setVisibility(View.VISIBLE);
+			viewHoder.fristWord.setVisibility(View.GONE);
 			viewHoder.fristWord.setText(ch2);
 		}
 
@@ -140,14 +144,24 @@ public class ShoppingCarAdapter extends BaseAdapter {
 		// app.imageLoader.displayImage(model.getShopGoodsImg(), viewHoder.pic,
 		// options,
 		// animateFirstListener);
-		//app.imageLoader.displayImage(model.getShopGoodsImg(), viewHoder.pic);
-		viewHoder.testTitle.setText(model.getShopGoodsName());
-		viewHoder.learntime_textview.setText("￥" + model.getToalPrace());
-		viewHoder.goodsNum.setText("x" + model.getShopGoodsNumber());
+	if(Tools.IsEmpty(model.getShopGoodsImg())){
+		viewHoder.pic.setImageResource(R.mipmap.error_icon);
+		}else{
+			app.imageLoader.displayImage(model.getShopGoodsImg(), viewHoder.pic);
+		}
 
+		viewHoder.testTitle.setText(model.getShopGoodsName());
+		viewHoder.discroub_textview.setText(model.getShopGoodsInfo());
+		viewHoder.learntime_textview.setText(model.getShopGoodsPrace()+"康币");
+
+		viewHoder.goodsNum.setText("" + model.getShopGoodsNumber());
+		setSitis(viewHoder.learntime_textview);
 		return convertView;
 	}
-
+	public void setSitis(TextView goods_prace){
+		String content=goods_prace.getText().toString();
+		TextViewUtils.setContentTextSize(goods_prace,content,(int)Tools.dip2px(context,20),0,content.length()-2);
+	}
 	public void checkBoxCheck(final int position, final CheckBox checkBox, final String id) {
 		checkBox.setOnClickListener(new OnClickListener() {
 
@@ -191,7 +205,7 @@ public class ShoppingCarAdapter extends BaseAdapter {
 	}
 
 	public class ViewHoder {
-		TextView fristWord, testTitle, learntime_textview, goodsNum;
+		TextView fristWord, testTitle, discroub_textview,learntime_textview, goodsNum;
 		ImageView pic;
 		CheckBox checkBox;
 

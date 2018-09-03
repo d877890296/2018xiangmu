@@ -9,6 +9,7 @@ import com.json.NetJsonFiled;
 public class GoodsListModel {
     @NetJsonFiled
     public  int  id;//": 1,
+
     @NetJsonFiled
     public  int   shopId;
     @NetJsonFiled

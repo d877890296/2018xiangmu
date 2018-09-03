@@ -20,7 +20,7 @@ public class GoodsDetailsAdapter extends BaseAdapter {
     public Context context;
     public LayoutInflater inflater;
     final String mimeType = "text/html";
-    final String encoding = "utf-8";
+    final String encoding = "UTF-8";
 
     private GoodsListModel goodsListModel;
 
@@ -75,8 +75,9 @@ public class GoodsDetailsAdapter extends BaseAdapter {
 
                         detailsContent_web.loadData("暂无详情", mimeType, encoding);
                     }else{
-                        detailsContent_web.loadData(goodsListModel.content,  mimeType, encoding);
-                       // detailsContent_web.loadData(URLEncoder.encode(goodsListModel.content, encoding), mimeType, encoding);
+                        String content=goodsListModel.content;
+                        detailsContent_web.loadDataWithBaseURL ("",content,  mimeType, encoding,null);
+
                     }
 
                 } catch (Exception ex) {

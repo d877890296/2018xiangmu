@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Html;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -20,18 +22,31 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dev.customview.AdViewPaper;
 import com.dev.customview.TextViewUtils;
 import com.goods.city.GoodsListModel;
 import com.goods.city.GoodsValue;
+import com.goods.netrequst.Logger;
+import com.goods.netrequst.NetRequstAjaxCallBack;
+import com.goods.netrequst.PostRequst;
 import com.goods.shoppingcar.ShoppingCarActivity;
+import com.goods.sortlsitview.AjaxShopModel;
+import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.Tools;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
+import com.xfkc.caimai.bean.GoodsKey;
+import com.xfkc.caimai.config.SharedPref;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.goods.netrequst.PostRequst.UPSUCCESS;
 
 /**
  * Created by 10835 on 2018/8/26.
@@ -60,6 +75,10 @@ public class GoodsDetailsActivity extends BaseActivity {
     private TextView point_textView;
     private GoodsDetailsHeader goodsDetailsHeader;
 
+
+    private PostRequst postRequst;
+    private NetRequstAjaxCallBack ajaxCallBack;
+
     @Override
     protected int getLayoutResource() {
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
@@ -78,6 +97,9 @@ public class GoodsDetailsActivity extends BaseActivity {
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
+        postRequst = new PostRequst(handler);
+        ajaxCallBack = new NetRequstAjaxCallBack(mContext);
+        ajaxCallBack.setOnNetRequstAjaxCallBack(onNetRequstAjaxCallBack);
         goodsListModel = GoodsValue.getInstance().getGoodsListModel();
         locationImg = new ArrayList<ImageView>();
 
@@ -199,7 +221,7 @@ public class GoodsDetailsActivity extends BaseActivity {
         if (goodsListModel != null) {
             goodsTitle_textView.setText(goodsListModel.title);
 
-            goods_discroubTitle_textView.setText(Html.fromHtml(goodsListModel.content));
+            goods_discroubTitle_textView.setText(goodsListModel.sellPoint+"");
             goodsPrace_textView.setText(goodsListModel.itemPrice + "康币");
             setSitis(goodsPrace_textView);
         }
@@ -367,4 +389,79 @@ public class GoodsDetailsActivity extends BaseActivity {
         dialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
         dialog.show();
     }
+
+
+    /****
+     *
+     * 请求数据
+     */
+    public void requstNetData() {
+        if (app.shopModel != null) {
+            userToken = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
+            GoodsKey goodsKey = new GoodsKey();
+            goodsKey.token = userToken;
+            goodsKey.shopId = app.shopModel.getShopId();
+            goodsKey.recordName = "";
+            postRequst.getProductBySearch(handler, goodsKey);
+        }
+
+    }
+    private NetRequstAjaxCallBack.OnNetRequstAjaxCallBack onNetRequstAjaxCallBack = new NetRequstAjaxCallBack.OnNetRequstAjaxCallBack() {
+
+        @Override
+        public void MsgCallBack(boolean isSuccess, String errorMsg, Object object) {
+            // TODO Auto-generated method stub
+            dissMbProgress();
+            if (isSuccess) {
+
+                ArrayList<GoodsListModel> shopsList = (ArrayList) object;
+
+            } else {
+
+            }
+
+
+        }
+
+    };
+    private Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case UPSUCCESS://数据获取成功
+                    if (msg.arg1 == 1) {//成功
+                        String jsonObj = msg.obj.toString();
+                        if (Tools.IsEmpty(jsonObj)) {
+                            android.widget.Toast.makeText(mContext,
+                                    "数据错误", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        JSONObject obj = null;
+                        try {
+                            obj = new JSONObject(jsonObj);
+                            //   CommonConvert convert = new CommonConvert(obj);
+                            //   jsonObj = convert.getString("data");
+                            jsonObj = obj.getString("data");
+                            Logger.e("jsonObj:---", jsonObj);
+
+                            app.jsonHttp.getJsonObj(jsonObj, AjaxShopModel.class,
+                                    ajaxCallBack.getProductBySearch);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    } else {//失败
+                        android.widget.Toast.makeText(mContext,
+                                "加载数据失败", Toast.LENGTH_LONG).show();
+                    }
+
+                    break;
+            }
+        }
+    };
+
+
+
 }

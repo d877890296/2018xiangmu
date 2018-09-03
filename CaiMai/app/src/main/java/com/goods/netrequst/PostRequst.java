@@ -93,6 +93,59 @@ public class PostRequst {
     }
 
     /***
+     * 添加购物车
+     * @param handler
+     * @param goodsKey
+     */
+    public void addProduct(Handler handler, GoodsKey goodsKey
+    ) {
+        this.handler = handler;
+        url = Constant.BASE_URL + "/api/shopcart/addProduct?";
+        params = new RequestParams();
+        params.addBodyParameter("token", goodsKey.token);
+        params.addBodyParameter("pageNum", goodsKey.pageNum);
+        params.addBodyParameter("pageSize", goodsKey.pageSize);
+        params.addBodyParameter("shopId", goodsKey.shopId);
+        params.addBodyParameter("secoCategory", goodsKey.categoryId);
+        uploadMethod(params, url);
+    }
+
+    /****
+     * 更新购物车商品数量
+     * @param handler
+     * @param goodsKey
+     */
+    public void editCartItemsNum(Handler handler, GoodsKey goodsKey
+    ) {
+        this.handler = handler;
+        url = Constant.BASE_URL + "/api/shopcart/editCartItemsNum?";
+        params = new RequestParams();
+        params.addBodyParameter("token", goodsKey.token);
+        params.addBodyParameter("pageNum", goodsKey.pageNum);
+        params.addBodyParameter("pageSize", goodsKey.pageSize);
+        params.addBodyParameter("shopId", goodsKey.shopId);
+        params.addBodyParameter("secoCategory", goodsKey.categoryId);
+        uploadMethod(params, url);
+    }
+
+    /***
+     * 根据当前用户获取购物车商品
+     * @param handler
+     * @param goodsKey
+     */
+    public void getShopCart(Handler handler, GoodsKey goodsKey
+    ) {
+        this.handler = handler;
+        url = Constant.BASE_URL + "/api/shopcart/getShopCart?";
+        params = new RequestParams();
+        params.addBodyParameter("token", goodsKey.token);
+        uploadMethod(params, url);
+    }
+
+
+
+
+    /***
      *
      * 上传的方法
      *

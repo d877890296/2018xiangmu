@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/fristWord"
@@ -19,21 +19,21 @@
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-     
+
         android:background="#ededed" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ededed"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/listitem_sharp_selector"
             android:orientation="horizontal"
-            android:padding="5dp" >
+            android:padding="5dp">
 
             <CheckBox
                 android:id="@+id/checkBox"
@@ -54,7 +54,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="10dp"
                 android:scaleType="fitXY"
-                android:src="@mipmap/error_icon"  />
+                android:src="@mipmap/error_icon" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -62,12 +62,12 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:gravity="center"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/testTitle"
@@ -75,19 +75,41 @@
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/isnews"
                         android:layout_weight="1"
-                        android:maxLines="2"
-                        android:text="在线测评试卷001ftfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+                        android:maxLines="1"
+                        android:text="在线测评试卷001f"
                         android:textColor="#000000"
                         android:textSize="15sp" />
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_weight="0"
+
+                        android:text="140-180*4个"
+                        android:textColor="#7f000000"
+                        android:textSize="15sp" />
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/discroub_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:layout_marginTop="10dp"
+                    android:text="eeee"
+                    android:maxLines="1"
+                    android:textColor="#7f000000"
+                    android:textSize="15sp" />
 
                 <FrameLayout
                     android:id="@+id/linertime"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_marginTop="5dp"
-                    android:focusable="false"
-                    android:layout_weight="1" >
+                    android:layout_weight="1"
+                    android:focusable="false">
 
                     <TextView
                         android:id="@+id/learntime_textview"
@@ -96,35 +118,35 @@
                         android:layout_gravity="left|center"
                         android:text="￥65"
                         android:textColor="#ff0000"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textSize="15sp"
+                        />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right|center"
-                          android:focusableInTouchMode="false"
                         android:layout_marginRight="2dp"
-                        android:orientation="horizontal" >
+                        android:focusableInTouchMode="false"
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:id="@+id/goods_remove_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:layout_marginRight="10dp"
-                            android:background="@drawable/remove_img"
+                            android:src="@drawable/remove_img"
                             android:focusable="false"
-                             android:layout_gravity="center"
                             android:textColor="#000000" />
 
                         <TextView
                             android:id="@+id/goodsNum"
-                            android:layout_width="60dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="30dp"
-                            android:background="#ededed"
-                            android:text="x100"
-                       
+
                             android:gravity="center"
+
+                            android:text="1"
                             android:textColor="#000000"
                             android:textSize="13sp" />
 
@@ -132,9 +154,9 @@
                             android:id="@+id/goods_add_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:layout_marginLeft="10dp"
-                            android:background="@drawable/add_img"
-                             android:layout_gravity="center"
+                            android:src="@drawable/add_img"
                             android:focusable="false"
                             android:textColor="#000000" />
                     </LinearLayout>

@@ -500,6 +500,7 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
                             //   jsonObj = convert.getString("data");
                             jsonObj = obj.getString("data");
                             Logger.e("jsonObj:---", jsonObj);
+
                             app.jsonHttp.getJsonObj(jsonObj, AjaxShopModel.class,
                                     ajaxCallBack.getProductBySearch);
                         } catch (JSONException e) {
