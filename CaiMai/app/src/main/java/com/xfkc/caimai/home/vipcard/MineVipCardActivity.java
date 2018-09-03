@@ -55,6 +55,7 @@ public class MineVipCardActivity extends BaseActivity {
         toolbarLeftImg.setImageResource(R.mipmap.back_white);
 
         mineVipCardListAdapter = new MineVipCardListAdapter(this);
+        mineVipCardListAdapter.setData(list);
         listview.setAdapter(mineVipCardListAdapter);
         token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
 

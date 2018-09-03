@@ -14,40 +14,34 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dev.customview.BarLineSetting;
+import com.goods.city.GoodsCityListAdapter.OnListViewClickLinstener;
 import com.goods.details.GoodsDetailsActivity;
-import com.goods.model.GoodsModel;
 import com.goods.netrequst.Logger;
 import com.goods.netrequst.NetRequstAjaxCallBack;
 import com.goods.netrequst.PostRequst;
 import com.goods.shoppingcar.ShoppingCarActivity;
 import com.goods.sortlsitview.AjaxShopModel;
 import com.goods.sortlsitview.GoodsChooseCityActivity;
-import com.goods.sortlsitview.SortAdapter;
-import com.goods.sortlsitview.SortModel;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.Tools;
-import com.json.CommonConvert;
 import com.recycle.view.MyRecyclerView;
 import com.refushView.RefreshLayout;
 import com.refushView.holder.DefineBAGRefreshWithLoadView;
-import com.xfkc.caimai.MainActivity;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
-import com.goods.city.GoodsCityListAdapter.OnListViewClickLinstener;
-import com.xfkc.caimai.bean.GoodsCityModel;
 import com.xfkc.caimai.bean.GoodsKey;
-import com.xfkc.caimai.bean.LoginInfo;
+import com.xfkc.caimai.bean.TopCategory;
 import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.net.PayFactory;
 import com.xfkc.caimai.net.RxHelper;
-import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+
+import rx.Subscriber;
 
 import static com.goods.netrequst.PostRequst.UPSUCCESS;
 
@@ -96,11 +90,12 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
 //    private GoodsTypeAdapter goodsTypeAdapter;
 //    private String goodclassid = "";
 
-
+    private String topCategoryId = "1";
     public GoodsKey goodsKey;
     //
     private PostRequst postRequst;
     private NetRequstAjaxCallBack ajaxCallBack;
+    private List<TopCategory.DataBean.ListBean> top_list;
 
     @Override
     protected int getLayoutResource() {
@@ -125,9 +120,9 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
         back_btn.setVisibility(View.VISIBLE);
 
         topbar_img_title = (TextView) findViewById(R.id.topbar_img_title);
-        if(app.shopModel!=null) {
+        if (app.shopModel != null) {
             topbar_img_title.setText(app.shopModel.getName());
-        }else{
+        } else {
             topbar_img_title.setText("点击获取");
         }
         topbar_img_title.setOnClickListener(onClickListener);
@@ -217,7 +212,27 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
 
     @Override
     protected void loadData() {
+        PayFactory.getPayService().getTopCategory()
+                .compose(RxHelper.<TopCategory>io_main())
+                .subscribe(new Subscriber<TopCategory>() {
+                    @Override
+                    public void onCompleted() {
 
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(TopCategory topCategory) {
+                        if (topCategory.data.list != null && topCategory.data.list.size() != 0) {
+                            top_list.addAll(topCategory.data.list);
+                            topCategoryId = top_list.get(0).id+"";
+                        }
+                    }
+                });
 
     }
 
@@ -233,6 +248,8 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
             goodsKey.pageNum = pageNum + "";
             goodsKey.pageSize = pageSize + "";
             goodsKey.shopId = app.shopModel.getShopId();
+            goodsKey.topCategoryId = Integer.parseInt(topCategoryId);
+            goodsKey.recordName = "";
             postRequst.getProductBySearch(handler, goodsKey);
         }
 
@@ -267,7 +284,7 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
                     backHistory(-1, true, false, extraMap);
                     break;
                 case R.id.topbar_img_title:
-                    skip_classView(GoodsChooseCityActivity.class, extraMap, false,1000);
+                    skip_classView(GoodsChooseCityActivity.class, extraMap, false, 1000);
                     break;
                 case R.id.other_btn:
                     skip_classView(ShoppingCarActivity.class, extraMap, false);
@@ -277,7 +294,8 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
                     setBarTextColor(0);
                     barLineSetting.Amination(0);
 
-
+                    topCategoryId = "1";
+                    requstNetData();
                     isFristLoadData = true;
                     showMbProgress("数据加载中...");
 //                    app.netRequst.shoppingGoodsRequst("1", "1", "100", "", goodclassid,
@@ -303,6 +321,8 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
                             dissMbProgress();
                         }
                     }, 2000);
+                    topCategoryId = "2";
+                    requstNetData();
                     break;
                 case R.id.prace_textView:
                     sidx = "";
@@ -318,8 +338,8 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
                             dissMbProgress();
                         }
                     }, 2000);
-
-
+                    topCategoryId ="3";
+                    requstNetData();
                     break;
                 case R.id.more_textView:
                     sidx = "";
@@ -335,8 +355,8 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
                             dissMbProgress();
                         }
                     }, 2000);
-
-
+                    topCategoryId = "4";
+                    requstNetData();
                     break;
                 case R.id.goods_grid_list_change:
                     //myRecyclerView = null;
@@ -351,6 +371,7 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
 //                        goodsCityListAdapter.setBaseType(0);
 //                        curStyle = 0;
 //                    }
+                    extraMap.put("topCategoryId",topCategoryId);
                     skip_classView(GoodsStyleActivity.class, extraMap, false);
                     break;
 
@@ -444,17 +465,15 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
         public void MsgCallBack(boolean isSuccess, String errorMsg, Object object) {
             // TODO Auto-generated method stub
             dissMbProgress();
-            if (isSuccess){
+            if (isSuccess) {
 
-                ArrayList<GoodsListModel> shopsList=(ArrayList)object;
+                ArrayList<GoodsListModel> shopsList = (ArrayList) object;
                 goodsData.addAll(shopsList);
                 goodsCityListAdapter.setGoodsData(goodsData);
                 nodataview_textview.setVisibility(View.GONE);
-            }else{
+            } else {
                 nodataview_textview.setVisibility(View.VISIBLE);
             }
-
-
 
 
         }
@@ -477,10 +496,10 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
                         JSONObject obj = null;
                         try {
                             obj = new JSONObject(jsonObj);
-                         //   CommonConvert convert = new CommonConvert(obj);
-                         //   jsonObj = convert.getString("data");
-                            jsonObj =     obj.getString("data");
-                            Logger.e("jsonObj:---",jsonObj);
+                            //   CommonConvert convert = new CommonConvert(obj);
+                            //   jsonObj = convert.getString("data");
+                            jsonObj = obj.getString("data");
+                            Logger.e("jsonObj:---", jsonObj);
                             app.jsonHttp.getJsonObj(jsonObj, AjaxShopModel.class,
                                     ajaxCallBack.getProductBySearch);
                         } catch (JSONException e) {
@@ -501,11 +520,11 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode==1000){
-            if(app.shopModel!=null) {
+        if (resultCode == 1000) {
+            if (app.shopModel != null) {
                 topbar_img_title.setText(app.shopModel.getName());
                 requstNetData();
-            }else{
+            } else {
                 topbar_img_title.setText("点击获取");
             }
         }

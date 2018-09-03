@@ -22,6 +22,8 @@ public class RegisterSuccessActivity extends BaseActivity {
     @Bind(R.id.login_btn)
     StateButton loginBtn;
 
+    private String phone;
+
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_register_success;
@@ -32,7 +34,7 @@ public class RegisterSuccessActivity extends BaseActivity {
         toolbarTitle.setText("注册登录");
         toolbarRightText.setText("取消");
 
-
+        phone = getIntent().getStringExtra("phone");
     }
 
     @Override
@@ -49,6 +51,7 @@ public class RegisterSuccessActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.login_btn:
+                extraMap.put("phone",phone);
                 skip_classView(PerfectInforActivity.class,extraMap,true);
                 break;
         }

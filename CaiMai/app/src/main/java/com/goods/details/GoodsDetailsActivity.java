@@ -307,7 +307,7 @@ public class GoodsDetailsActivity extends BaseActivity {
                     //  skip_classView(SureOrderforgoodsActivity.class, extraMap, false);
                     break;
                 case R.id.goodsTypeTextView:
-                    showGoodsType();
+//                    showGoodsType();
                     break;
                 default:
                     break;
@@ -335,30 +335,30 @@ public class GoodsDetailsActivity extends BaseActivity {
     private void showGoodsType() {
         final Dialog dialog = new Dialog(this, R.style.BottomDialog);
         View contentView = LayoutInflater.from(this).inflate(R.layout.goods_type_dialog, null);
-        TextView horizontal = (TextView) contentView.findViewById(R.id.choose_camera_horizontal);
-        TextView vertical = (TextView) contentView.findViewById(R.id.choose_camera_vertical);
-        TextView finish = (TextView) contentView.findViewById(R.id.choose_camera_finish);
-        horizontal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+//        TextView horizontal = (TextView) contentView.findViewById(R.id.choose_camera_horizontal);
+//        TextView vertical = (TextView) contentView.findViewById(R.id.choose_camera_vertical);
+//        TextView finish = (TextView) contentView.findViewById(R.id.choose_camera_finish);
+//        horizontal.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                dialog.dismiss();
+//            }
+//        });
+//        vertical.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                dialog.dismiss();
+//            }
+//        });
 
-                dialog.dismiss();
-            }
-        });
-        vertical.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                dialog.dismiss();
-            }
-        });
-
-        finish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+//        finish.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.dismiss();
+//            }
+//        });
         dialog.setContentView(contentView);
         ViewGroup.LayoutParams layoutParams = contentView.getLayoutParams();
         layoutParams.width = getResources().getDisplayMetrics().widthPixels;
