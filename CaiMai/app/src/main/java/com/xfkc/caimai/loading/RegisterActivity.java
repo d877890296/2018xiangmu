@@ -16,6 +16,7 @@ import com.hyf.tdlibrary.utils.ToastUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 import com.xfkc.caimai.bean.EmptyBean;
+import com.xfkc.caimai.bean.RegistBean;
 import com.xfkc.caimai.customview.StateButton;
 import com.xfkc.caimai.net.PayFactory;
 import com.xfkc.caimai.net.RxHelper;
@@ -165,20 +166,20 @@ public class RegisterActivity extends BaseActivity {
     private void userRegistData() {
         PayFactory.getPayService()
                 .registerInfo(phone,msgcode,password,yq_code)
-                .compose(RxHelper.<EmptyBean>io_main())
-                .subscribe(new ProgressSubscriber<EmptyBean>(this) {
+                .compose(RxHelper.<RegistBean>io_main())
+                .subscribe(new ProgressSubscriber<RegistBean>(this) {
                     @Override
-                    public void onNext(EmptyBean userInfoBean) {
+                    public void onNext(RegistBean registBean) {
 //                        //展示注册成功对话框
-                        showRegisterDialog();
+                        showRegisterDialog(registBean);
                     }
                 });
 
     }
 
     /*展示注册成功的对话框*/
-    private void showRegisterDialog() {
-        startActivity(new Intent(this, RegisterSuccessActivity.class));
+    private void showRegisterDialog(RegistBean registBean) {
+        startActivity(new Intent(this, RegisterSuccessActivity.class).putExtra("phone",registBean.data.phone));
         finish();
     }
 

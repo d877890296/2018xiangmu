@@ -9,6 +9,8 @@ import com.xfkc.caimai.bean.GoodsCityModel;
 import com.xfkc.caimai.bean.GoodsKey;
 import com.xfkc.caimai.bean.LoginInfo;
 import com.xfkc.caimai.bean.RecruiHallBean;
+import com.xfkc.caimai.bean.RegistBean;
+import com.xfkc.caimai.bean.TopCategory;
 import com.xfkc.caimai.bean.UserInfoBean;
 import com.xfkc.caimai.bean.VipCardBean;
 import com.xfkc.caimai.bean.ZfbBean;
@@ -35,8 +37,8 @@ public interface PayService {
 
     //注册
     @GET("/api/memUser/register")
-    Observable<EmptyBean> registerInfo(@Query("phone") String phone, @Query("verCode") String verCode,
-                                       @Query("userPwd") String userPwd, @Query("inviteCode") String inviteCode);
+    Observable<RegistBean> registerInfo(@Query("phone") String phone, @Query("verCode") String verCode,
+                                        @Query("userPwd") String userPwd, @Query("inviteCode") String inviteCode);
 
     //获取验证码
     @GET("/api/memUser/login")
@@ -63,6 +65,10 @@ public interface PayService {
     //会员购买创建订单
     @GET("/api/appPay/crateMemOrder")
     Observable<ZfbBean> zfbPay(@Query("memCardId") String memCardId, @Query("token") String token);
+
+    //支付宝充值
+    @GET("/api/appPay/memCharge")
+    Observable<ZfbBean> memCharge(@Query("price") String price, @Query("token") String token);
 
     //获取轮播图
     @GET("/api/banner/findAll")
@@ -106,4 +112,14 @@ public interface PayService {
     @GET("/api/receiveAdress/getReceiveAdress")
     Observable<AddressBean> getReceiveAdress(@Query("token") String token);
 
+    //实名认证
+    @GET("/api/memUser/certification")
+    Observable<EmptyBean> certification(@Query("realName") String realName,@Query("idCard") String idCard,
+                                        @Query("province") String province,@Query("city") String city,
+                                        @Query("area") String area,@Query("detailAdress") String detailAdress,
+                                        @Query("phone") String phone);
+
+    //顶部类别列表
+    @GET("/api/happycommune/getTopCategory")
+    Observable<TopCategory> getTopCategory();
 }

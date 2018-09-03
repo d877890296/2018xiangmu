@@ -89,6 +89,7 @@ public class SocialCentreFragment extends BaseFragment {
     private String token;
 
     private String payPwd="" ,kbAmount= "";
+    private UserInfoBean.DataBean userData;
 
     @Override
     protected int getLayoutResource() {
@@ -130,6 +131,7 @@ public class SocialCentreFragment extends BaseFragment {
     private void setInfo(UserInfoBean userInfoBean) {
         mineName.setText(userInfoBean.data.nicName);
         Glide.with(mContext).load(userInfoBean.data.userImg).error(R.mipmap.heart_icon).into(accountIv);
+        userData = userInfoBean.data;
 
         mineId.setText(userInfoBean.data.kcId);
         payPwd = userInfoBean.data.payPwd;
@@ -145,8 +147,8 @@ public class SocialCentreFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0://康币钱包
-                        extraMap.put("payPwd",payPwd);
-                        extraMap.put("kbAmount",kbAmount);
+                        extraMap.put("payPwd",payPwd+"");
+                        extraMap.put("kbAmount",kbAmount+"");
                         skip_classView(WalletActivity.class, extraMap, false, true);
                         break;
                     case 1://我的会员卡
@@ -170,6 +172,10 @@ public class SocialCentreFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.account_iv:
+                extraMap.put("imageUrl",userData.userImg+"");
+                extraMap.put("nickName",userData.nicName+"");
+                extraMap.put("phone",userData.phone+"");
+                extraMap.put("detailAdress",userData.detailAdress+"");
                 skip_classView(MineInfoActivity.class, extraMap, false, true);
                 break;
             case R.id.setting_iv:

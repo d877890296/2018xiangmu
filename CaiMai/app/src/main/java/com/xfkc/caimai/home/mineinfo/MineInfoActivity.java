@@ -9,8 +9,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
+import com.bumptech.glide.Glide;
+import com.hyf.tdlibrary.utils.ToastUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
+import com.xfkc.caimai.net.PayFactory;
+import com.xfkc.caimai.order.ChooseAddressActivity;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -62,6 +66,16 @@ public class MineInfoActivity extends BaseActivity {
         toolbarTitle.setTextColor(Color.BLACK);
         toolbarLeftImg.setImageResource(R.mipmap.back_white);
         toolbarRightText.setText("保存");
+
+        String imageUrl = getIntent().getStringExtra("imageUrl");
+        String nickName = getIntent().getStringExtra("nickName");
+        String user_phone = getIntent().getStringExtra("phone");
+        String detailAdress = getIntent().getStringExtra("detailAdress");
+
+        Glide.with(this).load(imageUrl).error(R.mipmap.heart_icon).into(accountIv);
+        personName.setRightString(nickName);
+        phone.setRightString(user_phone);
+        personRegistAddress.setRightString(detailAdress);
     }
 
     @Override
@@ -89,8 +103,11 @@ public class MineInfoActivity extends BaseActivity {
             case R.id.person_regist_address:
                 break;
             case R.id.get_goods_address:
+                skip_classView(ChooseAddressActivity.class, extraMap, false);
                 break;
             case R.id.toolbar_right_text:
+                ToastUtil.showToast("保存成功");
+                finish();
                 break;
         }
     }

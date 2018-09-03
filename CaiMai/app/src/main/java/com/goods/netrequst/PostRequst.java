@@ -69,6 +69,8 @@ public class PostRequst {
         params.addBodyParameter("pageNum", goodsKey.pageNum);
         params.addBodyParameter("pageSize", goodsKey.pageSize);
         params.addBodyParameter("shopId", goodsKey.shopId);
+        params.addBodyParameter("topCategoryId", goodsKey.topCategoryId+"");
+        params.addBodyParameter("recordName", goodsKey.recordName);
         uploadMethod(params, url);
     }
 

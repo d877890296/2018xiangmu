@@ -1,8 +1,5 @@
 package com.goods.netrequst;
 
-import android.os.Handler;
-
-
 import com.goods.sortlsitview.AjaxShopModel;
 import com.net.http.AjaxCallBack;
 import com.xfkc.caimai.application.MyApplication;
@@ -28,9 +25,9 @@ public class NetRequst {
 	 * @param callback
 	 * @return
 	 */
-	public String getAllCategory(AjaxCallBack<AjaxShopModel> callback) {
+	public String getAllCategory(AjaxCallBack<AjaxShopModel> callback,String topCategoryId) {
 		String TAG = "getAllCategory";
-		String url = UrlFactory.GetUrl("/api/happycommune/getAllCategory");
+		String url = UrlFactory.GetUrl("/api/happycommune/getAllCategory","topCategoryId",topCategoryId);
 		Logger.e(TAG, url);
 		MyApplication.getInstance().getJson.getJson(url, AjaxShopModel.class, callback);
 		return url;

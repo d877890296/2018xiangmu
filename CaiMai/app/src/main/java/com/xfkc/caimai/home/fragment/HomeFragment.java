@@ -2,6 +2,8 @@ package com.xfkc.caimai.home.fragment;
 
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -22,6 +24,7 @@ import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
 import java.util.ArrayList;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * 大仓库
@@ -33,6 +36,8 @@ public class HomeFragment extends BaseFragment {
     ListView homeList;
     @Bind(R.id.toolbar_title)
     TextView toolbarTitle;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
 
     private ArrayList<String> listData = new ArrayList<>();
     private ModuleAdapter moduleAdapter;
@@ -44,9 +49,9 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-
+        toolbar.setBackgroundColor(Color.parseColor("#ff704d"));
         toolbarTitle.setText("幸福康城");
-
+        toolbarTitle.setTextColor(Color.WHITE);
         listData.clear();
 
         listData.add("幸福公社");
@@ -63,14 +68,14 @@ public class HomeFragment extends BaseFragment {
     /*获取轮播图*/
     private void getBanner() {
         PayFactory.getPayService()
-                .getBannerData("0","10")
+                .getBannerData("0", "10")
                 .compose(RxHelper.<BannerBean>io_main())
                 .subscribe(new ProgressSubscriber<BannerBean>(mContext) {
                     @Override
                     public void onNext(BannerBean bannerBean) {
 
                         moduleAdapter = new ModuleAdapter(mContext);
-                        moduleAdapter.setData(listData,bannerBean.data.list);
+                        moduleAdapter.setData(listData, bannerBean.data.list);
                         homeList.setAdapter(moduleAdapter);
                     }
                 });
@@ -86,15 +91,15 @@ public class HomeFragment extends BaseFragment {
 
                 switch (position) {
                     case 0:
-                      //  ToastUtil.showToast("暂未开放");
-                        skip_classView(GoodsCityActivity.class,extraMap,false,false);
+                        //  ToastUtil.showToast("暂未开放");
+                        skip_classView(GoodsCityActivity.class, extraMap, false, false);
                         break;
                     case 1:
 //                        startActivity(new Intent(mContext, ConfirmOrderActivity.class));
                         startActivity(new Intent(mContext, RecruitmentHallActivity.class));
                         break;
                     case 2:
-                        skip_classView(VipCardActivity.class,extraMap,false,false);
+                        skip_classView(VipCardActivity.class, extraMap, false, false);
                         break;
                     case 3:
                         ToastUtil.showToast("该功能暂未开放");
@@ -108,4 +113,10 @@ public class HomeFragment extends BaseFragment {
 
     }
 
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
 }

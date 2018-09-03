@@ -1,9 +1,6 @@
 package com.goods.city;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -11,32 +8,14 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.goods.city.GoodsCityListAdapter.OnListViewClickLinstener;
-import com.goods.details.GoodsDetailsActivity;
-import com.goods.model.GoodsModel;
-import com.goods.netrequst.GetJson;
-import com.goods.netrequst.Logger;
 import com.goods.netrequst.NetRequst;
 import com.goods.netrequst.NetRequstAjaxCallBack;
-import com.goods.netrequst.PostRequst;
-import com.goods.sortlsitview.AjaxShopModel;
-import com.hyf.tdlibrary.utils.Tools;
-import com.json.CommonConvert;
-import com.recycle.view.MyRecyclerView;
-import com.refushView.RefreshLayout;
-import com.refushView.holder.DefineBAGRefreshWithLoadView;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.goods.netrequst.PostRequst.UPSUCCESS;
 
 /**
  * Created by 10835 on 2018/8/20.
@@ -65,7 +44,7 @@ public class GoodsStyleActivity extends BaseActivity  {
 
     private  int requstType=0;
     private String firstTitle="";
-
+    private String topCategoryId;
     @Override
     protected int getLayoutResource() {
         return R.layout.goods_style_layout;
@@ -79,6 +58,7 @@ public class GoodsStyleActivity extends BaseActivity  {
         netRequst = NetRequst.getInstance();
         ajaxCallBack = new NetRequstAjaxCallBack(mContext);
         ajaxCallBack.setOnNetRequstAjaxCallBack(onNetRequstAjaxCallBack);
+        topCategoryId = getIntent().getStringExtra("topCategoryId");
         viewInit();
     }
 
@@ -137,7 +117,7 @@ public class GoodsStyleActivity extends BaseActivity  {
     public void  requstNetData(){
         requstType=0;
         showMbProgress("数据加载中");
-        netRequst.getAllCategory(ajaxCallBack.getAllCategory);
+        netRequst.getAllCategory(ajaxCallBack.getAllCategory,topCategoryId);
     }
 
 

@@ -54,6 +54,8 @@ public class SettingPayPasswordActivity extends BaseActivity {
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
+        toolbarLeftImg.setImageResource(R.mipmap.back_white);
+        toolbarTitle.setText("设置支付密码");
 
     }
 

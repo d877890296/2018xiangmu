@@ -1,24 +1,27 @@
 package com.goods.details;
 
+import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.dev.customview.AdViewPaper;
-import com.dev.customview.MyToast;
-import com.dev.customview.ObservableScrollView;
 import com.dev.customview.TextViewUtils;
 import com.goods.city.GoodsListModel;
 import com.goods.city.GoodsValue;
@@ -26,11 +29,6 @@ import com.goods.shoppingcar.ShoppingCarActivity;
 import com.hyf.tdlibrary.utils.Tools;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
-import com.dev.customview.ObservableScrollView.ScrollViewListener;
-import com.xfkc.caimai.util.RandomID;
-
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +53,7 @@ public class GoodsDetailsActivity extends BaseActivity {
 
     private ImageView gs_img, xq_img, pj_img, tj_img;
     private TextView gs_textView, xq_textView, pj_textView, tj_textView;
-
+    private TextView goodsType_textView;//规格选择
     private List<ImageView> locationImg;
 
     private AdViewPaper adViewPaper;
@@ -122,7 +120,7 @@ public class GoodsDetailsActivity extends BaseActivity {
         goodsTitle_textView = (TextView) topHeadView.findViewById(R.id.goodsTitle_textView);
         goods_discroubTitle_textView = (TextView) topHeadView.findViewById(R.id.goods_discroubTitle_textView);
         goodsPrace_textView = (TextView) topHeadView.findViewById(R.id.goodsPrace_textView);
-
+        goodsType_textView = (TextView) topHeadView.findViewById(R.id.goodsTypeTextView);
 
         top_frameLayout = (FrameLayout) topHeadView.findViewById(R.id.top_frameLayout);
         top_frameLayout.setVisibility(View.VISIBLE);
@@ -187,6 +185,7 @@ public class GoodsDetailsActivity extends BaseActivity {
         botoom_shopCarTtv.setOnClickListener(onClickListener);
         addShoppingCar_textView.setOnClickListener(onClickListener);
         buy_textView.setOnClickListener(onClickListener);
+        goodsType_textView.setOnClickListener(onClickListener);
         setBaseContent();
     }
 
@@ -307,11 +306,15 @@ public class GoodsDetailsActivity extends BaseActivity {
                     extraMap.put("allPrace", price);
                     //  skip_classView(SureOrderforgoodsActivity.class, extraMap, false);
                     break;
+                case R.id.goodsTypeTextView:
+//                    showGoodsType();
+                    break;
                 default:
                     break;
             }
         }
     };
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -326,5 +329,42 @@ public class GoodsDetailsActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         GoodsValue.getInstance().reSet();
+    }
+
+    /*展示商品规格*/
+    private void showGoodsType() {
+        final Dialog dialog = new Dialog(this, R.style.BottomDialog);
+        View contentView = LayoutInflater.from(this).inflate(R.layout.goods_type_dialog, null);
+//        TextView horizontal = (TextView) contentView.findViewById(R.id.choose_camera_horizontal);
+//        TextView vertical = (TextView) contentView.findViewById(R.id.choose_camera_vertical);
+//        TextView finish = (TextView) contentView.findViewById(R.id.choose_camera_finish);
+//        horizontal.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                dialog.dismiss();
+//            }
+//        });
+//        vertical.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                dialog.dismiss();
+//            }
+//        });
+
+//        finish.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.dismiss();
+//            }
+//        });
+        dialog.setContentView(contentView);
+        ViewGroup.LayoutParams layoutParams = contentView.getLayoutParams();
+        layoutParams.width = getResources().getDisplayMetrics().widthPixels;
+        contentView.setLayoutParams(layoutParams);
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+        dialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+        dialog.show();
     }
 }
