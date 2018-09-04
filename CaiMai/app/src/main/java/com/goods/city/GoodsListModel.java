@@ -40,5 +40,14 @@ public class GoodsListModel {
     public String sname;
     @NetJsonFiled
     public  int categoryId;
-
+    @NetJsonFiled //库存
+    public String inventory;
+    @NetJsonFiled //单位
+    public String unit;
+    @NetJsonFiled //分期类型
+    public int mailType;
+    @NetJsonFiled //分期数
+    public int periodTime;
+    @NetJsonFiled //规格类型
+    public int itemType;
 }

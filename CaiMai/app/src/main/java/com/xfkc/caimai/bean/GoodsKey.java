@@ -18,4 +18,6 @@ public class GoodsKey {
     public String latitude;
 
     public int topCategoryId;
+    public int itemId;
+    public int buyNum;
 }

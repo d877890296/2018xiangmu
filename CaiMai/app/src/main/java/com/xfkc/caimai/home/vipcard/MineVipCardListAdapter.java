@@ -7,7 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.xfkc.caimai.R;
-import com.xfkc.caimai.bean.VipCardBean;
+import com.xfkc.caimai.bean.MineVipCardBean;
 import com.zhy.autolayout.AutoLinearLayout;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 public class MineVipCardListAdapter extends BaseAdapter {
 
     private final Context context;
-    private ArrayList<VipCardBean.DataBean.ListBean> list;
+    private ArrayList<MineVipCardBean.DataBean> list;
 
 
     public MineVipCardListAdapter(Context context) {
@@ -32,7 +32,7 @@ public class MineVipCardListAdapter extends BaseAdapter {
     }
 
     /*设置数据*/
-    public void setData(ArrayList<VipCardBean.DataBean.ListBean> list) {
+    public void setData(ArrayList<MineVipCardBean.DataBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -65,12 +65,12 @@ public class MineVipCardListAdapter extends BaseAdapter {
             viewHodler = (ViewHolder) convertView.getTag();
         }
 
-        VipCardBean.DataBean.ListBean listBean = list.get(position);
+        MineVipCardBean.DataBean listBean = list.get(position);
 
-        viewHodler.days.setText("剩余有效期: 365天");
+        viewHodler.days.setText("剩余有效期:"+listBean.remainDays+"天");
         viewHodler.title.setText(listBean.cardName);
         viewHodler.price.setText("");
-        viewHodler.imageBg.setBackgroundResource(R.mipmap.vip01);
+        viewHodler.imageBg.setBackgroundResource(R.mipmap.vip02);
 
 
         return convertView;

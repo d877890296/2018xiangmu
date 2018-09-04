@@ -1,37 +1,5 @@
 package com.goods.shoppingcar;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-
-import com.dev.customview.CustomListView;
-import com.dev.customview.MyToast;
-
-
-import com.goods.city.GoodsListModel;
-import com.goods.details.GoodsDetailsActivity;
-import com.goods.details.ShoppingCarModel;
-import com.goods.netrequst.Logger;
-import com.goods.netrequst.NetRequstAjaxCallBack;
-import com.goods.netrequst.PostRequst;
-import com.goods.order.SureOrderActivity;
-import com.goods.shoppingcar.ShoppingCarAdapter.OnCheckBoxBack;
-
-
-import com.goods.sortlsitview.AjaxShopModel;
-import com.hyf.tdlibrary.utils.SharedPrefUtil;
-import com.hyf.tdlibrary.utils.Tools;
-import com.json.NetJsonFiled;
-import com.xfkc.caimai.R;
-import com.xfkc.caimai.base.BaseActivity;
-import com.xfkc.caimai.bean.GoodsKey;
-import com.xfkc.caimai.config.SharedPref;
-import com.xfkc.caimai.order.OrderActivity;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -43,11 +11,33 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.dev.customview.CustomListView;
+import com.dev.customview.MyToast;
+import com.goods.city.GoodsListModel;
+import com.goods.details.GoodsDetailsActivity;
+import com.goods.details.ShoppingCarModel;
+import com.goods.netrequst.Logger;
+import com.goods.netrequst.NetRequstAjaxCallBack;
+import com.goods.netrequst.PostRequst;
+import com.goods.order.SureOrderActivity;
+import com.goods.shoppingcar.ShoppingCarAdapter.OnCheckBoxBack;
+import com.hyf.tdlibrary.utils.SharedPrefUtil;
+import com.hyf.tdlibrary.utils.Tools;
+import com.xfkc.caimai.R;
+import com.xfkc.caimai.base.BaseActivity;
+import com.xfkc.caimai.bean.GoodsKey;
+import com.xfkc.caimai.config.SharedPref;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.goods.netrequst.PostRequst.UPSUCCESS;
 

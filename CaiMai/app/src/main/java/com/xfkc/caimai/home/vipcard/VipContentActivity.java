@@ -103,17 +103,17 @@ public class VipContentActivity extends BaseActivity {
         vipCardNo.setText("VIP 123456789");
 
 
-        switch (TYPE) {
-            case 0:
-                imageBg.setBackgroundResource(R.mipmap.vip01);
-                break;
-            case 1:
-                imageBg.setBackgroundResource(R.mipmap.vip03);
-                break;
-            case 2:
+//        switch (TYPE) {
+//            case 0:
+//                imageBg.setBackgroundResource(R.mipmap.vip01);
+//                break;
+//            case 1:
+//                imageBg.setBackgroundResource(R.mipmap.vip03);
+//                break;
+//            case 2:
                 imageBg.setBackgroundResource(R.mipmap.vip02);
-                break;
-        }
+//                break;
+//        }
 
     }
 

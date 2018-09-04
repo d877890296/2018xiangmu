@@ -65,7 +65,13 @@ public class RecruedHallListAdapter extends BaseAdapter {
         }
 
         RecruiHallBean.DataBean.ListBean listBean = list.get(position);
-
+        viewHodler.dianpuTitle.setText(listBean.shopName);
+        viewHodler.aType.setText("A类事业合伙人：20");
+        viewHodler.bType.setText("B类事业合伙人：200");
+        viewHodler.cType.setText("C类事业合伙人：500");
+        viewHodler.aTypeDes.setText("每个季度可获得店铺年营业额0.07%的康币分红");
+        viewHodler.bTypeDes.setText("每个季度可获得店铺年营业额0.03%的康币分红");
+        viewHodler.cTypeDes.setText("每年可获得每年50个康币分红");
         viewHodler.dianpuTitle.setText(listBean.shopName);
 
 

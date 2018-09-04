@@ -40,7 +40,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/ic_launcher" />
+                        android:src="@mipmap/icon_dingwei" />
 
                     <TextView
                         android:id="@+id/get_goods_name"
@@ -81,7 +81,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/ic_launcher" />
+                        android:src="@mipmap/icon_youjiantou" />
 
                 </RelativeLayout>
 
@@ -90,7 +90,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="30dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/add_address_layout" />
 
                 <View
                     android:layout_width="match_parent"
@@ -112,7 +112,7 @@
                         android:layout_height="110dp"
                         android:layout_marginRight="38px"
                         android:scaleType="centerCrop"
-                        android:src="@mipmap/ic_launcher" />
+                        android:src="@mipmap/error_icon" />
 
                     <ImageView
                         android:id="@+id/shop_dazhe"
@@ -121,7 +121,7 @@
                         android:layout_alignBottom="@+id/shop_image"
                         android:layout_alignRight="@+id/shop_image"
                         android:padding="10px"
-                        android:src="@mipmap/ic_launcher"
+                        android:src="@mipmap/error_icon"
                         android:visibility="gone" />
 
                     <TextView
@@ -188,40 +188,38 @@
 
                     <LinearLayout
                         android:id="@+id/rl_edit"
-                        android:layout_width="200px"
-                        android:layout_height="80px"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/shop_price"
                         android:layout_alignParentEnd="true"
-                        android:background="@color/bg_color">
+                        >
 
                         <TextView
                             android:id="@+id/delete_goods_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_margin="3px"
-                            android:layout_weight="1"
                             android:gravity="center"
-                            android:text="—"
-                            android:textColor="@color/black" />
+                           android:background="@mipmap/delete" />
 
                         <TextView
                             android:id="@+id/show_goodsnum_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_margin="3px"
-                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
                             android:background="@color/white"
                             android:gravity="center"
                             android:text="1" />
 
                         <TextView
                             android:id="@+id/add_goods_tv"
-                            android:layout_width="0px"
-                            android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_margin="3px"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="+" />
+                            android:background="@mipmap/add" />
                     </LinearLayout>
 
                 </com.zhy.autolayout.AutoRelativeLayout>
@@ -272,36 +270,33 @@
                         android:layout_below="@+id/way"
                         android:layout_marginTop="20dp"
                         android:gravity="center"
-                        android:visibility="gone"
-                        >
+                        android:visibility="gone">
 
                         <TextView
                             android:id="@+id/way_youji"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
                             android:background="@drawable/order_tv_bg02"
                             android:paddingBottom="5dp"
                             android:paddingLeft="20dp"
                             android:paddingRight="20dp"
                             android:paddingTop="5dp"
                             android:text="邮寄"
-                            android:textSize="14sp"
-                            android:layout_marginRight="10dp"
-                            />
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/way_ziqu"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
                             android:background="@drawable/order_tv_bg02"
                             android:paddingBottom="5dp"
                             android:paddingLeft="20dp"
                             android:paddingRight="20dp"
                             android:paddingTop="5dp"
                             android:text="自取"
-                            android:textSize="14sp"
-                            android:layout_marginLeft="10dp"
-                            />
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                 </RelativeLayout>
@@ -329,6 +324,7 @@
                         android:text="康币支付"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
+
                     <LinearLayout
                         android:id="@+id/payway_layout"
                         android:layout_width="match_parent"
@@ -336,36 +332,33 @@
                         android:layout_below="@+id/pay_way"
                         android:layout_marginTop="20dp"
                         android:gravity="center"
-                        android:visibility="gone"
-                        >
+                        android:visibility="gone">
 
                         <TextView
                             android:id="@+id/kangbi"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
                             android:background="@drawable/order_tv_bg02"
                             android:paddingBottom="5dp"
                             android:paddingLeft="20dp"
                             android:paddingRight="20dp"
                             android:paddingTop="5dp"
                             android:text="康币"
-                            android:textSize="14sp"
-                            android:layout_marginRight="10dp"
-                            />
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/daijinjuan"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
                             android:background="@drawable/order_tv_bg02"
                             android:paddingBottom="5dp"
                             android:paddingLeft="20dp"
                             android:paddingRight="20dp"
                             android:paddingTop="5dp"
                             android:text="代金券"
-                            android:textSize="14sp"
-                            android:layout_marginLeft="10dp"
-                            />
+                            android:textSize="14sp" />
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -545,10 +538,10 @@
                 android:layout_width="250px"
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
-                android:background="@color/red"
+                android:background="@color/ff704d"
                 android:gravity="center"
-                android:text="提交订单"
-                android:textColor="@color/white"
+                android:text="立即支付"
+                android:textColor="@color/whilte"
                 android:textSize="18sp" />
 
             <TextView
