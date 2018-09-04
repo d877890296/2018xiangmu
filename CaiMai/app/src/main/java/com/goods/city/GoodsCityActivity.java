@@ -262,12 +262,6 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
         public void itemClick(int position, GoodsCityListAdapter.ViewHolder holder) {
             // TODO Auto-generated method stub
             GoodsListModel model = goodsData.get(position);
-//            extraMap.put("goodsStoreId", model.getGoodsStoreId());
-//            extraMap.put("goodsId", model.getGoodsId());
-//            extraMap.put("price", model.getGoodsPrice());
-//            extraMap.put("goodsProperty", model.getGoodsProperty());
-//            extraMap.put("goodsImg", model.getGoodsMainPhotoId());
-//            extraMap.put("goodsName", model.getGoodsName());
             GoodsValue.getInstance().setGoodsListModel(model);
             skip_classView(GoodsDetailsActivity.class, extraMap, false);
         }
@@ -466,7 +460,6 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
             // TODO Auto-generated method stub
             dissMbProgress();
             if (isSuccess) {
-
                 ArrayList<GoodsListModel> shopsList = (ArrayList) object;
                 goodsData.addAll(shopsList);
                 goodsCityListAdapter.setGoodsData(goodsData);

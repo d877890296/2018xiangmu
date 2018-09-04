@@ -32,6 +32,8 @@ public class ShoppingCarModel {
 	public String gcId;
 	public String toalPrace;
 
+	public String allParamData;
+
 	public String getShopName() {
 		return shopName;
 	}
@@ -136,5 +138,11 @@ public class ShoppingCarModel {
 		this.toalPrace = toalPrace;
 	}
 
-	
+	public String getAllParamData() {
+		return allParamData;
+	}
+
+	public void setAllParamData(String allParamData) {
+		this.allParamData = allParamData;
+	}
 }

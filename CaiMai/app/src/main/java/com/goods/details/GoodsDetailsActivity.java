@@ -305,6 +305,8 @@ public class GoodsDetailsActivity extends BaseActivity {
                 case R.id.addShoppingCar_textView:// 加入购物车
                     isShow = true;
                     showMbProgress("添加中...");
+                    requstNetDataAddProduct();
+
 //                    app.netRequst.shoppingCartSaveRequst(acc.getUserId(), goodsStoreId, goodsId, "1", specInfo, price,
 //                            netRequstAjaxCallBack.shopingCarAddCallback);
                     showGoodsType();
@@ -357,7 +359,21 @@ public class GoodsDetailsActivity extends BaseActivity {
             }
         }
     };
+    /****
+     *
+     * 请求数据
+     */
+    public void requstNetDataAddProduct() {
+        if (app.shopModel != null) {
+            userToken = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
+            GoodsKey goodsKey = new GoodsKey();
+            goodsKey.token = userToken;
 
+            GoodsValue.getInstance().getGoodsListModel().buyNum=1;
+            postRequst.addProduct(handler, goodsKey);
+        }
+
+    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -409,10 +425,10 @@ public class GoodsDetailsActivity extends BaseActivity {
 
         Glide.with(this).load(goodsListModel.pic).error(R.mipmap.error_icon).into(shop_iv);
         shop_price.setText(goodsListModel.itemPrice+"康币");
-        if (Tools.IsEmpty(goodsListModel.inventory)){
+        if (Tools.IsEmpty(goodsListModel.inventory+"")){
             inventory = 0;
         }else {
-            inventory = Integer.parseInt(goodsListModel.inventory);
+            inventory = Integer.parseInt(goodsListModel.inventory+"");
         }
         shop_kc.setText("库存 "+inventory +" "+goodsListModel.unit);
         if (goodsListModel.itemType == 0){
@@ -599,7 +615,6 @@ public class GoodsDetailsActivity extends BaseActivity {
                             //   jsonObj = convert.getString("data");
                             jsonObj = obj.getString("data");
                             Logger.e("jsonObj:---", jsonObj);
-
                             app.jsonHttp.getJsonObj(jsonObj, AjaxShopModel.class,
                                     ajaxCallBack.getProductBySearch);
                         } catch (JSONException e) {
