@@ -228,7 +228,7 @@ public class ConfirmOrderActivity extends RxActivity {
 
     /*设置商品显示数据*/
     private void setShopInfo() {
-        Glide.with(this).load(imageUrl).error(R.mipmap.ic_launcher).into(shopImage);
+        Glide.with(this).load(imageUrl).error(R.mipmap.error_icon).into(shopImage);
         shopDazhe.setVisibility(View.GONE);
 
         //商品名称
@@ -346,8 +346,10 @@ public class ConfirmOrderActivity extends RxActivity {
                 }
                 break;
             case R.id.kangbi:
+
                 break;
             case R.id.daijinjuan:
+
                 break;
             case R.id.payway:
                 if (paywayLayout.getVisibility() == View.GONE){
@@ -577,9 +579,9 @@ public class ConfirmOrderActivity extends RxActivity {
             return;
         if (requestCode == 1004 && resultCode == 1005) {
             addressId = data.getStringExtra("addressId");
-            String name = data.getStringExtra("userName");
-            String phone = data.getStringExtra("userPhone");
-            String address = data.getStringExtra("usAddress");
+            String name = data.getStringExtra("name");
+            String phone = data.getStringExtra("phone");
+            String address = data.getStringExtra("address");
 
             getGoodsName.setText("收货人: " + name);
             getGoodsPhone.setText(phone);

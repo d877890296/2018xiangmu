@@ -77,7 +77,7 @@ public class VipCardListAdapter extends BaseAdapter {
             viewHodler.days.setText("有效期: 365天" );
             viewHodler.title.setText(listBean.cardName);
             viewHodler.price.setText("￥" + listBean.cardPrice);
-            viewHodler.imageBg.setBackgroundResource(R.mipmap.vip01);
+            viewHodler.imageBg.setBackgroundResource(R.mipmap.vip02);
         }
 
 

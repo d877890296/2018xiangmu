@@ -1,6 +1,7 @@
 package com.xfkc.caimai.home.recruitmenthall;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -68,11 +69,13 @@ public class RecruHallListAdapter extends BaseAdapter {
         RecruiHallBean.DataBean.ListBean listBean = list.get(position);
 
         viewHodler.dianpuTitle.setText(listBean.shopName);
-
+        viewHodler.aType.setText("A类事业合伙人：3(人)/20");
+        viewHodler.bType.setText("B类事业合伙人：3(人)/20");
+        viewHodler.cType.setText("C类事业合伙人：3(人)/20");
         viewHodler.payBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                context.startActivity(new Intent(context,RecruContentActivity.class));
             }
         });
 

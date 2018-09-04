@@ -42,7 +42,7 @@ public class MineVipContentActivity extends BaseActivity {
 
     //会员卡类别
     private int TYPE = 0;
-
+    private String cardTypeName , remainDays;
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_minevip_content;
@@ -54,7 +54,9 @@ public class MineVipContentActivity extends BaseActivity {
         toolbarTitle.setTextColor(Color.BLACK);
         toolbarLeftImg.setImageResource(R.mipmap.back_white);
 
-        TYPE = getIntent().getIntExtra("type", 0);
+        cardTypeName = getIntent().getStringExtra("cardTypeName");
+        remainDays =getIntent().getStringExtra("remainDays");
+        TYPE =getIntent().getIntExtra("carTypeId",1);
         setVipCardType();
     }
 
@@ -68,23 +70,16 @@ public class MineVipContentActivity extends BaseActivity {
 
     /*设置会员卡类别*/
     private void setVipCardType() {
+        days.setText("剩余有效期:"+remainDays+"天");
+        title.setText(cardTypeName);
         switch (TYPE) {
-            case 0:
-                days.setText("剩余有效期: 365天");
-                title.setText("初级会员");
-//                price.setText("￥36.5" );
+            case 1:
                 imageBg.setBackgroundResource(R.mipmap.vip01);
                 break;
-            case 1:
-                days.setText("剩余有效期: 365天");
-                title.setText("中级会员");
-//                price.setText("￥365" );
+            case 2:
                 imageBg.setBackgroundResource(R.mipmap.vip03);
                 break;
-            case 2:
-                days.setText("剩余有效期: 365天");
-                title.setText("高级会员");
-//                price.setText("￥3650" );
+            case 3:
                 imageBg.setBackgroundResource(R.mipmap.vip02);
                 break;
         }

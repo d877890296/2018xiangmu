@@ -8,6 +8,7 @@ import com.xfkc.caimai.bean.EmptyBean;
 import com.xfkc.caimai.bean.GoodsCityModel;
 import com.xfkc.caimai.bean.GoodsKey;
 import com.xfkc.caimai.bean.LoginInfo;
+import com.xfkc.caimai.bean.MineVipCardBean;
 import com.xfkc.caimai.bean.RecruiHallBean;
 import com.xfkc.caimai.bean.RegistBean;
 import com.xfkc.caimai.bean.TopCategory;
@@ -50,10 +51,10 @@ public interface PayService {
     Observable<EmptyBean> updatePwd(@Query("phone") String phone, @Query("userPwd") String userPwd, @Query("verCode") String verCode);
 
     //查询用户购买的会员卡
-    @GET("/api/memUser/findMemCardByUserId")
-    Observable<VipCardBean> getUserVipCard(@Query("token") String token);
+    @GET("/api/memCard/findUserCard")
+    Observable<MineVipCardBean> getUserVipCard(@Query("token") String token);
 
-    //查询用户购买的会员卡
+    //查询所有会员卡类别
     @GET("/api/memCard/findAll")
     Observable<VipCardBean> findAllVipCard(@Query("pageNum") String pageNum, @Query("pageSize") String pageSize);
 
@@ -122,4 +123,8 @@ public interface PayService {
     //顶部类别列表
     @GET("/api/happycommune/getTopCategory")
     Observable<TopCategory> getTopCategory();
+
+    //更新购物车
+    @POST("/api/shopcart/editCartItemsNum ")
+    Observable<EmptyBean> editCartItemsNum(@Body GoodsKey id);
 }

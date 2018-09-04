@@ -12,7 +12,7 @@ import com.dev.customview.CustomListView;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
-import com.xfkc.caimai.bean.VipCardBean;
+import com.xfkc.caimai.bean.MineVipCardBean;
 import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.net.PayFactory;
 import com.xfkc.caimai.net.RxHelper;
@@ -39,7 +39,7 @@ public class MineVipCardActivity extends BaseActivity {
     CustomListView listview;
 
     private MineVipCardListAdapter mineVipCardListAdapter;
-    private ArrayList<VipCardBean.DataBean.ListBean> list = new ArrayList<>();
+    private ArrayList<MineVipCardBean.DataBean> list = new ArrayList<>();
 
     private String token;
 
@@ -67,9 +67,11 @@ public class MineVipCardActivity extends BaseActivity {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                VipCardBean.DataBean.ListBean listBean = list.get(position);
-
-                skip_classView(MineVipContentActivity.class,extraMap,false);
+                MineVipCardBean.DataBean listBean = list.get(position - 1);
+                extraMap.put("carTypeId", listBean.carTypeId);
+                extraMap.put("cardTypeName", listBean.cardName+"");
+                extraMap.put("remainDays", listBean.remainDays + "");
+                skip_classView(MineVipContentActivity.class, extraMap, false);
             }
         });
     }
@@ -79,15 +81,14 @@ public class MineVipCardActivity extends BaseActivity {
 
         PayFactory.getPayService()
                 .getUserVipCard(token)
-                .compose(RxHelper.<VipCardBean>io_main())
-                .subscribe(new ProgressSubscriber<VipCardBean>(this) {
+                .compose(RxHelper.<MineVipCardBean>io_main())
+                .subscribe(new ProgressSubscriber<MineVipCardBean>(this) {
                     @Override
-                    public void onNext(VipCardBean vipCardBean) {
-                        if (vipCardBean.data.list != null && vipCardBean.data.list.size() != 0) {
-                            list.addAll(vipCardBean.data.list);
+                    public void onNext(MineVipCardBean mineVipCardBean) {
+                        if (mineVipCardBean.data != null && mineVipCardBean.data.size() != 0) {
+                            list.addAll(mineVipCardBean.data);
                             mineVipCardListAdapter.setData(list);
                         }
-
                     }
                 });
     }

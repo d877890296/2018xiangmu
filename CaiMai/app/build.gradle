@@ -61,9 +61,15 @@ dependencies {
     //compile 'com.android.support:appcompat-v7:25.3.1'
     //支付
     compile files('libs/alipaySdk-20180403.jar')
-    testCompile 'junit:junit:4.12'
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
+<<<<<<< HEAD
+=======
+
+
+
+    testCompile 'junit:junit:4.12'
+>>>>>>> a1d2a22e80d2ad6fa37950f06b0a4c7d6eb2f399
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.apkfuns.xprogressdialog:xprogressdialog:1.2.0'

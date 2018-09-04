@@ -1,53 +1,344 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/white"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="15dp"
-    >
+    android:background="@color/transparent">
 
-    <LinearLayout
+    <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="end"
-        >
-
-        <ImageView
-            android:id="@+id/close_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-
-        <ImageView
-            android:id="@+id/shop_iv"
-            android:layout_width="123dp"
-            android:layout_height="123dp" />
+        android:layout_above="@+id/bottom_layout"
+        android:background="@color/whilte"
+        android:orientation="vertical"
+        android:padding="15dp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
-            <TextView
-                android:id="@+id/shop_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textColor="@color/ff704d"
-                />
+            android:gravity="end">
 
+            <ImageView
+                android:id="@+id/close_iv"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/close" />
         </LinearLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/shop_iv"
+                android:layout_width="123dp"
+                android:layout_height="123dp"
+                android:src="@mipmap/error_icon" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/shop_iv"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/shop_iv"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/shop_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="16.9康币"
+                    android:textColor="@color/ff704d"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/shop_kc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="库存 123 件"
+                    android:textColor="@color/time_text_color"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="请选择规格 数量 分期"
+                    android:textColor="@color/time_text_color"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/f1f1f1" />
+
+        <TextView
+            android:id="@+id/type_name01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="请选择规格"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <com.dev.customview.MyGridView
+            android:id="@+id/type_gridview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:numColumns="2"
+            android:visibility="gone">
+
+        </com.dev.customview.MyGridView>
+        <TextView
+            android:id="@+id/type_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/type_grid_bg02"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:text="140-180g×4个"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/f1f1f1" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="请选择数量"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:id="@+id/rl_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true">
+
+                <TextView
+                    android:id="@+id/delete_goods_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3px"
+                    android:background="@mipmap/delete"
+                    android:gravity="center" />
+
+                <TextView
+                    android:id="@+id/show_goodsnum_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:text="1" />
+
+                <TextView
+                    android:id="@+id/add_goods_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3px"
+                    android:background="@mipmap/add"
+                    android:gravity="center" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/f1f1f1" />
+
+        <TextView
+            android:id="@+id/type_name02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="分期邮寄"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            >
+
+            <RadioButton
+                android:id="@+id/fenqi_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/type_fq_bg"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:text="3期" />
+
+            <RadioButton
+                android:id="@+id/fenqi_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/type_fq_bg"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:text="6期" />
+
+            <RadioButton
+                android:id="@+id/fenqi_9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/type_fq_bg"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:text="9期" />
+
+            <RadioButton
+                android:id="@+id/fenqi_12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/type_fq_bg"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:text="12期" />
+        </LinearLayout>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="0"
+        android:background="#FFF"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp">
+
+            <TextView
+                android:id="@+id/botoom_shopCarTtv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/gd_shopingcar_btn_pro"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/botoom_shopNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="@drawable/circle"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="#FFF"
+                android:textSize="10sp" />
+
+
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:background="#ededed"
+            android:drawablePadding="5dp"
+            android:drawableTop="@drawable/btn_fav"
+            android:gravity="center"
+            android:text="客服"
+            android:textColor="#000000"
+            android:textSize="10sp"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fff"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/addShoppingCar_textView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#fd8300"
+                android:gravity="center"
+                android:text="加入购物车"
+                android:textColor="#fff"
+                android:textSize="15sp" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="6dp"
+                android:layout_marginTop="6dp"
+                android:background="#fff" />
+
+            <TextView
+                android:id="@+id/buy_textView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#fd8300"
+                android:gravity="center"
+                android:text="立即购买"
+                android:textColor="#fff"
+                android:textSize="15sp" />
+        </LinearLayout>
     </LinearLayout>
-
-
-</LinearLayout>
+</RelativeLayout>
