@@ -460,7 +460,6 @@ public class GoodsDetailsActivity extends BaseActivity {
         addShoppingCar_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                upadteCartNum();
                 dialog.dismiss();
             }
         });
@@ -570,13 +569,11 @@ public class GoodsDetailsActivity extends BaseActivity {
             // TODO Auto-generated method stub
             dissMbProgress();
             if (isSuccess) {
-
                 ArrayList<GoodsListModel> shopsList = (ArrayList) object;
 
             } else {
 
             }
-
 
         }
 
@@ -618,9 +615,5 @@ public class GoodsDetailsActivity extends BaseActivity {
             }
         }
     };
-
-    private void upadteCartNum(){
-
-    }
 
 }

@@ -562,7 +562,6 @@ public class ShoppingCarActivity extends BaseActivity {
             // TODO Auto-generated method stub
             dissMbProgress();
             if (isSuccess) {
-
                 ArrayList<GoodsListModel> shopsList = (ArrayList) object;
 
             } else {
