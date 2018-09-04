@@ -130,11 +130,11 @@ public class ShoppingCarAdapter extends BaseAdapter {
 			if (ch1.equals(ch2)) {
 				viewHoder.fristWord.setVisibility(View.GONE);
 			} else {
-				viewHoder.fristWord.setVisibility(View.GONE);
+				viewHoder.fristWord.setVisibility(View.VISIBLE);
 				viewHoder.fristWord.setText(ch2);
 			}
 		} else {
-			viewHoder.fristWord.setVisibility(View.GONE);
+			viewHoder.fristWord.setVisibility(View.VISIBLE);
 			viewHoder.fristWord.setText(ch2);
 		}
 

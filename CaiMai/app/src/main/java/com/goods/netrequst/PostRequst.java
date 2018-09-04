@@ -6,6 +6,9 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 
+import com.goods.city.GoodsListModel;
+import com.goods.city.GoodsValue;
+import com.json.NetJsonFiled;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -14,6 +17,10 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.xfkc.caimai.bean.GoodsKey;
 import com.xfkc.caimai.config.Constant;
+
+import org.apache.http.NameValuePair;
+
+import java.util.List;
 
 /***
  *
@@ -103,10 +110,39 @@ public class PostRequst {
         url = Constant.BASE_URL + "/api/shopcart/addProduct?";
         params = new RequestParams();
         params.addBodyParameter("token", goodsKey.token);
-        params.addBodyParameter("pageNum", goodsKey.pageNum);
-        params.addBodyParameter("pageSize", goodsKey.pageSize);
-        params.addBodyParameter("shopId", goodsKey.shopId);
-        params.addBodyParameter("secoCategory", goodsKey.categoryId);
+        GoodsListModel goodsListModel= GoodsValue.getInstance().getGoodsListModel();
+        params.addBodyParameter("id", goodsListModel.id+"");
+        params.addBodyParameter("itemId", goodsListModel.itemId+"");
+        params.addBodyParameter("title", goodsListModel.title+"");
+        params.addBodyParameter("sellPoint", goodsListModel.sellPoint+"");
+        params.addBodyParameter("category", goodsListModel.category+"");
+        params.addBodyParameter("pic", goodsListModel.pic+"");
+        params.addBodyParameter("status", goodsListModel.status+"");
+//        params.addBodyParameter("createTime", goodsListModel.createTime+"");
+//        params.addBodyParameter("updateTime", goodsListModel.updateTime+"");
+        params.addBodyParameter("scid", goodsListModel.scid+"");
+        params.addBodyParameter("mailType", goodsListModel.mailType+"");
+        params.addBodyParameter("itemType", goodsListModel.itemType+"");
+        params.addBodyParameter("itemPrice", goodsListModel.itemPrice+"");
+        params.addBodyParameter("allParamData", goodsListModel.allParamData+"");
+        params.addBodyParameter("paramData", goodsListModel.paramData+"");
+        params.addBodyParameter("buyNum", goodsListModel.buyNum+"");
+        params.addBodyParameter("shopId", goodsListModel.shopId+"");
+        params.addBodyParameter("mailPrice", goodsListModel.mailPrice+"");
+        params.addBodyParameter("inventory", goodsListModel.inventory+"");
+        params.addBodyParameter("receiveProvince", goodsListModel.receiveProvince+"");
+        params.addBodyParameter("unit", goodsListModel.unit+"");
+        params.addBodyParameter("cid", goodsListModel.cid+"");
+        params.addBodyParameter("topCategoryId", goodsListModel.topCategoryId+"");
+        params.addBodyParameter("periodTime", goodsListModel.periodTime+"");
+        params.addBodyParameter("backSelf", goodsListModel.backSelf+"");
+        params.addBodyParameter("saleType", goodsListModel.saleType+"");
+        params.addBodyParameter("backType", goodsListModel.backType+"");
+        params.addBodyParameter("firstBack", goodsListModel.firstBack+"");
+        params.addBodyParameter("secondBack", goodsListModel.secondBack+"");
+        params.addBodyParameter("useType", goodsListModel.useType+"");
+        params.addBodyParameter("content", goodsListModel.content+"");
+        params.addBodyParameter("secondCategory", goodsListModel.secondCategory+"");
         uploadMethod(params, url);
     }
 
@@ -121,10 +157,10 @@ public class PostRequst {
         url = Constant.BASE_URL + "/api/shopcart/editCartItemsNum?";
         params = new RequestParams();
         params.addBodyParameter("token", goodsKey.token);
-        params.addBodyParameter("pageNum", goodsKey.pageNum);
-        params.addBodyParameter("pageSize", goodsKey.pageSize);
         params.addBodyParameter("shopId", goodsKey.shopId);
-        params.addBodyParameter("secoCategory", goodsKey.categoryId);
+        params.addBodyParameter("itemId", goodsKey.itemId);
+        params.addBodyParameter("buyNum", goodsKey.buyNum);
+
         uploadMethod(params, url);
     }
 
