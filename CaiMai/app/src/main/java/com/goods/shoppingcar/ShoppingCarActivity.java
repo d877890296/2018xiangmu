@@ -420,9 +420,9 @@ public class ShoppingCarActivity extends BaseActivity {
                 String tempId = data.get(j).getId();
                 if (id.equals(tempId)) {
 
-                    int num=Integer.parseInt(data.get(j).getShopGoodsNumber());
+                    int num = Integer.parseInt(data.get(j).getShopGoodsNumber());
 
-                    double prace = Double.parseDouble(data.get(j).getToalPrace())*num;
+                    double prace = Double.parseDouble(data.get(j).getToalPrace()) * num;
                     allPrace += prace;
                 }
 
@@ -430,7 +430,7 @@ public class ShoppingCarActivity extends BaseActivity {
         }
 
         if (isEdit == false) {
-            allPrace_textView.setText("￥" + allPrace);
+            allPrace_textView.setText(allPrace + "康币");
             count_textView.setText("结算(" + deleteArray.size() + ")");
         } else {
             isRemove = true;
@@ -474,15 +474,14 @@ public class ShoppingCarActivity extends BaseActivity {
         public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
             // TODO Auto-generated method stub
 
-            ShoppingCarModel model = data.get(arg2);
-
-            extraMap.put("goodsImg", model.getShopGoodsImg());
-            extraMap.put("goodsStoreId", goodsStoreId);
-            extraMap.put("goodsId", model.getShopGoodsId());
-            extraMap.put("count", model.getShopGoodsNumber());
-            extraMap.put("goodsProperty", model.getShopGoodsInfo());
-            extraMap.put("goodsName", model.getShopGoodsName());
-            extraMap.put("price", model.getShopGoodsPrace());
+           // ShoppingCarModel model = data.get(arg2);
+//            extraMap.put("goodsImg", model.getShopGoodsImg());
+//            extraMap.put("goodsStoreId", goodsStoreId);
+//            extraMap.put("goodsId", model.getShopGoodsId());
+//            extraMap.put("count", model.getShopGoodsNumber());
+//            extraMap.put("goodsProperty", model.getShopGoodsInfo());
+//            extraMap.put("goodsName", model.getShopGoodsName());
+//            extraMap.put("price", model.getShopGoodsPrace());
 
 
             skip_classView(GoodsDetailsActivity.class, extraMap, false);
@@ -546,7 +545,7 @@ public class ShoppingCarActivity extends BaseActivity {
 
                         }
                         countParce();
-                        allPrace_textView.setText("￥" + allPrace);
+                        allPrace_textView.setText(allPrace + "康币");
                         seletall_btn.setText(" 全选");
                         seletall_btn.setChecked(false);
                         isCheckAll = false;
@@ -640,6 +639,11 @@ public class ShoppingCarActivity extends BaseActivity {
                                 analysisData(jsonObjData);
                             } else {
                                 requstNetData(0);
+                                deleteArray.clear();
+
+                                tradeIntegralAdapter.setDeleteArray(deleteArray);
+                                // 选择情况
+                                statisticsChoose();
                                 dissMbProgress();
                             }
 //							app.jsonHttp.getJsonObj(jsonObj, AjaxShopModel.class,
@@ -661,7 +665,7 @@ public class ShoppingCarActivity extends BaseActivity {
 
     //15295180301
     public void analysisData(JSONArray jsonObjData) {
-        if (jsonObjData!=null&&jsonObjData.length()>0){
+        if (jsonObjData != null && jsonObjData.length() > 0) {
             data.clear();
         }
         for (int j = 0; j < jsonObjData.length(); j++) {
