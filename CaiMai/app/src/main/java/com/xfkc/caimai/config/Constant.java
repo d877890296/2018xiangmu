@@ -11,6 +11,7 @@ public class Constant {
     public static final String TAG = "---幸福康城---";
     public static final String BASE_URL = "http://47.105.126.49:9999";
 //    public static final String BASE_URL = "http://70f9150e.ngrok.io";
+//    public static final String BASE_URL = "http://2001cdb8.ngrok.io";
 
 
     //关于我们

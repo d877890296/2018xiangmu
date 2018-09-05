@@ -1,7 +1,6 @@
 package com.goods.details;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,6 +33,7 @@ import com.goods.city.GoodsValue;
 import com.goods.netrequst.Logger;
 import com.goods.netrequst.NetRequstAjaxCallBack;
 import com.goods.netrequst.PostRequst;
+import com.goods.order.SureOrderActivity;
 import com.goods.shoppingcar.ShoppingCarActivity;
 import com.goods.sortlsitview.AjaxShopModel;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
@@ -43,7 +43,6 @@ import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 import com.xfkc.caimai.bean.GoodsKey;
 import com.xfkc.caimai.config.SharedPref;
-import com.xfkc.caimai.order.ConfirmOrderActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -305,7 +304,7 @@ public class GoodsDetailsActivity extends BaseActivity {
                 case R.id.addShoppingCar_textView:// 加入购物车
                     isShow = true;
                     showMbProgress("添加中...");
-                    requstNetDataAddProduct();
+//                    requstNetDataAddProduct();
 
 //                    app.netRequst.shoppingCartSaveRequst(acc.getUserId(), goodsStoreId, goodsId, "1", specInfo, price,
 //                            netRequstAjaxCallBack.shopingCarAddCallback);
@@ -364,6 +363,7 @@ public class GoodsDetailsActivity extends BaseActivity {
      * 请求数据
      */
     public void requstNetDataAddProduct() {
+
         if (app.shopModel != null) {
             userToken = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
             GoodsKey goodsKey = new GoodsKey();
@@ -469,20 +469,24 @@ public class GoodsDetailsActivity extends BaseActivity {
         botoom_shopCarTtv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                skip_classView(ShoppingCarActivity.class, extraMap, false);
+                dissMbProgress();
                 dialog.dismiss();
             }
         });
         addShoppingCar_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                requstNetDataAddProduct();
                 dialog.dismiss();
             }
         });
         buy_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(GoodsDetailsActivity.this,ConfirmOrderActivity.class));
+                extraMap.put("allPrace", allPrice+"");
+                extraMap.put("sourceType", 1);
+                skip_classView(SureOrderActivity.class, extraMap, false);
                 dialog.dismiss();
             }
         });
@@ -500,11 +504,11 @@ public class GoodsDetailsActivity extends BaseActivity {
         dialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
         dialog.show();
     }
-
+    private float allPrice;
     private void setAllPrice(int number, TextView show_goodsnum_tv) {
         show_goodsnum_tv.setText(number + "");
-//        float price = number * mpmodityPrice;
-//        allPrice = (float) (Math.round(price * 10000)) / 10000;
+        float price = number * Integer.parseInt(goodsListModel.itemPrice);
+        allPrice = (float) (Math.round(price * 10000)) / 10000;
 //        noebuytvPrice.setText("￥" + decimalFormat.format(allPrice + mpmodityFreight));
     }
     /*设置分期显示*/

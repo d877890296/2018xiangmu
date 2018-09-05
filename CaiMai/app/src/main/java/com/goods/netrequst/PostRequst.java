@@ -8,7 +8,6 @@ import android.os.Message;
 
 import com.goods.city.GoodsListModel;
 import com.goods.city.GoodsValue;
-import com.json.NetJsonFiled;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -17,10 +16,6 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.xfkc.caimai.bean.GoodsKey;
 import com.xfkc.caimai.config.Constant;
-
-import org.apache.http.NameValuePair;
-
-import java.util.List;
 
 /***
  *
