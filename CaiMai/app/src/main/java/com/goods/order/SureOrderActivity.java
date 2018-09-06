@@ -27,6 +27,7 @@ import com.xfkc.caimai.config.Constant;
 import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.dialog.ShowPassWordDialog;
 import com.xfkc.caimai.order.ChooseAddressActivity;
+import com.xfkc.caimai.pay.PaySuccessActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -181,6 +182,7 @@ public class SureOrderActivity extends BaseActivity {
 
 //                    }
                     addOrder();
+
                     break;
                 case R.id.way_youji:
                     WAY = 1;
@@ -227,7 +229,7 @@ public class SureOrderActivity extends BaseActivity {
         String note = buyerSay.getText().toString();
         token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
         HttpParams params = new HttpParams();
-        params.put("itemId", "1021427464");//商品id
+        params.put("itemId", itemId);//商品id
         params.put("buyNum", "1");//购买数量
         params.put("itemPrice", itemPrice);//商品单价
         params.put("paramData", paramData);//商品参数
@@ -255,7 +257,6 @@ public class SureOrderActivity extends BaseActivity {
                         AddOrderBean addOrderBean = gson.fromJson(s, AddOrderBean.class);
                         if (addOrderBean.retCode == 1) {
                             message = addOrderBean.message;
-                            payOrder("123545");
                             showPassWordDialog.showTimeDialog02(SureOrderActivity.this, 28.9, 1000);
                         } else {
                             ToastUtil.showToast(addOrderBean.message);
@@ -269,8 +270,8 @@ public class SureOrderActivity extends BaseActivity {
     public void payOrder(String pwd) {
         token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
         HttpParams params = new HttpParams();
-        params.put("orderNum", "1");
-        params.put("paymentWay", payWay + "");
+        params.put("orderNum", message);
+        params.put("paymentWay", PAY_WAY);
         params.put("orderPrice", "1");
         params.put("payPwd", pwd);
         params.put("token", token);
@@ -283,6 +284,14 @@ public class SureOrderActivity extends BaseActivity {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
                         Log.e("----------", s);
+                        Gson gson = new Gson();
+                        AddOrderBean addOrderBean = gson.fromJson(s, AddOrderBean.class);
+                        if (addOrderBean.retCode == 1) {
+                           skip_classView(PaySuccessActivity.class,extraMap,true);
+                        } else {
+                            ToastUtil.showToast(addOrderBean.message);
+                        }
+                        dissMbProgress();
                     }
                 });
     }

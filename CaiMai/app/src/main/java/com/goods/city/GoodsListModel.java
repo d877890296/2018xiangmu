@@ -22,9 +22,9 @@ public class GoodsListModel {
     @NetJsonFiled
     public int status;//": 1,
     @NetJsonFiled
-    public String createTime;//": "",
+    public int createTime;//": "",
     @NetJsonFiled
-    public String updateTime;//": "",
+    public int updateTime;//": "",
     @NetJsonFiled
     public int scid;//": 1,
     @NetJsonFiled //分期类型
@@ -32,7 +32,7 @@ public class GoodsListModel {
     @NetJsonFiled
     public int itemType;//": 1,
     @NetJsonFiled
-    public String itemPrice;
+    public int itemPrice;
     @NetJsonFiled
     public String allParamData;
     @NetJsonFiled
@@ -57,7 +57,7 @@ public class GoodsListModel {
     @NetJsonFiled //分期数
     public int periodTime;
     @NetJsonFiled //分期数
-    public int backSelf;
+    public double backSelf;
     @NetJsonFiled //分期数
     public int saleType;
     @NetJsonFiled //分期数

@@ -5,21 +5,21 @@
     android:layout_height="wrap_content"
     android:background="#fff"
     android:gravity="center"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/icon_time"
+            android:layout_height="19dp"
+            android:drawableLeft="@mipmap/dianpu_icon"
             android:drawablePadding="5dp"
-            android:text="全国联通充值店"
+            android:text="北京一号店"
             android:textColor="#000000"
             android:textSize="15sp" />
 
@@ -39,7 +39,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/goods_image"
@@ -49,11 +49,11 @@
             android:scaleType="fitXY"
             android:src="@mipmap/error_icon" />
 
-        <FrameLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/goods_name"
@@ -64,16 +64,91 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/goods_des"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/goods_name"
+                android:layout_marginTop="5dp"
+                android:text="为了赶在夏天滋润你"
+                android:textColor="#5f5f5f"
+                android:textSize="12sp" />
+
+            <TextView
                 android:id="@+id/goods_prace"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
+                android:layout_below="@+id/goods_des"
                 android:layout_marginTop="5dp"
-                android:text="共1件商品  合计：￥49.00（包含运费）"
-                android:textColor="#525252"
-                android:textSize="10sp" />
-        </FrameLayout>
+                android:text="￥49.00 康币"
+                android:textColor="@color/ff704d"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/goods_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:text="x1"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+
+        </RelativeLayout>
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/goods_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@mipmap/psz_icon"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:text="配送中"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true">
+
+            <TextView
+                android:id="@+id/goods_allnum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="共计1件商品"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/goods_allprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="49.00"
+                android:textColor="@color/ff704d"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/goods_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="康币"
+                android:textColor="@color/ff704d"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
@@ -82,26 +157,27 @@
         android:layout_marginRight="5dp"
         android:background="#ededed" />
 
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="8dp" >
+        android:padding="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/lookLogistics_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/black_shape"
+                android:clickable="true"
                 android:padding="5dp"
                 android:text="查看物流"
-                android:clickable="true"
                 android:textColor="#000000"
                 android:textSize="12sp" />
 
@@ -111,13 +187,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/black_shape"
+                android:clickable="true"
                 android:padding="5dp"
                 android:text="确认收货"
-                android:clickable="true"
                 android:textColor="#000000"
                 android:textSize="12sp" />
         </LinearLayout>
     </FrameLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"

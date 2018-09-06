@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -42,13 +43,16 @@ import com.hyf.tdlibrary.utils.Tools;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 import com.xfkc.caimai.bean.GoodsKey;
+import com.xfkc.caimai.config.Constant;
 import com.xfkc.caimai.config.SharedPref;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.goods.netrequst.PostRequst.UPSUCCESS;
 
@@ -83,6 +87,7 @@ public class GoodsDetailsActivity extends BaseActivity {
     private PostRequst postRequst;
     private NetRequstAjaxCallBack ajaxCallBack;
     private int number = 1;//商品数量
+
     @Override
     protected int getLayoutResource() {
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
@@ -358,20 +363,73 @@ public class GoodsDetailsActivity extends BaseActivity {
             }
         }
     };
+
     /****
      *
      * 请求数据
      */
     public void requstNetDataAddProduct() {
 
-        if (app.shopModel != null) {
-            userToken = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
-            GoodsKey goodsKey = new GoodsKey();
-            goodsKey.token = userToken;
+//        if (app.shopModel != null) {
+//            userToken = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
+//            GoodsKey goodsKey = new GoodsKey();
+//            goodsKey.token = userToken;
+//
+//            GoodsValue.getInstance().getGoodsListModel().buyNum = 1;
+//            postRequst.addProduct(handler, goodsKey);
+//        }
 
-            GoodsValue.getInstance().getGoodsListModel().buyNum=1;
-            postRequst.addProduct(handler, goodsKey);
-        }
+        // 参数
+        final Map<String, Object> params = new HashMap<String, Object>();
+        token= SharedPrefUtil.get(mContext,SharedPref.TOKEN);
+        params.put("token", token);
+        GoodsListModel goodsListModel= GoodsValue.getInstance().getGoodsListModel();
+        params.put("id", goodsListModel.id);
+        params.put("itemId", goodsListModel.itemId);
+        params.put("title", goodsListModel.title);
+        params.put("sellPoint", goodsListModel.sellPoint);
+        params.put("category", goodsListModel.category);
+        params.put("pic", goodsListModel.pic);
+        params.put("status", goodsListModel.status);
+//        params.addBodyParameter("createTime", goodsListModel.createTime+"");
+//        params.addBodyParameter("updateTime", goodsListModel.updateTime+"");
+        params.put("scid", goodsListModel.scid);
+        params.put("mailType", goodsListModel.mailType);
+        params.put("itemType", goodsListModel.itemType);
+        params.put("itemPrice", goodsListModel.itemPrice);
+        params.put("allParamData", goodsListModel.allParamData);
+        params.put("paramData", goodsListModel.paramData);
+        params.put("buyNum", goodsListModel.buyNum);
+        params.put("shopId", goodsListModel.shopId);
+        params.put("mailPrice", goodsListModel.mailPrice);
+        params.put("inventory", goodsListModel.inventory);
+        params.put("receiveProvince", goodsListModel.receiveProvince);
+        params.put("unit", goodsListModel.unit);
+        params.put("cid", goodsListModel.cid);
+        params.put("topCategoryId", goodsListModel.topCategoryId);
+        params.put("periodTime", goodsListModel.periodTime);
+        params.put("backSelf", goodsListModel.backSelf);
+        params.put("saleType", goodsListModel.saleType);
+        params.put("backType", goodsListModel.backType);
+        params.put("firstBack", goodsListModel.firstBack);
+        params.put("secondBack", goodsListModel.secondBack);
+        params.put("useType", goodsListModel.useType);
+        params.put("content", goodsListModel.content);
+        params.put("secondCategory", goodsListModel.secondCategory);
+        // 服务器请求路径
+        final String strUrlPath = Constant.BASE_URL+"/api/shopcart/addProduct?";
+
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String strResult = HttpPost.submitPostData(strUrlPath, params, "utf-8");
+                Log.e("=====",strResult);
+            }
+        }).start();
+
+
 
     }
 
@@ -390,8 +448,9 @@ public class GoodsDetailsActivity extends BaseActivity {
         GoodsValue.getInstance().reSet();
     }
 
-    private ArrayList<RadioButton> fenqi_radios=new ArrayList<>();
+    private ArrayList<RadioButton> fenqi_radios = new ArrayList<>();
     private int fenqi_type = 0;
+
     /*展示商品规格*/
     private void showGoodsType() {
         final int inventory;
@@ -422,23 +481,28 @@ public class GoodsDetailsActivity extends BaseActivity {
         fenqi_radios.add(fenqi_6);
         fenqi_radios.add(fenqi_9);
         fenqi_radios.add(fenqi_12);
+        String picture = "";
+        if (!Tools.IsEmpty(goodsListModel.pic)) {
+            picture = goodsListModel.pic;
+        }
+        Glide.with(this).load(picture).error(R.mipmap.error_icon).into(shop_iv);
 
-        Glide.with(this).load(goodsListModel.pic).error(R.mipmap.error_icon).into(shop_iv);
-        shop_price.setText(goodsListModel.itemPrice+"康币");
-        if (Tools.IsEmpty(goodsListModel.inventory+"")){
+        shop_price.setText(goodsListModel.itemPrice + "康币");
+        if (Tools.IsEmpty(goodsListModel.inventory + "")) {
             inventory = 0;
-        }else {
-            inventory = Integer.parseInt(goodsListModel.inventory+"");
+        } else {
+            inventory = Integer.parseInt(goodsListModel.inventory + "");
         }
-        shop_kc.setText("库存 "+inventory +" "+goodsListModel.unit);
-        if (goodsListModel.itemType == 0){
-            type_price.setText(goodsListModel.itemPrice+"康币");
-        }else {
+        shop_kc.setText("库存 " + inventory + " " + goodsListModel.unit);
+        Log.e("----allpara---", goodsListModel.allParamData);
+        if (goodsListModel.itemType == 0) {
+            type_price.setText(goodsListModel.paramData);
+        } else {
 
         }
-        if (goodsListModel.mailType == 0){
+        if (goodsListModel.mailType == 0) {
             setFenQiShow(-1);
-        }else {
+        } else {
             fenqi_3.setOnClickListener(onClickListener);
             fenqi_6.setOnClickListener(onClickListener);
             fenqi_9.setOnClickListener(onClickListener);
@@ -450,17 +514,17 @@ public class GoodsDetailsActivity extends BaseActivity {
             public void onClick(View v) {
                 if (number > 1) {
                     number--;
-                    setAllPrice(number,show_goodsnum_tv);
+                    setAllPrice(number, show_goodsnum_tv);
                 }
             }
         });
         add_goods_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (number<inventory){
+                if (number < inventory) {
                     number++;
-                    setAllPrice(number,show_goodsnum_tv);
-                }else {
+                    setAllPrice(number, show_goodsnum_tv);
+                } else {
                     ToastUtil.showToast("库存量不足");
                 }
             }
@@ -484,7 +548,7 @@ public class GoodsDetailsActivity extends BaseActivity {
         buy_textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                extraMap.put("allPrace", allPrice+"");
+                extraMap.put("allPrace", allPrice + "");
                 extraMap.put("sourceType", 1);
                 skip_classView(SureOrderActivity.class, extraMap, false);
                 dialog.dismiss();
@@ -504,68 +568,72 @@ public class GoodsDetailsActivity extends BaseActivity {
         dialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
         dialog.show();
     }
+
     private float allPrice;
+
     private void setAllPrice(int number, TextView show_goodsnum_tv) {
         show_goodsnum_tv.setText(number + "");
-        float price = number * Integer.parseInt(goodsListModel.itemPrice);
+        float price = number * goodsListModel.itemPrice;
         allPrice = (float) (Math.round(price * 10000)) / 10000;
 //        noebuytvPrice.setText("￥" + decimalFormat.format(allPrice + mpmodityFreight));
     }
+
     /*设置分期显示*/
     private void setFenQiShow(int id) {
-       for (int i=0;i<fenqi_radios.size();i++){
-           if (id == -1){
-               fenqi_radios.get(i).setBackgroundResource(R.drawable.type_grid_bg03);
-               fenqi_radios.get(i).setTextColor(Color.parseColor("#dfdfdf"));
-           }else {
-               switch (goodsListModel.periodTime){
-                   case 3:
-                       if (i > 0){
-                           fenqi_radios.get(i).setBackgroundResource(R.drawable.type_grid_bg03);
-                           fenqi_radios.get(i).setTextColor(Color.parseColor("#dfdfdf"));
-                           fenqi_radios.get(i).setClickable(false);
-                           fenqi_radios.get(i).setEnabled(false);
-                       }else {
-                           setFenqiCheck(id ,i);
-                       }
-                       break;
-                   case 6:
-                       if (i > 1){
-                           fenqi_radios.get(i).setBackgroundResource(R.drawable.type_grid_bg03);
-                           fenqi_radios.get(i).setTextColor(Color.parseColor("#dfdfdf"));
-                           fenqi_radios.get(i).setClickable(false);
-                           fenqi_radios.get(i).setEnabled(false);
-                       }else {
-                           setFenqiCheck(id ,i);
-                       }
-                       break;
-                   case 9:
-                       if (i > 2){
-                           fenqi_radios.get(i).setBackgroundResource(R.drawable.type_grid_bg03);
-                           fenqi_radios.get(i).setTextColor(Color.parseColor("#dfdfdf"));
-                           fenqi_radios.get(i).setClickable(false);
-                           fenqi_radios.get(i).setEnabled(false);
-                       }else {
-                           setFenqiCheck(id ,i);
-                       }
-                       break;
-                   case 12:
-                       setFenqiCheck(id ,i);
-                       break;
-               }
+        for (int i = 0; i < fenqi_radios.size(); i++) {
+            if (id == -1) {
+                fenqi_radios.get(i).setBackgroundResource(R.drawable.type_grid_bg03);
+                fenqi_radios.get(i).setTextColor(Color.parseColor("#dfdfdf"));
+            } else {
+                switch (goodsListModel.periodTime) {
+                    case 3:
+                        if (i > 0) {
+                            fenqi_radios.get(i).setBackgroundResource(R.drawable.type_grid_bg03);
+                            fenqi_radios.get(i).setTextColor(Color.parseColor("#dfdfdf"));
+                            fenqi_radios.get(i).setClickable(false);
+                            fenqi_radios.get(i).setEnabled(false);
+                        } else {
+                            setFenqiCheck(id, i);
+                        }
+                        break;
+                    case 6:
+                        if (i > 1) {
+                            fenqi_radios.get(i).setBackgroundResource(R.drawable.type_grid_bg03);
+                            fenqi_radios.get(i).setTextColor(Color.parseColor("#dfdfdf"));
+                            fenqi_radios.get(i).setClickable(false);
+                            fenqi_radios.get(i).setEnabled(false);
+                        } else {
+                            setFenqiCheck(id, i);
+                        }
+                        break;
+                    case 9:
+                        if (i > 2) {
+                            fenqi_radios.get(i).setBackgroundResource(R.drawable.type_grid_bg03);
+                            fenqi_radios.get(i).setTextColor(Color.parseColor("#dfdfdf"));
+                            fenqi_radios.get(i).setClickable(false);
+                            fenqi_radios.get(i).setEnabled(false);
+                        } else {
+                            setFenqiCheck(id, i);
+                        }
+                        break;
+                    case 12:
+                        setFenqiCheck(id, i);
+                        break;
+                }
 
-           }
-       }
+            }
+        }
 
     }
 
-    private void setFenqiCheck(int id, int i){
-        if (i== android.R.attr.id){
+    private void setFenqiCheck(int id, int i) {
+        if (i == id) {
             fenqi_radios.get(i).setChecked(true);
-        }else {
+        } else {
             fenqi_radios.get(i).setChecked(false);
         }
     }
+
     /****
      *
      * 请求数据

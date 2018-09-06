@@ -5,21 +5,22 @@
     android:layout_height="wrap_content"
     android:background="#fff"
     android:gravity="center"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/icon_time"
+            android:drawableLeft="@mipmap/dianpu_icon"
             android:drawablePadding="5dp"
-            android:text="全国联通充值店"
+            android:gravity="center_vertical"
+            android:text="北京一号店"
             android:textColor="#000000"
             android:textSize="15sp" />
 
@@ -42,7 +43,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:orientation="horizontal"
-        android:visibility="visible" >
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/goods_image"
@@ -56,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/goods_name"
@@ -67,14 +68,13 @@
                 android:textSize="15sp" />
 
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/goods_prace"
@@ -98,7 +98,6 @@
             </LinearLayout>
 
 
-
         </FrameLayout>
     </LinearLayout>
 
@@ -110,7 +109,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:orientation="horizontal"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <com.dev.customview.MyGridView
             android:id="@+id/second_myGridView"
@@ -118,8 +117,7 @@
             android:layout_height="match_parent"
             android:cacheColorHint="#00000000"
             android:listSelector="#00000000"
-            android:numColumns="4" >
-        </com.dev.customview.MyGridView>
+            android:numColumns="4"></com.dev.customview.MyGridView>
     </LinearLayout>
 
     <View
@@ -129,31 +127,51 @@
         android:layout_marginRight="5dp"
         android:background="#ededed" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        android:orientation="horizontal"
-        android:padding="10dp" >
+        android:layout_height="wrap_content">
+
 
         <TextView
-            android:id="@+id/totalNumber_textView"
+            android:id="@+id/goods_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="共1件商品   小计"
-            android:textColor="#525252"
-            android:textSize="14sp"
-            android:visibility="visible" />
+            android:drawableLeft="@mipmap/dfk_icon"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:text="待支付"
+            android:textColor="#000000"
+            android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/totalPrace_textView"
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="￥100.00"
-            android:textColor="#ff0000"
-            android:textSize="14sp"
-            android:visibility="visible" />
-    </LinearLayout>
+            android:layout_alignParentEnd="true"
+            android:gravity="right"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/totalNumber_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="共1件商品   小计"
+                android:textColor="#525252"
+                android:textSize="14sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/totalPrace_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥100.00"
+                android:textColor="#ff0000"
+                android:textSize="14sp"
+                android:visibility="visible" />
+        </LinearLayout>
+    </RelativeLayout>
+
 
     <View
         android:layout_width="match_parent"
@@ -166,13 +184,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="8dp" >
+        android:padding="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/lookLogistics_textView"

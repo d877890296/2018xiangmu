@@ -312,6 +312,10 @@ public class AddAddressActivity extends RxActivity {
             public void onSelected(String... citySelected) {
                 //省份
                 province = citySelected[0];
+
+                if (province.contains("市")){
+                    province = province.replace("市","");
+                }
                 //城市
                 city = citySelected[1];
                 //区县（如果设定了两级联动，那么该项返回空）
