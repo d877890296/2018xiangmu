@@ -370,64 +370,65 @@ public class GoodsDetailsActivity extends BaseActivity {
      */
     public void requstNetDataAddProduct() {
 
-//        if (app.shopModel != null) {
-//            userToken = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
-//            GoodsKey goodsKey = new GoodsKey();
-//            goodsKey.token = userToken;
+        if (app.shopModel != null) {
+            userToken = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
+            GoodsKey goodsKey = new GoodsKey();
+            goodsKey.token = userToken;
+
+            GoodsValue.getInstance().getGoodsListModel().buyNum = 1;
+            GoodsValue.getInstance().getGoodsListModel().paramData="0";
+            postRequst.addProduct(handler, goodsKey);
+        }
+
+//        // 参数
+//        final Map<String, Object> params = new HashMap<String, Object>();
+//        token= SharedPrefUtil.get(mContext,SharedPref.TOKEN);
+//        params.put("token", token);
+//        GoodsListModel goodsListModel= GoodsValue.getInstance().getGoodsListModel();
+//        params.put("id", goodsListModel.id);
+//        params.put("itemId", goodsListModel.itemId);
+//        params.put("title", goodsListModel.title);
+//        params.put("sellPoint", goodsListModel.sellPoint);
+//        params.put("category", goodsListModel.category);
+//        params.put("pic", goodsListModel.pic);
+//        params.put("status", goodsListModel.status);
+////        params.addBodyParameter("createTime", goodsListModel.createTime+"");
+////        params.addBodyParameter("updateTime", goodsListModel.updateTime+"");
+//        params.put("scid", goodsListModel.scid);
+//        params.put("mailType", goodsListModel.mailType);
+//        params.put("itemType", goodsListModel.itemType);
+//        params.put("itemPrice", goodsListModel.itemPrice);
+//        params.put("allParamData", goodsListModel.allParamData);
+//        params.put("paramData", goodsListModel.paramData);
+//        params.put("buyNum", goodsListModel.buyNum);
+//        params.put("shopId", goodsListModel.shopId);
+//        params.put("mailPrice", goodsListModel.mailPrice);
+//        params.put("inventory", goodsListModel.inventory);
+//        params.put("receiveProvince", goodsListModel.receiveProvince);
+//        params.put("unit", goodsListModel.unit);
+//        params.put("cid", goodsListModel.cid);
+//        params.put("topCategoryId", goodsListModel.topCategoryId);
+//        params.put("periodTime", goodsListModel.periodTime);
+//        params.put("backSelf", goodsListModel.backSelf);
+//        params.put("saleType", goodsListModel.saleType);
+//        params.put("backType", goodsListModel.backType);
+//        params.put("firstBack", goodsListModel.firstBack);
+//        params.put("secondBack", goodsListModel.secondBack);
+//        params.put("useType", goodsListModel.useType);
+//        params.put("content", goodsListModel.content);
+//        params.put("secondCategory", goodsListModel.secondCategory);
+//        // 服务器请求路径
+//        final String strUrlPath = Constant.BASE_URL+"/api/shopcart/addProduct?";
 //
-//            GoodsValue.getInstance().getGoodsListModel().buyNum = 1;
-//            postRequst.addProduct(handler, goodsKey);
-//        }
-
-        // 参数
-        final Map<String, Object> params = new HashMap<String, Object>();
-        token= SharedPrefUtil.get(mContext,SharedPref.TOKEN);
-        params.put("token", token);
-        GoodsListModel goodsListModel= GoodsValue.getInstance().getGoodsListModel();
-        params.put("id", goodsListModel.id);
-        params.put("itemId", goodsListModel.itemId);
-        params.put("title", goodsListModel.title);
-        params.put("sellPoint", goodsListModel.sellPoint);
-        params.put("category", goodsListModel.category);
-        params.put("pic", goodsListModel.pic);
-        params.put("status", goodsListModel.status);
-//        params.addBodyParameter("createTime", goodsListModel.createTime+"");
-//        params.addBodyParameter("updateTime", goodsListModel.updateTime+"");
-        params.put("scid", goodsListModel.scid);
-        params.put("mailType", goodsListModel.mailType);
-        params.put("itemType", goodsListModel.itemType);
-        params.put("itemPrice", goodsListModel.itemPrice);
-        params.put("allParamData", goodsListModel.allParamData);
-        params.put("paramData", goodsListModel.paramData);
-        params.put("buyNum", goodsListModel.buyNum);
-        params.put("shopId", goodsListModel.shopId);
-        params.put("mailPrice", goodsListModel.mailPrice);
-        params.put("inventory", goodsListModel.inventory);
-        params.put("receiveProvince", goodsListModel.receiveProvince);
-        params.put("unit", goodsListModel.unit);
-        params.put("cid", goodsListModel.cid);
-        params.put("topCategoryId", goodsListModel.topCategoryId);
-        params.put("periodTime", goodsListModel.periodTime);
-        params.put("backSelf", goodsListModel.backSelf);
-        params.put("saleType", goodsListModel.saleType);
-        params.put("backType", goodsListModel.backType);
-        params.put("firstBack", goodsListModel.firstBack);
-        params.put("secondBack", goodsListModel.secondBack);
-        params.put("useType", goodsListModel.useType);
-        params.put("content", goodsListModel.content);
-        params.put("secondCategory", goodsListModel.secondCategory);
-        // 服务器请求路径
-        final String strUrlPath = Constant.BASE_URL+"/api/shopcart/addProduct?";
-
-
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String strResult = HttpPost.submitPostData(strUrlPath, params, "utf-8");
-                Log.e("=====",strResult);
-            }
-        }).start();
+//
+//
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+    //String strResult = HttpPost.submitPostData(strUrlPath, params, "utf-8");
+//                Log.e("=====",strResult);
+//            }
+//        }).start();
 
 
 
