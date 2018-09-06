@@ -91,11 +91,9 @@ public class HomeFragment extends BaseFragment {
 
                 switch (position) {
                     case 0:
-                        //  ToastUtil.showToast("暂未开放");
                         skip_classView(GoodsCityActivity.class, extraMap, false, false);
                         break;
                     case 1:
-//                        startActivity(new Intent(mContext, ConfirmOrderActivity.class));
                         startActivity(new Intent(mContext, RecruitmentHallActivity.class));
                         break;
                     case 2:

@@ -29,31 +29,45 @@
                     android:divider="#ededed"
                     android:listSelector="#00000000"
                     android:scrollbars="none" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-                <ListView
-                    android:id="@+id/goodsListView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#fff"
-                    android:cacheColorHint="#00000000"
-                    android:divider="#ededed"
 
-                    android:listSelector="#00000000"
-                    android:scrollbars="none" />
-                 <TextView
-                    android:id="@+id/second_nodataview_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true"
-                    android:background="#fff"
-                    android:gravity="center"
-                    android:text="该分类暂无数据！"
-                    android:textColor="#D2852B"
+                    <ListView
+                        android:id="@+id/goodsListView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#fff"
+                        android:cacheColorHint="#00000000"
+                        android:divider="#ededed"
+                        android:listSelector="#00000000"
+                        android:scrollbars="none"
+                        android:visibility="gone" />
 
-                    android:textSize="15sp"
-                    android:visibility="gone" />
+                    <GridView
+                        android:id="@+id/goodsGridView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#fff"
+                        android:cacheColorHint="#00000000"
+                        android:divider="#ededed"
+                        android:listSelector="#00000000"
+                        android:numColumns="3"
+                        android:scrollbars="none" />
+
+                    <TextView
+                        android:id="@+id/second_nodataview_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:background="#fff"
+                        android:gravity="center"
+                        android:text="该分类暂无数据！"
+                        android:textColor="#D2852B"
+
+                        android:textSize="15sp"
+                        android:visibility="gone" />
                 </RelativeLayout>
             </LinearLayout>
 
