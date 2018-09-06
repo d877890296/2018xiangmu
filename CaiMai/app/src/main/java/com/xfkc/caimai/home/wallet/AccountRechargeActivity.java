@@ -1,6 +1,7 @@
 package com.xfkc.caimai.home.wallet;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,6 +34,8 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.OnClick;
 
+import static com.xfkc.caimai.R.id.price_et;
+
 /**
  * 账户充值
  */
@@ -55,7 +58,7 @@ public class AccountRechargeActivity extends BaseActivity {
     TextView price1000;
     @Bind(R.id.price_2000)
     TextView price2000;
-    @Bind(R.id.price_et)
+    @Bind(price_et)
     TextView priceEt;
     @Bind(R.id.weixin_rb)
     RadioButton weixinRb;
@@ -67,7 +70,8 @@ public class AccountRechargeActivity extends BaseActivity {
     //标题集合
     private ArrayList<TextView> list_tv = new ArrayList<>();
     //支付方式 0微信  1支付宝
-    private int PAY_WAY = 0 , PRICE_NUMBER = 1000;
+    private int PAY_WAY = 0;
+    private String  PRICE_NUMBER = "1000";
     //选择支付方式集合
     private ArrayList<RadioButton> list_radio = new ArrayList<>();
 
@@ -96,22 +100,23 @@ public class AccountRechargeActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.toolbar_left_img, R.id.price_1000, R.id.price_2000, R.id.price_et, R.id.weixin_rb, R.id.zhifubao_rb, R.id.pay_btn})
+    @OnClick({R.id.toolbar_left_img, R.id.price_1000, R.id.price_2000, price_et, R.id.weixin_rb, R.id.zhifubao_rb, R.id.pay_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_left_img:
                 finish();
                 break;
             case R.id.price_1000:
-                PRICE_NUMBER = 1000;
+                PRICE_NUMBER = "1000";
                 updateShow(0);
                 break;
             case R.id.price_2000:
-                PRICE_NUMBER = 2000;
+                PRICE_NUMBER = "2000";
                 updateShow(1);
                 break;
-            case R.id.price_et:
-                PRICE_NUMBER = 0;
+            case price_et:
+//                PRICE_NUMBER = 0;
+                skip_classView(EditPayNumActivity.class, extraMap, false, 1007);
                 updateShow(2);
                 break;
             case R.id.weixin_rb:
@@ -123,9 +128,9 @@ public class AccountRechargeActivity extends BaseActivity {
                 setRadioButton(1);
                 break;
             case R.id.pay_btn:
-                if (PAY_WAY == 1){
+                if (PAY_WAY == 1) {
                     getPayData();
-                }else {
+                } else {
 
                 }
                 break;
@@ -160,7 +165,7 @@ public class AccountRechargeActivity extends BaseActivity {
     private void getPayData() {
         token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
         PayFactory.getPayService()
-                .memCharge(PRICE_NUMBER+"" , token)
+                .memCharge(PRICE_NUMBER + "", token)
                 .compose(RxHelper.<ZfbBean>io_main())
                 .subscribe(new ProgressSubscriber<ZfbBean>(this) {
                     @Override
@@ -249,10 +254,19 @@ public class AccountRechargeActivity extends BaseActivity {
 
     /*跳转至支付成功页*/
     private void startPaySuccess() {
-        skip_classView(PaySuccessActivity.class,extraMap,false,1003);
+        skip_classView(PaySuccessActivity.class, extraMap, false, 1003);
     }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (requestCode == 1007 && resultCode == 1008) {
+            PRICE_NUMBER = data.getStringExtra("paynum");
+            priceEt.setText( PRICE_NUMBER);
+        }
+
+    }
 }
 

@@ -76,7 +76,7 @@ public class MyApplication extends RootApplication {
         //初始化推送
         initJPush();
         //设置拍照权限
-//        setCameraPremiss();
+        setCameraPremiss();
     }
     /*设置拍照权限*/
     private void setCameraPremiss() {

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whilte"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    tools:context="com.xfkc.caimai.home.wallet.EditPayNumActivity">
+
+    <include layout="@layout/widget_toolbar" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/f1f1f1" />
+
+    <EditText
+        android:id="@+id/pay_et"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/type_grid_bg02"
+        android:hint="请输入支付金额"
+        android:inputType="number"
+        android:paddingLeft="10dp" />
+
+    <com.xfkc.caimai.customview.StateButton
+        android:id="@+id/commit"
+        android:layout_width="162dp"
+        android:layout_height="45dp"
+        android:text="确认"
+        android:textColor="@color/whilte"
+        android:textSize="16sp"
+        app:normalBackgroundColor="@color/ff704d"
+        app:pressedBackgroundColor="@color/ff704d"
+        app:radius="20dp"
+        android:layout_marginTop="20dp"
+
+        />
+
+
+</com.zhy.autolayout.AutoLinearLayout>
