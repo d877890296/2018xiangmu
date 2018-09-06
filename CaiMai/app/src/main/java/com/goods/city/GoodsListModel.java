@@ -8,83 +8,83 @@ import com.json.NetJsonFiled;
 
 public class GoodsListModel {
     @NetJsonFiled
-    public int id;//": 1,
+    public Integer id;//": 1,
     @NetJsonFiled
-    public int itemId;//": 1133895167,
+    public Integer itemId;//": 1133895167,
     @NetJsonFiled
     public String title;//": "甜瓜1133895167",
     @NetJsonFiled
     public String sellPoint;//": "你好",
     @NetJsonFiled
-    public String category;//": null,
+    public Integer category;//": null,
     @NetJsonFiled
     public String pic;//": "",
     @NetJsonFiled
-    public int status;//": 1,
+    public Integer status;//": 1,
     @NetJsonFiled
-    public int createTime;//": "",
+    public Integer createTime;//": "",
     @NetJsonFiled
-    public int updateTime;//": "",
+    public Integer updateTime;//": "",
     @NetJsonFiled
-    public int scid;//": 1,
+    public Integer scid;//": 1,
     @NetJsonFiled //分期类型
-    public int mailType;
+    public Integer mailType;
     @NetJsonFiled
-    public int itemType;//": 1,
+    public Integer itemType;//": 1,
     @NetJsonFiled
-    public int itemPrice;
+    public Integer itemPrice;
     @NetJsonFiled
     public String allParamData;
     @NetJsonFiled
     public String paramData;
     @NetJsonFiled
-    public int buyNum;
+    public Integer buyNum;
     @NetJsonFiled
-    public int shopId;
+    public Integer shopId;
     @NetJsonFiled
-    public int mailPrice;
+    public Integer mailPrice;
     @NetJsonFiled
-    public int inventory;
+    public Integer inventory;
     @NetJsonFiled
     public String receiveProvince;
     @NetJsonFiled
     public String unit;
     @NetJsonFiled
-    public int cid;
+    public Integer cid;
     @NetJsonFiled
-    public int topCategoryId;
+    public Integer topCategoryId;
 
     @NetJsonFiled //分期数
-    public int periodTime;
+    public Integer periodTime;
     @NetJsonFiled //分期数
-    public double backSelf;
+    public Integer backSelf;
     @NetJsonFiled //分期数
-    public int saleType;
+    public Integer saleType;
     @NetJsonFiled //分期数
-    public int backType;
+    public Integer backType;
     @NetJsonFiled //分期数
-    public int firstBack;
+    public Integer firstBack;
     @NetJsonFiled //分期数
-    public int secondBack;
+    public Integer secondBack;
     @NetJsonFiled //分期数
-    public int useType;
+    public Integer useType;
     @NetJsonFiled
     public String content;
 
     @NetJsonFiled
-    public String secondCategory;
+    public Integer secondCategory;
 
 
     //一级列表数据
     @NetJsonFiled
     public String cname;//": "水果",
     @NetJsonFiled
-    public int rank;//": 1,
+    public Integer rank;//": 1,
     //二级列表数据
     @NetJsonFiled
     public String sname;
     @NetJsonFiled
-    public int categoryId;
+    public Integer categoryId;
 
 
 }
