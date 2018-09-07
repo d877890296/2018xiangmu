@@ -128,7 +128,6 @@ public class ShoppingCarActivity extends BaseActivity {
     @Override
     protected void loadData() {
 
-
     }
 
     public void viewInit() {
@@ -735,4 +734,6 @@ public class ShoppingCarActivity extends BaseActivity {
         SureCarValue.getInstance().removeAllData();
         SureCarValue.getInstance().reSet();
     }
+
+
 }

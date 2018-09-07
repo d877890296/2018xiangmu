@@ -5,6 +5,7 @@ import com.xfkc.caimai.bean.AddressBean;
 import com.xfkc.caimai.bean.AllShopsModel;
 import com.xfkc.caimai.bean.BannerBean;
 import com.xfkc.caimai.bean.EmptyBean;
+import com.xfkc.caimai.bean.GoodsCarNumBean;
 import com.xfkc.caimai.bean.GoodsCityModel;
 import com.xfkc.caimai.bean.GoodsKey;
 import com.xfkc.caimai.bean.LoginInfo;
@@ -124,7 +125,11 @@ public interface PayService {
     @GET("/api/happycommune/getTopCategory")
     Observable<TopCategory> getTopCategory();
 
-    //更新购物车
+    //更新购物车数量
     @POST("/api/shopcart/editCartItemsNum ")
     Observable<EmptyBean> editCartItemsNum(@Body GoodsKey id);
+
+    //更新购物车数量
+    @GET("/api/shopcart/getShopCartItemNum")
+    Observable<GoodsCarNumBean> getShopCartItemNum(@Query("token") String token);
 }

@@ -47,8 +47,8 @@ public class SureOrderActivity extends BaseActivity {
     TextView wayYouji;
     @Bind(R.id.way_ziqu)
     TextView wayZiqu;
-    @Bind(R.id.pay_way)
-    TextView payWay;
+//    @Bind(R.id.pay_way)
+//    TextView payWay;
     @Bind(R.id.kangbi)
     TextView kangbi;
     @Bind(R.id.daijinjuan)
@@ -61,6 +61,8 @@ public class SureOrderActivity extends BaseActivity {
     LinearLayout paywayLayout;
     @Bind(R.id.buyer_say)
     EditText buyerSay;
+    @Bind(R.id.payway)
+    RelativeLayout payway;
     private String allPrace;
     private TextView allPrace_textView;
     private TextView getGoods_pople, getGoods_phone, getGoods_address;
@@ -148,7 +150,7 @@ public class SureOrderActivity extends BaseActivity {
         kangbi.setOnClickListener(onClickListener);
         daijinjuan.setOnClickListener(onClickListener);
         paywayLayout.setOnClickListener(onClickListener);
-
+        payway.setOnClickListener(onClickListener);
     }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -252,7 +254,7 @@ public class SureOrderActivity extends BaseActivity {
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
-                        Log.e("--2--",s);
+                        Log.e("--2--", s);
                         Gson gson = new Gson();
                         AddOrderBean addOrderBean = gson.fromJson(s, AddOrderBean.class);
                         if (addOrderBean.retCode == 1) {
@@ -287,7 +289,7 @@ public class SureOrderActivity extends BaseActivity {
                         Gson gson = new Gson();
                         AddOrderBean addOrderBean = gson.fromJson(s, AddOrderBean.class);
                         if (addOrderBean.retCode == 1) {
-                           skip_classView(PaySuccessActivity.class,extraMap,true);
+                            skip_classView(PaySuccessActivity.class, extraMap, true);
                         } else {
                             ToastUtil.showToast(addOrderBean.message);
                         }
@@ -340,5 +342,4 @@ public class SureOrderActivity extends BaseActivity {
 //            shouhuoAddress.setVisibility(View.VISIBLE);
         }
     }
-
 }

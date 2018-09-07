@@ -1,9 +1,5 @@
 package com.goods.order;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +9,9 @@ import android.widget.TextView;
 import com.goods.details.ShoppingCarModel;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.LzBaseAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SureGoodsAdapter extends LzBaseAdapter {
 	private List<ShoppingCarModel> goodsData;
@@ -31,7 +30,7 @@ public class SureGoodsAdapter extends LzBaseAdapter {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 4;
+		return goodsData.size();
 	}
 
 	@Override

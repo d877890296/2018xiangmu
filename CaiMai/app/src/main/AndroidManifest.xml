@@ -142,11 +142,12 @@
 
         <activity android:name=".pay.UpdatePayPasswordActivity" />
         <activity android:name=".home.recruitmenthall.RecruContentActivity" />
-        <activity android:name=".home.wallet.EditPayNumActivity"></activity>
+        <activity android:name=".home.wallet.EditPayNumActivity" />
         <activity
             android:name=".camera.MyPhotoPickerActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/PhotoPickerTheme" />
+        <activity android:name=".home.mineprofit.MineProfitActivity"></activity>
     </application>
 
 </manifest>

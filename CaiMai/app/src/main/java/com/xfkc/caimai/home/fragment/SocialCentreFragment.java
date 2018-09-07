@@ -21,6 +21,7 @@ import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.home.SettingActivity;
 import com.xfkc.caimai.home.adapter.MyGridAdapter;
 import com.xfkc.caimai.home.mineinfo.MineInfoActivity;
+import com.xfkc.caimai.home.mineprofit.MineProfitActivity;
 import com.xfkc.caimai.home.vipcard.MineVipCardActivity;
 import com.xfkc.caimai.home.wallet.WalletActivity;
 import com.xfkc.caimai.loading.LoadingActivity;
@@ -155,6 +156,7 @@ public class SocialCentreFragment extends BaseFragment {
                         skip_classView(MineVipCardActivity.class, extraMap, false, true);
                         break;
                     case 2://我的收益
+                        skip_classView(MineProfitActivity.class,extraMap,false,true);
                         break;
                     case 3://我加入的店铺
                         break;

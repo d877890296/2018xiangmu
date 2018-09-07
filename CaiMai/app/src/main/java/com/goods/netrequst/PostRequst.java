@@ -5,13 +5,10 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Settings;
-import android.util.Log;
 
 import com.goods.city.GoodsListModel;
 import com.goods.city.GoodsValue;
-import com.goods.details.NetUtils;
-import com.hyf.tdlibrary.utils.SharedPrefUtil;
+import com.hyf.tdlibrary.utils.Tools;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -20,17 +17,6 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.xfkc.caimai.bean.GoodsKey;
 import com.xfkc.caimai.config.Constant;
-import com.xfkc.caimai.config.SharedPref;
-
-import org.apache.http.NameValuePair;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ConcurrentSkipListMap;
-
-import okhttp3.Call;
-import okhttp3.Response;
 
 /***
  *
@@ -113,16 +99,21 @@ public class PostRequst {
      * 添加购物车
      * @param handler
      * @param goodsKey
+     * @param number
      */
-    public void addProduct(Handler handler, GoodsKey goodsKey
-    ) {
+    public void addProduct(Handler handler, GoodsKey goodsKey,
+                           int number) {
         this.handler = handler;
         url = Constant.BASE_URL + "/api/shopcart/addProduct?";
         params = new RequestParams();
 
         GoodsListModel goodsListModel = GoodsValue.getInstance().getGoodsListModel();
         params.addBodyParameter("token", goodsKey.token);
-        params.addBodyParameter("id", goodsListModel.id + "");
+        String id="";
+        if (!Tools.IsEmpty(goodsListModel.id+"")){
+            id = goodsListModel.id+"";
+        }
+        params.addBodyParameter("id",id );
         params.addBodyParameter("itemId", goodsListModel.itemId + "");
         params.addBodyParameter("title", goodsListModel.title + "");
         params.addBodyParameter("sellPoint", goodsListModel.sellPoint + "");
@@ -135,9 +126,17 @@ public class PostRequst {
         params.addBodyParameter("mailType", goodsListModel.mailType + "");
         params.addBodyParameter("itemType", goodsListModel.itemType + "");
         params.addBodyParameter("itemPrice", goodsListModel.itemPrice + "");
-        params.addBodyParameter("allParamData", goodsListModel.allParamData + "");
-        params.addBodyParameter("paramData", goodsListModel.paramData + "");
-        params.addBodyParameter("buyNum", goodsListModel.buyNum + "");
+        String allparamData = "0";
+        if (!Tools.IsEmpty(goodsListModel.allParamData)){
+            allparamData = goodsListModel.allParamData;
+        }
+        params.addBodyParameter("allParamData", allparamData);
+        String paramData = "0";
+        if (!Tools.IsEmpty(goodsListModel.paramData)){
+            paramData = goodsListModel.paramData;
+        }
+        params.addBodyParameter("paramData",paramData );
+        params.addBodyParameter("buyNum", number+"");
         params.addBodyParameter("shopId", goodsListModel.shopId + "");
         params.addBodyParameter("mailPrice", goodsListModel.mailPrice + "");
         params.addBodyParameter("inventory", goodsListModel.inventory + "");

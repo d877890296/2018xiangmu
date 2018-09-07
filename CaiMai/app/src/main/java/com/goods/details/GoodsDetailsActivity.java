@@ -36,23 +36,24 @@ import com.goods.netrequst.NetRequstAjaxCallBack;
 import com.goods.netrequst.PostRequst;
 import com.goods.order.SureOrderActivity;
 import com.goods.shoppingcar.ShoppingCarActivity;
-import com.goods.sortlsitview.AjaxShopModel;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.ToastUtil;
 import com.hyf.tdlibrary.utils.Tools;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
+import com.xfkc.caimai.bean.GoodsCarNumBean;
 import com.xfkc.caimai.bean.GoodsKey;
-import com.xfkc.caimai.config.Constant;
 import com.xfkc.caimai.config.SharedPref;
+import com.xfkc.caimai.net.PayFactory;
+import com.xfkc.caimai.net.RxHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import rx.Subscriber;
 
 import static com.goods.netrequst.PostRequst.UPSUCCESS;
 
@@ -111,7 +112,7 @@ public class GoodsDetailsActivity extends BaseActivity {
         ajaxCallBack.setOnNetRequstAjaxCallBack(onNetRequstAjaxCallBack);
         goodsListModel = GoodsValue.getInstance().getGoodsListModel();
         locationImg = new ArrayList<ImageView>();
-
+        userToken = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
         viewInit();
     }
 
@@ -222,7 +223,7 @@ public class GoodsDetailsActivity extends BaseActivity {
 
     @Override
     protected void loadData() {
-
+        updateCarNum();
 
     }
 
@@ -371,13 +372,13 @@ public class GoodsDetailsActivity extends BaseActivity {
     public void requstNetDataAddProduct() {
 
         if (app.shopModel != null) {
-            userToken = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
+
             GoodsKey goodsKey = new GoodsKey();
             goodsKey.token = userToken;
 
-            GoodsValue.getInstance().getGoodsListModel().buyNum = 1;
-            GoodsValue.getInstance().getGoodsListModel().paramData="0";
-            postRequst.addProduct(handler, goodsKey);
+//            GoodsValue.getInstance().getGoodsListModel().buyNum = 1;
+//            GoodsValue.getInstance().getGoodsListModel().paramData="0";
+            postRequst.addProduct(handler, goodsKey,number);
         }
 
 //        // 参数
@@ -451,7 +452,7 @@ public class GoodsDetailsActivity extends BaseActivity {
 
     private ArrayList<RadioButton> fenqi_radios = new ArrayList<>();
     private int fenqi_type = 0;
-
+    private TextView botoom_typeshopNumber;
     /*展示商品规格*/
     private void showGoodsType() {
         final int inventory;
@@ -470,7 +471,7 @@ public class GoodsDetailsActivity extends BaseActivity {
         final TextView show_goodsnum_tv = (TextView) contentView.findViewById(R.id.show_goodsnum_tv);
 
         TextView botoom_shopCarTtv = (TextView) contentView.findViewById(R.id.botoom_shopCarTtv);
-        TextView botoom_shopNumber = (TextView) contentView.findViewById(R.id.botoom_shopNumber);
+        botoom_typeshopNumber = (TextView) contentView.findViewById(R.id.botoom_shopNumber);
         TextView addShoppingCar_textView = (TextView) contentView.findViewById(R.id.addShoppingCar_textView);
         TextView buy_textView = (TextView) contentView.findViewById(R.id.buy_textView);
 
@@ -482,6 +483,8 @@ public class GoodsDetailsActivity extends BaseActivity {
         fenqi_radios.add(fenqi_6);
         fenqi_radios.add(fenqi_9);
         fenqi_radios.add(fenqi_12);
+
+        botoom_typeshopNumber.setText(goodsCarNum+"");
         String picture = "";
         if (!Tools.IsEmpty(goodsListModel.pic)) {
             picture = goodsListModel.pic;
@@ -495,7 +498,7 @@ public class GoodsDetailsActivity extends BaseActivity {
             inventory = Integer.parseInt(goodsListModel.inventory + "");
         }
         shop_kc.setText("库存 " + inventory + " " + goodsListModel.unit);
-        Log.e("----allpara---", goodsListModel.allParamData);
+        Log.e("----allpara---", goodsListModel.allParamData+"");
         if (goodsListModel.itemType == 0) {
             type_price.setText(goodsListModel.paramData);
         } else {
@@ -676,6 +679,7 @@ public class GoodsDetailsActivity extends BaseActivity {
                 case UPSUCCESS://数据获取成功
                     if (msg.arg1 == 1) {//成功
                         String jsonObj = msg.obj.toString();
+                        Logger.e("jsonObj:--1-", jsonObj);
                         if (Tools.IsEmpty(jsonObj)) {
                             android.widget.Toast.makeText(mContext,
                                     "数据错误", Toast.LENGTH_LONG).show();
@@ -688,8 +692,11 @@ public class GoodsDetailsActivity extends BaseActivity {
                             //   jsonObj = convert.getString("data");
                             jsonObj = obj.getString("data");
                             Logger.e("jsonObj:---", jsonObj);
-                            app.jsonHttp.getJsonObj(jsonObj, AjaxShopModel.class,
-                                    ajaxCallBack.getProductBySearch);
+//                            app.jsonHttp.getJsonObj(jsonObj, AjaxShopModel.class,
+//                                    ajaxCallBack.getProductBySearch);
+                            updateCarNum();
+                            ToastUtil.showToast("添加成功");
+                            dissMbProgress();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -703,5 +710,30 @@ public class GoodsDetailsActivity extends BaseActivity {
             }
         }
     };
+
+    private int goodsCarNum = 0;
+    /*刷新购物车数量*/
+    private void updateCarNum(){
+        PayFactory.getPayService().getShopCartItemNum(userToken)
+                .compose(RxHelper.<GoodsCarNumBean>io_main())
+                .subscribe(new Subscriber<GoodsCarNumBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(GoodsCarNumBean goodsCarNumBean) {
+                        goodsCarNum = goodsCarNumBean.data;
+                        botoom_shopNumber.setText(goodsCarNum+"");
+                        botoom_typeshopNumber.setText(goodsCarNum+"");
+                    }
+                });
+    }
 
 }
