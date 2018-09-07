@@ -1,34 +1,27 @@
 package com.goods.details;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import android.app.Activity;
+import android.content.Context;
+import android.os.Handler;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.TextView;
 
 import com.dev.customview.AdViewPaper;
 import com.dev.customview.AdViewPaper.OnSingleTouchListener;
-
-
 import com.hyf.tdlibrary.utils.Tools;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.application.MyApplication;
 import com.xfkc.caimai.base.ViewPagerAdapter;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.hardware.camera2.params.LensShadingMap;
-import android.os.Handler;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.view.Gravity;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
-import android.widget.TextView;
-import android.widget.Toast;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * 设置导航 图片轮播
@@ -68,7 +61,7 @@ public class GoodsDetailsHeader {
 		this.point_textView = point_textView;
 		initView();
 		app = MyApplication.getInstance();
-		setAdData();
+//		setAdData();
 	}
 
 	private void initView() {
@@ -79,9 +72,9 @@ public class GoodsDetailsHeader {
 
 	private void setAdData() {
 		topPicData = new ArrayList<AdTopPicModel>();
-		 for (int i = 0; i < 4; i++) {
+		 for (int i = 0; i < imgArray.length; i++) {
 		 AdTopPicModel model = new AdTopPicModel();
-		 model.setImagepath(imges[i] + "");
+		 model.setImagepath(imgArray[i] + "");
 		 model.setId(i);
 		 topPicData.add(model);
 		 }
@@ -213,8 +206,8 @@ public class GoodsDetailsHeader {
 			
 			// app.imageLoader.displayImage(topPicData.get(i).getImagepath(),
 			// imageView);
-		//	app.imageLoader.displayImage(topPicData.get(i).getImagepath(), imageView);
-			imageView.setImageResource(Integer.parseInt(topPicData.get(i).getImagepath()));
+			app.imageLoader.displayImage(topPicData.get(i).getImagepath(), imageView);
+//			imageView.setImageResource(Integer.parseInt(topPicData.get(i).getImagepath()));
 			images.add(imageView);
 		}
 

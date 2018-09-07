@@ -1,18 +1,7 @@
 package com.goods.city;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
-import com.dev.customview.TextViewUtils;
-import com.goods.model.GoodsModel;
-import com.hyf.tdlibrary.utils.Tools;
-import com.xfkc.caimai.R;
-import com.xfkc.caimai.application.MyApplication;
-
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,6 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.dev.customview.TextViewUtils;
+import com.hyf.tdlibrary.utils.Tools;
+import com.xfkc.caimai.R;
+import com.xfkc.caimai.application.MyApplication;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GoodsCityListAdapter extends RecyclerView.Adapter<GoodsCityListAdapter.ViewHolder> {
 	public Context mContext;
@@ -83,7 +80,8 @@ public class GoodsCityListAdapter extends RecyclerView.Adapter<GoodsCityListAdap
 		setSitis(holder.goods_prace);
 		//app.imageLoader.displayImage(model.getGoodsMainPhotoId(), holder.goods_image,app.options);
 		if (!Tools.IsEmpty(model.pic)){
-			app.imageLoader.displayImage(model.pic,holder.goods_image);
+			String[]  strs=model.pic.split(",");
+			app.imageLoader.displayImage(strs[0],holder.goods_image);
 		}else{
 			holder.goods_image.setImageResource(R.mipmap.error_icon);
 		}

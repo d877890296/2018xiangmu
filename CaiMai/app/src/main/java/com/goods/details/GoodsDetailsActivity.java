@@ -170,7 +170,10 @@ public class GoodsDetailsActivity extends BaseActivity {
             goodsDetailsHeader = new GoodsDetailsHeader(GoodsDetailsActivity.this);
         }
         goodsDetailsHeader.setView(adViewPaper, point_textView);
-
+        if (!Tools.IsEmpty( goodsListModel.pic)){
+            String[] imges= goodsListModel.pic.split(",");
+            goodsDetailsHeader.setImgArray(imges);
+        }
         goodsListView.addHeaderView(topHeadView);
 
         goodsListView.setAdapter(adapter);
