@@ -1,6 +1,7 @@
 package com.goods.sortlsitview;
 
 import com.goods.city.GoodsListModel;
+import com.goods.mineOrderforgoods.OrderModel;
 import com.json.NetJsonFiled;
 
 import java.util.ArrayList;
@@ -19,4 +20,6 @@ public class AjaxShopModel {
     @NetJsonFiled(objClassName = "com.goods.city.GoodsListModel")
     public ArrayList<GoodsListModel> list;//学习列表信息
 
+    @NetJsonFiled(objClassName = "com.goods.mineOrderforgoods.OrderModel")
+    public ArrayList<OrderModel> data;//学习列表信息
 }

@@ -40,9 +40,6 @@ public class GoodsStyleActivity extends BaseActivity {
     private NetRequst netRequst;
     private NetRequstAjaxCallBack ajaxCallBack;
 
-    private String style[] = {"水果", "蔬菜"};
-
-    private String content[] = {"水果2", "蔬2菜", "水fs果2", "蔬2菜", "水果csa2"};
 
     private int requstType = 0;
     private String firstTitle = "";
@@ -89,7 +86,6 @@ public class GoodsStyleActivity extends BaseActivity {
         goods_styleListView.setAdapter(goodsStyleAdapter);
         goods_styleListView.setOnItemClickListener(onItemClickListener1);
 
-
 //        goodsListView = (ListView) findViewById(R.id.goodsListView);
 //        goodsStyleContentAdapter.setData(data);
 //        goodsListView.setAdapter(goodsStyleContentAdapter);
@@ -99,7 +95,17 @@ public class GoodsStyleActivity extends BaseActivity {
         goodsGridView = (GridView) findViewById(R.id.goodsGridView);
         goodsStyleGridContentAdapter.setData(data);
         goodsGridView.setAdapter(goodsStyleGridContentAdapter);
-        goodsGridView.setOnItemClickListener(onItemClickListener);
+
+
+        goodsGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                extraMap.put("id", data.get(position).getStyleId());
+                extraMap.put("categoryId", data.get(position).getCategoryId());
+                extraMap.put("goodsName", data.get(position).getGoodsName());
+                skip_classView(GoodsStyleDetailsActivity.class, extraMap, false);
+            }
+        });
 
         requstNetData();
     }
@@ -147,17 +153,7 @@ public class GoodsStyleActivity extends BaseActivity {
         }
     };
 
-    private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            extraMap.put("id", data.get(position).getStyleId());
-            extraMap.put("categoryId", data.get(position).getCategoryId());
-            extraMap.put("goodsName", data.get(position).getGoodsName());
-            skip_classView(GoodsStyleDetailsActivity.class, extraMap, false);
-
-        }
-    };
 
     @Override
     protected void loadData() {

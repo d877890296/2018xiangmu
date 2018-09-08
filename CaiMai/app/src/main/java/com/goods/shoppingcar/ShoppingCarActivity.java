@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.dev.customview.CustomListView;
 import com.dev.customview.MyToast;
 import com.goods.city.GoodsListModel;
+import com.goods.city.GoodsValue;
 import com.goods.details.GoodsDetailsActivity;
 import com.goods.details.ShoppingCarModel;
 import com.goods.netrequst.Logger;
@@ -51,7 +52,7 @@ public class ShoppingCarActivity extends BaseActivity {
     private String goodsStoreId;
     private CustomListView mine_myListView;
     private ShoppingCarAdapter tradeIntegralAdapter;
-    private List<ShoppingCarModel> data;
+    private List<GoodsListModel> data;
 
     public List<String> deleteArray;
 
@@ -64,48 +65,15 @@ public class ShoppingCarActivity extends BaseActivity {
     private LinearLayout showcountinfo_liner;
 
     private PostRequst postRequst;
-    private NetRequstAjaxCallBack ajaxCallBack;
+
 
     public void deaultDataInit() {
         // TODO Auto-generated method stub
         postRequst = new PostRequst(handler);
-        ajaxCallBack = new NetRequstAjaxCallBack(mContext);
-        ajaxCallBack.setOnNetRequstAjaxCallBack(onNetRequstAjaxCallBack);
-        SureCarValue.getInstance().init();
-        data = new ArrayList<ShoppingCarModel>();
-        deleteArray = new ArrayList<String>();
 
-//        String className = "fsfs";
-//        String goodsStoreId = "12344";
-//        String goodsId = "344";
-//        String image1 = "222";
-//        String title = "一户";
-//        String goodsPrice = "20.9";
-//        String count = "2";
-//        String totalPrace = "24.90";
-//        String storePrice = "24.90";
-//        String gcid = "345";
-//        String id = "2344";
-//        String goodsInfo = "00009ji";
-//
-//        ShoppingCarModel model = new ShoppingCarModel();
-//        model.setShopName(className);
-//        model.setShopId(goodsStoreId);
-//        model.setShopGoodsName(title);
-//        model.setId(id);
-//        model.setShopGoodsId(goodsId);
-//        model.setGcId(gcid);
-//        model.setShopGoodsImg(image1);
-//        model.setShopGoodsInfo(goodsInfo);
-//        model.setShopGoodsNumber(count);
-//        model.setShopGoodsPrace(goodsPrice + "");
-//        model.setToalPrace(totalPrace + "");
-//        model.setShopGoodsOriginalPrace(storePrice + "");
-//
-//        model.setShopGoodsStyle("电子");
-//
-//
-//        data.add(model);
+        SureCarValue.getInstance().init();
+        data = new ArrayList<GoodsListModel>();
+        deleteArray = new ArrayList<String>();
 
 
     }
@@ -193,94 +161,6 @@ public class ShoppingCarActivity extends BaseActivity {
     }
 
 
-//	private OnNetRequstAjaxCallBack onNetRequstAjaxCallBack = new OnNetRequstAjaxCallBack() {
-//
-//		@Override
-//		public void MsgCallBack(boolean isSuccess, String errorMsg, Object object) {
-//			// TODO Auto-generated method stub
-//			dissMbProgress();
-//			if (isSuccess) {
-//				if (errorMsg.equals("9")) {
-//					isRemove = false;
-//					showMbProgress("数据加载中...");
-//					app.netRequst.shoppingCartsDtasRequst(acc.getUserId(), goodsStoreId, "0", "20",
-//							netRequstAjaxCallBack.shopingCarDataCallback);
-//				} else if (errorMsg.equals("10")) {
-//					isRemove = false;
-//					showMbProgress("数据加载中...");
-//					app.netRequst.shoppingCartsDtasRequst(acc.getUserId(), goodsStoreId, "0", "20",
-//							netRequstAjaxCallBack.shopingCarDataCallback);
-//				} else {
-//
-//					if (isRemove == false) {
-//						if (isClear) {
-//							data.clear();
-//							isClear = false;
-//						}
-//						JSONArray list = (JSONArray) object;
-//						for (int i = 0; i < list.length(); i++) {
-//							try {
-//								JSONObject obj = list.getJSONObject(i);
-//								String className = obj.getString("className");
-//								String goodsStoreId = obj.getString("scId");
-//								String goodsId = obj.getString("goodsId");
-//								String image1 = obj.getString("goodsMainPhoto");
-//								String title = obj.getString("goodName");
-//								String goodsPrice = obj.getDouble("goodsPrice") + "";
-//								String count = obj.getInt("count") + "";
-//								String totalPrace = obj.getDouble("price") + "";
-//								String storePrice = obj.getDouble("storePrice") + "";
-//								String gcid = obj.getString("gcId");
-//								String id = obj.getString("id");
-//								String goodsInfo = obj.getString("specInfo");
-//
-//								ShoppingCarModel model = new ShoppingCarModel();
-//								model.setShopName(className);
-//								model.setShopId(goodsStoreId);
-//								model.setShopGoodsName(title);
-//								model.setId(id);
-//								model.setShopGoodsId(goodsId);
-//								model.setGcId(gcid);
-//								model.setShopGoodsImg( image1);
-//								model.setShopGoodsInfo(goodsInfo);
-//								model.setShopGoodsNumber(count);
-//								model.setShopGoodsPrace(goodsPrice + "");
-//								model.setToalPrace(totalPrace + "");
-//								model.setShopGoodsOriginalPrace(storePrice + "");
-//								model.setShopGoodsStyle("上衣");
-//
-//								data.add(model);
-//
-//							} catch (JSONException e) {
-//								// TODO Auto-generated catch block
-//								e.printStackTrace();
-//							}
-//						}
-//
-//						data = SortClass.SortHaveData(data);
-//						if (data.size() == 0) {
-//							nodataview_textview.setVisibility(View.VISIBLE);
-//							nodataview_textview.setText("购物车空空如也，赶快去商城添加吧！");
-//						} else {
-//							nodataview_textview.setVisibility(View.GONE);
-//							tradeIntegralAdapter.setData(data);
-//						}
-//					} else {
-//						isRemove = false;
-//						showMbProgress("数据加载中...");
-//						app.netRequst.shoppingCartsDtasRequst(acc.getUserId(), goodsStoreId, "0", "20",
-//								netRequstAjaxCallBack.shopingCarDataCallback);
-//					}
-//				}
-//			} else {
-//				nodataview_textview.setVisibility(View.VISIBLE);
-//				nodataview_textview.setText("购物车空空如也，赶快去商城添加吧！");
-//				// MyToast.showMyToast(mContext, errorMsg, -1);
-//			}
-//
-//		}
-//	};
-
     private boolean isClear;
 
     private OnCheckBoxBack onCheckBoxBack = new OnCheckBoxBack() {
@@ -308,8 +188,8 @@ public class ShoppingCarActivity extends BaseActivity {
         public void backShopState(int position, String id, boolean check) {
             // TODO Auto-generated method stub
             isClear = true;
-            ShoppingCarModel model = data.get(position);
-            String shopGoodsNumber = model.getShopGoodsNumber();
+            GoodsListModel model = data.get(position);
+            String shopGoodsNumber = model.buyNum+"";
             if (Tools.IsEmpty(shopGoodsNumber)) {
                 shopGoodsNumber = "0";
             }
@@ -341,13 +221,13 @@ public class ShoppingCarActivity extends BaseActivity {
      *
      * 请求数据
      */
-    public void requstNetDataEditNum(ShoppingCarModel model, String num) {
+    public void requstNetDataEditNum(GoodsListModel model, String num) {
         this.requstType = 1;
         userToken = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
         GoodsKey goodsKey = new GoodsKey();
         goodsKey.token = userToken;
-        goodsKey.shopId = model.getShopId();
-        goodsKey.itemId = model.getShopGoodsId();
+        goodsKey.shopId = model.id+"";
+        goodsKey.itemId = model.itemId+"";
         goodsKey.buyNum = num;
         postRequst.editCartItemsNum(handler, goodsKey);
 
@@ -416,12 +296,12 @@ public class ShoppingCarActivity extends BaseActivity {
             String id = deleteArray.get(i);
             ids += id + ",";
             for (int j = 0; j < data.size(); j++) {
-                String tempId = data.get(j).getId();
+                String tempId = data.get(j).id+"";
                 if (id.equals(tempId)) {
 
-                    int num = Integer.parseInt(data.get(j).getShopGoodsNumber());
+                    int num = data.get(j).buyNum;
 
-                    double prace = Double.parseDouble(data.get(j).getToalPrace()) * num;
+                    double prace = data.get(j).itemPrice * num;
                     allPrace += prace;
                 }
 
@@ -473,16 +353,7 @@ public class ShoppingCarActivity extends BaseActivity {
         public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
             // TODO Auto-generated method stub
 
-           // ShoppingCarModel model = data.get(arg2);
-//            extraMap.put("goodsImg", model.getShopGoodsImg());
-//            extraMap.put("goodsStoreId", goodsStoreId);
-//            extraMap.put("goodsId", model.getShopGoodsId());
-//            extraMap.put("count", model.getShopGoodsNumber());
-//            extraMap.put("goodsProperty", model.getShopGoodsInfo());
-//            extraMap.put("goodsName", model.getShopGoodsName());
-//            extraMap.put("price", model.getShopGoodsPrace());
-
-
+            GoodsValue.getInstance().setGoodsListModel(data.get(arg2-1));
             skip_classView(GoodsDetailsActivity.class, extraMap, false);
         }
     };
@@ -514,11 +385,11 @@ public class ShoppingCarActivity extends BaseActivity {
                     if (isCheckAll == false) {
                         deleteArray.clear();
                         for (int i = 0; i < data.size(); i++) {
-                            deleteArray.add(data.get(i).getId());
+                            deleteArray.add(data.get(i).id+"");
                         }
                         SureCarValue.getInstance().setAllData(data);
                     } else {
-                        // SureCarValue.getInstance().removeAllData();
+                      SureCarValue.getInstance().removeAllData();
                         deleteArray.clear();
                     }
 
@@ -530,8 +401,7 @@ public class ShoppingCarActivity extends BaseActivity {
                     if (isEdit) {
                         isClear = true;
                         showMbProgress("移除中...");
-//					app.netRequst.shoppingCartsRemoveRequst(acc.getUserId(), goodsStoreId, getIdString(),
-//							netRequstAjaxCallBack.shopingCarAddCallback);
+
                         String[] ids = getIds();
                         for (int i = 0; i < ids.length; i++) {
                             String id = ids[i];
@@ -553,7 +423,7 @@ public class ShoppingCarActivity extends BaseActivity {
                         if (allPrace == 0) {
                             MyToast.showMyToast(mContext, "请选择商品", -1);
                         } else {
-                            extraMap.put("allPrace", allPrace+"");
+                            extraMap.put("allPrace", allPrace + "");
                             skip_classView(SureOrderActivity.class, extraMap, false);
                         }
 
@@ -591,23 +461,7 @@ public class ShoppingCarActivity extends BaseActivity {
     }
 
 
-    private NetRequstAjaxCallBack.OnNetRequstAjaxCallBack onNetRequstAjaxCallBack = new NetRequstAjaxCallBack.OnNetRequstAjaxCallBack() {
 
-        @Override
-        public void MsgCallBack(boolean isSuccess, String errorMsg, Object object) {
-            // TODO Auto-generated method stub
-            dissMbProgress();
-            if (isSuccess) {
-                ArrayList<GoodsListModel> shopsList = (ArrayList) object;
-
-            } else {
-
-            }
-
-
-        }
-
-    };
     private Handler handler = new Handler() {
 
         @Override
@@ -673,34 +527,48 @@ public class ShoppingCarActivity extends BaseActivity {
                 JSONArray woquArr = jsonObject.getJSONArray("items");
                 for (int i = 0; i < woquArr.length(); i++) {
                     JSONObject obj = woquArr.getJSONObject(i);
-//			GoodsListModel model=new GoodsListModel();
-//			model.id=obj.getInt("id");
-//			model.shopId=obj.getInt("shopId");
-//			model.itemId=obj.getInt("itemId");
-//			model.title=obj.getString("title");
-//			model.sellPoint=obj.getString("sellPoint");
-//			model.category=obj.getString("category");
-//			model.pic=obj.getString("pic");
-//			model.status=obj.getInt("status");
-//			model.itemPrice=obj.getInt("itemPrice")+"";
-//			model.content=obj.getString("content")+"";
 
-//
-                    ShoppingCarModel model = new ShoppingCarModel();
-                    model.setShopName(shopName);
-                    model.setShopId(obj.getInt("shopId") + "");
-                    model.setShopGoodsName(obj.getString("title"));
-                    model.setId(obj.getInt("id") + "");
-                    model.setShopGoodsId(obj.getInt("itemId") + "");
-                    model.setGcId(obj.getInt("scid") + "");
-                    model.setShopGoodsImg(obj.getString("pic"));
-                    model.setShopGoodsInfo(obj.getString("content"));
-                    model.setShopGoodsNumber(obj.getInt("buyNum") + "");
-                    model.setShopGoodsPrace(obj.getInt("itemPrice") + "");
-                    model.setToalPrace(obj.getInt("itemPrice") + "");
-                    model.setShopGoodsOriginalPrace(obj.getInt("itemPrice") + "");
-                    model.setShopGoodsStyle("上衣");
-                    model.setAllParamData(obj.getString("allParamData"));
+                 //   ShoppingCarModel model = new ShoppingCarModel();
+
+                    GoodsListModel  model= new  GoodsListModel();
+                    model.shopName=shopName;
+
+                    model.id=obj.getInt("id") ;
+                    model.itemId=obj.getInt("itemId") ;
+                    model.title=obj.getString("title");
+                    model.sellPoint=obj.getString("sellPoint");
+                    //model.category=obj.getString("category");
+                    model.pic=obj.getString("pic");
+                    model.status=obj.getInt("status") ;
+
+//                    "createTime": null,
+//                     "updateTime": null,
+                    model.scid=obj.getInt("scid") ;
+                    model.mailType=obj.getInt("mailType") ;
+                    model.itemType=obj.getInt("itemType") ;
+                    model.itemPrice=obj.getInt("itemPrice") ;
+
+                    model.allParamData=obj.getString("allParamData");
+                    model.paramData=obj.getString("paramData");
+                    model.buyNum=obj.getInt("buyNum") ;
+                    model.shopId=obj.getInt("shopId") ;
+                    model.  mailPrice=obj.getDouble("mailPrice");
+                    model.  inventory=obj.getInt("inventory") ;
+                    model.  receiveProvince=obj.getString("receiveProvince");
+                    model.unit=obj.getString("unit");
+                    model.  cid=obj.getInt("cid") ;
+                    model.  topCategoryId=obj.getInt("topCategoryId") ;
+                    model.  periodTime=obj.getInt("periodTime") ;
+                    model.  backSelf=obj.getDouble("backSelf");
+                    model.  saleType=obj.getInt("saleType") ;
+                    model.  backType=obj.getInt("backType") ;
+                    model.  firstBack=obj.getDouble("firstBack");
+                    model.  secondBack=obj.getDouble("secondBack");
+                    model.  useType=obj.getInt("useType");
+                    model.content=obj.getString("content");
+
+
+
                     data.add(model);
                 }
             } catch (JSONException e) {

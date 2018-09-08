@@ -7,12 +7,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.goods.city.GoodsListModel;
 import com.goods.details.ShoppingCarModel;
+import com.goods.netrequst.NetRequstAjaxCallBack;
+import com.goods.netrequst.PostRequst;
+import com.goods.sortlsitview.AjaxShopModel;
+import com.hyf.tdlibrary.utils.SharedPrefUtil;
+import com.hyf.tdlibrary.utils.Tools;
 import com.recycle.view.MyRecyclerView;
 import com.refushView.RefreshLayout;
 import com.refushView.holder.DefineBAGRefreshWithLoadView;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseFragment;
+import com.xfkc.caimai.bean.GoodsKey;
+import com.xfkc.caimai.config.SharedPref;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,6 +32,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import static com.goods.netrequst.PostRequst.UPSUCCESS;
 
 /****
  * 
@@ -41,6 +52,8 @@ public class AllOrderGoodsFragment extends BaseFragment implements RefreshLayout
 	private OrderGoodsListAdapter goodsCityListAdapter;
 	private List<GoodsDataModel> data;
 
+	private PostRequst postRequst;
+	private NetRequstAjaxCallBack ajaxCallBack;
 
 	public void baseDataInit() {
 		// TODO Auto-generated method stub
@@ -48,6 +61,9 @@ public class AllOrderGoodsFragment extends BaseFragment implements RefreshLayout
 			goodsCityListAdapter = new OrderGoodsListAdapter(mContext);
 			data = new ArrayList<GoodsDataModel>();
 		}
+		postRequst = new PostRequst(handler);
+		ajaxCallBack = new NetRequstAjaxCallBack(mContext);
+		ajaxCallBack.setOnNetRequstAjaxCallBack(onNetRequstAjaxCallBack);
 	}
 
 	@Override
@@ -80,6 +96,7 @@ public class AllOrderGoodsFragment extends BaseFragment implements RefreshLayout
 			recyclerView.setAdapter(goodsCityListAdapter);
 //			app.netRequst.shoppingCartsOrderDatasRequst(userId, acc.getStoreId(), "20", "1", "100",
 //					netRequstAjaxCallBack.shopingCarDataCallback);
+			requstGetMyOrder();
 			requstNetData();
 		}else{
 			goodsCityListAdapter.setBaseType(2);
@@ -308,5 +325,70 @@ public class AllOrderGoodsFragment extends BaseFragment implements RefreshLayout
 //		}
 
 	//};
+	///============================数据处理=============================
+
+	public void requstGetMyOrder() {
+		String userToken = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
+		GoodsKey goodsKey = new GoodsKey();
+		goodsKey.token = userToken;
+		goodsKey.pageNum = 0 + "";
+		goodsKey.pageSize = 20 + "";
+		postRequst.getMyOrder(handler, goodsKey,true);
+	}
+
+
+	private NetRequstAjaxCallBack.OnNetRequstAjaxCallBack onNetRequstAjaxCallBack = new NetRequstAjaxCallBack.OnNetRequstAjaxCallBack() {
+
+		@Override
+		public void MsgCallBack(boolean isSuccess, String errorMsg, Object object) {
+			// TODO Auto-generated method stub
+			dissMbProgress();
+			if (isSuccess) {
+				ArrayList<OrderModel> shopsList = (ArrayList) object;
+
+			} else {
+
+			}
+
+
+		}
+
+	};
+	private Handler handler = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			switch (msg.what) {
+				case UPSUCCESS://数据获取成功
+					if (msg.arg1 == 1) {//成功
+						String jsonObj = msg.obj.toString();
+						if (Tools.IsEmpty(jsonObj)) {
+							android.widget.Toast.makeText(mContext,
+									"数据错误", Toast.LENGTH_LONG).show();
+							nodataview_textview.setVisibility(View.VISIBLE);
+							nodataview_textview.setText("购物车空空如也，赶快去商城添加吧！");
+
+							return;
+						}
+						JSONObject obj = null;
+						try {
+							obj = new JSONObject(jsonObj);
+								app.jsonHttp.getJsonObj(jsonObj, AjaxShopModel.class,
+									ajaxCallBack.getMyOrder);
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+
+					} else {//失败
+
+						nodataview_textview.setVisibility(View.VISIBLE);
+						nodataview_textview.setText("购物车空空如也，赶快去商城添加吧！");
+					}
+
+					break;
+			}
+		}
+	};
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 
 import com.dev.customview.TextViewUtils;
+import com.goods.city.GoodsListModel;
 import com.goods.details.ShoppingCarModel;
 import com.hyf.tdlibrary.utils.Tools;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -29,7 +30,7 @@ public class ShoppingCarAdapter extends BaseAdapter {
 	MyApplication app;
 	private String fileServer;
 	LayoutInflater layoutInflater;
-	private List<ShoppingCarModel> data;
+	private List<GoodsListModel> data;
 	private DisplayImageOptions options;
 
 	public List<String> deleteArray;
@@ -49,14 +50,14 @@ public class ShoppingCarAdapter extends BaseAdapter {
 		this.onCheckBoxBack = onCheckBoxBack;
 	}
 
-	public List<ShoppingCarModel> getData() {
+	public List<GoodsListModel> getData() {
 		return data;
 	}
 
-	public void setData(List<ShoppingCarModel> data) {
+	public void setData(List<GoodsListModel> data) {
 		this.data = data;
 		if (this.data == null) {
-			this.data = new ArrayList<ShoppingCarModel>();
+			this.data = new ArrayList<GoodsListModel>();
 		}
 
 		this.notifyDataSetChanged();
@@ -100,6 +101,7 @@ public class ShoppingCarAdapter extends BaseAdapter {
 
 			viewHoder.testTitle = (TextView) convertView.findViewById(R.id.testTitle);
 			viewHoder.discroub_textview= (TextView) convertView.findViewById(R.id.discroub_textview);
+			viewHoder.guig_textView= (TextView) convertView.findViewById(R.id.guig_textView);
 
 			viewHoder.checkBox = (CheckBox) convertView.findViewById(R.id.checkBox);
 
@@ -114,19 +116,19 @@ public class ShoppingCarAdapter extends BaseAdapter {
 		} else {
 			viewHoder = (ViewHoder) convertView.getTag();
 		}
-		ShoppingCarModel model = data.get(position);
-		if (isRepeateData(model.getId()) == false) {
+		GoodsListModel model = data.get(position);
+		if (isRepeateData(model.id+"") == false) {
 			viewHoder.checkBox.setChecked(false);
 		} else {
 			viewHoder.checkBox.setChecked(true);
 		}
-		checkBoxCheck(position, viewHoder.checkBox, model.getId());
-		checkCheck(position, viewHoder.goods_remove_btn, model.getShopGoodsId());
-		checkCheck(position, viewHoder.goods_add_btn, model.getShopGoodsId());
+		checkBoxCheck(position, viewHoder.checkBox, model.id+"");
+		checkCheck(position, viewHoder.goods_remove_btn, model.id+"");
+		checkCheck(position, viewHoder.goods_add_btn,  model.id+"");
 
-		String ch2 = model.getShopName();
+		String ch2 = model.shopName;
 		if (position > 0) {
-			String ch1 = data.get(position - 1).getShopName();
+			String ch1 = data.get(position - 1).shopName;
 			if (ch1.equals(ch2)) {
 				viewHoder.fristWord.setVisibility(View.GONE);
 			} else {
@@ -144,18 +146,19 @@ public class ShoppingCarAdapter extends BaseAdapter {
 		// app.imageLoader.displayImage(model.getShopGoodsImg(), viewHoder.pic,
 		// options,
 		// animateFirstListener);
-	if(Tools.IsEmpty(model.getShopGoodsImg())){
+	if(Tools.IsEmpty(model.pic)){
 		viewHoder.pic.setImageResource(R.mipmap.error_icon);
 		}else{
-			app.imageLoader.displayImage(model.getShopGoodsImg(), viewHoder.pic);
+			app.imageLoader.displayImage(model.pic, viewHoder.pic);
 		}
 
-		viewHoder.testTitle.setText(model.getShopGoodsName());
-		viewHoder.discroub_textview.setText(model.getShopGoodsInfo());
-		viewHoder.learntime_textview.setText(model.getShopGoodsPrace()+"康币");
-
-		viewHoder.goodsNum.setText("" + model.getShopGoodsNumber());
+		viewHoder.testTitle.setText(model.title);
+		viewHoder.guig_textView.setText(model.paramData+"");
+		viewHoder.discroub_textview.setText(model.sellPoint+"");
+		viewHoder.learntime_textview.setText(model.itemPrice+"康币");
+		viewHoder.goodsNum.setText("" + model.buyNum);
 		setSitis(viewHoder.learntime_textview);
+
 		return convertView;
 	}
 	public void setSitis(TextView goods_prace){
@@ -205,7 +208,7 @@ public class ShoppingCarAdapter extends BaseAdapter {
 	}
 
 	public class ViewHoder {
-		TextView fristWord, testTitle, discroub_textview,learntime_textview, goodsNum;
+		TextView fristWord, testTitle, discroub_textview,learntime_textview, guig_textView,goodsNum;
 		ImageView pic;
 		CheckBox checkBox;
 

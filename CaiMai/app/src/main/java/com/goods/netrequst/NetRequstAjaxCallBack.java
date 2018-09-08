@@ -8,6 +8,7 @@ import android.content.Context;
 
 import com.dev.customview.MyToast;
 import com.goods.city.GoodsListModel;
+import com.goods.mineOrderforgoods.OrderModel;
 import com.goods.sortlsitview.AjaxShopModel;
 import com.goods.sortlsitview.CharacterParser;
 import com.goods.sortlsitview.ShopsList;
@@ -73,7 +74,7 @@ public class NetRequstAjaxCallBack {
             ArrayList<SortModel> sortData = new ArrayList<SortModel>();
             String shops = t.shops;
             ArrayList<ShopsList> shopsList = t.shopsList;
-            analisyShops(sortData, shops,shopsList);
+            analisyShops(sortData, shops, shopsList);
             if (onNetRequstAjaxCallBack != null) {
                 onNetRequstAjaxCallBack.MsgCallBack(true, "", sortData);
             }
@@ -82,18 +83,18 @@ public class NetRequstAjaxCallBack {
     };
     private CharacterParser characterParser;
 
-    public void analisyShops(ArrayList<SortModel> sortData, String shops, ArrayList<ShopsList> shopsList ) {
+    public void analisyShops(ArrayList<SortModel> sortData, String shops, ArrayList<ShopsList> shopsList) {
         try {
             // 实例化汉字转拼音类
             characterParser = CharacterParser.getInstance();
-            if (Tools.IsEmpty(shops)){
+            if (Tools.IsEmpty(shops)) {
                 SortModel model = new SortModel();
                 model.setName("定位商店失败");
                 model.setProvinceId("20000");
-                model.setShopId( "9");
+                model.setShopId("9");
                 model.setSortLetters("A");
                 sortData.add(model);
-            }else{
+            } else {
                 JSONObject obj = new JSONObject(shops);
                 CommonConvert convert = new CommonConvert(obj);
                 int shopId = convert.getInt("shopId");
@@ -115,9 +116,9 @@ public class NetRequstAjaxCallBack {
             }
 
 
-            for (int i=0;i<shopsList.size();i++){
+            for (int i = 0; i < shopsList.size(); i++) {
                 int shopId_ = shopsList.get(i).shopId;
-                String shopName_ =  shopsList.get(i).shopName;
+                String shopName_ = shopsList.get(i).shopName;
                 if (Tools.IsEmpty(shopName_)) {
                     shopName_ = "空";
                 }
@@ -151,10 +152,6 @@ public class NetRequstAjaxCallBack {
     }
 
 
-
-
-
-
     /***
      * 注销登录回调
      */
@@ -184,9 +181,9 @@ public class NetRequstAjaxCallBack {
 
 
             ArrayList<GoodsListModel> shopsList = t.list;
-            if (onNetRequstAjaxCallBack != null&&shopsList!=null&&shopsList.size()>0) {
+            if (onNetRequstAjaxCallBack != null && shopsList != null && shopsList.size() > 0) {
                 onNetRequstAjaxCallBack.MsgCallBack(true, "", shopsList);
-            }else{
+            } else {
                 onNetRequstAjaxCallBack.MsgCallBack(false, "", shopsList);
             }
 
@@ -223,9 +220,9 @@ public class NetRequstAjaxCallBack {
 //            CommonConvert convert = new CommonConvert(obj);
 //            jsonObj = convert.getString("data");
             ArrayList<GoodsListModel> shopsList = t.list;
-            if (onNetRequstAjaxCallBack != null&&shopsList!=null&&shopsList.size()>0) {
+            if (onNetRequstAjaxCallBack != null && shopsList != null && shopsList.size() > 0) {
                 onNetRequstAjaxCallBack.MsgCallBack(true, "", shopsList);
-            }else{
+            } else {
                 onNetRequstAjaxCallBack.MsgCallBack(false, "", shopsList);
             }
 
@@ -264,9 +261,9 @@ public class NetRequstAjaxCallBack {
 //            CommonConvert convert = new CommonConvert(obj);
 //            jsonObj = convert.getString("data");
             ArrayList<GoodsListModel> shopsList = t.list;
-            if (onNetRequstAjaxCallBack != null&&shopsList!=null&&shopsList.size()>0) {
+            if (onNetRequstAjaxCallBack != null && shopsList != null && shopsList.size() > 0) {
                 onNetRequstAjaxCallBack.MsgCallBack(true, "", shopsList);
-            }else{
+            } else {
                 onNetRequstAjaxCallBack.MsgCallBack(false, "", shopsList);
             }
 
@@ -303,9 +300,46 @@ public class NetRequstAjaxCallBack {
 //            CommonConvert convert = new CommonConvert(obj);
 //            jsonObj = convert.getString("data");
             ArrayList<GoodsListModel> shopsList = t.list;
-            if (onNetRequstAjaxCallBack != null&&shopsList!=null&&shopsList.size()>0) {
+            if (onNetRequstAjaxCallBack != null && shopsList != null && shopsList.size() > 0) {
                 onNetRequstAjaxCallBack.MsgCallBack(true, "", shopsList);
-            }else{
+            } else {
+                onNetRequstAjaxCallBack.MsgCallBack(false, "", shopsList);
+            }
+
+        }
+    };
+
+    /***
+     * 订单列表
+     */
+    public AjaxCallBack<AjaxShopModel> getMyOrder = new AjaxCallBack<AjaxShopModel>() {
+        @Override
+        public void onFailure(Throwable t, int errorNo, String strMsg) {
+            // TODO Auto-generated method stub
+            super.onFailure(t, errorNo, strMsg);
+            // 失败的handler回调
+            MyToast.showMyToast(mContext, "服务异常", -1);
+            if (onNetRequstAjaxCallBack != null) {
+                onNetRequstAjaxCallBack.MsgCallBack(false, "error:" + strMsg, "数据获取失败");
+            }
+        }
+
+        @Override
+        public void onSuccess(AjaxShopModel t) {
+            // TODO Auto-generated method stub
+            super.onSuccess(t);
+            if (t == null) {
+                MyToast.showMyToast(mContext, "数据获取失败", -1);
+                if (onNetRequstAjaxCallBack != null) {
+                    onNetRequstAjaxCallBack.MsgCallBack(false, "", "数据获取失败");
+                }
+                return;
+            }
+
+            ArrayList<OrderModel> shopsList = t.data;
+            if (onNetRequstAjaxCallBack != null && shopsList != null && shopsList.size() > 0) {
+                onNetRequstAjaxCallBack.MsgCallBack(true, "", shopsList);
+            } else {
                 onNetRequstAjaxCallBack.MsgCallBack(false, "", shopsList);
             }
 

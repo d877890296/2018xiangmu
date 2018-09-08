@@ -245,6 +245,32 @@ public class PostRequst {
         uploadMethod(params, url);
     }
 
+    /****
+     *
+     * /api/order/getMyOrder
+     * `status` int  1待支付 2待发货 3配送中 4待评价 5已评价 6已取消
+     * 查询全部订单 该字段 不传
+     *
+     * 获取我的订单
+     * @param handler
+     * @param goodsKey
+     */
+    public void getMyOrder(Handler handler, GoodsKey goodsKey,boolean isAll
+    ) {
+        this.handler = handler;
+        url = Constant.BASE_URL + "/api/order/getMyOrder?";
+        params = new RequestParams();
+        params.addBodyParameter("token", goodsKey.token);
+        params.addBodyParameter("pageNum", goodsKey.pageNum);
+        params.addBodyParameter("pageSize", goodsKey.pageSize);
+        if (!isAll){
+            params.addBodyParameter("status", goodsKey.status+"");
+        }
+        uploadMethod(params, url);
+    }
+
+
+///api/order/getOrderFreight
 
     /***
      *

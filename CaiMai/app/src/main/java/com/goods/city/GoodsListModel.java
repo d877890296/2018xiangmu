@@ -7,6 +7,8 @@ import com.json.NetJsonFiled;
  */
 
 public class GoodsListModel {
+    public String shopName;
+
     @NetJsonFiled
     public Integer id;//": 1,
     @NetJsonFiled
@@ -42,7 +44,7 @@ public class GoodsListModel {
     @NetJsonFiled
     public Integer shopId;
     @NetJsonFiled
-    public Integer mailPrice;
+    public double mailPrice;
     @NetJsonFiled
     public Integer inventory;
     @NetJsonFiled
@@ -57,15 +59,15 @@ public class GoodsListModel {
     @NetJsonFiled //分期数
     public Integer periodTime;
     @NetJsonFiled //分期数
-    public Integer backSelf;
+    public Double backSelf;
     @NetJsonFiled //分期数
     public Integer saleType;
     @NetJsonFiled //分期数
     public Integer backType;
     @NetJsonFiled //分期数
-    public Integer firstBack;
+    public Double firstBack;
     @NetJsonFiled //分期数
-    public Integer secondBack;
+    public Double secondBack;
     @NetJsonFiled //分期数
     public Integer useType;
     @NetJsonFiled
@@ -73,7 +75,8 @@ public class GoodsListModel {
 
     @NetJsonFiled
     public Integer secondCategory;
-
+    @NetJsonFiled
+    public String orderNum;
 
     //一级列表数据
     @NetJsonFiled

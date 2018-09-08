@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.dev.mbprogress.MbProgress;
 import com.xfkc.caimai.MainActivity;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.application.MyApplication;
@@ -40,7 +41,7 @@ public abstract class BaseFragment extends Fragment {
 
     public LinearLayout progress_liner;
     public TextView nodataview_textview;
-
+    public MbProgress mbProgress;
     @Nullable
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -140,6 +141,22 @@ public abstract class BaseFragment extends Fragment {
 
         }
     }
+
+
+    public void showMbProgress(String msg) {
+        if (mbProgress == null) {
+            mbProgress = new MbProgress(getContext(), false);
+        }
+        mbProgress.showMbDialog(msg);
+    }
+
+    public void dissMbProgress() {
+        if (mbProgress != null) {
+            mbProgress.dismiss();
+        }
+
+    }
+
     /** list刷新 **/
     public static final int LIST_REFUSH_WHAT = 0;
     /** list加载更多数据 **/
