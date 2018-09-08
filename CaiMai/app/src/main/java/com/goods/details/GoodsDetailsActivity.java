@@ -490,7 +490,7 @@ public class GoodsDetailsActivity extends BaseActivity {
                 extraMap.put("allPrace", allPrice + "");
                 extraMap.put("sourceType", 1);
                 SureCarValue.getInstance().init();
-                goodsListModel.buyNum=1;
+                goodsListModel.buyNum=1;   
                 SureCarValue.getInstance().setAddressData(goodsListModel);
                 skip_classView(SureOrderActivity.class, extraMap, false);
                 dialog.dismiss();
