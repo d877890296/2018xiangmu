@@ -396,8 +396,8 @@ public class GoodsDetailsActivity extends BaseActivity {
 //        params.put("category", goodsListModel.category);
 //        params.put("pic", goodsListModel.pic);
 //        params.put("status", goodsListModel.status);
-////        params.addBodyParameter("createTime", goodsListModel.createTime+"");
-////        params.addBodyParameter("updateTime", goodsListModel.updateTime+"");
+//        params.addBodyParameter("createTime", goodsListModel.createTime+"");
+//        params.addBodyParameter("updateTime", goodsListModel.updateTime+"");
 //        params.put("scid", goodsListModel.scid);
 //        params.put("mailType", goodsListModel.mailType);
 //        params.put("itemType", goodsListModel.itemType);
@@ -428,8 +428,8 @@ public class GoodsDetailsActivity extends BaseActivity {
 //
 //        new Thread(new Runnable() {
 //            @Override
-//            public void run() {
-    //String strResult = HttpPost.submitPostData(strUrlPath, params, "utf-8");
+//            public void run()
+//              String strResult = HttpPost.submitPostData(strUrlPath, params, "utf-8");
 //                Log.e("=====",strResult);
 //            }
 //        }).start();

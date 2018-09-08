@@ -1,6 +1,5 @@
 package com.xfkc.caimai.loading;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -91,8 +90,7 @@ public class UpdatePassWordActivity extends BaseActivity {
                     @Override
                     public void onNext(EmptyBean emptyBean) {
                         ToastUtil.showToast("密码修改成功");
-                        finish();
-                        setResult(1002,new Intent());
+                        backHistory(1002,true,true,extraMap);
                     }
                 });
 

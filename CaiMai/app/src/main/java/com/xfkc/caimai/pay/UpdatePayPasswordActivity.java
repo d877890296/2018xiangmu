@@ -9,10 +9,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.ToastUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 import com.xfkc.caimai.bean.EmptyBean;
+import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.customview.StateButton;
 import com.xfkc.caimai.net.PayFactory;
 import com.xfkc.caimai.net.RxHelper;
@@ -68,7 +70,8 @@ public class UpdatePayPasswordActivity extends BaseActivity {
     @Override
     protected void initViews(Bundle savedInstanceState) {
         toolbarLeftImg.setImageResource(R.mipmap.back_white);
-        toolbarTitle.setText("注册");
+        toolbarTitle.setText("修改支付密码");
+        token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
     }
 
     @Override
@@ -128,7 +131,7 @@ public class UpdatePayPasswordActivity extends BaseActivity {
     /*提交注册数据*/
     private void userRegistData() {
         PayFactory.getPayService()
-                .updatePayPwd(phone, msgcode, password)
+                .updatePayPwd(phone, msgcode, password,token)
                 .compose(RxHelper.<EmptyBean>io_main())
                 .subscribe(new ProgressSubscriber<EmptyBean>(this) {
                     @Override

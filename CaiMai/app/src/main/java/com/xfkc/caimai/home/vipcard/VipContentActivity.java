@@ -65,7 +65,7 @@ public class VipContentActivity extends BaseActivity {
     //支付方式 0微信  1支付宝
     private int PAY_WAY = 0;
     //会员卡类别
-    private int TYPE = 0;
+    private int cartype = 0;
 
     private String name = "", car_price="" , carid="";
 
@@ -83,12 +83,11 @@ public class VipContentActivity extends BaseActivity {
         list_radio.add(weixinRb);
         list_radio.add(zhifubaoRb);
 
-        TYPE = getIntent().getIntExtra("type", 0);
 
         name = getIntent().getStringExtra("name");
         car_price = getIntent().getStringExtra("price");
         carid = getIntent().getStringExtra("carid");
-
+        cartype = getIntent().getIntExtra("cartype", 0);
         token = SharedPrefUtil.get(this, SharedPref.TOKEN);
 
         setVipCardType();
@@ -103,17 +102,17 @@ public class VipContentActivity extends BaseActivity {
         vipCardNo.setText("VIP 123456789");
 
 
-//        switch (TYPE) {
-//            case 0:
-//                imageBg.setBackgroundResource(R.mipmap.vip01);
-//                break;
-//            case 1:
-//                imageBg.setBackgroundResource(R.mipmap.vip03);
-//                break;
-//            case 2:
+        switch (cartype) {
+            case 0:
+                imageBg.setBackgroundResource(R.mipmap.vip01);
+                break;
+            case 1:
+                imageBg.setBackgroundResource(R.mipmap.vip03);
+                break;
+            case 2:
                 imageBg.setBackgroundResource(R.mipmap.vip02);
-//                break;
-//        }
+                break;
+        }
 
     }
 

@@ -2,14 +2,14 @@
 <com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
+    android:padding="20dp"
     android:background="@color/white"
     >
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/feeling_user_iv"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:clickable="true"
         android:src="@mipmap/heart_icon" />
 
