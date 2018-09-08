@@ -1,5 +1,6 @@
 package com.goods.shoppingcar;
 
+import com.goods.city.GoodsListModel;
 import com.goods.details.ShoppingCarModel;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.List;
 
 public class SureCarValue {
 	public static SureCarValue sureOrderModel;
-	public List<ShoppingCarModel> addressData;
+	public List<GoodsListModel> addressData;
 
 	public synchronized static SureCarValue getInstance() {
 		if (null == sureOrderModel) {
@@ -19,7 +20,7 @@ public class SureCarValue {
 	}
 
 	public void init() {
-		addressData = new ArrayList<ShoppingCarModel>();
+		addressData = new ArrayList<GoodsListModel>();
 	}
 
 	public void reSet() {
@@ -30,15 +31,15 @@ public class SureCarValue {
 		}
 	}
 
-	public List<ShoppingCarModel> getAddressData() {
+	public List<GoodsListModel> getAddressData() {
 		return addressData;
 	}
 
-	public void setAddressData(ShoppingCarModel model) {
-		if (isRepeateData(model.getShopGoodsId()) == false) {
+	public void setAddressData(GoodsListModel model) {
+		if (isRepeateData(model.id+"") == false) {
 			addressData.add(model);
 		} else {
-			int id_ = isRepeate(model.getShopGoodsId());
+			int id_ = isRepeate(model.id+"");
 			if (id_ != -1) {
 				addressData.remove(id_);
 			}
@@ -46,7 +47,7 @@ public class SureCarValue {
 
 	}
 
-	public void setAllData(List<ShoppingCarModel> data) {
+	public void setAllData(List<GoodsListModel> data) {
 		addressData.clear();
 		addressData.addAll(data);
 	}
@@ -66,8 +67,8 @@ public class SureCarValue {
 	 * @return
 	 */
 	public boolean isRepeateData(String goodsId) {
-		for (ShoppingCarModel model : addressData) {
-			if (model.getShopGoodsId().equals(goodsId)) {
+		for (GoodsListModel model : addressData) {
+			if (model.id.equals(goodsId)) {
 				return true;
 			}
 		}
@@ -83,8 +84,8 @@ public class SureCarValue {
 	public int isRepeate(String goodsId) {
 		int count = addressData.size();
 		for (int i = 0; i < count; i++) {
-			ShoppingCarModel model = addressData.get(i);
-			if (model.getShopGoodsId().equals(goodsId)) {
+			GoodsListModel model = addressData.get(i);
+			if (model.id.equals(goodsId)) {
 				return i;
 			}
 		}

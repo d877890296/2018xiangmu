@@ -33,6 +33,10 @@ public class ShoppingCarModel {
 	public String toalPrace;
 
 	public String allParamData;
+	public String paramData;
+
+
+	public String  sellPoint;
 
 	public String getShopName() {
 		return shopName;
@@ -144,5 +148,21 @@ public class ShoppingCarModel {
 
 	public void setAllParamData(String allParamData) {
 		this.allParamData = allParamData;
+	}
+
+	public String getParamData() {
+		return paramData;
+	}
+
+	public void setParamData(String paramData) {
+		this.paramData = paramData;
+	}
+
+	public String getSellPoint() {
+		return sellPoint;
+	}
+
+	public void setSellPoint(String sellPoint) {
+		this.sellPoint = sellPoint;
 	}
 }

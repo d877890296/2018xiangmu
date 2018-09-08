@@ -36,6 +36,7 @@ import com.goods.netrequst.NetRequstAjaxCallBack;
 import com.goods.netrequst.PostRequst;
 import com.goods.order.SureOrderActivity;
 import com.goods.shoppingcar.ShoppingCarActivity;
+import com.goods.shoppingcar.SureCarValue;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.ToastUtil;
 import com.hyf.tdlibrary.utils.Tools;
@@ -315,32 +316,12 @@ public class GoodsDetailsActivity extends BaseActivity {
                     showMbProgress("添加中...");
 //                    requstNetDataAddProduct();
 
-//                    app.netRequst.shoppingCartSaveRequst(acc.getUserId(), goodsStoreId, goodsId, "1", specInfo, price,
-//                            netRequstAjaxCallBack.shopingCarAddCallback);
-                    showGoodsType();
-                    break;
-                case R.id.buy_textView:
-                    //    SureCarValue.getInstance().init();
-                    ShoppingCarModel model = new ShoppingCarModel();
-                    model.setShopName(goodsName);
-                    model.setShopId(goodsStoreId);
-                    model.setShopGoodsName(goodsName);
-                    model.setShopGoodsId(goodsId);
-                    model.setGcId("0");
-                    model.setShopGoodsImg(goodsImg);
-                    model.setShopGoodsInfo(goodsName);
-                    model.setShopGoodsNumber("1");
-                    model.setShopGoodsPrace(price + "");
-                    model.setShopGoodsOriginalPrace(price + "");
-                    model.setShopGoodsStyle("上衣");
-                    showGoodsType();
-                    // SureCarValue.getInstance().setAddressData(model);
-                    isShow = false;
-                    // 添加购物车
-//                    app.netRequst.shoppingCartSaveRequst(acc.getUserId(), goodsStoreId, goodsId, "1", specInfo, price,
-//                            netRequstAjaxCallBack.shopingCarAddCallback);
 
-                    extraMap.put("allPrace", price);
+                    break;
+                case R.id.buy_textView://直接购买
+                    isShow = false;
+
+                    showGoodsType();
                     //  skip_classView(SureOrderforgoodsActivity.class, extraMap, false);
                     break;
                 case R.id.goodsTypeTextView:
@@ -384,55 +365,6 @@ public class GoodsDetailsActivity extends BaseActivity {
             postRequst.addProduct(handler, goodsKey,number);
         }
 
-//        // 参数
-//        final Map<String, Object> params = new HashMap<String, Object>();
-//        token= SharedPrefUtil.get(mContext,SharedPref.TOKEN);
-//        params.put("token", token);
-//        GoodsListModel goodsListModel= GoodsValue.getInstance().getGoodsListModel();
-//        params.put("id", goodsListModel.id);
-//        params.put("itemId", goodsListModel.itemId);
-//        params.put("title", goodsListModel.title);
-//        params.put("sellPoint", goodsListModel.sellPoint);
-//        params.put("category", goodsListModel.category);
-//        params.put("pic", goodsListModel.pic);
-//        params.put("status", goodsListModel.status);
-////        params.addBodyParameter("createTime", goodsListModel.createTime+"");
-////        params.addBodyParameter("updateTime", goodsListModel.updateTime+"");
-//        params.put("scid", goodsListModel.scid);
-//        params.put("mailType", goodsListModel.mailType);
-//        params.put("itemType", goodsListModel.itemType);
-//        params.put("itemPrice", goodsListModel.itemPrice);
-//        params.put("allParamData", goodsListModel.allParamData);
-//        params.put("paramData", goodsListModel.paramData);
-//        params.put("buyNum", goodsListModel.buyNum);
-//        params.put("shopId", goodsListModel.shopId);
-//        params.put("mailPrice", goodsListModel.mailPrice);
-//        params.put("inventory", goodsListModel.inventory);
-//        params.put("receiveProvince", goodsListModel.receiveProvince);
-//        params.put("unit", goodsListModel.unit);
-//        params.put("cid", goodsListModel.cid);
-//        params.put("topCategoryId", goodsListModel.topCategoryId);
-//        params.put("periodTime", goodsListModel.periodTime);
-//        params.put("backSelf", goodsListModel.backSelf);
-//        params.put("saleType", goodsListModel.saleType);
-//        params.put("backType", goodsListModel.backType);
-//        params.put("firstBack", goodsListModel.firstBack);
-//        params.put("secondBack", goodsListModel.secondBack);
-//        params.put("useType", goodsListModel.useType);
-//        params.put("content", goodsListModel.content);
-//        params.put("secondCategory", goodsListModel.secondCategory);
-//        // 服务器请求路径
-//        final String strUrlPath = Constant.BASE_URL+"/api/shopcart/addProduct?";
-//
-//
-//
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-    //String strResult = HttpPost.submitPostData(strUrlPath, params, "utf-8");
-//                Log.e("=====",strResult);
-//            }
-//        }).start();
 
 
 
@@ -486,7 +418,7 @@ public class GoodsDetailsActivity extends BaseActivity {
         fenqi_radios.add(fenqi_6);
         fenqi_radios.add(fenqi_9);
         fenqi_radios.add(fenqi_12);
-
+        setAllPrice(number, show_goodsnum_tv);
         botoom_typeshopNumber.setText(goodsCarNum+"");
         String picture = "";
         if (!Tools.IsEmpty(goodsListModel.pic)) {
@@ -554,9 +486,12 @@ public class GoodsDetailsActivity extends BaseActivity {
         });
         buy_textView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {//直接购买
                 extraMap.put("allPrace", allPrice + "");
                 extraMap.put("sourceType", 1);
+                SureCarValue.getInstance().init();
+                goodsListModel.buyNum=1;
+                SureCarValue.getInstance().setAddressData(goodsListModel);
                 skip_classView(SureOrderActivity.class, extraMap, false);
                 dialog.dismiss();
             }

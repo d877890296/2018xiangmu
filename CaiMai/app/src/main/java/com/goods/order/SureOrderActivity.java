@@ -2,32 +2,52 @@ package com.goods.order;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dev.customview.MyListView;
+import com.goods.city.GoodsListModel;
+import com.goods.city.GoodsValue;
 import com.goods.details.GoodsDetailsActivity;
 import com.goods.details.ShoppingCarModel;
 import com.goods.mineinfo.DeleteView;
+import com.goods.netrequst.Logger;
+import com.goods.netrequst.NetRequstAjaxCallBack;
+import com.goods.netrequst.PostRequst;
+import com.goods.shoppingcar.SureCarValue;
 import com.google.gson.Gson;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.ToastUtil;
+import com.hyf.tdlibrary.utils.Tools;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.HttpParams;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 import com.xfkc.caimai.bean.AddOrderBean;
+import com.xfkc.caimai.bean.AddressBean;
+import com.xfkc.caimai.bean.GoodsKey;
 import com.xfkc.caimai.config.Constant;
 import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.dialog.ShowPassWordDialog;
+import com.xfkc.caimai.net.PayFactory;
+import com.xfkc.caimai.net.RxHelper;
+import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
 import com.xfkc.caimai.order.ChooseAddressActivity;
 import com.xfkc.caimai.pay.PaySuccessActivity;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,18 +56,19 @@ import butterknife.Bind;
 import okhttp3.Call;
 import okhttp3.Response;
 
+import static com.goods.netrequst.PostRequst.UPSUCCESS;
+
 /**
  * Created by 10835 on 2018/9/1.
  */
 
 public class SureOrderActivity extends BaseActivity {
 
-
     @Bind(R.id.way_youji)
     TextView wayYouji;
     @Bind(R.id.way_ziqu)
     TextView wayZiqu;
-//    @Bind(R.id.pay_way)
+    //    @Bind(R.id.pay_way)
 //    TextView payWay;
     @Bind(R.id.kangbi)
     TextView kangbi;
@@ -70,11 +91,9 @@ public class SureOrderActivity extends BaseActivity {
     private LinearLayout fristliner, orderdetails_liner, choose_address;
 
     private TextView uporder_textView;
-
-
     private MyListView goodsMyListView;
     private SureGoodsAdapter sureGoodsAdapter;
-    private List<ShoppingCarModel> goodsData;
+    private List<GoodsListModel> goodsData;
     private DeleteView deleteView;
 
     private String addressId = "1";
@@ -88,6 +107,7 @@ public class SureOrderActivity extends BaseActivity {
 
     private ShowPassWordDialog showPassWordDialog;
 
+
     @Override
     protected int getLayoutResource() {
         return R.layout.goods_sureorder_layout;
@@ -95,9 +115,11 @@ public class SureOrderActivity extends BaseActivity {
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
-        // SureOrderValue.getInstance().init();
-        goodsData = new ArrayList<ShoppingCarModel>();
+        //SureCarValue.getInstance().init();
+        goodsData = new ArrayList<GoodsListModel>();
         allPrace = getIntent().getStringExtra("allPrace");
+        goodsData = SureCarValue.getInstance().getAddressData();
+
 
         list_way.add(wayYouji);
         list_way.add(wayZiqu);
@@ -109,6 +131,40 @@ public class SureOrderActivity extends BaseActivity {
 
         viewInit();
     }
+
+    //地址集合
+    private ArrayList<AddressBean.DataBean> list_address = new ArrayList();
+
+    protected void requstAddress() {
+
+        token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
+        PayFactory.getPayService().getReceiveAdress(token)
+                .compose(RxHelper.<AddressBean>io_main())
+                .subscribe(new ProgressSubscriber<AddressBean>(this) {
+                    @Override
+                    public void onNext(AddressBean addressBean) {
+                        dissMbProgress();
+                        if (addressBean.data != null && addressBean.data.size() != 0) {
+                            list_address.addAll(addressBean.data);
+                            addressId = addressBean.data.get(0).id + "";
+                            getGoods_pople.setText(addressBean.data.get(0).receiveName + "");
+                            getGoods_phone.setText(addressBean.data.get(0).phone + "");
+                            getGoods_address.setText(addressBean.data.get(0).detailAdress + "");
+
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        dissMbProgress();
+                    }
+                });
+
+
+    }
+
 
     public void viewInit() {
         back_btn = (ImageButton) findViewById(R.id.back_img_btn);
@@ -129,7 +185,7 @@ public class SureOrderActivity extends BaseActivity {
         // findViewById(R.id.orderdetails_liner);
 
         goodsMyListView = (MyListView) findViewById(R.id.goodsMyListView);
-        //goodsMyListView.setOnItemClickListener(onItemClickListener);
+        goodsMyListView.setOnItemClickListener(onItemClickListener);
         sureGoodsAdapter = new SureGoodsAdapter(mContext);
         sureGoodsAdapter.setGoodsData(goodsData);
         goodsMyListView.setAdapter(sureGoodsAdapter);
@@ -141,9 +197,8 @@ public class SureOrderActivity extends BaseActivity {
         allPrace_textView.setText("￥" + allPrace);
         uporder_textView = (TextView) findViewById(R.id.uporder_textView);
         uporder_textView.setOnClickListener(onClickListener);
-        // showMbProgress("数据求情中...");
-        // app.netRequst.goodsAddressDatasRequst(acc.getUserId(), "1", "20", netRequstAjaxCallBack.shopingCarDataCallback);
-
+        showMbProgress("数据求情中...");
+        requstAddress();
         wayYouji.setOnClickListener(onClickListener);
         wayZiqu.setOnClickListener(onClickListener);
         peisongway.setOnClickListener(onClickListener);
@@ -174,15 +229,10 @@ public class SureOrderActivity extends BaseActivity {
 
                     break;
                 case R.id.uporder_textView:// 提价订单
-
 //                    if (Tools.IsEmpty(addressId)) {
 //                        MyToast.showMyToast(mContext, "请添加收货地址！", -1);
 //                    } else {
                     showMbProgress("数据求情中...");
-                    //  app.netRequst.shoppingOrderSaveRequst(acc.getUserId(), "10", getIdString(), allPrace, "1",addressId,acc.getStoreId(),
-                    //      netRequstAjaxCallBack.shopingCarRemoveCallback);
-
-//                    }
                     addOrder();
 
                     break;
@@ -223,22 +273,55 @@ public class SureOrderActivity extends BaseActivity {
         }
 
     };
+    private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
 
+        @Override
+        public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+            // TODO Auto-generated method stub
+            GoodsValue.getInstance().setGoodsListModel(goodsData.get(arg2));
+            skip_classView(GoodsDetailsActivity.class, extraMap, false);
+        }
+    };
     private String message;
+    private String buyNum = "";
 
-    /* 点击立即支付时生成订单相关 */
+    /* *
+    点击立即支付时生成订单相关
+    */
     private void addOrder() {
+
+
+        for (GoodsListModel mdoel : goodsData) {
+            itemId += mdoel.itemId + ",";
+            buyNum += mdoel.buyNum + ",";
+            itemPrice += mdoel.itemPrice + ",";
+            if (Tools.IsEmpty(mdoel.paramData)) {
+                mdoel.paramData = "0";
+            }
+
+            paramData += mdoel.paramData + ",";
+
+        }
+
+        itemId = itemId.substring(0, itemId.length() - 1);
+        buyNum = buyNum.substring(0, buyNum.length() - 1);
+        itemPrice = itemPrice.substring(0, itemPrice.length() - 1);
+        paramData= paramData.substring(0, paramData.length() - 1);
+
         String note = buyerSay.getText().toString();
         token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
+
         HttpParams params = new HttpParams();
+        params.put("token", token);
+        params.put("shopsId", goodsData.get(0).shopId);//店铺id
+
         params.put("itemId", itemId);//商品id
-        params.put("buyNum", "1");//购买数量
+        params.put("buyNum", buyNum);//购买数量
         params.put("itemPrice", itemPrice);//商品单价
         params.put("paramData", paramData);//商品参数
-        params.put("periodTime", "12");//商品期数
+        params.put("periodTime", goodsData.get(0).periodTime);//商品期数
 
-        params.put("token", token);
-        params.put("shopsId", shopId);//店铺id
+
         params.put("price", allPrace);
         params.put("freight", freight);
         params.put("pickupWay", WAY);
@@ -334,12 +417,24 @@ public class SureOrderActivity extends BaseActivity {
             String phone = data.getStringExtra("phone");
             String address = data.getStringExtra("address");
 
-            getGoods_pople.setText("收货人: " + name);
+            getGoods_pople.setText(name);
             getGoods_phone.setText(phone);
-            getGoods_address.setText("收货地址: " + address);
+            getGoods_address.setText(address);
 
 //            addAddressIv.setVisibility(View.GONE);
 //            shouhuoAddress.setVisibility(View.VISIBLE);
         }
     }
+
+
+
+
+    @Override
+    public void onDestroy() {
+        // TODO Auto-generated method stub
+        super.onDestroy();
+        SureCarValue.getInstance().removeAllData();
+        SureCarValue.getInstance().reSet();
+    }
+
 }

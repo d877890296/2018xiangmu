@@ -14,7 +14,7 @@
         android:gravity="center|left"
         android:padding="10dp"
         android:paddingLeft="15dp"
-
+        android:visibility="gone"
         android:text=""
         android:textColor="#000000"
         android:textSize="16sp" />
@@ -22,7 +22,7 @@
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-
+android:visibility="gone"
         android:background="#ededed" />
 
     <LinearLayout
@@ -45,7 +45,7 @@
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:layout_centerInParent="true"
-                android:clickable="true"
+
                 android:src="@mipmap/error_icon"
                 app:civ_border_color="@color/color_grey"
                 android:layout_marginTop="5dp"
