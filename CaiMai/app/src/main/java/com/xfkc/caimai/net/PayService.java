@@ -92,12 +92,12 @@ public interface PayService {
 
     //首次设置支付密码
     @GET("/api/memUser/addPayPwd")
-    Observable<EmptyBean> setPayPwd(@Query("payPwd") String payPwd);
+    Observable<EmptyBean> setPayPwd(@Query("payPwd") String payPwd,@Query("token") String token);
 
     //修改支付密码
     @GET("/api/memUser/updatePayPwd")
     Observable<EmptyBean> updatePayPwd(@Query("phone") String phone, @Query("verCode") String verCode,
-                                       @Query("payPwd") String payPwd);
+                                       @Query("payPwd") String payPwd,@Query("token") String token);
 
     //获取用户信息
     @GET("/api/memUser/findUserDetByPhone")
@@ -132,4 +132,9 @@ public interface PayService {
     //更新购物车数量
     @GET("/api/shopcart/getShopCartItemNum")
     Observable<GoodsCarNumBean> getShopCartItemNum(@Query("token") String token);
+
+    //查询我加入的店铺
+    @GET("/api/recruite/myjoinshop")
+    Observable<EmptyBean> myjoinshop(@Query("token") String token);
+
 }

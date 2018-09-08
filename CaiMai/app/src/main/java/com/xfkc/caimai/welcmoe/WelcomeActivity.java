@@ -9,6 +9,8 @@ import android.view.animation.AnimationSet;
 import android.widget.ImageView;
 
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
+import com.hyf.tdlibrary.utils.Tools;
+import com.xfkc.caimai.MainActivity;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.loading.LoadingActivity;
@@ -22,7 +24,7 @@ public class WelcomeActivity extends AppCompatActivity {
     ImageView welcomeIv;
 
     private int guideId;
-
+    private String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +32,7 @@ public class WelcomeActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 //        StatusBarUtil.setTransparent(this);
         guideId = SharedPrefUtil.get(WelcomeActivity.this, SharedPref.GUIDE_GLAG, 1);
-
+        token =SharedPrefUtil.get(this,SharedPref.TOKEN);
         //设置动画渐变
         setAnimation();
 
@@ -89,7 +91,11 @@ public class WelcomeActivity extends AppCompatActivity {
             if (guideId == 1) {
                 goGuide();
             } else {
-                startActivity(new Intent(WelcomeActivity.this, LoadingActivity.class));
+                if (Tools.IsEmpty(token)){
+                    startActivity(new Intent(WelcomeActivity.this, LoadingActivity.class));
+                }else {
+                    startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+                }
             }
             finish();
         }

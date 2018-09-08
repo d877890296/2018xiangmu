@@ -147,7 +147,9 @@
             android:name=".camera.MyPhotoPickerActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/PhotoPickerTheme" />
-        <activity android:name=".home.mineprofit.MineProfitActivity"></activity>
+        <activity android:name=".home.mineprofit.MineProfitActivity" />
+        <activity android:name=".home.comment.ToCommentActivity"></activity>
+        <activity android:name=".home.myjoinshop.MyJoinShopActivity"/>
     </application>
 
 </manifest>

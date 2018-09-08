@@ -67,27 +67,26 @@ public class GoodsStyleGridContentAdapter extends LzBaseAdapter {
         }
 
         GoodsStyleModel model = data.get(position);
-//        String ch2 = model.getStyleName();
+        String ch2 = model.getStyleName();
 //        if (position > 2) {
 //            String ch1 = data.get(position - 1).getStyleName();
 //            if (ch1.equals(ch2)) {
 //                viewHolder.fristWord.setVisibility(View.GONE);
 //            } else {
-//                viewHolder.fristWord.setVisibility(View.GONE);
+//                viewHolder.fristWord.setVisibility(View.VISIBLE);
 //                viewHolder.fristWord.setText(ch2);
 //            }
 //        } else {
-//            viewHolder.fristWord.setVisibility(View.GONE);
+//            viewHolder.fristWord.setVisibility(View.VISIBLE);
 //            if (position == 0) {
 //                viewHolder.fristWord.setText(ch2);
 //            } else {
 //                viewHolder.fristWord.setText("");
 //            }
-////            viewHolder.fristWord.setText(ch2);
 //        }
-//
-        Glide.with(context).load(model.headImg).error(R.mipmap.error_icon).into(viewHolder.imageView);
+        viewHolder.fristWord.setVisibility(View.GONE);
         viewHolder.testTitle.setText(model.getGoodsName());
+        Glide.with(context).load(model.headImg).error(R.mipmap.error_icon).into(viewHolder.imageView);
         return convertView;
     }
 

@@ -38,8 +38,8 @@ public class VipCardListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public void setType(int type){
-        this.type =type;
+    public void setType(int type) {
+        this.type = type;
         notifyDataSetChanged();
     }
 
@@ -73,11 +73,22 @@ public class VipCardListAdapter extends BaseAdapter {
 
         VipCardBean.DataBean.ListBean listBean = list.get(position);
 
-        if (listBean.carTypeId == type){
-            viewHodler.days.setText("有效期: 365天" );
+        if (listBean.carTypeId == type) {
+            viewHodler.days.setText("有效期: 365天");
             viewHodler.title.setText(listBean.cardName);
             viewHodler.price.setText("￥" + listBean.cardPrice);
-            viewHodler.imageBg.setBackgroundResource(R.mipmap.vip02);
+            switch (position % 3) {
+                case 0:
+                    viewHodler.imageBg.setBackgroundResource(R.mipmap.vip01);
+                    break;
+                case 1:
+                    viewHodler.imageBg.setBackgroundResource(R.mipmap.vip03);
+                    break;
+                case 2:
+                    viewHodler.imageBg.setBackgroundResource(R.mipmap.vip02);
+                    break;
+            }
+
         }
 
 

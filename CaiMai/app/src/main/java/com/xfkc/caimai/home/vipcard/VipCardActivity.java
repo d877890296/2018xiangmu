@@ -87,10 +87,11 @@ public class VipCardActivity extends BaseActivity {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                VipCardBean.DataBean.ListBean listBean = list.get(position-1);
+                VipCardBean.DataBean.ListBean listBean = list.get(position - 1);
                 extraMap.put("price", listBean.cardPrice);
                 extraMap.put("name", listBean.cardName);
                 extraMap.put("carid", listBean.id);
+                extraMap.put("cartype", position % 3);
                 skip_classView(VipContentActivity.class, extraMap, false);
             }
         });

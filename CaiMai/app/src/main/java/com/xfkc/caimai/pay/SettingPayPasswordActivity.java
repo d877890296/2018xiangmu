@@ -8,10 +8,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.ToastUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 import com.xfkc.caimai.bean.EmptyBean;
+import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.customview.StateButton;
 import com.xfkc.caimai.net.PayFactory;
 import com.xfkc.caimai.net.RxHelper;
@@ -56,7 +58,7 @@ public class SettingPayPasswordActivity extends BaseActivity {
     protected void initViews(Bundle savedInstanceState) {
         toolbarLeftImg.setImageResource(R.mipmap.back_white);
         toolbarTitle.setText("设置支付密码");
-
+        token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
     }
 
     @Override
@@ -85,7 +87,7 @@ public class SettingPayPasswordActivity extends BaseActivity {
             ToastUtil.showToast("密码不能为空!");
             return;
         }
-        if (password.length() != 6 ){
+        if (password.length() != 6) {
             ToastUtil.showToast("密码长度不对!");
             return;
         }
@@ -106,7 +108,7 @@ public class SettingPayPasswordActivity extends BaseActivity {
     private void request() {
 
         PayFactory.getPayService()
-                .setPayPwd(password)
+                .setPayPwd(password,token)
                 .compose(RxHelper.<EmptyBean>io_main())
                 .subscribe(new ProgressSubscriber<EmptyBean>(this) {
                     @Override

@@ -117,7 +117,7 @@ public class ForgetPassWordActivity extends BaseActivity {
 
         @Override
         public void onFinish() {
-            getYanzhengBtn.setBackgroundColor(Color.parseColor("#d51628"));
+            getYanzhengBtn.setBackgroundColor(Color.parseColor("#ff704d"));
             getYanzhengBtn.setClickable(true);
             getYanzhengBtn.setEnabled(true);
             getYanzhengBtn.setText("获取验证码");
