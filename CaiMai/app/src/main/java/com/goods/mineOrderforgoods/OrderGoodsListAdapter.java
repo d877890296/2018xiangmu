@@ -58,10 +58,8 @@ public class OrderGoodsListAdapter extends RecyclerView.Adapter<OrderGoodsListAd
 	public void onBindViewHolder(final ViewHolder holder, final int position) {
 		// TODO Auto-generated method stub
 		final int curtentIndex = getRealPosition(holder);
-
 		if (baseType == 2) {
 			holder.lookLogistics_textView.setVisibility(View.GONE);
-
 			holder.suregetGoods_textView.setText("提醒发货");
 		} else {
 			holder.lookLogistics_textView.setVisibility(View.VISIBLE);

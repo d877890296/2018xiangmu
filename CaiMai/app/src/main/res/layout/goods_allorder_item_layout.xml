@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
-        android:visibility="gone"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -40,69 +40,23 @@
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/goods_image"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_margin="2dp"
-            android:scaleType="fitXY"
-            android:src="@mipmap/error_icon" />
-
-        <RelativeLayout
+        <com.dev.customview.MyListView
+            android:id="@+id/order_goodslist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/goods_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="我们的宝贝都是好的"
-                android:textColor="#000000"
-                android:layout_marginTop="10dp"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/goods_des"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/goods_name"
-                android:layout_marginTop="5dp"
-                android:text="为了赶在夏天滋润你"
-                android:textColor="#5f5f5f"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/goods_prace"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/goods_des"
-                android:layout_marginTop="10dp"
-                android:text="49.00 康币"
-                android:textColor="@color/ff704d"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/goods_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:text="x1"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
+            android:cacheColorHint="#00000000"
+            android:listSelector="#00000000" />
 
 
-        </RelativeLayout>
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="0"
         android:padding="10dp">
 
         <TextView
@@ -127,16 +81,23 @@
                 android:layout_height="wrap_content"
                 android:text="共计1件商品"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="15sp" />
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="合计:"
+                android:textColor="#000000"
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/goods_allprice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:text="49.00"
                 android:textColor="@color/ff704d"
-                android:textSize="18sp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/goods_unit"
@@ -144,6 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="康币"
+                android:visibility="gone"
                 android:textColor="@color/ff704d"
                 android:textSize="14sp" />
 
@@ -171,16 +133,52 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             android:orientation="horizontal">
+            <TextView
+                android:id="@+id/cannelOrder_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/cannel_pay_shape"
+                android:clickable="true"
+                android:padding="5dp"
+                android:text="取消订单"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/tuikuan_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/cannel_pay_shape"
+                android:clickable="true"
+                android:padding="5dp"
+                android:text="申请退款"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+
+
+            <TextView
+                android:id="@+id/pj_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/orange_pay_shape"
+                android:clickable="true"
+                android:padding="5dp"
+                android:layout_marginLeft="10dp"
+                android:text="去评价"
+                android:textColor="#FFFFFF"
+                android:visibility="visible"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/lookLogistics_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/black_shape"
+                android:background="@drawable/orange_pay_shape"
                 android:clickable="true"
                 android:padding="5dp"
+                android:layout_marginLeft="10dp"
                 android:text="查看物流"
-                android:textColor="#000000"
+                android:textColor="#FFFFFF"
+                android:visibility="visible"
                 android:textSize="12sp" />
 
             <TextView
@@ -188,12 +186,38 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:background="@drawable/black_shape"
+                android:background="@drawable/orange_pay_shape"
                 android:clickable="true"
                 android:padding="5dp"
                 android:text="确认收货"
-                android:textColor="#000000"
+                android:textColor="#FFFFFF"
+                android:visibility="visible"
                 android:textSize="12sp" />
+            <TextView
+                android:id="@+id/pay_btGoods_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/orange_pay_shape"
+                android:clickable="true"
+                android:padding="5dp"
+
+                android:text="立即支付"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/lookd_btGoods_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/orange_pay_shape"
+                android:clickable="true"
+                android:padding="5dp"
+
+                android:text="查看详情"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+
         </LinearLayout>
     </FrameLayout>
 
