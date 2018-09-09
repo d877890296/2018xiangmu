@@ -2,8 +2,6 @@ package com.goods.order;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,17 +10,12 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dev.customview.MyListView;
 import com.goods.city.GoodsListModel;
 import com.goods.city.GoodsValue;
 import com.goods.details.GoodsDetailsActivity;
-import com.goods.details.ShoppingCarModel;
 import com.goods.mineinfo.DeleteView;
-import com.goods.netrequst.Logger;
-import com.goods.netrequst.NetRequstAjaxCallBack;
-import com.goods.netrequst.PostRequst;
 import com.goods.shoppingcar.SureCarValue;
 import com.google.gson.Gson;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
@@ -35,7 +28,6 @@ import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 import com.xfkc.caimai.bean.AddOrderBean;
 import com.xfkc.caimai.bean.AddressBean;
-import com.xfkc.caimai.bean.GoodsKey;
 import com.xfkc.caimai.config.Constant;
 import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.dialog.ShowPassWordDialog;
@@ -45,18 +37,12 @@ import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
 import com.xfkc.caimai.order.ChooseAddressActivity;
 import com.xfkc.caimai.pay.PaySuccessActivity;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import okhttp3.Call;
 import okhttp3.Response;
-
-import static com.goods.netrequst.PostRequst.UPSUCCESS;
 
 /**
  * Created by 10835 on 2018/9/1.
@@ -96,15 +82,15 @@ public class SureOrderActivity extends BaseActivity {
     private List<GoodsListModel> goodsData;
     private DeleteView deleteView;
 
-    private String addressId = "1";
+    private String addressId = "1",province="北京";
 
     private ArrayList<TextView> list_way = new ArrayList<>();
     private ArrayList<TextView> list_payway = new ArrayList<>();
 
     private int WAY = 1, PAY_WAY = 1;
-    private int freight = 0, sourceType = 2;
+    private int sourceType = 2;
     private String shopId = "12", itemId = "1", itemPrice = "1", paramData = "1";
-
+    private double freight = 0;
     private ShowPassWordDialog showPassWordDialog;
 
 
@@ -119,7 +105,7 @@ public class SureOrderActivity extends BaseActivity {
         goodsData = new ArrayList<GoodsListModel>();
         allPrace = getIntent().getStringExtra("allPrace");
         goodsData = SureCarValue.getInstance().getAddressData();
-
+        token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
 
         list_way.add(wayYouji);
         list_way.add(wayZiqu);
@@ -199,6 +185,7 @@ public class SureOrderActivity extends BaseActivity {
         uporder_textView.setOnClickListener(onClickListener);
         showMbProgress("数据求情中...");
         requstAddress();
+        requstFreight();
         wayYouji.setOnClickListener(onClickListener);
         wayZiqu.setOnClickListener(onClickListener);
         peisongway.setOnClickListener(onClickListener);
@@ -206,6 +193,55 @@ public class SureOrderActivity extends BaseActivity {
         daijinjuan.setOnClickListener(onClickListener);
         paywayLayout.setOnClickListener(onClickListener);
         payway.setOnClickListener(onClickListener);
+    }
+
+    /*获取邮费信息*/
+    private void requstFreight() {
+        for (GoodsListModel mdoel : goodsData) {
+            itemId += mdoel.itemId + ",";
+            buyNum += mdoel.buyNum + ",";
+            itemPrice += mdoel.itemPrice + ",";
+            if (Tools.IsEmpty(mdoel.paramData)) {
+                mdoel.paramData = "0";
+            }
+            paramData += mdoel.paramData + ",";
+
+        }
+
+        itemId = itemId.substring(0, itemId.length() - 1);
+        buyNum = buyNum.substring(0, buyNum.length() - 1);
+        itemPrice = itemPrice.substring(0, itemPrice.length() - 1);
+        paramData = paramData.substring(0, paramData.length() - 1);
+
+        HttpParams params = new HttpParams();
+        params.put("token", token);
+        params.put("shopId", goodsData.get(0).shopId);//店铺id
+
+        params.put("itemId", itemId);//商品id
+        params.put("buyNum", buyNum);//购买数量
+        params.put("itemPrice", itemPrice);//商品单价
+        params.put("paramData", paramData);//商品参数
+        params.put("receiveProvince", province);
+
+        OkGo.post(Constant.BASE_URL + "/api/order/getOrderFreight")
+                .tag(this)//url请求地址
+                .params(params)
+                .isMultipart(true)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        Log.e("--3--", s);
+//                        Gson gson = new Gson();
+//                        AddOrderBean addOrderBean = gson.fromJson(s, AddOrderBean.class);
+//                        if (addOrderBean.retCode == 1) {
+//                            message = addOrderBean.message;
+//                            showPassWordDialog.showTimeDialog02(SureOrderActivity.this, 28.9, 1000);
+//                        } else {
+//                            ToastUtil.showToast(addOrderBean.message);
+//                        }
+                        dissMbProgress();
+                    }
+                });
     }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -306,10 +342,10 @@ public class SureOrderActivity extends BaseActivity {
         itemId = itemId.substring(0, itemId.length() - 1);
         buyNum = buyNum.substring(0, buyNum.length() - 1);
         itemPrice = itemPrice.substring(0, itemPrice.length() - 1);
-        paramData= paramData.substring(0, paramData.length() - 1);
+        paramData = paramData.substring(0, paramData.length() - 1);
 
         String note = buyerSay.getText().toString();
-        token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
+
 
         HttpParams params = new HttpParams();
         params.put("token", token);
@@ -416,7 +452,7 @@ public class SureOrderActivity extends BaseActivity {
             String name = data.getStringExtra("name");
             String phone = data.getStringExtra("phone");
             String address = data.getStringExtra("address");
-
+            province =  data.getStringExtra("province");
             getGoods_pople.setText(name);
             getGoods_phone.setText(phone);
             getGoods_address.setText(address);
@@ -425,8 +461,6 @@ public class SureOrderActivity extends BaseActivity {
 //            shouhuoAddress.setVisibility(View.VISIBLE);
         }
     }
-
-
 
 
     @Override

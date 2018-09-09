@@ -1,6 +1,5 @@
 package com.goods.netrequst;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -8,7 +7,6 @@ import android.content.Context;
 
 import com.dev.customview.MyToast;
 import com.goods.city.GoodsListModel;
-import com.goods.mineOrderforgoods.OrderModel;
 import com.goods.sortlsitview.AjaxShopModel;
 import com.goods.sortlsitview.CharacterParser;
 import com.goods.sortlsitview.ShopsList;

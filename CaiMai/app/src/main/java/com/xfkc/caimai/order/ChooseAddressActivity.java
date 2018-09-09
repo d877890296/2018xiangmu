@@ -78,6 +78,7 @@ public class ChooseAddressActivity extends RxActivity {
                 extraMap.put("phone",dataBean.phone);
                 extraMap.put("address",dataBean.detailAdress);
                 extraMap.put("addressId",dataBean.id);
+                extraMap.put("province",dataBean.province);
                 backHistory(1005,true,true,extraMap);
             }
         });

@@ -1,7 +1,6 @@
 package com.goods.sortlsitview;
 
 import com.goods.city.GoodsListModel;
-import com.goods.mineOrderforgoods.OrderModel;
 import com.json.NetJsonFiled;
 
 import java.util.ArrayList;

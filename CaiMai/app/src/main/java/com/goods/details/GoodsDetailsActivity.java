@@ -37,6 +37,7 @@ import com.goods.netrequst.PostRequst;
 import com.goods.order.SureOrderActivity;
 import com.goods.shoppingcar.ShoppingCarActivity;
 import com.goods.shoppingcar.SureCarValue;
+import com.google.gson.Gson;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.ToastUtil;
 import com.hyf.tdlibrary.utils.Tools;
@@ -44,6 +45,7 @@ import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 import com.xfkc.caimai.bean.GoodsCarNumBean;
 import com.xfkc.caimai.bean.GoodsKey;
+import com.xfkc.caimai.bean.ParamBean;
 import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.net.PayFactory;
 import com.xfkc.caimai.net.RxHelper;
@@ -171,8 +173,8 @@ public class GoodsDetailsActivity extends BaseActivity {
             goodsDetailsHeader = new GoodsDetailsHeader(GoodsDetailsActivity.this);
         }
         goodsDetailsHeader.setView(adViewPaper, point_textView);
-        if (!Tools.IsEmpty( goodsListModel.pic)){
-            String[] imges= goodsListModel.pic.split(",");
+        if (!Tools.IsEmpty(goodsListModel.pic)) {
+            String[] imges = goodsListModel.pic.split(",");
             goodsDetailsHeader.setImgArray(imges);
         }
         goodsListView.addHeaderView(topHeadView);
@@ -361,11 +363,9 @@ public class GoodsDetailsActivity extends BaseActivity {
             goodsKey.token = userToken;
 
 //            GoodsValue.getInstance().getGoodsListModel().buyNum = 1;
-//            GoodsValue.getInstance().getGoodsListModel().paramData="0";
-            postRequst.addProduct(handler, goodsKey,number);
+            GoodsValue.getInstance().getGoodsListModel().paramData = param;
+            postRequst.addProduct(handler, goodsKey, number);
         }
-
-
 
 
     }
@@ -388,6 +388,8 @@ public class GoodsDetailsActivity extends BaseActivity {
     private ArrayList<RadioButton> fenqi_radios = new ArrayList<>();
     private int fenqi_type = 0;
     private TextView botoom_typeshopNumber;
+    private String param = "0";
+
     /*展示商品规格*/
     private void showGoodsType() {
         final int inventory;
@@ -419,7 +421,7 @@ public class GoodsDetailsActivity extends BaseActivity {
         fenqi_radios.add(fenqi_9);
         fenqi_radios.add(fenqi_12);
         setAllPrice(number, show_goodsnum_tv);
-        botoom_typeshopNumber.setText(goodsCarNum+"");
+        botoom_typeshopNumber.setText(goodsCarNum + "");
         String picture = "";
         if (!Tools.IsEmpty(goodsListModel.pic)) {
             picture = goodsListModel.pic;
@@ -433,11 +435,19 @@ public class GoodsDetailsActivity extends BaseActivity {
             inventory = Integer.parseInt(goodsListModel.inventory + "");
         }
         shop_kc.setText("库存 " + inventory + " " + goodsListModel.unit);
-        Log.e("----allpara---", goodsListModel.allParamData+"");
+        Log.e("----allpara---", goodsListModel.allParamData + "");
         if (goodsListModel.itemType == 0) {
             type_price.setText(goodsListModel.paramData);
         } else {
-
+            if (!Tools.IsEmpty(goodsListModel.allParamData)) {
+                Gson gson = new Gson();
+                ParamBean paramBean = gson.fromJson(goodsListModel.allParamData.substring(1, goodsListModel.allParamData.length() - 1), ParamBean.class);
+                type_name01.setText(paramBean.group);
+                if (paramBean.params.size() != 0) {
+                    param = paramBean.params.get(0);
+                    type_price.setText(paramBean.params.get(0));
+                }
+            }
         }
         if (goodsListModel.mailType == 0) {
             setFenQiShow(-1);
@@ -490,7 +500,8 @@ public class GoodsDetailsActivity extends BaseActivity {
                 extraMap.put("allPrace", allPrice + "");
                 extraMap.put("sourceType", 1);
                 SureCarValue.getInstance().init();
-                goodsListModel.buyNum=1;   
+                goodsListModel.buyNum = 1;
+                goodsListModel.paramData = param;
                 SureCarValue.getInstance().setAddressData(goodsListModel);
                 skip_classView(SureOrderActivity.class, extraMap, false);
                 dialog.dismiss();
@@ -650,8 +661,9 @@ public class GoodsDetailsActivity extends BaseActivity {
     };
 
     private int goodsCarNum = 0;
+
     /*刷新购物车数量*/
-    private void updateCarNum(){
+    private void updateCarNum() {
         PayFactory.getPayService().getShopCartItemNum(userToken)
                 .compose(RxHelper.<GoodsCarNumBean>io_main())
                 .subscribe(new Subscriber<GoodsCarNumBean>() {
@@ -668,8 +680,8 @@ public class GoodsDetailsActivity extends BaseActivity {
                     @Override
                     public void onNext(GoodsCarNumBean goodsCarNumBean) {
                         goodsCarNum = goodsCarNumBean.data;
-                        botoom_shopNumber.setText(goodsCarNum+"");
-                        botoom_typeshopNumber.setText(goodsCarNum+"");
+                        botoom_shopNumber.setText(goodsCarNum + "");
+                        botoom_typeshopNumber.setText(goodsCarNum + "");
                     }
                 });
     }
