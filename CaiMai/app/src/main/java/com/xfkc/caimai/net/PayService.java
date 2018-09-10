@@ -5,6 +5,7 @@ import com.xfkc.caimai.bean.AddressBean;
 import com.xfkc.caimai.bean.AllShopsModel;
 import com.xfkc.caimai.bean.BannerBean;
 import com.xfkc.caimai.bean.EmptyBean;
+import com.xfkc.caimai.bean.FeelingBean;
 import com.xfkc.caimai.bean.GoodsCarNumBean;
 import com.xfkc.caimai.bean.GoodsCityModel;
 import com.xfkc.caimai.bean.GoodsKey;
@@ -137,4 +138,8 @@ public interface PayService {
     @GET("/api/recruite/myjoinshop")
     Observable<EmptyBean> myjoinshop(@Query("token") String token);
 
+
+    //查询我的情怀链
+    @GET("/api/memUser/findChain")
+    Observable<FeelingBean> findChain(@Query("token") String token, @Query("pageNum") int pageNum, @Query("pageSize") int pageSize);
 }

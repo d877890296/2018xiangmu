@@ -5,10 +5,18 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.ToastUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseFragment;
+import com.xfkc.caimai.bean.FeelingBean;
+import com.xfkc.caimai.bean.UserInfoBean;
+import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.home.adapter.FeelingAdapter;
+import com.xfkc.caimai.net.PayFactory;
+import com.xfkc.caimai.net.RxHelper;
+import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
 
 import java.util.ArrayList;
 
@@ -35,7 +43,9 @@ public class FeelingFragment extends BaseFragment {
     @Bind(R.id.feelint_list)
     ListView feelingList;
 
-    private ArrayList<String> listData = new ArrayList<>();
+    private int pageNum=0,pageSize=20;
+
+    private ArrayList<FeelingBean.DataBean.NextMemUserPageBean.ListBean> listData = new ArrayList<>();
     private FeelingAdapter feelingAdapter;
     @Override
     protected int getLayoutResource() {
@@ -46,13 +56,45 @@ public class FeelingFragment extends BaseFragment {
     protected void initData() {
 
         listData.clear();
-        for (int i = 0; i < 8; i++) {
-            listData.add("" + i);
-        }
+//        for (int i = 0; i < 8; i++) {
+//            listData.add("" + i);
+//        }
 
         feelingAdapter = new FeelingAdapter(mContext);
-        feelingAdapter.setData(listData);
-        feelingList.setAdapter(feelingAdapter);
+        String token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
+        getUserInfo(token);
+        PayFactory.getPayService().findChain(token,pageNum,pageSize)
+        .compose(RxHelper.<FeelingBean>io_main())
+        .subscribe(new ProgressSubscriber<FeelingBean>(mContext) {
+            @Override
+            public void onNext(FeelingBean feelingBean) {
+                peopleNumber.setText("情怀链人数: "+feelingBean.data.nextNum);
+                getMoney.setText("情怀链收益: "+feelingBean.data.nextMoney);
+
+               if (feelingBean.data.nextMemUserPage.list!=null&&feelingBean.data.nextMemUserPage.list.size()!=0){
+                   listData.addAll(feelingBean.data.nextMemUserPage.list);
+                   feelingAdapter.setData(listData);
+                   feelingList.setAdapter(feelingAdapter);
+               }
+            }
+        });
+
+
+    }
+
+    /*获取用户信息*/
+    private void getUserInfo(String token) {
+        PayFactory.getPayService()
+                .findUserDetByPhone(token)
+                .compose(RxHelper.<UserInfoBean>io_main())
+                .subscribe(new ProgressSubscriber<UserInfoBean>(mContext) {
+                    @Override
+                    public void onNext(UserInfoBean userInfoBean) {
+
+                        feelingName.setText(userInfoBean.data.nicName);
+                        Glide.with(mContext).load(userInfoBean.data.userImg).error(R.mipmap.heart_icon).into(accountIv);
+                    }
+                });
 
     }
 

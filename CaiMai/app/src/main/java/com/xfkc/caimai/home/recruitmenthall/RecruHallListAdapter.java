@@ -69,9 +69,15 @@ public class RecruHallListAdapter extends BaseAdapter {
         RecruiHallBean.DataBean.ListBean listBean = list.get(position);
 
         viewHodler.dianpuTitle.setText(listBean.shopName);
-        viewHodler.aType.setText("A类事业合伙人：3(人)/20");
-        viewHodler.bType.setText("B类事业合伙人：3(人)/20");
-        viewHodler.cType.setText("C类事业合伙人：3(人)/20");
+        for (int i=0;i<listBean.inrecruiList.size();i++){
+            if (i==0){
+                viewHodler.aType.setText(listBean.inrecruiList.get(i).partnerType+"类事业合伙人:"+listBean.inrecruiList.get(i).joinPersonNumber+"(人)/"+listBean.inrecruiList.get(i).personNumber);
+            }else if (i==1){
+                viewHodler.bType.setText(listBean.inrecruiList.get(i).partnerType+"类事业合伙人:"+listBean.inrecruiList.get(i).joinPersonNumber+"(人)/"+listBean.inrecruiList.get(i).personNumber);
+            }else if (i==2){
+                viewHodler.cType.setText(listBean.inrecruiList.get(i).partnerType+"类事业合伙人:"+listBean.inrecruiList.get(i).joinPersonNumber+"(人)/"+listBean.inrecruiList.get(i).personNumber);
+            }
+        }
         viewHodler.payBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

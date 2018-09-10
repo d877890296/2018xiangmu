@@ -6,9 +6,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.xfkc.caimai.R;
+import com.xfkc.caimai.bean.FeelingBean;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,13 +30,13 @@ public class FeelingAdapter extends BaseAdapter {
     private final int TYPE2 = 1;//其余模块
     private Context context;
 
-    private List<String> moduleList;
+    private ArrayList<FeelingBean.DataBean.NextMemUserPageBean.ListBean> moduleList;
 
     public FeelingAdapter(Context context) {
         this.context = context;
     }
 
-    public void setData(List<String> moduleList) {
+    public void setData(ArrayList<FeelingBean.DataBean.NextMemUserPageBean.ListBean> moduleList) {
         this.moduleList = moduleList;
     }
 
@@ -53,7 +55,7 @@ public class FeelingAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return moduleList.size() + 1;
+        return moduleList.size();
     }
 
     @Override
@@ -81,17 +83,21 @@ public class FeelingAdapter extends BaseAdapter {
                     viewHolder = (ViewHolder) convertView.getTag();
         }
 
+        FeelingBean.DataBean.NextMemUserPageBean.ListBean listBean = moduleList.get(position);
         switch (type) {
             case TYPE1://
                 viewHolder.kbNumber.setVisibility(View.GONE);
                 viewHolder.feelingPeopleNumber.setVisibility(View.GONE);
+                Glide.with(context).load(listBean.userImg).error(R.mipmap.heart_icon).into(viewHolder.feelingUserIv);
+                viewHolder.feelingUserName.setText(listBean.kcId);
+                viewHolder.feelingTime.setText(listBean.createTime+"");
                 break;
             case TYPE2:
-                position = position - 1;
-                viewHolder.feelingUserName.setText("昵称"+moduleList.get(position));
-                viewHolder.feelingTime.setText("2018-08-0" + moduleList.get(position));
-                viewHolder.feelingPeopleNumber.setText("情怀链"+moduleList.get(position)+"人");
-                viewHolder.kbNumber.setText("贡献康币"+moduleList.get(position));
+                Glide.with(context).load(listBean.userImg).error(R.mipmap.heart_icon).into(viewHolder.feelingUserIv);
+                viewHolder.feelingUserName.setText(listBean.kcId);
+                viewHolder.feelingTime.setText(listBean.createTime+"");
+                viewHolder.feelingPeopleNumber.setText("情怀链"+listBean.nextNum+"人");
+                viewHolder.kbNumber.setText("贡献康币"+listBean.nextMoney);
                 break;
         }
 

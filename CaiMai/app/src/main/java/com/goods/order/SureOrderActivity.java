@@ -28,6 +28,7 @@ import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 import com.xfkc.caimai.bean.AddOrderBean;
 import com.xfkc.caimai.bean.AddressBean;
+import com.xfkc.caimai.bean.FreightBean;
 import com.xfkc.caimai.config.Constant;
 import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.dialog.ShowPassWordDialog;
@@ -72,25 +73,25 @@ public class SureOrderActivity extends BaseActivity {
     RelativeLayout payway;
     private String allPrace;
     private TextView allPrace_textView;
-    private TextView getGoods_pople, getGoods_phone, getGoods_address;
+    private TextView getGoods_pople, getGoods_phone, getGoods_address,yunfei;
 
     private LinearLayout fristliner, orderdetails_liner, choose_address;
 
-    private TextView uporder_textView;
+    private TextView uporder_textView, shopAllprice,reallyPay;
     private MyListView goodsMyListView;
     private SureGoodsAdapter sureGoodsAdapter;
     private List<GoodsListModel> goodsData;
     private DeleteView deleteView;
 
-    private String addressId = "1",province="北京";
+    private String addressId = "1", province = "北京";
 
     private ArrayList<TextView> list_way = new ArrayList<>();
     private ArrayList<TextView> list_payway = new ArrayList<>();
 
     private int WAY = 1, PAY_WAY = 1;
     private int sourceType = 2;
-    private String shopId = "12", itemId = "1", itemPrice = "1", paramData = "1";
-    private double freight = 0;
+    private String shopId = "", itemId = "", itemPrice = "", paramData = "";
+    private double freight = 0,reall_price = 0;
     private ShowPassWordDialog showPassWordDialog;
 
 
@@ -163,8 +164,10 @@ public class SureOrderActivity extends BaseActivity {
         getGoods_address = (TextView) findViewById(R.id.getGoods_address);
 
         nodataview_textview = (TextView) findViewById(R.id.nodataview_textview);
-
+        yunfei = (TextView) findViewById(R.id.yunfei);
         choose_address = (LinearLayout) findViewById(R.id.choose_address);
+        shopAllprice = (TextView) findViewById(R.id.shop_allprice);
+        reallyPay = (TextView) findViewById(R.id.really_pay);
 
         // fristliner = (LinearLayout) findViewById(R.id.fristliner);
         // orderdetails_liner = (LinearLayout)
@@ -180,7 +183,8 @@ public class SureOrderActivity extends BaseActivity {
         choose_address.setOnClickListener(onClickListener);
         // fristliner.setOnClickListener(onClickListener);
         // orderdetails_liner.setOnClickListener(onClickListener);
-        allPrace_textView.setText("￥" + allPrace);
+
+        shopAllprice.setText("￥"+allPrace);
         uporder_textView = (TextView) findViewById(R.id.uporder_textView);
         uporder_textView.setOnClickListener(onClickListener);
         showMbProgress("数据求情中...");
@@ -219,7 +223,7 @@ public class SureOrderActivity extends BaseActivity {
 
         params.put("itemId", itemId);//商品id
         params.put("buyNum", buyNum);//购买数量
-        params.put("itemPrice", itemPrice);//商品单价
+//        params.put("itemPrice", itemPrice);//商品单价
         params.put("paramData", paramData);//商品参数
         params.put("receiveProvince", province);
 
@@ -230,15 +234,18 @@ public class SureOrderActivity extends BaseActivity {
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
-                        Log.e("--3--", s);
-//                        Gson gson = new Gson();
-//                        AddOrderBean addOrderBean = gson.fromJson(s, AddOrderBean.class);
-//                        if (addOrderBean.retCode == 1) {
-//                            message = addOrderBean.message;
-//                            showPassWordDialog.showTimeDialog02(SureOrderActivity.this, 28.9, 1000);
-//                        } else {
-//                            ToastUtil.showToast(addOrderBean.message);
-//                        }
+                        Gson gson = new Gson();
+                        FreightBean freightBean = gson.fromJson(s, FreightBean.class);
+                        if (freightBean.retCode == 1) {
+                            freight = freightBean.data;
+                            yunfei.setText("￥"+freight);
+                            reall_price = Double.parseDouble(allPrace)+freight;
+                            reall_price = (double) (Math.round(reall_price * 10000)) / 10000;
+                            allPrace_textView.setText("￥" + reall_price );
+                            reallyPay.setText("￥" + reall_price);
+                        } else {
+                            ToastUtil.showToast(freightBean.message);
+                        }
                         dissMbProgress();
                     }
                 });
@@ -327,22 +334,22 @@ public class SureOrderActivity extends BaseActivity {
     private void addOrder() {
 
 
-        for (GoodsListModel mdoel : goodsData) {
-            itemId += mdoel.itemId + ",";
-            buyNum += mdoel.buyNum + ",";
-            itemPrice += mdoel.itemPrice + ",";
-            if (Tools.IsEmpty(mdoel.paramData)) {
-                mdoel.paramData = "0";
-            }
-
-            paramData += mdoel.paramData + ",";
-
-        }
-
-        itemId = itemId.substring(0, itemId.length() - 1);
-        buyNum = buyNum.substring(0, buyNum.length() - 1);
-        itemPrice = itemPrice.substring(0, itemPrice.length() - 1);
-        paramData = paramData.substring(0, paramData.length() - 1);
+//        for (GoodsListModel mdoel : goodsData) {
+//            itemId += mdoel.itemId + ",";
+//            buyNum += mdoel.buyNum + ",";
+//            itemPrice += mdoel.itemPrice + ",";
+//            if (Tools.IsEmpty(mdoel.paramData)) {
+//                mdoel.paramData = "0";
+//            }
+//
+//            paramData += mdoel.paramData + ",";
+//
+//        }
+//
+//        itemId = itemId.substring(0, itemId.length() - 1);
+//        buyNum = buyNum.substring(0, buyNum.length() - 1);
+//        itemPrice = itemPrice.substring(0, itemPrice.length() - 1);
+//        paramData = paramData.substring(0, paramData.length() - 1);
 
         String note = buyerSay.getText().toString();
 
@@ -378,7 +385,7 @@ public class SureOrderActivity extends BaseActivity {
                         AddOrderBean addOrderBean = gson.fromJson(s, AddOrderBean.class);
                         if (addOrderBean.retCode == 1) {
                             message = addOrderBean.message;
-                            showPassWordDialog.showTimeDialog02(SureOrderActivity.this, 28.9, 1000);
+                            showPassWordDialog.showTimeDialog02(SureOrderActivity.this, reall_price, 1000);
                         } else {
                             ToastUtil.showToast(addOrderBean.message);
                         }
@@ -393,7 +400,7 @@ public class SureOrderActivity extends BaseActivity {
         HttpParams params = new HttpParams();
         params.put("orderNum", message);
         params.put("paymentWay", PAY_WAY);
-        params.put("orderPrice", "1");
+        params.put("orderPrice", reall_price);
         params.put("payPwd", pwd);
         params.put("token", token);
 
@@ -452,11 +459,11 @@ public class SureOrderActivity extends BaseActivity {
             String name = data.getStringExtra("name");
             String phone = data.getStringExtra("phone");
             String address = data.getStringExtra("address");
-            province =  data.getStringExtra("province");
+            province = data.getStringExtra("province");
             getGoods_pople.setText(name);
             getGoods_phone.setText(phone);
             getGoods_address.setText(address);
-
+            requstFreight();
 //            addAddressIv.setVisibility(View.GONE);
 //            shouhuoAddress.setVisibility(View.VISIBLE);
         }

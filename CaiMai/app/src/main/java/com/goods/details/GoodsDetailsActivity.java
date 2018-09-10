@@ -317,7 +317,7 @@ public class GoodsDetailsActivity extends BaseActivity {
                     isShow = true;
                     showMbProgress("添加中...");
 //                    requstNetDataAddProduct();
-
+                    showGoodsType();
 
                     break;
                 case R.id.buy_textView://直接购买
@@ -363,8 +363,8 @@ public class GoodsDetailsActivity extends BaseActivity {
             goodsKey.token = userToken;
 
 //            GoodsValue.getInstance().getGoodsListModel().buyNum = 1;
-            GoodsValue.getInstance().getGoodsListModel().paramData = param;
-            postRequst.addProduct(handler, goodsKey, number);
+//            GoodsValue.getInstance().getGoodsListModel().paramData = param;
+            postRequst.addProduct(handler, goodsKey, number,param);
         }
 
 
