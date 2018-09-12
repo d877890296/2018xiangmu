@@ -110,11 +110,11 @@ public class PostRequst {
 
         GoodsListModel goodsListModel = GoodsValue.getInstance().getGoodsListModel();
         params.addBodyParameter("token", goodsKey.token);
-        String id="";
-        if (!Tools.IsEmpty(goodsListModel.id+"")){
-            id = goodsListModel.id+"";
+        String id = "";
+        if (!Tools.IsEmpty(goodsListModel.id + "")) {
+            id = goodsListModel.id + "";
         }
-        params.addBodyParameter("id",id );
+        params.addBodyParameter("id", id);
         params.addBodyParameter("itemId", goodsListModel.itemId + "");
         params.addBodyParameter("title", goodsListModel.title + "");
         params.addBodyParameter("sellPoint", goodsListModel.sellPoint + "");
@@ -122,13 +122,13 @@ public class PostRequst {
         params.addBodyParameter("pic", goodsListModel.pic + "");
         params.addBodyParameter("status", goodsListModel.status + "");
         // params.addBodyParameter("createTime", goodsListModel.createTime+"");
-       //  params.addBodyParameter("updateTime", goodsListModel.updateTime+"");
+        //  params.addBodyParameter("updateTime", goodsListModel.updateTime+"");
         params.addBodyParameter("scid", goodsListModel.scid + "");
         params.addBodyParameter("mailType", goodsListModel.mailType + "");
         params.addBodyParameter("itemType", goodsListModel.itemType + "");
         params.addBodyParameter("itemPrice", goodsListModel.itemPrice + "");
         String allparamData = "0";
-        if (!Tools.IsEmpty(goodsListModel.allParamData)){
+        if (!Tools.IsEmpty(goodsListModel.allParamData)) {
             allparamData = goodsListModel.allParamData;
         }
         params.addBodyParameter("allParamData", allparamData);
@@ -136,8 +136,8 @@ public class PostRequst {
 //        if (!Tools.IsEmpty(goodsListModel.paramData)){
 //            paramData = goodsListModel.paramData;
 //        }
-        params.addBodyParameter("paramData",paramData );
-        params.addBodyParameter("buyNum", number+"");
+        params.addBodyParameter("paramData", paramData);
+        params.addBodyParameter("buyNum", number + "");
         params.addBodyParameter("shopId", goodsListModel.shopId + "");
         params.addBodyParameter("mailPrice", goodsListModel.mailPrice + "");
         params.addBodyParameter("inventory", goodsListModel.inventory + "");
@@ -256,7 +256,7 @@ public class PostRequst {
      * @param handler
      * @param goodsKey
      */
-    public void getMyOrder(Handler handler, GoodsKey goodsKey,boolean isAll
+    public void getMyOrder(Handler handler, GoodsKey goodsKey, boolean isAll
     ) {
         this.handler = handler;
         url = Constant.BASE_URL + "/api/order/getMyOrder?";
@@ -264,12 +264,47 @@ public class PostRequst {
         params.addBodyParameter("token", goodsKey.token);
         params.addBodyParameter("pageNum", goodsKey.pageNum);
         params.addBodyParameter("pageSize", goodsKey.pageSize);
-        if (!isAll){
-            params.addBodyParameter("status", goodsKey.status+"");
+        if (!isAll) {
+            params.addBodyParameter("status", goodsKey.status + "");
         }
         uploadMethod(params, url);
     }
 
+    /****
+     *
+     取消订单/确认收货更改订单状态
+
+     * 0取消订单 4确定收货
+     * @param handler
+     * @param goodsKey
+     *
+     */
+    public void updateOrderStatus(Handler handler, GoodsKey goodsKey
+    ) {
+        this.handler = handler;
+        url = Constant.BASE_URL + "/api/order/updateOrderStatus?";
+        params = new RequestParams();
+        params.addBodyParameter("token", goodsKey.token);
+        params.addBodyParameter("orderNum", goodsKey.orderNum);
+        params.addBodyParameter("status", goodsKey.status + "");
+        uploadMethod(params, url);
+    }
+
+    /****
+     * 查看物流
+     * @param handler
+     * @param goodsKey
+     */
+    public void queryLogisticsInfo(Handler handler, GoodsKey goodsKey
+    ) {
+        this.handler = handler;
+        url = Constant.BASE_URL + "/api/order/queryLogisticsInfo?";
+        params = new RequestParams();
+        params.addBodyParameter("token", goodsKey.token);
+        params.addBodyParameter("orderNum", goodsKey.orderNum);
+
+        uploadMethod(params, url);
+    }
 
 ///api/order/getOrderFreight
 

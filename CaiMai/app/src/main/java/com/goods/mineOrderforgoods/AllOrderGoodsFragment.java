@@ -25,6 +25,9 @@ import com.xfkc.caimai.base.BaseFragment;
 import com.xfkc.caimai.bean.GoodsKey;
 import com.xfkc.caimai.config.SharedPref;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 import static com.goods.netrequst.PostRequst.UPSUCCESS;
@@ -46,16 +49,16 @@ public class AllOrderGoodsFragment extends BaseFragment implements RefreshLayout
     private MyRecyclerView myRecyclerView;
     private AllOrderGoodsListAdapter goodsCityListAdapter;
     ArrayList<OrderModel> shopsList;
-private  int status;
+    private int status;
     private PostRequst postRequst;
     private NetRequstAjaxCallBack ajaxCallBack;
-
+    private int requstStyle = 0;
 
 
     public void baseDataInit() {
         // TODO Auto-generated method stub
         if (shopsList == null) {
-            goodsCityListAdapter = new AllOrderGoodsListAdapter(mContext,handler);
+            goodsCityListAdapter = new AllOrderGoodsListAdapter(mContext, handler);
             shopsList = new ArrayList<OrderModel>();
         }
         postRequst = new PostRequst(handler);
@@ -92,7 +95,7 @@ private  int status;
             myRecyclerView.setListView(true);
             recyclerView.setAdapter(goodsCityListAdapter);
 
-            requstGetMyOrder(  this.status);
+            requstGetMyOrder(this.status);
 
         } else {
             goodsCityListAdapter.setBaseType(2);
@@ -102,10 +105,12 @@ private  int status;
 
 
     }
+
     public void setStatus(int status) {
         this.status = status;
 
     }
+
     /**
      * 设置 BGARefreshLayout刷新和加载
      */
@@ -171,18 +176,24 @@ private  int status;
             switch (state) {
                 case -1://取消订单
                     //	skip_classView(OrderforgoodsInfoActivity.class, extraMap, false, false);
-
-
-
                     break;
                 case 0://取消订单
+                    showMbProgress("订单取消中");
+                    requstStyle = 1;
+                    String orderNum = shopsList.get(position).orderNum;
+                    requstUpdateOrderStatus(orderNum, 0);
                     //	skip_classView(OrderforgoodsInfoActivity.class, extraMap, false, false);
                     break;
                 case 1://查看物流
-
-                    //skip_classView(OrderforgoodsLogisticsActivity.class, extraMap, false, -1);
+                    String orderNum_ = shopsList.get(position).orderNum;
+                    extraMap.put("orderNum",orderNum_);
+                    skip_classView(OrderforgoodsLogisticsActivity.class, extraMap, false, -1);
                     break;
                 case 2://确认收货
+                    showMbProgress("订单确认中");
+                    requstStyle = 2;
+                    String orderNum1 = shopsList.get(position).orderNum;
+                    requstUpdateOrderStatus(orderNum1, 4);
                     //MyToast.showMyToast(context, "确认收货", -1);
                     break;
                 case 3:   //  立即支付
@@ -222,20 +233,35 @@ private  int status;
     ///============================数据处理=============================
 
     public void requstGetMyOrder(int status) {
+        requstStyle = 0;
         String userToken = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
         GoodsKey goodsKey = new GoodsKey();
         goodsKey.token = userToken;
         goodsKey.pageNum = 0 + "";
         goodsKey.pageSize = 20 + "";
-        goodsKey.status=status;
-      
-        if (status==0) {
+        goodsKey.status = status;
+        if (status == 0) {
             postRequst.getMyOrder(handler, goodsKey, true);
-        }else{
+        } else {
             postRequst.getMyOrder(handler, goodsKey, false);
         }
     }
 
+    /***
+     * 更新订单
+     * @param orderNum
+     * @param status
+     */
+    public void requstUpdateOrderStatus(String orderNum, int status) {
+        requstStyle = 1;
+        String userToken = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
+        GoodsKey goodsKey = new GoodsKey();
+        goodsKey.token = userToken;
+        goodsKey.orderNum = orderNum + "";
+        goodsKey.status = status;
+        postRequst.updateOrderStatus(handler, goodsKey);
+
+    }
 
     private NetRequstAjaxCallBack.OnNetRequstAjaxCallBack onNetRequstAjaxCallBack = new NetRequstAjaxCallBack.OnNetRequstAjaxCallBack() {
 
@@ -268,16 +294,48 @@ private  int status;
                         if (Tools.IsEmpty(jsonObj)) {
                             android.widget.Toast.makeText(mContext,
                                     "数据错误", Toast.LENGTH_LONG).show();
-                            nodataview_textview.setVisibility(View.VISIBLE);
-                            nodataview_textview.setText("购物车空空如也，赶快去商城添加吧！");
-
+                            if (requstStyle == 0) {
+                                nodataview_textview.setVisibility(View.VISIBLE);
+                                nodataview_textview.setText("购物车空空如也，赶快去商城添加吧！");
+                            }
                             return;
                         }
+                        if (requstStyle == 0) {
+                            app.jsonHttp.getJsonObj(jsonObj, AjaxShopModel.class,
+                                    ajaxCallBack.getMyOrder);
+                            requstStyle = 0;
+                        } else if (requstStyle == 1) {
+                            try {
+                                dissMbProgress();
+                                //   {"message":"操作类型错误","retCode":0,"data":null}
+                                JSONObject OBJ = new JSONObject(jsonObj);
+                                int retCode = OBJ.getInt("retCode");
+                                if (retCode == 0) {
+                                    Toast.makeText(mContext, "订单取消失败", Toast.LENGTH_LONG).show();
+                                } else {
+                                    requstGetMyOrder(status);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
-
-                        app.jsonHttp.getJsonObj(jsonObj, AjaxShopModel.class,
-                                ajaxCallBack.getMyOrder);
-
+                            requstStyle = 0;
+                        } else if (requstStyle == 2) {
+                            try {
+                                dissMbProgress();
+                                //   {"message":"操作类型错误","retCode":0,"data":null}
+                                JSONObject OBJ = new JSONObject(jsonObj);
+                                int retCode = OBJ.getInt("retCode");
+                                if (retCode == 0) {
+                                    Toast.makeText(mContext, "订单确认失败", Toast.LENGTH_LONG).show();
+                                } else {
+                                    requstGetMyOrder(status);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            requstStyle = 0;
+                        }
 
                     } else {//失败
 
@@ -287,10 +345,10 @@ private  int status;
 
                     break;
                 case 90:
-                    int fatherPosition=msg.arg1;
-                    int position=msg.arg2;
-                    GoodsValue.getInstance().setGoodsListModel(  shopsList.get(fatherPosition).itemOrderDetailList.get(position));
-                  skip_classView(GoodsDetailsActivity.class, extraMap, false,-1);
+                    int fatherPosition = msg.arg1;
+                    int position = msg.arg2;
+                    GoodsValue.getInstance().setGoodsListModel(shopsList.get(fatherPosition).itemOrderDetailList.get(position));
+                    skip_classView(GoodsDetailsActivity.class, extraMap, false, -1);
 
                     break;
             }
