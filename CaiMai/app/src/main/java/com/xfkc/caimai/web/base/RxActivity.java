@@ -1,12 +1,10 @@
-package com.xfkc.caimai.rx.activity;
+package com.xfkc.caimai.web.base;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.hyf.tdlibrary.utils.StatusBarUtil;
 import com.xfkc.caimai.R;
-import com.xfkc.caimai.base.BaseActivity;
-import com.xfkc.caimai.rx.rx.ActivityLifeCycleEvent;
 
 import retrofit2.Response;
 import rx.Observable;
@@ -25,20 +23,19 @@ public abstract class RxActivity extends BaseActivity {
     super.onCreate(savedInstanceState);
     lifecycleSubject.onNext(ActivityLifeCycleEvent.CREATE);
     setStatusBar();
+//    try {
+//      RenZhen_SP.getBoolean(RxActivity.this,"key",false);
+//    } catch (Exception e) {
+//      RenZhen_SP.putBoolean(RxActivity.this,"key",false);
+//    }
 
-  }
-
-  @Override
-  public void setContentView(int layoutResID) {
-    super.setContentView(layoutResID);
   }
 
   /**
    * 设置状态栏颜色
    */
   protected void setStatusBar() {
-    StatusBarUtil.setColor(this, getResources().getColor(R.color.white),50);
-//    StatusBarUtil.setColorNoTranslucent(this, getResources().getColor(R.color.red));
+    StatusBarUtil.setColor(this, getResources().getColor(R.color.color_theme));
   }
   @Override
   protected void onDestroy() {

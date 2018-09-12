@@ -17,11 +17,16 @@ import com.bumptech.glide.Glide;
 import com.foamtrace.photopicker.PhotoPickerActivity;
 import com.foamtrace.photopicker.PhotoPreviewActivity;
 import com.foamtrace.photopicker.SelectModel;
+import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.ToastUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
+import com.xfkc.caimai.bean.EmptyBean;
 import com.xfkc.caimai.camera.MyImageCaptureManager;
 import com.xfkc.caimai.camera.MyPhotoPickerIntent;
+import com.xfkc.caimai.config.SharedPref;
+import com.xfkc.caimai.net.PayFactory;
+import com.xfkc.caimai.net.RxHelper;
 import com.xfkc.caimai.order.ChooseAddressActivity;
 
 import java.io.IOException;
@@ -30,6 +35,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+import rx.Subscriber;
 
 import static com.xfkc.caimai.config.Constant.REQUEST_CAMERA_CODE;
 import static com.xfkc.caimai.config.Constant.REQUEST_PREVIEW_CODE;
@@ -70,7 +76,8 @@ public class MineInfoActivity extends BaseActivity {
     SuperTextView getGoodsAddress;
 
     private ShowPersonDialog personDialog;
-    private String nickName ,imageUrl ,detailAdress;
+    private String nickName, imageUrl, detailAdress;
+
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_mine_info;
@@ -82,17 +89,17 @@ public class MineInfoActivity extends BaseActivity {
         toolbarTitle.setTextColor(Color.BLACK);
         toolbarLeftImg.setImageResource(R.mipmap.back_white);
         toolbarRightText.setText("保存");
-
-         imageUrl = getIntent().getStringExtra("imageUrl");
-         nickName = getIntent().getStringExtra("nickName");
-         String user_phone = getIntent().getStringExtra("phone");
-         detailAdress = getIntent().getStringExtra("detailAdress");
+        token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
+        imageUrl = getIntent().getStringExtra("imageUrl");
+        nickName = getIntent().getStringExtra("nickName");
+        String user_phone = getIntent().getStringExtra("phone");
+        detailAdress = getIntent().getStringExtra("detailAdress");
 
         Glide.with(this).load(imageUrl).error(R.mipmap.heart_icon).into(accountIv);
         personName.setRightString(nickName);
         phone.setRightString(user_phone);
         personRegistAddress.setRightString(detailAdress);
-
+        getGoodsAddress.setRightString(detailAdress);
         personDialog = new ShowPersonDialog(this);
         personDialog.setActivity(this);
     }
@@ -105,7 +112,7 @@ public class MineInfoActivity extends BaseActivity {
 
     @OnClick({R.id.toolbar_left_img, R.id.account_iv,
             R.id.person_title_image, R.id.person_name, R.id.real_name, R.id.phone,
-            R.id.person_regist_address, R.id.get_goods_address,R.id.toolbar_right_text})
+            R.id.person_regist_address, R.id.get_goods_address, R.id.toolbar_right_text})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_left_img:
@@ -139,6 +146,26 @@ public class MineInfoActivity extends BaseActivity {
     public void setUpdate(String updateName) {
         personName.setRightString(updateName);
         nickName = updateName;
+        PayFactory.getPayService()
+                .updateUserNicName(token, nickName)
+                .compose(RxHelper.<EmptyBean>io_main())
+                .subscribe(new Subscriber<EmptyBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(EmptyBean emptyBean) {
+
+                    }
+                });
+
     }
 
     @Override
@@ -171,7 +198,7 @@ public class MineInfoActivity extends BaseActivity {
 
     private void refreshAdpater(ArrayList<String> paths) {
         // 处理返回照片地址
-        Log.e("url----------------",paths.get(0));
+        Log.e("url----------------", paths.get(0));
         accountIv.setImageBitmap(BitmapFactory.decodeFile(paths.get(0)));
 //        upLoadPic(paths.get(0));
     }

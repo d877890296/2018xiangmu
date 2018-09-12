@@ -12,9 +12,6 @@ import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 import com.xfkc.caimai.bean.EmptyBean;
 import com.xfkc.caimai.config.SharedPref;
-import com.xfkc.caimai.net.PayFactory;
-import com.xfkc.caimai.net.RxHelper;
-import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
 
 import java.util.ArrayList;
 
@@ -66,16 +63,16 @@ public class MyJoinShopActivity extends BaseActivity {
 
     @Override
     protected void loadData() {
-        PayFactory.getPayService()
-                .myjoinshop(token)
-                .compose(RxHelper.<EmptyBean>io_main())
-                .subscribe(new ProgressSubscriber<EmptyBean>(this) {
-                    @Override
-                    public void onNext(EmptyBean emptyBean) {
-
-
-                    }
-                });
+//        PayFactory.getPayService()
+//                .myjoinshop(token)
+//                .compose(RxHelper.<EmptyBean>io_main())
+//                .subscribe(new ProgressSubscriber<EmptyBean>(this) {
+//                    @Override
+//                    public void onNext(EmptyBean emptyBean) {
+//
+//
+//                    }
+//                });
 
 
     }

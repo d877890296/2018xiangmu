@@ -1,16 +1,5 @@
 package com.goods.mineOrderforgoods;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
-import com.dev.customview.BarLineSetting;
-import com.xfkc.caimai.R;
-import com.xfkc.caimai.base.BaseActivity;
-import com.xfkc.caimai.base.FreamentAdapter;
-
-
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -23,6 +12,14 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
+
+import com.dev.customview.BarLineSetting;
+import com.xfkc.caimai.R;
+import com.xfkc.caimai.base.BaseActivity;
+import com.xfkc.caimai.base.FreamentAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrderforgoodsActivity extends BaseActivity {
     private int baseType = 0;
@@ -150,7 +147,7 @@ public class OrderforgoodsActivity extends BaseActivity {
         if (baseType == 1) {//全部
             orderGoods_pager.setCurrentItem(1);
         } else if (baseType == 2) {
-            orderGoods_pager.setCurrentItem(2);
+            orderGoods_pager.setCurrentItem(3);
         } else if (baseType == 3) {
             orderGoods_pager.setCurrentItem(4);
         } else if (baseType == 4) {

@@ -7,7 +7,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.xfkc.caimai.R;
-import com.xfkc.caimai.bean.EmptyBean;
+import com.xfkc.caimai.bean.ProfitListBean;
+import com.xfkc.caimai.util.Utils;
 
 import java.util.ArrayList;
 
@@ -15,34 +16,27 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * 1.我的收益 列表展示类
+ * 1.收益 列表展示类
  * 2.@dongjinxu
  * 3.@2018/4/11.
  */
 
-public class MineProfitListAdapter extends BaseAdapter {
+public class ProfitListAdapter extends BaseAdapter {
 
     private final Context context;
-    private ArrayList<EmptyBean> list;
-    private double huiyuanCount;
-    private double shangchengCount;
+    private ArrayList<ProfitListBean.DataBean.ListBean> list;
 
 
-    public MineProfitListAdapter(Context context) {
+    public ProfitListAdapter(Context context) {
         this.context = context;
     }
 
     /*设置数据*/
-    public void setData(ArrayList<EmptyBean> list) {
+    public void setData(ArrayList<ProfitListBean.DataBean.ListBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
 
-    public void setCount(double huiyuanCount, double shangchengCount) {
-        this.huiyuanCount = huiyuanCount;
-        this.shangchengCount = shangchengCount;
-        notifyDataSetChanged();
-    }
 
     @Override
     public int getCount() {
@@ -64,31 +58,29 @@ public class MineProfitListAdapter extends BaseAdapter {
 
         ViewHolder viewHodler;
         if (convertView == null) {
-            convertView = View.inflate(context, R.layout.mineprofit_list_item, null);
+            convertView = View.inflate(context, R.layout.profit_item, null);
             viewHodler = new ViewHolder(convertView);
             convertView.setTag(viewHodler);
         } else {
             viewHodler = (ViewHolder) convertView.getTag();
         }
 
-        if (position == 0) {
-            viewHodler.mineprofitName.setText("情怀链带来的收益");
-            viewHodler.mineProfitPrice.setText(huiyuanCount + "康币");
-        } else if (position == 1) {
-            viewHodler.mineprofitName.setText("幸福公社带来的收益");
-            viewHodler.mineProfitPrice.setText(shangchengCount + "康币");
-        }
+        ProfitListBean.DataBean.ListBean listBean = list.get(position);
 
-
+        viewHodler.title.setText(listBean.tradeComment);
+        viewHodler.time.setText(Utils.timeStamp2Date(listBean.createTime, "yyyy-MM-dd"));
+        viewHodler.addPrice.setText("+" + listBean.tradeMoney);
         return convertView;
     }
 
 
     static class ViewHolder {
-        @Bind(R.id.mineprofit_name)
-        TextView mineprofitName;
-        @Bind(R.id.mine_profit_price)
-        TextView mineProfitPrice;
+        @Bind(R.id.title)
+        TextView title;
+        @Bind(R.id.time)
+        TextView time;
+        @Bind(R.id.add_price)
+        TextView addPrice;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

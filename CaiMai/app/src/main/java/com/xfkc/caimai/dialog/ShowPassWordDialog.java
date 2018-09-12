@@ -51,7 +51,7 @@ public class ShowPassWordDialog {
 	 */
 	private EditText editText0, editText1, editText2, editText3, editText4, editText5;
 
-	public void showTimeDialog02(final SureOrderActivity context, final double price, final int kangbiyue  ) {
+	public void showTimeDialog02(final SureOrderActivity context, final double price, final String kangbiyue  ) {
 			final Dialog dialog = new Dialog(context, R.style.BottomDialog);
 			View contentView = LayoutInflater.from(context).inflate(R.layout.verification_code_layout, null);
 

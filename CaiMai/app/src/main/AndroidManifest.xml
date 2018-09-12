@@ -149,8 +149,10 @@
             android:configChanges="orientation|screenSize"
             android:theme="@style/PhotoPickerTheme" />
         <activity android:name=".home.mineprofit.MineProfitActivity" />
-        <activity android:name=".home.comment.ToCommentActivity"></activity>
-        <activity android:name=".home.myjoinshop.MyJoinShopActivity"/>
+        <activity android:name=".home.comment.ToCommentActivity" />
+        <activity android:name=".home.myjoinshop.MyJoinShopActivity" />
+        <activity android:name=".web.TDWebViewActivity" />
+        <activity android:name=".home.mineprofit.ProfitListActivity"></activity>
     </application>
 
 </manifest>

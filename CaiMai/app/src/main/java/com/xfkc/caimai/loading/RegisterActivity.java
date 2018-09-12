@@ -23,6 +23,7 @@ import com.xfkc.caimai.net.RxHelper;
 import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /***
@@ -56,12 +57,15 @@ public class RegisterActivity extends BaseActivity {
     EditText againPasswordEdit;
     @Bind(R.id.yaoqing_edit)
     EditText yaoqingEdit;
+    @Bind(R.id.real_name_edit)
+    EditText realNameEdit;
 
     private String phone = "";//手机号码
     private String password = "";//用户密码
     private String msgcode;
     private String again_password;
     private String yq_code;
+    private String realName;
 
     @Override
     protected int getLayoutResource() {
@@ -128,12 +132,17 @@ public class RegisterActivity extends BaseActivity {
 
     /*用户注册*/
     private void userRegist() {
+        realName = realNameEdit.getText().toString();
         phone = loginPhoneEdit.getText().toString().trim();
         password = loginPasswordEdit.getText().toString().trim();
         msgcode = loginNumEdit.getText().toString().trim();
         again_password = againPasswordEdit.getText().toString().trim();
         yq_code = yaoqingEdit.getText().toString().trim();
 
+        if (TextUtils.isEmpty(realName)) {
+            ToastUtil.showToast("手机号码不能为空!");
+            return;
+        }
         if (TextUtils.isEmpty(phone)) {
             ToastUtil.showToast("手机号码不能为空!");
             return;
@@ -165,7 +174,7 @@ public class RegisterActivity extends BaseActivity {
     /*注册数据提交*/
     private void userRegistData() {
         PayFactory.getPayService()
-                .registerInfo(phone,msgcode,password,yq_code)
+                .registerInfo(phone, msgcode, password, yq_code,realName)
                 .compose(RxHelper.<RegistBean>io_main())
                 .subscribe(new ProgressSubscriber<RegistBean>(this) {
                     @Override
@@ -179,7 +188,7 @@ public class RegisterActivity extends BaseActivity {
 
     /*展示注册成功的对话框*/
     private void showRegisterDialog(RegistBean registBean) {
-        startActivity(new Intent(this, RegisterSuccessActivity.class).putExtra("phone",registBean.data.phone));
+        startActivity(new Intent(this, RegisterSuccessActivity.class).putExtra("phone", registBean.data.phone));
         finish();
     }
 
@@ -229,5 +238,12 @@ public class RegisterActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         timer.cancel();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

@@ -88,6 +88,7 @@ public class GoodsListModel {
     public String sname;
     @NetJsonFiled
     public Integer categoryId;
-
+    @NetJsonFiled
+    public String shippingPrice;
 
 }

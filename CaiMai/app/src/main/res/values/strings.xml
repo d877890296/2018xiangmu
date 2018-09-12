@@ -8,7 +8,7 @@
     <string name="register_complete">马上完善个人信息，开启您的幸福之旅吧！</string>
     <string name="register_button_string">完善个人信息</string>
 
-
+    <string name="h5_title">标题</string>
     <string name="wallet_string">充值后，余额不可提现，您可以更快捷地使用余额支付，康币钱包将保障您的账户安全</string>
 
 </resources>

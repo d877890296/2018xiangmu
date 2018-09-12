@@ -30,7 +30,7 @@
                 android:id="@+id/mine_profit_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="360.00康币"
+                android:text="0.00康币"
                 android:textColor="@color/ff704d"
                 android:textSize="20sp" />
 

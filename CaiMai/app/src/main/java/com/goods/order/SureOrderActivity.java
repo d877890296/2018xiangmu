@@ -29,6 +29,7 @@ import com.xfkc.caimai.base.BaseActivity;
 import com.xfkc.caimai.bean.AddOrderBean;
 import com.xfkc.caimai.bean.AddressBean;
 import com.xfkc.caimai.bean.FreightBean;
+import com.xfkc.caimai.bean.UserInfoBean;
 import com.xfkc.caimai.config.Constant;
 import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.dialog.ShowPassWordDialog;
@@ -37,11 +38,13 @@ import com.xfkc.caimai.net.RxHelper;
 import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
 import com.xfkc.caimai.order.ChooseAddressActivity;
 import com.xfkc.caimai.pay.PaySuccessActivity;
+import com.xfkc.caimai.pay.SettingPayPasswordActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -71,13 +74,17 @@ public class SureOrderActivity extends BaseActivity {
     EditText buyerSay;
     @Bind(R.id.payway)
     RelativeLayout payway;
+    @Bind(R.id.peisong_tv)
+    TextView peisongTv;
+    @Bind(R.id.payway_tv)
+    TextView paywayTv;
     private String allPrace;
     private TextView allPrace_textView;
-    private TextView getGoods_pople, getGoods_phone, getGoods_address,yunfei;
+    private TextView getGoods_pople, getGoods_phone, getGoods_address, yunfei;
 
     private LinearLayout fristliner, orderdetails_liner, choose_address;
 
-    private TextView uporder_textView, shopAllprice,reallyPay;
+    private TextView uporder_textView, shopAllprice, reallyPay;
     private MyListView goodsMyListView;
     private SureGoodsAdapter sureGoodsAdapter;
     private List<GoodsListModel> goodsData;
@@ -91,7 +98,7 @@ public class SureOrderActivity extends BaseActivity {
     private int WAY = 1, PAY_WAY = 1;
     private int sourceType = 2;
     private String shopId = "", itemId = "", itemPrice = "", paramData = "";
-    private double freight = 0,reall_price = 0;
+    private double freight = 0, reall_price = 0;
     private ShowPassWordDialog showPassWordDialog;
 
 
@@ -184,7 +191,7 @@ public class SureOrderActivity extends BaseActivity {
         // fristliner.setOnClickListener(onClickListener);
         // orderdetails_liner.setOnClickListener(onClickListener);
 
-        shopAllprice.setText("￥"+allPrace);
+        shopAllprice.setText("￥" + allPrace);
         uporder_textView = (TextView) findViewById(R.id.uporder_textView);
         uporder_textView.setOnClickListener(onClickListener);
         showMbProgress("数据求情中...");
@@ -238,10 +245,10 @@ public class SureOrderActivity extends BaseActivity {
                         FreightBean freightBean = gson.fromJson(s, FreightBean.class);
                         if (freightBean.retCode == 1) {
                             freight = freightBean.data;
-                            yunfei.setText("￥"+freight);
-                            reall_price = Double.parseDouble(allPrace)+freight;
+                            yunfei.setText("￥" + freight);
+                            reall_price = Double.parseDouble(allPrace) + freight;
                             reall_price = (double) (Math.round(reall_price * 10000)) / 10000;
-                            allPrace_textView.setText("￥" + reall_price );
+                            allPrace_textView.setText("￥" + reall_price);
                             reallyPay.setText("￥" + reall_price);
                         } else {
                             ToastUtil.showToast(freightBean.message);
@@ -282,10 +289,12 @@ public class SureOrderActivity extends BaseActivity {
                 case R.id.way_youji:
                     WAY = 1;
                     setWay(0);
+                    peisongTv.setText("邮寄");
                     break;
                 case R.id.way_ziqu:
                     WAY = 2;
                     setWay(1);
+                    peisongTv.setText("自取");
                     break;
                 case R.id.peisongway:
                     if (wayLayout.getVisibility() == View.GONE) {
@@ -297,10 +306,12 @@ public class SureOrderActivity extends BaseActivity {
                 case R.id.kangbi:
                     PAY_WAY = 1;
                     setPayWay(0);
+                    paywayTv.setText("康币");
                     break;
                 case R.id.daijinjuan:
                     PAY_WAY = 2;
                     setPayWay(1);
+                    paywayTv.setText("定级币");
                     break;
                 case R.id.payway:
                     if (paywayLayout.getVisibility() == View.GONE) {
@@ -333,23 +344,6 @@ public class SureOrderActivity extends BaseActivity {
     */
     private void addOrder() {
 
-
-//        for (GoodsListModel mdoel : goodsData) {
-//            itemId += mdoel.itemId + ",";
-//            buyNum += mdoel.buyNum + ",";
-//            itemPrice += mdoel.itemPrice + ",";
-//            if (Tools.IsEmpty(mdoel.paramData)) {
-//                mdoel.paramData = "0";
-//            }
-//
-//            paramData += mdoel.paramData + ",";
-//
-//        }
-//
-//        itemId = itemId.substring(0, itemId.length() - 1);
-//        buyNum = buyNum.substring(0, buyNum.length() - 1);
-//        itemPrice = itemPrice.substring(0, itemPrice.length() - 1);
-//        paramData = paramData.substring(0, paramData.length() - 1);
 
         String note = buyerSay.getText().toString();
 
@@ -385,7 +379,7 @@ public class SureOrderActivity extends BaseActivity {
                         AddOrderBean addOrderBean = gson.fromJson(s, AddOrderBean.class);
                         if (addOrderBean.retCode == 1) {
                             message = addOrderBean.message;
-                            showPassWordDialog.showTimeDialog02(SureOrderActivity.this, reall_price, 1000);
+                            showPassWordDialog.showTimeDialog02(SureOrderActivity.this, reall_price, kbAmount+"");
                         } else {
                             ToastUtil.showToast(addOrderBean.message);
                         }
@@ -411,24 +405,27 @@ public class SureOrderActivity extends BaseActivity {
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(String s, Call call, Response response) {
-                        Log.e("----------", s);
+//                        Log.e("----------", s);
                         Gson gson = new Gson();
                         AddOrderBean addOrderBean = gson.fromJson(s, AddOrderBean.class);
                         if (addOrderBean.retCode == 1) {
                             skip_classView(PaySuccessActivity.class, extraMap, true);
                         } else {
                             ToastUtil.showToast(addOrderBean.message);
+                            skip_classView(SettingPayPasswordActivity.class, extraMap, false);
                         }
                         dissMbProgress();
                     }
+
                 });
     }
 
     @Override
     protected void loadData() {
-
+        getData();
     }
 
+    /*选取邮寄方式*/
     private void setWay(int id) {
         for (int i = 0; i < list_way.size(); i++) {
             if (i == id) {
@@ -439,6 +436,7 @@ public class SureOrderActivity extends BaseActivity {
         }
     }
 
+    /*选取支付方式*/
     private void setPayWay(int id) {
         for (int i = 0; i < list_payway.size(); i++) {
             if (i == id) {
@@ -476,6 +474,28 @@ public class SureOrderActivity extends BaseActivity {
         super.onDestroy();
         SureCarValue.getInstance().removeAllData();
         SureCarValue.getInstance().reSet();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    private double kbAmount;
+    /*获取个人信息*/
+    private void getData() {
+        PayFactory.getPayService()
+                .findUserDetByPhone(token)
+                .compose(RxHelper.<UserInfoBean>io_main())
+                .subscribe(new ProgressSubscriber<UserInfoBean>(mContext) {
+                    @Override
+                    public void onNext(UserInfoBean userInfoBean) {
+                        kbAmount = userInfoBean.data.kbAmount;
+
+                    }
+                });
     }
 
 }

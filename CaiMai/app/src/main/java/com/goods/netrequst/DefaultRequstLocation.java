@@ -6,11 +6,9 @@ import android.os.Message;
 import android.widget.Toast;
 
 import com.goods.sortlsitview.AjaxShopModel;
-import com.goods.sortlsitview.CharacterParser;
-import com.goods.sortlsitview.ShopsList;
-import com.goods.sortlsitview.SortAdapter;
 import com.goods.sortlsitview.SortModel;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
+import com.hyf.tdlibrary.utils.ToastUtil;
 import com.hyf.tdlibrary.utils.Tools;
 import com.json.CommonConvert;
 import com.xfkc.caimai.application.MyApplication;
@@ -21,7 +19,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import static com.goods.netrequst.PostRequst.UPSUCCESS;
 
@@ -69,14 +66,16 @@ private Context mContext;
         @Override
         public void MsgCallBack(boolean isSuccess, String errorMsg, Object object) {
             // TODO Auto-generated method stub
-            ArrayList<SortModel> sortData=(ArrayList)object;
-            if (onLocationCallBack!=null&&sortData!=null&&sortData.size()>0){
-                onLocationCallBack.locationCallBack(isSuccess,"",sortData.get(0));
-            }else{
-                onLocationCallBack.locationCallBack(isSuccess,"地位错误！",null);
+            if (isSuccess ==true){
+                ArrayList<SortModel> sortData=(ArrayList)object;
+                if (onLocationCallBack!=null&&sortData!=null&&sortData.size()>0){
+                    onLocationCallBack.locationCallBack(isSuccess,"",sortData.get(0));
+                }else{
+                    onLocationCallBack.locationCallBack(isSuccess,"地位错误！",null);
+                }
+            }else {
+                ToastUtil.showToast("定位失败，请检查权限是否打开");
             }
-
-
         }
 
     };

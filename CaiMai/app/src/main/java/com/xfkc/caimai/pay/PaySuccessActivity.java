@@ -29,6 +29,7 @@ public class PaySuccessActivity extends BaseActivity {
     @Override
     protected void initViews(Bundle savedInstanceState) {
         toolbarTitle.setText("支付完成");
+
     }
 
     @Override

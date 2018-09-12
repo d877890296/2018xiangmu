@@ -15,15 +15,12 @@ import android.widget.TextView;
 import com.dev.customview.MyListView;
 import com.dev.customview.TextViewUtils;
 import com.goods.city.GoodsListModel;
-import com.goods.city.GoodsValue;
-import com.goods.details.GoodsDetailsActivity;
 import com.goods.netrequst.Logger;
 import com.hyf.tdlibrary.utils.Tools;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.LzBaseAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class AllOrderGoodsListAdapter extends RecyclerView.Adapter<AllOrderGoodsListAdapter.ViewHolder> {
     public Context mContext;
@@ -255,6 +252,7 @@ private Handler handler;
             } else if (model.status == 3) {
                 cannelOrder_textView.setVisibility(View.GONE);
                 lookLogistics_textView.setVisibility(View.VISIBLE);
+                suregetGoods_textView.setText("确认收货");
                 suregetGoods_textView.setVisibility(View.VISIBLE);
                 pay_btGoods_textView.setVisibility(View.GONE);
                 tuikuan_textView.setVisibility(View.GONE);

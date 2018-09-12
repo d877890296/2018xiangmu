@@ -14,7 +14,7 @@
         <com.dev.customview.AdViewPaper
             android:id="@+id/adViewPager"
             android:layout_width="match_parent"
-            android:layout_height="280dp" />
+            android:layout_height="450dp" />
 
         <!-- ////////////////////默认顶部视图开始//////////////// -->
 
@@ -269,10 +269,11 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/youfei_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:text="5康币"
+                android:text="0.00康币"
                 android:textColor="#525252"
                 android:textSize="15sp" />
         </LinearLayout>

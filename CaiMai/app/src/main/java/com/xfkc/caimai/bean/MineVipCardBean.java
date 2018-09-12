@@ -38,7 +38,7 @@ public class MineVipCardBean extends Response {
          * remainDays : 363
          */
 
-        public Object id;
+        public String id;
         public String cardName;//会员卡名字
         public double cardPrice;//会员卡价格
         public String interests;//会员卡权益

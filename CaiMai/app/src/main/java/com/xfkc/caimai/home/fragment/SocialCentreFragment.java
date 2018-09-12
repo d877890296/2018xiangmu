@@ -13,9 +13,12 @@ import com.bumptech.glide.Glide;
 import com.dev.customview.MyGridView;
 import com.goods.mineOrderforgoods.OrderforgoodsActivity;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
+import com.hyf.tdlibrary.utils.ToastUtil;
+import com.hyf.tdlibrary.utils.Tools;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseFragment;
 import com.xfkc.caimai.bean.EmptyBean;
+import com.xfkc.caimai.bean.MineVipCardBean;
 import com.xfkc.caimai.bean.UserInfoBean;
 import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.home.SettingActivity;
@@ -35,6 +38,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+import rx.Subscriber;
 
 
 /**
@@ -85,12 +89,16 @@ public class SocialCentreFragment extends BaseFragment {
     TextView tkshNumberTv;
     @Bind(R.id.gridview)
     MyGridView gridview;
+    @Bind(R.id.vip_year_layout)
+    LinearLayout vipYearLayout;
+    @Bind(R.id.kbye_layout)
+    LinearLayout kbyeLayout;
 
     private MyGridAdapter myGridAdapter;
     private ArrayList<EmptyBean> button_listInfo = new ArrayList();
     private String token;
 
-    private String payPwd="" ,kbAmount= "";
+    private String payPwd = "", kbAmount = "";
     private UserInfoBean.DataBean userData;
 
     @Override
@@ -110,7 +118,12 @@ public class SocialCentreFragment extends BaseFragment {
         }
         gridview.setAdapter(myGridAdapter);
         setGridClick();
+        getVipCardTime();
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
         getData();
     }
 
@@ -131,14 +144,18 @@ public class SocialCentreFragment extends BaseFragment {
 
     /*设置用户信息*/
     private void setInfo(UserInfoBean userInfoBean) {
-        mineName.setText(userInfoBean.data.nicName);
+        if (Tools.IsEmpty(userInfoBean.data.nicName)) {
+            mineName.setText("昵称");
+        } else {
+            mineName.setText(userInfoBean.data.nicName);
+        }
         Glide.with(mContext).load(userInfoBean.data.userImg).error(R.mipmap.heart_icon).into(accountIv);
         userData = userInfoBean.data;
 
-        mineId.setText(userInfoBean.data.kcId);
+        mineId.setText("幸福ID:" + userInfoBean.data.kcId);
         payPwd = userInfoBean.data.payPwd;
-
-        kbNumber.setText(userInfoBean.data.kbAmount+"康币");
+        kbAmount = userInfoBean.data.kbAmount + "";
+        kbNumber.setText(kbAmount + "康币");
 
     }
 
@@ -149,22 +166,24 @@ public class SocialCentreFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0://康币钱包
-                        extraMap.put("payPwd",payPwd+"");
-                        extraMap.put("kbAmount",kbAmount+"");
+                        extraMap.put("payPwd", payPwd + "");
+                        extraMap.put("kbAmount", kbAmount + "");
                         skip_classView(WalletActivity.class, extraMap, false, true);
                         break;
                     case 1://我的会员卡
                         skip_classView(MineVipCardActivity.class, extraMap, false, true);
                         break;
                     case 2://我的收益
-                        skip_classView(MineProfitActivity.class,extraMap,false,true);
+                        skip_classView(MineProfitActivity.class, extraMap, false, true);
                         break;
                     case 3://我加入的店铺
-                        skip_classView(MyJoinShopActivity.class,extraMap,false,true);
+                        skip_classView(MyJoinShopActivity.class, extraMap, false, true);
                         break;
                     case 4://我发布的服务
+                        ToastUtil.showToast("该功能暂未开放!");
                         break;
                     case 5://我提供的服务
+                        ToastUtil.showToast("该功能暂未开放!");
                         break;
                 }
             }
@@ -172,47 +191,56 @@ public class SocialCentreFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.account_iv, R.id.setting_iv, R.id.order_tv, R.id.wait_pay_tv, R.id.psz_tv, R.id.dpj_tv, R.id.tk_sh_tv})
+    @OnClick({R.id.account_iv, R.id.setting_iv,
+            R.id.order_tv, R.id.wait_pay_tv, R.id.psz_tv,
+            R.id.dpj_tv, R.id.tk_sh_tv, R.id.vip_year_layout, R.id.kbye_layout})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.account_iv:
-                extraMap.put("imageUrl",userData.userImg+"");
-                extraMap.put("nickName",userData.nicName+"");
-                extraMap.put("phone",userData.phone+"");
-                extraMap.put("detailAdress",userData.detailAdress+"");
+                extraMap.put("imageUrl", userData.userImg + "");
+                extraMap.put("nickName", userData.nicName + "");
+                extraMap.put("phone", userData.phone + "");
+                extraMap.put("detailAdress", userData.detailAdress + "");
                 skip_classView(MineInfoActivity.class, extraMap, false, true);
                 break;
             case R.id.setting_iv:
-                skip_classView(SettingActivity.class,extraMap,false,1005);
+                skip_classView(SettingActivity.class, extraMap, false, 1005);
                 break;
             case R.id.order_tv:
 
 
                 extraMap.put("baseType", -1);
                 skip_classView(OrderforgoodsActivity.class, extraMap, false, false);
-               // startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"0"));
+                // startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"0"));
                 break;
             case R.id.wait_pay_tv:
-           //     startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"1"));
+                //     startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"1"));
                 extraMap.put("baseType", 1);
                 skip_classView(OrderforgoodsActivity.class, extraMap, false, false);
                 break;
             case R.id.psz_tv:
 
-               // startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"2"));
+                // startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"2"));
                 extraMap.put("baseType", 2);
                 skip_classView(OrderforgoodsActivity.class, extraMap, false, false);
                 break;
             case R.id.dpj_tv:
-               // startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"3"));
+                // startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"3"));
                 extraMap.put("baseType", 3);
                 skip_classView(OrderforgoodsActivity.class, extraMap, false, false);
                 break;
             case R.id.tk_sh_tv:
-             //   startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"4"));
+                //   startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"4"));
                 extraMap.put("baseType", 4);
                 skip_classView(OrderforgoodsActivity.class, extraMap, false, false);
 
+                break;
+            case R.id.vip_year_layout:
+                break;
+            case R.id.kbye_layout:
+                extraMap.put("payPwd", payPwd + "");
+                extraMap.put("kbAmount", kbAmount + "");
+                skip_classView(WalletActivity.class, extraMap, false, true);
                 break;
         }
     }
@@ -220,8 +248,35 @@ public class SocialCentreFragment extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1005 && resultCode == 1006){
-            skip_classView(LoadingActivity.class,extraMap,true,true);
+        if (requestCode == 1005 && resultCode == 1006) {
+            skip_classView(LoadingActivity.class, extraMap, true, true);
         }
+    }
+
+
+    private void getVipCardTime() {
+        PayFactory.getPayService()
+                .getUserVipCard(token)
+                .compose(RxHelper.<MineVipCardBean>io_main())
+                .subscribe(new Subscriber<MineVipCardBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(MineVipCardBean mineVipCardBean) {
+                        if (mineVipCardBean.data != null && mineVipCardBean.data.size() != 0) {
+                            surplusDays.setText(mineVipCardBean.data.get(0).remainDays+"天");
+                            yearsVip.setText(mineVipCardBean.data.get(0).cardName+"");
+                        }
+                    }
+                });
+
     }
 }

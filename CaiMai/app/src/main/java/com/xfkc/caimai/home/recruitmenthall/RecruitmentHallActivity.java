@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -104,17 +103,19 @@ public class RecruitmentHallActivity extends BaseActivity {
 
     /*设置监听*/
     private void setClick() {
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                position = position - 1;
-                if (TYPE == 0) {
-
-                } else {
-
-                }
-            }
-        });
+//        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                position = position - 1;
+//                RecruiHallBean.DataBean.ListBean listBean = list.get(position);
+//                if (TYPE == 0) {
+//                    startActivity(new Intent(RecruitmentHallActivity.this,RecruContentActivity.class)
+//                    .putExtra("listBean",listBean));
+//                } else {
+//
+//                }
+//            }
+//        });
     }
 
     @Override

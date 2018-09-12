@@ -66,7 +66,7 @@ public class RecruHallListAdapter extends BaseAdapter {
             viewHodler = (ViewHolder) convertView.getTag();
         }
 
-        RecruiHallBean.DataBean.ListBean listBean = list.get(position);
+        final RecruiHallBean.DataBean.ListBean listBean = list.get(position);
 
         viewHodler.dianpuTitle.setText(listBean.shopName);
         for (int i=0;i<listBean.inrecruiList.size();i++){
@@ -81,7 +81,10 @@ public class RecruHallListAdapter extends BaseAdapter {
         viewHodler.payBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context,RecruContentActivity.class));
+                String shopId=listBean.inrecruiList.get(0).shopId;
+                context.startActivity(new Intent(context,RecruContentActivity.class)
+                .putExtra("shopId",shopId)
+                );
             }
         });
 

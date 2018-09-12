@@ -58,7 +58,7 @@ public class UserInfoBean extends Response {
         public String detailAdress;
         public String inviteCode;
         public String shopId;
-        public String createTime;
+        public long createTime;
         public String userAccount;
         public String status;
         public int nextNum;

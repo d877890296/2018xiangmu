@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -17,11 +19,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dev.mbprogress.MbProgress;
-import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.StatusBarUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.application.MyApplication;
-import com.xfkc.caimai.config.SharedPref;
+import com.xfkc.caimai.cjs.PublicRelativeLayout;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public MyApplication app;
 
     public MbProgress mbProgress;
-
+    public PublicRelativeLayout publicRelativeLayout;
     /** 没有数据 */
     public TextView nodataview_textview;
     public LinearLayout net_error_liner, progress_liner, loadfail_liner;
@@ -73,7 +74,24 @@ public abstract class BaseActivity extends AppCompatActivity {
         StatusBarUtil.setColor(this, getResources().getColor(R.color.white), 50);
 //        StatusBarUtil.setColor(this,getResources().getColor(R.color.ff704d));
     }
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+        View view = LayoutInflater.from(this).inflate(layoutResID, null);
 
+        publicRelativeLayout = new PublicRelativeLayout(this);
+        publicRelativeLayout.addView(view);
+        publicRelativeLayout.settingSystemBar(this);
+    }
+
+    /**
+     * 布局加载完后修改沉浸式状态栏颜色
+     *
+     * @param barColor
+     */
+    public void setChangeBarColor(String barColor) {
+        publicRelativeLayout.setChangeBarColor(barColor);
+    }
     /**
      * 初始化变量，包括Intent带的数据和activity内的变量
      */

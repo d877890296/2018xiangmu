@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.bean.FeelingBean;
+import com.xfkc.caimai.util.Utils;
 
 import java.util.ArrayList;
 
@@ -31,6 +32,8 @@ public class FeelingAdapter extends BaseAdapter {
     private Context context;
 
     private ArrayList<FeelingBean.DataBean.NextMemUserPageBean.ListBean> moduleList;
+    private String nicName, userImg;
+    private long createTime;
 
     public FeelingAdapter(Context context) {
         this.context = context;
@@ -38,6 +41,12 @@ public class FeelingAdapter extends BaseAdapter {
 
     public void setData(ArrayList<FeelingBean.DataBean.NextMemUserPageBean.ListBean> moduleList) {
         this.moduleList = moduleList;
+    }
+
+    public void setTypeData(String nicName, String userImg, long createTime) {
+        this.nicName = nicName;
+        this.userImg = userImg;
+        this.createTime = createTime;
     }
 
     @Override
@@ -76,28 +85,27 @@ public class FeelingAdapter extends BaseAdapter {
         ViewHolder viewHolder = null;
 
         if (convertView == null) {
-                    convertView = View.inflate(context, R.layout.feeling_item, null);
-                    viewHolder = new ViewHolder(convertView);
-                    convertView.setTag(viewHolder);
+            convertView = View.inflate(context, R.layout.feeling_item, null);
+            viewHolder = new ViewHolder(convertView);
+            convertView.setTag(viewHolder);
         } else {
-                    viewHolder = (ViewHolder) convertView.getTag();
+            viewHolder = (ViewHolder) convertView.getTag();
         }
-
         FeelingBean.DataBean.NextMemUserPageBean.ListBean listBean = moduleList.get(position);
         switch (type) {
             case TYPE1://
                 viewHolder.kbNumber.setVisibility(View.GONE);
                 viewHolder.feelingPeopleNumber.setVisibility(View.GONE);
                 Glide.with(context).load(listBean.userImg).error(R.mipmap.heart_icon).into(viewHolder.feelingUserIv);
-                viewHolder.feelingUserName.setText(listBean.kcId);
-                viewHolder.feelingTime.setText(listBean.createTime+"");
+                viewHolder.feelingUserName.setText(listBean.nicName);
+                viewHolder.feelingTime.setText("我的引荐人");
                 break;
             case TYPE2:
                 Glide.with(context).load(listBean.userImg).error(R.mipmap.heart_icon).into(viewHolder.feelingUserIv);
-                viewHolder.feelingUserName.setText(listBean.kcId);
-                viewHolder.feelingTime.setText(listBean.createTime+"");
-                viewHolder.feelingPeopleNumber.setText("情怀链"+listBean.nextNum+"人");
-                viewHolder.kbNumber.setText("贡献康币"+listBean.nextMoney);
+                viewHolder.feelingUserName.setText(listBean.nicName);
+                viewHolder.feelingTime.setText(Utils.timeStamp2Date(listBean.createTime, "yyyy-MM-dd"));
+                viewHolder.feelingPeopleNumber.setText("情怀链" + listBean.nextNum + "人");
+                viewHolder.kbNumber.setText("贡献康币" + listBean.nextMoney);
                 break;
         }
 

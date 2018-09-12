@@ -5,16 +5,24 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
+import com.xfkc.caimai.bean.RecruiHallBean;
+import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.customview.StateButton;
+import com.xfkc.caimai.net.PayFactory;
+import com.xfkc.caimai.net.RxHelper;
+import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -57,7 +65,15 @@ public class RecruContentActivity extends BaseActivity {
     RadioButton cRb;
     @Bind(R.id.commit)
     StateButton commit;
+    @Bind(R.id.a_layout)
+    LinearLayout aLayout;
+    @Bind(R.id.b_layout)
+    LinearLayout bLayout;
+    @Bind(R.id.c_layout)
+    LinearLayout cLayout;
     private ArrayList<RadioButton> list_radio = new ArrayList<>();
+    private String shopId;
+    private String a_price = "0", b_price = "0", c_price = "0", reall_price = "0";
 
     @Override
     protected int getLayoutResource() {
@@ -69,36 +85,75 @@ public class RecruContentActivity extends BaseActivity {
         toolbarTitle.setText("招募详情");
         toolbarTitle.setTextColor(Color.BLACK);
         toolbarLeftImg.setImageResource(R.mipmap.back_white);
-
+        token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
         list_radio.add(aRb);
         list_radio.add(bRb);
         list_radio.add(cRb);
+        shopId = getIntent().getStringExtra("shopId");
 
     }
 
     @Override
     protected void loadData() {
-
+        PayFactory.getPayService()
+                .recruitmentHall(pageNum, pageSize, token, "2", shopId)
+                .compose(RxHelper.<RecruiHallBean>io_main())
+                .subscribe(new ProgressSubscriber<RecruiHallBean>(this) {
+                    @Override
+                    public void onNext(RecruiHallBean recruiHallBean) {
+                        if (recruiHallBean.data.list != null && recruiHallBean.data.list.size() != 0) {
+                            RecruiHallBean.DataBean.ListBean listBean = recruiHallBean.data.list.get(0);
+                            dianpuTitle.setText(listBean.shopName);
+                            for (int i = 0; i < listBean.inrecruiList.size(); i++) {
+                                if (i == 0) {
+                                    aLayout.setVisibility(View.VISIBLE);
+                                    aType.setText(listBean.inrecruiList.get(i).partnerType + "类事业合伙人:" + listBean.inrecruiList.get(i).joinPersonNumber + "(人)/" + listBean.inrecruiList.get(i).personNumber);
+                                    a_price = listBean.inrecruiList.get(i).kangbiCount + "";
+                                    aTypePrice.setText("￥" + a_price);
+                                } else if (i == 1) {
+                                    bLayout.setVisibility(View.VISIBLE);
+                                    bType.setText(listBean.inrecruiList.get(i).partnerType + "类事业合伙人:" + listBean.inrecruiList.get(i).joinPersonNumber + "(人)/" + listBean.inrecruiList.get(i).personNumber);
+                                    b_price = listBean.inrecruiList.get(i).kangbiCount + "";
+                                    bTypePrice.setText("￥" + b_price);
+                                } else if (i == 2) {
+                                    cLayout.setVisibility(View.VISIBLE);
+                                    c_price = listBean.inrecruiList.get(i).kangbiCount + "";
+                                    cTypePrice.setText("￥" + c_price);
+                                    cType.setText(listBean.inrecruiList.get(i).partnerType + "类事业合伙人:" + listBean.inrecruiList.get(i).joinPersonNumber + "(人)/" + listBean.inrecruiList.get(i).personNumber);
+                                }
+                            }
+                        }
+                    }
+                });
     }
 
-    @OnClick({R.id.toolbar_left_img, R.id.commit,R.id.a_rb, R.id.b_rb, R.id.c_rb})
+    @OnClick({R.id.toolbar_left_img, R.id.commit, R.id.a_rb, R.id.b_rb, R.id.c_rb})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_left_img:
                 finish();
                 break;
             case R.id.commit:
+                commit();
                 break;
             case R.id.a_rb:
                 setRadioButton(0);
+                reall_price = a_price;
                 break;
             case R.id.b_rb:
+                reall_price = b_price;
                 setRadioButton(1);
                 break;
             case R.id.c_rb:
+                reall_price = c_price;
                 setRadioButton(2);
                 break;
         }
+    }
+
+    /*添加*/
+    private void commit() {
+
     }
 
 
@@ -114,4 +169,10 @@ public class RecruContentActivity extends BaseActivity {
     }
 
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }
