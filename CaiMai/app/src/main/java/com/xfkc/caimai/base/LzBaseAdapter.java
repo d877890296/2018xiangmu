@@ -16,6 +16,7 @@ public abstract class LzBaseAdapter extends BaseAdapter {
     public Context context;
     public LayoutInflater inflater;
     public MyApplication app;
+    public int  allSize;
     public LzBaseAdapter(Context context) {
         this.context=context;
         inflater=	LayoutInflater.from(context);

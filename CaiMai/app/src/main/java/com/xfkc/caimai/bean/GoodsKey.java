@@ -20,4 +20,5 @@ public class GoodsKey {
     public int topCategoryId;
     public String itemId;
     public String buyNum;
+    public String orderNum;
 }
