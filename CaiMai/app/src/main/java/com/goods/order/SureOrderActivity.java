@@ -44,7 +44,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -409,7 +408,8 @@ public class SureOrderActivity extends BaseActivity {
                         Gson gson = new Gson();
                         AddOrderBean addOrderBean = gson.fromJson(s, AddOrderBean.class);
                         if (addOrderBean.retCode == 1) {
-                            skip_classView(PaySuccessActivity.class, extraMap, true);
+                            extraMap.put("type","1");
+                            skip_classView(PaySuccessActivity.class, extraMap, false,101);
                         } else {
                             ToastUtil.showToast(addOrderBean.message);
                             skip_classView(SettingPayPasswordActivity.class, extraMap, false);
@@ -464,24 +464,12 @@ public class SureOrderActivity extends BaseActivity {
             requstFreight();
 //            addAddressIv.setVisibility(View.GONE);
 //            shouhuoAddress.setVisibility(View.VISIBLE);
+        }else if (requestCode == 101 && resultCode == 102){
+            backHistory(103,true,true,extraMap);
         }
     }
 
 
-    @Override
-    public void onDestroy() {
-        // TODO Auto-generated method stub
-        super.onDestroy();
-        SureCarValue.getInstance().removeAllData();
-        SureCarValue.getInstance().reSet();
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 
     private double kbAmount;
     /*获取个人信息*/
@@ -497,5 +485,6 @@ public class SureOrderActivity extends BaseActivity {
                     }
                 });
     }
+
 
 }

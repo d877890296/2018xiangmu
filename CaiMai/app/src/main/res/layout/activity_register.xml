@@ -47,7 +47,6 @@
                 android:layout_height="match_parent"
                 android:background="@null"
                 android:hint="请填写姓名"
-                android:inputType="number"
                 android:maxLength="11"
                 android:paddingLeft="15dp"
                 android:textColor="@color/text_color"

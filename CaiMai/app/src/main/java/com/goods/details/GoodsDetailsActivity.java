@@ -1,6 +1,7 @@
 package com.goods.details;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -547,7 +548,7 @@ public class GoodsDetailsActivity extends BaseActivity {
                 goodsListModel.buyNum = 1;
                 goodsListModel.paramData = param;
                 SureCarValue.getInstance().setAddressData(goodsListModel);
-                skip_classView(SureOrderActivity.class, extraMap, false);
+                skip_classView(SureOrderActivity.class, extraMap, false,104);
                 dissMbProgress();
                 dialog.dismiss();
             }
@@ -738,4 +739,13 @@ public class GoodsDetailsActivity extends BaseActivity {
                 });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 104 &&resultCode == 103){
+            finish();
+        }
+
+    }
 }

@@ -12,17 +12,18 @@ import android.widget.TextView;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
+import com.xfkc.caimai.bean.RecruBean;
 import com.xfkc.caimai.bean.RecruiHallBean;
 import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.customview.StateButton;
 import com.xfkc.caimai.net.PayFactory;
 import com.xfkc.caimai.net.RxHelper;
 import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
+import com.xfkc.caimai.pay.PayWAyActivity;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -73,8 +74,8 @@ public class RecruContentActivity extends BaseActivity {
     LinearLayout cLayout;
     private ArrayList<RadioButton> list_radio = new ArrayList<>();
     private String shopId;
-    private String a_price = "0", b_price = "0", c_price = "0", reall_price = "0";
-
+    private String partnerType = "A";
+    private double a_price = 0, b_price = 0, c_price = 0,reall_price= 0;
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_recru_content;
@@ -108,16 +109,17 @@ public class RecruContentActivity extends BaseActivity {
                                 if (i == 0) {
                                     aLayout.setVisibility(View.VISIBLE);
                                     aType.setText(listBean.inrecruiList.get(i).partnerType + "类事业合伙人:" + listBean.inrecruiList.get(i).joinPersonNumber + "(人)/" + listBean.inrecruiList.get(i).personNumber);
-                                    a_price = listBean.inrecruiList.get(i).kangbiCount + "";
+                                    a_price = listBean.inrecruiList.get(i).kangbiCount ;
+                                    reall_price = a_price;
                                     aTypePrice.setText("￥" + a_price);
                                 } else if (i == 1) {
                                     bLayout.setVisibility(View.VISIBLE);
                                     bType.setText(listBean.inrecruiList.get(i).partnerType + "类事业合伙人:" + listBean.inrecruiList.get(i).joinPersonNumber + "(人)/" + listBean.inrecruiList.get(i).personNumber);
-                                    b_price = listBean.inrecruiList.get(i).kangbiCount + "";
+                                    b_price = listBean.inrecruiList.get(i).kangbiCount ;
                                     bTypePrice.setText("￥" + b_price);
                                 } else if (i == 2) {
                                     cLayout.setVisibility(View.VISIBLE);
-                                    c_price = listBean.inrecruiList.get(i).kangbiCount + "";
+                                    c_price = listBean.inrecruiList.get(i).kangbiCount ;
                                     cTypePrice.setText("￥" + c_price);
                                     cType.setText(listBean.inrecruiList.get(i).partnerType + "类事业合伙人:" + listBean.inrecruiList.get(i).joinPersonNumber + "(人)/" + listBean.inrecruiList.get(i).personNumber);
                                 }
@@ -137,14 +139,17 @@ public class RecruContentActivity extends BaseActivity {
                 commit();
                 break;
             case R.id.a_rb:
-                setRadioButton(0);
+                partnerType = "A";
                 reall_price = a_price;
+                setRadioButton(0);
                 break;
             case R.id.b_rb:
+                partnerType = "B";
                 reall_price = b_price;
                 setRadioButton(1);
                 break;
             case R.id.c_rb:
+                partnerType = "C";
                 reall_price = c_price;
                 setRadioButton(2);
                 break;
@@ -153,7 +158,16 @@ public class RecruContentActivity extends BaseActivity {
 
     /*添加*/
     private void commit() {
-
+        PayFactory.getPayService().recruitOrder(token,shopId,partnerType,reall_price)
+                .compose(RxHelper.<RecruBean>io_main())
+                .subscribe(new ProgressSubscriber<RecruBean>(this) {
+                    @Override
+                    public void onNext(RecruBean recruBean) {
+                        extraMap.put("orderNum",recruBean.data.orderNum);
+                        extraMap.put("sign",recruBean.data.sign);
+                        skip_classView(PayWAyActivity.class,extraMap,true);
+                    }
+                });
     }
 
 
@@ -169,10 +183,4 @@ public class RecruContentActivity extends BaseActivity {
     }
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

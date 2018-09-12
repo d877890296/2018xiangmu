@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.hyf.tdlibrary.utils.ToastUtil;
-import com.orhanobut.logger.Logger;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -47,14 +46,12 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
     @Override
     public void onResp(BaseResp resp) {
-        Logger.e(TAG, "onPayFinish, errCode = ==" + resp.errCode);
+//        Logger.e(TAG, "onPayFinish, errCode = ==" + resp.errCode);
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             //根据下面的errCode表中 switch一下即可
             //如果是0的话,就是成功,然后这里去服务器查询具体的支付结果,注意服务器查询的支付结果才是可靠地支付结果
             switch (resp.errCode) {
                 case 0://成功
-//                    startActivity(new Intent(WXPayEntryActivity.this, ConfirmOrderActivity.class));
-//                    startActivity(new Intent(WXPayEntryActivity.this, VipConfirmOrderActivity.class));
                     ToastUtil.showToast("支付成功");
                     break;
                 case -1://错误  可能的原因：签名错误、未注册APPID、项目设置APPID不正确、注册的APPID与设置的不匹配、其他异常等

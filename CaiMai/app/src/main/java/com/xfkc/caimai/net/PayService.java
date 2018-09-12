@@ -13,6 +13,7 @@ import com.xfkc.caimai.bean.GoodsKey;
 import com.xfkc.caimai.bean.LoginInfo;
 import com.xfkc.caimai.bean.MineVipCardBean;
 import com.xfkc.caimai.bean.ProfitListBean;
+import com.xfkc.caimai.bean.RecruBean;
 import com.xfkc.caimai.bean.RecruiHallBean;
 import com.xfkc.caimai.bean.RegistBean;
 import com.xfkc.caimai.bean.RevenueBean;
@@ -174,4 +175,9 @@ public interface PayService {
     //查询课件
     @GET("/api/vedio/findVedioByType")
     Observable<BigLectureBean> findVedioByType(@Query("token") String token, @Query("type") String type);
+
+    //加入招募
+    @GET("/api/appPay/recruitOrder")
+    Observable<RecruBean> recruitOrder(@Query("token") String token, @Query("shopId") String shopId,
+                                       @Query("partnerType") String partnerType, @Query("payAmount") double payAmount);
 }

@@ -254,6 +254,7 @@ public class AccountRechargeActivity extends BaseActivity {
 
     /*跳转至支付成功页*/
     private void startPaySuccess() {
+        extraMap.put("type","3");
         skip_classView(PaySuccessActivity.class, extraMap, false, 1003);
     }
 
