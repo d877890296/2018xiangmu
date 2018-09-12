@@ -241,7 +241,7 @@ private  int status;
         goodsKey.pageNum = 0 + "";
         goodsKey.pageSize = 20 + "";
         goodsKey.status=status;
-      
+
         if (status==0) {
             postRequst.getMyOrder(handler, goodsKey, true);
         }else{
