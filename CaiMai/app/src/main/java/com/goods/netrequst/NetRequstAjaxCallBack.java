@@ -1,9 +1,5 @@
 package com.goods.netrequst;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Context;
 
 import com.dev.customview.MyToast;
@@ -16,6 +12,9 @@ import com.goods.sortlsitview.SortModel;
 import com.hyf.tdlibrary.utils.Tools;
 import com.json.CommonConvert;
 import com.net.http.AjaxCallBack;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 

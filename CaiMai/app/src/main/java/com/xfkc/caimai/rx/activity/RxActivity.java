@@ -28,6 +28,11 @@ public abstract class RxActivity extends BaseActivity {
 
   }
 
+  @Override
+  public void setContentView(int layoutResID) {
+    super.setContentView(layoutResID);
+  }
+
   /**
    * 设置状态栏颜色
    */

@@ -9,10 +9,7 @@
     tools:context="com.xfkc.caimai.home.recruitmenthall.RecruContentActivity">
 
     <include layout="@layout/widget_toolbar" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/f1f1f1" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,10 +43,13 @@
             android:background="@color/f1f1f1" />
 
         <LinearLayout
+            android:id="@+id/a_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -112,10 +112,12 @@
 
 
         <LinearLayout
+            android:id="@+id/b_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -183,10 +185,13 @@
             android:background="@color/f1f1f1" />
 
         <LinearLayout
+            android:id="@+id/c_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone"
+            >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -264,6 +269,7 @@
             android:id="@+id/commit"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:layout_margin="20dp"
             android:layout_marginTop="30dp"
             android:text="立即加入"
             android:textSize="20dp"
@@ -271,11 +277,14 @@
             app:normalTextColor="@color/white"
             app:pressedBackgroundColor="@color/ff704d_90"
             app:pressedTextColor="@color/white"
-            app:radius="20dp"
-            android:layout_margin="20dp"
-            />
+            app:radius="20dp" />
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/f1f1f1" />
 
 
 </com.zhy.autolayout.AutoLinearLayout>

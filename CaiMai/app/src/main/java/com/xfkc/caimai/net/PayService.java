@@ -4,17 +4,22 @@ package com.xfkc.caimai.net;
 import com.xfkc.caimai.bean.AddressBean;
 import com.xfkc.caimai.bean.AllShopsModel;
 import com.xfkc.caimai.bean.BannerBean;
+import com.xfkc.caimai.bean.BigLectureBean;
 import com.xfkc.caimai.bean.EmptyBean;
+import com.xfkc.caimai.bean.FeelingBean;
 import com.xfkc.caimai.bean.GoodsCarNumBean;
 import com.xfkc.caimai.bean.GoodsCityModel;
 import com.xfkc.caimai.bean.GoodsKey;
 import com.xfkc.caimai.bean.LoginInfo;
 import com.xfkc.caimai.bean.MineVipCardBean;
+import com.xfkc.caimai.bean.ProfitListBean;
 import com.xfkc.caimai.bean.RecruiHallBean;
 import com.xfkc.caimai.bean.RegistBean;
+import com.xfkc.caimai.bean.RevenueBean;
 import com.xfkc.caimai.bean.TopCategory;
 import com.xfkc.caimai.bean.UserInfoBean;
 import com.xfkc.caimai.bean.VipCardBean;
+import com.xfkc.caimai.bean.WXBean;
 import com.xfkc.caimai.bean.ZfbBean;
 
 import retrofit2.http.Body;
@@ -40,7 +45,8 @@ public interface PayService {
     //注册
     @GET("/api/memUser/register")
     Observable<RegistBean> registerInfo(@Query("phone") String phone, @Query("verCode") String verCode,
-                                        @Query("userPwd") String userPwd, @Query("inviteCode") String inviteCode);
+                                        @Query("userPwd") String userPwd, @Query("inviteCode") String inviteCode
+            , @Query("realName") String realName);
 
     //获取验证码
     @GET("/api/memUser/login")
@@ -92,12 +98,12 @@ public interface PayService {
 
     //首次设置支付密码
     @GET("/api/memUser/addPayPwd")
-    Observable<EmptyBean> setPayPwd(@Query("payPwd") String payPwd,@Query("token") String token);
+    Observable<EmptyBean> setPayPwd(@Query("payPwd") String payPwd, @Query("token") String token);
 
     //修改支付密码
     @GET("/api/memUser/updatePayPwd")
     Observable<EmptyBean> updatePayPwd(@Query("phone") String phone, @Query("verCode") String verCode,
-                                       @Query("payPwd") String payPwd,@Query("token") String token);
+                                       @Query("payPwd") String payPwd, @Query("token") String token);
 
     //获取用户信息
     @GET("/api/memUser/findUserDetByPhone")
@@ -116,9 +122,9 @@ public interface PayService {
 
     //实名认证
     @GET("/api/memUser/certification")
-    Observable<EmptyBean> certification(@Query("realName") String realName,@Query("idCard") String idCard,
-                                        @Query("province") String province,@Query("city") String city,
-                                        @Query("area") String area,@Query("detailAdress") String detailAdress,
+    Observable<EmptyBean> certification(@Query("realName") String realName, @Query("idCard") String idCard,
+                                        @Query("province") String province, @Query("city") String city,
+                                        @Query("area") String area, @Query("detailAdress") String detailAdress,
                                         @Query("phone") String phone);
 
     //顶部类别列表
@@ -137,4 +143,35 @@ public interface PayService {
     @GET("/api/recruite/myjoinshop")
     Observable<EmptyBean> myjoinshop(@Query("token") String token);
 
+
+    //查询我的情怀链
+    @GET("/api/memUser/findChain")
+    Observable<FeelingBean> findChain(@Query("token") String token, @Query("pageNum") int pageNum, @Query("pageSize") int pageSize);
+
+    //微信支付
+    @GET("/api/WXPay/crateMemOrder")
+    Observable<WXBean> wxPay(@Query("token") String token, @Query("memCardId") String memCardId);
+
+
+    //修改用户昵称
+    @GET("/api/memUser/updateUserNicName")
+    Observable<EmptyBean> updateUserNicName(@Query("token") String token, @Query("nicName") String nicName);
+
+    //正在招募，已完成招募列表
+    @GET("/api/recruite/inrecruitment")
+    Observable<RecruiHallBean> recruitmentHall(@Query("pageNum") int pageNum, @Query("pageSize") int pageSize,
+                                               @Query("token") String token, @Query("shopStatus") String shopStatus, @Query("shopId") String shopId);
+
+    //我的总收益
+    @GET("/api/tradeInfo/findMyRevenue")
+    Observable<RevenueBean> findMyRevenue(@Query("token") String token);
+
+    //我的总收益
+    @GET("/api/tradeInfo/11.2:findMyRevenueDet")
+    Observable<ProfitListBean> findMyRevenueDet(@Query("token") String token, @Query("pageNum") int pageNum,
+                                                @Query("pageSize") int pageSize, @Query("type") String type);
+
+    //查询课件
+    @GET("/api/vedio/findVedioByType")
+    Observable<BigLectureBean> findVedioByType(@Query("token") String token, @Query("type") String type);
 }

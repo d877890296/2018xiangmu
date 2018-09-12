@@ -24,6 +24,8 @@ public class MineProfitListAdapter extends BaseAdapter {
 
     private final Context context;
     private ArrayList<EmptyBean> list;
+    private double huiyuanCount;
+    private double shangchengCount;
 
 
     public MineProfitListAdapter(Context context) {
@@ -36,6 +38,11 @@ public class MineProfitListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void setCount(double huiyuanCount, double shangchengCount) {
+        this.huiyuanCount = huiyuanCount;
+        this.shangchengCount = shangchengCount;
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getCount() {
@@ -62,6 +69,14 @@ public class MineProfitListAdapter extends BaseAdapter {
             convertView.setTag(viewHodler);
         } else {
             viewHodler = (ViewHolder) convertView.getTag();
+        }
+
+        if (position == 0) {
+            viewHodler.mineprofitName.setText("情怀链带来的收益");
+            viewHodler.mineProfitPrice.setText(huiyuanCount + "康币");
+        } else if (position == 1) {
+            viewHodler.mineprofitName.setText("幸福公社带来的收益");
+            viewHodler.mineProfitPrice.setText(shangchengCount + "康币");
         }
 
 

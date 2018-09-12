@@ -59,7 +59,7 @@ public class BannerBean extends Response {
 
             public int id;
             public String title;
-            public Object url;
+            public String url;
             public long startTime;
             public long endTime;
             public int status;

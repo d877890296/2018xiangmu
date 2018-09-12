@@ -46,7 +46,7 @@
             android:layout_marginTop="10dp"
             android:textSize="14sp"
             android:textColor="@color/time_text_color"
-            android:text="康币余额 10000.0"
+            android:text="康币余额 0.00"
             />
 
 

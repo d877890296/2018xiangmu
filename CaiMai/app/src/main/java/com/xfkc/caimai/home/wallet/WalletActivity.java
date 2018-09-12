@@ -3,6 +3,7 @@ package com.xfkc.caimai.home.wallet;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -61,6 +62,7 @@ public class WalletActivity extends BaseActivity {
         kbAmount = getIntent().getStringExtra("kbAmount");
         payPwd = getIntent().getStringExtra("payPwd");
 
+        Log.e("kab---",kbAmount);
         kbyeTv.setText(kbAmount+"");
     }
 

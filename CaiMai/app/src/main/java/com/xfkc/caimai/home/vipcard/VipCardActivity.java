@@ -64,7 +64,7 @@ public class VipCardActivity extends BaseActivity {
 
     @Override
     protected void initViews(Bundle savedInstanceState) {
-        toolbarTitle.setText("大讲堂");
+        toolbarTitle.setText("会员卡");
         toolbarTitle.setTextColor(Color.WHITE);
         toolbar.setBackgroundColor(Color.parseColor("#ff704d"));
         toolbarLeftImg.setImageResource(R.mipmap.back_orage);

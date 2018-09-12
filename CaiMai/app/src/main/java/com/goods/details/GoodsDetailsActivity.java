@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -37,6 +36,7 @@ import com.goods.netrequst.PostRequst;
 import com.goods.order.SureOrderActivity;
 import com.goods.shoppingcar.ShoppingCarActivity;
 import com.goods.shoppingcar.SureCarValue;
+import com.google.gson.Gson;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.ToastUtil;
 import com.hyf.tdlibrary.utils.Tools;
@@ -44,6 +44,7 @@ import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 import com.xfkc.caimai.bean.GoodsCarNumBean;
 import com.xfkc.caimai.bean.GoodsKey;
+import com.xfkc.caimai.bean.ParamBean;
 import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.net.PayFactory;
 import com.xfkc.caimai.net.RxHelper;
@@ -77,8 +78,8 @@ public class GoodsDetailsActivity extends BaseActivity {
     private TextView back_textView, shoppingcar_textView, botoom_shopCarTtv, botoom_shopNumber, addShoppingCar_textView, buy_textView;
 
     private ImageView gs_img, xq_img, pj_img, tj_img;
-    private TextView gs_textView, xq_textView, pj_textView, tj_textView;
-    private TextView goodsType_textView;//规格选择
+    private TextView gs_textView, xq_textView, pj_textView, tj_textView, youfei_tv;
+    private TextView goodsType_textView, goods_num_tv;//规格选择
     private List<ImageView> locationImg;
 
     private AdViewPaper adViewPaper;
@@ -89,6 +90,7 @@ public class GoodsDetailsActivity extends BaseActivity {
     private PostRequst postRequst;
     private NetRequstAjaxCallBack ajaxCallBack;
     private int number = 1;//商品数量
+    private ImageView goods_remove_button, goods_add_bt;
 
     @Override
     protected int getLayoutResource() {
@@ -154,7 +156,11 @@ public class GoodsDetailsActivity extends BaseActivity {
         goods_discroubTitle_textView = (TextView) topHeadView.findViewById(R.id.goods_discroubTitle_textView);
         goodsPrace_textView = (TextView) topHeadView.findViewById(R.id.goodsPrace_textView);
         goodsType_textView = (TextView) topHeadView.findViewById(R.id.goodsTypeTextView);
-
+        goods_remove_button = (ImageView) topHeadView.findViewById(R.id.goods_remove_btn);
+        goods_add_bt = (ImageView) topHeadView.findViewById(R.id.goods_add_btn);
+        goods_num_tv = (TextView) topHeadView.findViewById(R.id.goodsNum);
+        youfei_tv = (TextView) topHeadView.findViewById(R.id.youfei_tv);
+        youfei_tv.setText(goodsListModel.shippingPrice + "康币");
         top_frameLayout = (FrameLayout) topHeadView.findViewById(R.id.top_frameLayout);
         top_frameLayout.setVisibility(View.VISIBLE);
 
@@ -171,8 +177,8 @@ public class GoodsDetailsActivity extends BaseActivity {
             goodsDetailsHeader = new GoodsDetailsHeader(GoodsDetailsActivity.this);
         }
         goodsDetailsHeader.setView(adViewPaper, point_textView);
-        if (!Tools.IsEmpty( goodsListModel.pic)){
-            String[] imges= goodsListModel.pic.split(",");
+        if (!Tools.IsEmpty(goodsListModel.pic)) {
+            String[] imges = goodsListModel.pic.split(",");
             goodsDetailsHeader.setImgArray(imges);
         }
         goodsListView.addHeaderView(topHeadView);
@@ -222,6 +228,8 @@ public class GoodsDetailsActivity extends BaseActivity {
         addShoppingCar_textView.setOnClickListener(onClickListener);
         buy_textView.setOnClickListener(onClickListener);
         goodsType_textView.setOnClickListener(onClickListener);
+        goods_remove_button.setOnClickListener(onClickListener);
+        goods_add_bt.setOnClickListener(onClickListener);
         setBaseContent();
     }
 
@@ -315,7 +323,7 @@ public class GoodsDetailsActivity extends BaseActivity {
                     isShow = true;
                     showMbProgress("添加中...");
 //                    requstNetDataAddProduct();
-
+                    showGoodsType();
 
                     break;
                 case R.id.buy_textView://直接购买
@@ -343,6 +351,26 @@ public class GoodsDetailsActivity extends BaseActivity {
                     fenqi_type = 12;
                     setFenQiShow(3);
                     break;
+                case R.id.goods_remove_btn:
+                    if (number > 1) {
+                        number--;
+                        setAllPrice(number);
+                    }
+                    break;
+                case R.id.goods_add_btn:
+                    final int inventory;
+                    if (Tools.IsEmpty(goodsListModel.inventory + "")) {
+                        inventory = 0;
+                    } else {
+                        inventory = Integer.parseInt(goodsListModel.inventory + "");
+                    }
+                    if (number < inventory) {
+                        number++;
+                        setAllPrice(number);
+                    } else {
+                        ToastUtil.showToast("库存量不足");
+                    }
+                    break;
                 default:
                     break;
             }
@@ -361,11 +389,9 @@ public class GoodsDetailsActivity extends BaseActivity {
             goodsKey.token = userToken;
 
 //            GoodsValue.getInstance().getGoodsListModel().buyNum = 1;
-//            GoodsValue.getInstance().getGoodsListModel().paramData="0";
-            postRequst.addProduct(handler, goodsKey,number);
+//            GoodsValue.getInstance().getGoodsListModel().paramData = param;
+            postRequst.addProduct(handler, goodsKey, number, param);
         }
-
-
 
 
     }
@@ -388,6 +414,8 @@ public class GoodsDetailsActivity extends BaseActivity {
     private ArrayList<RadioButton> fenqi_radios = new ArrayList<>();
     private int fenqi_type = 0;
     private TextView botoom_typeshopNumber;
+    private String param = "0";
+
     /*展示商品规格*/
     private void showGoodsType() {
         final int inventory;
@@ -409,7 +437,7 @@ public class GoodsDetailsActivity extends BaseActivity {
         botoom_typeshopNumber = (TextView) contentView.findViewById(R.id.botoom_shopNumber);
         TextView addShoppingCar_textView = (TextView) contentView.findViewById(R.id.addShoppingCar_textView);
         TextView buy_textView = (TextView) contentView.findViewById(R.id.buy_textView);
-
+        LinearLayout fenqi_layout = (LinearLayout) contentView.findViewById(R.id.fenqi_layout);
         RadioButton fenqi_3 = (RadioButton) contentView.findViewById(R.id.fenqi_3);
         RadioButton fenqi_6 = (RadioButton) contentView.findViewById(R.id.fenqi_6);
         RadioButton fenqi_9 = (RadioButton) contentView.findViewById(R.id.fenqi_9);
@@ -419,7 +447,7 @@ public class GoodsDetailsActivity extends BaseActivity {
         fenqi_radios.add(fenqi_9);
         fenqi_radios.add(fenqi_12);
         setAllPrice(number, show_goodsnum_tv);
-        botoom_typeshopNumber.setText(goodsCarNum+"");
+        botoom_typeshopNumber.setText(goodsCarNum + "");
         String picture = "";
         if (!Tools.IsEmpty(goodsListModel.pic)) {
             picture = goodsListModel.pic;
@@ -433,15 +461,38 @@ public class GoodsDetailsActivity extends BaseActivity {
             inventory = Integer.parseInt(goodsListModel.inventory + "");
         }
         shop_kc.setText("库存 " + inventory + " " + goodsListModel.unit);
-        Log.e("----allpara---", goodsListModel.allParamData+"");
         if (goodsListModel.itemType == 0) {
-            type_price.setText(goodsListModel.paramData);
+            if (Tools.IsEmpty(goodsListModel.paramData)){
+                type_name01.setVisibility(View.GONE);
+                type_price.setVisibility(View.GONE);
+            }else {
+                type_name01.setVisibility(View.VISIBLE);
+                type_price.setVisibility(View.VISIBLE);
+                type_price.setText(goodsListModel.paramData);
+            }
         } else {
-
+            if (goodsListModel.allParamData == null || Tools.IsEmpty(goodsListModel.allParamData) || goodsListModel.allParamData.equals("null")) {
+                type_name01.setVisibility(View.GONE);
+                type_price.setVisibility(View.GONE);
+            } else {
+                type_name01.setVisibility(View.VISIBLE);
+                type_price.setVisibility(View.VISIBLE);
+                Gson gson = new Gson();
+                ParamBean paramBean = gson.fromJson(goodsListModel.allParamData.substring(1, goodsListModel.allParamData.length() - 1), ParamBean.class);
+                type_name01.setText(paramBean.group);
+                if (paramBean.params.size() != 0) {
+                    param = paramBean.params.get(0);
+                    type_price.setText(paramBean.params.get(0));
+                }
+            }
         }
         if (goodsListModel.mailType == 0) {
             setFenQiShow(-1);
+            type_name02.setVisibility(View.GONE);
+            fenqi_layout.setVisibility(View.GONE);
         } else {
+            type_name02.setVisibility(View.VISIBLE);
+            fenqi_layout.setVisibility(View.VISIBLE);
             fenqi_3.setOnClickListener(onClickListener);
             fenqi_6.setOnClickListener(onClickListener);
             fenqi_9.setOnClickListener(onClickListener);
@@ -455,6 +506,7 @@ public class GoodsDetailsActivity extends BaseActivity {
                     number--;
                     setAllPrice(number, show_goodsnum_tv);
                 }
+                dissMbProgress();
             }
         });
         add_goods_tv.setOnClickListener(new View.OnClickListener() {
@@ -466,6 +518,7 @@ public class GoodsDetailsActivity extends BaseActivity {
                 } else {
                     ToastUtil.showToast("库存量不足");
                 }
+                dissMbProgress();
             }
         });
 
@@ -481,6 +534,7 @@ public class GoodsDetailsActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 requstNetDataAddProduct();
+                dissMbProgress();
                 dialog.dismiss();
             }
         });
@@ -490,9 +544,11 @@ public class GoodsDetailsActivity extends BaseActivity {
                 extraMap.put("allPrace", allPrice + "");
                 extraMap.put("sourceType", 1);
                 SureCarValue.getInstance().init();
-                goodsListModel.buyNum=1;   
+                goodsListModel.buyNum = 1;
+                goodsListModel.paramData = param;
                 SureCarValue.getInstance().setAddressData(goodsListModel);
                 skip_classView(SureOrderActivity.class, extraMap, false);
+                dissMbProgress();
                 dialog.dismiss();
             }
         });
@@ -517,6 +573,13 @@ public class GoodsDetailsActivity extends BaseActivity {
         show_goodsnum_tv.setText(number + "");
         float price = number * goodsListModel.itemPrice;
         allPrice = (float) (Math.round(price * 10000)) / 10000;
+//        noebuytvPrice.setText("￥" + decimalFormat.format(allPrice + mpmodityFreight));
+    }
+
+    private void setAllPrice(int number) {
+        goods_num_tv.setText("x" + number);
+//        float price = number * goodsListModel.itemPrice;
+//        allPrice = (float) (Math.round(price * 10000)) / 10000;
 //        noebuytvPrice.setText("￥" + decimalFormat.format(allPrice + mpmodityFreight));
     }
 
@@ -650,8 +713,9 @@ public class GoodsDetailsActivity extends BaseActivity {
     };
 
     private int goodsCarNum = 0;
+
     /*刷新购物车数量*/
-    private void updateCarNum(){
+    private void updateCarNum() {
         PayFactory.getPayService().getShopCartItemNum(userToken)
                 .compose(RxHelper.<GoodsCarNumBean>io_main())
                 .subscribe(new Subscriber<GoodsCarNumBean>() {
@@ -668,8 +732,8 @@ public class GoodsDetailsActivity extends BaseActivity {
                     @Override
                     public void onNext(GoodsCarNumBean goodsCarNumBean) {
                         goodsCarNum = goodsCarNumBean.data;
-                        botoom_shopNumber.setText(goodsCarNum+"");
-                        botoom_typeshopNumber.setText(goodsCarNum+"");
+                        botoom_shopNumber.setText(goodsCarNum + "");
+                        botoom_typeshopNumber.setText(goodsCarNum + "");
                     }
                 });
     }

@@ -100,9 +100,10 @@ public class PostRequst {
      * @param handler
      * @param goodsKey
      * @param number
+     * @param paramData
      */
     public void addProduct(Handler handler, GoodsKey goodsKey,
-                           int number) {
+                           int number, String paramData) {
         this.handler = handler;
         url = Constant.BASE_URL + "/api/shopcart/addProduct?";
         params = new RequestParams();
@@ -131,10 +132,10 @@ public class PostRequst {
             allparamData = goodsListModel.allParamData;
         }
         params.addBodyParameter("allParamData", allparamData);
-        String paramData = "0";
-        if (!Tools.IsEmpty(goodsListModel.paramData)){
-            paramData = goodsListModel.paramData;
-        }
+//        String paramData = "0";
+//        if (!Tools.IsEmpty(goodsListModel.paramData)){
+//            paramData = goodsListModel.paramData;
+//        }
         params.addBodyParameter("paramData",paramData );
         params.addBodyParameter("buyNum", number+"");
         params.addBodyParameter("shopId", goodsListModel.shopId + "");

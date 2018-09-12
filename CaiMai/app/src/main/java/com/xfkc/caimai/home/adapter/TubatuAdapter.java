@@ -1,6 +1,7 @@
 package com.xfkc.caimai.home.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -8,7 +9,9 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.bean.BannerBean;
+import com.xfkc.caimai.config.Constant;
 import com.xfkc.caimai.customview.RecyclingPagerAdapter;
+import com.xfkc.caimai.web.TDWebViewActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +65,9 @@ public class TubatuAdapter extends RecyclingPagerAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //企业网址链接
+                mContext.startActivity(new Intent(mContext, TDWebViewActivity.class)
+                        .putExtra(Constant.WEB_URL, mList.get(position).url));
             }
         });
         return imageView;

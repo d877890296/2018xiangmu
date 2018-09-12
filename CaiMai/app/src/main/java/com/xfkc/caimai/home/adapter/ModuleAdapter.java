@@ -38,8 +38,8 @@ public class ModuleAdapter extends BaseAdapter {
     private List<String> moduleList;
     //其他模块适配器
 //    private OthersModuleAdapter othersModuleAdapter;
-
-    private int[] images={R.mipmap.xingfu,R.mipmap.zhaomudating,R.mipmap.vip_car,R.mipmap.every_8};
+    private String[] titls = {"各种会员商品任君挑选", "加入我们成为我们的一员", "购买会员享受会员权益", "暂未开放 敬请期待"};
+    private int[] images = {R.mipmap.xingfu, R.mipmap.zhaomudating, R.mipmap.vip_car, R.mipmap.every_8};
     private List<BannerBean.DataBean.ListBean> list_banner;
 
     public ModuleAdapter(Context context) {
@@ -118,7 +118,7 @@ public class ModuleAdapter extends BaseAdapter {
             case TYPE2:
                 position = position - 1;
                 viewHolder02.title.setText(moduleList.get(position));
-                viewHolder02.content.setText("标题文字标题文字");
+                viewHolder02.content.setText(titls[position]);
                 viewHolder02.image.setImageResource(images[position]);
                 break;
         }

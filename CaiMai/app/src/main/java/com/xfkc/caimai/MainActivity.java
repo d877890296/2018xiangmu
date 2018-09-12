@@ -58,7 +58,6 @@ public class MainActivity extends RxActivity {
     @Override
     protected void initViews(Bundle savedInstanceState) {
         token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
-
         initTabHost();
 
         if (Build.VERSION.SDK_INT >= 23) {

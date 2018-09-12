@@ -38,6 +38,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         //隐藏状态栏
 //        StatusBarUtil.hideStatus(this);
+
     }
 
 

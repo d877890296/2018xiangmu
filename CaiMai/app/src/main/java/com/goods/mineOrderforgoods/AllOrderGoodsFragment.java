@@ -1,17 +1,17 @@
 package com.goods.mineOrderforgoods;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.goods.city.GoodsListModel;
 import com.goods.city.GoodsValue;
 import com.goods.details.GoodsDetailsActivity;
-import com.goods.details.ShoppingCarModel;
-import com.goods.netrequst.Logger;
+import com.goods.mineOrderforgoods.AllOrderGoodsListAdapter.OnListViewClickLinstener;
 import com.goods.netrequst.NetRequstAjaxCallBack;
 import com.goods.netrequst.PostRequst;
 import com.goods.sortlsitview.AjaxShopModel;
@@ -25,20 +25,7 @@ import com.xfkc.caimai.base.BaseFragment;
 import com.xfkc.caimai.bean.GoodsKey;
 import com.xfkc.caimai.config.SharedPref;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.goods.mineOrderforgoods.AllOrderGoodsListAdapter.OnListViewClickLinstener;
+import java.util.ArrayList;
 
 import static com.goods.netrequst.PostRequst.UPSUCCESS;
 
@@ -277,6 +264,7 @@ private  int status;
                 case UPSUCCESS://数据获取成功
                     if (msg.arg1 == 1) {//成功
                         String jsonObj = msg.obj.toString();
+                        Log.e("-------", jsonObj);
                         if (Tools.IsEmpty(jsonObj)) {
                             android.widget.Toast.makeText(mContext,
                                     "数据错误", Toast.LENGTH_LONG).show();

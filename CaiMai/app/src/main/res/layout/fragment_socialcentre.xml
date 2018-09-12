@@ -66,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="5dp"
                     android:paddingTop="5dp"
-                    android:text="幸福ID: 123456"
+                    android:text="幸福ID: "
                     android:textColor="@color/white"
                     android:textSize="12sp" />
                 <!-- 收藏 -->
@@ -78,6 +78,7 @@
                     android:paddingTop="10dp">
 
                     <LinearLayout
+                        android:id="@+id/vip_year_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -108,6 +109,7 @@
                         android:background="@color/gray" />
 
                     <LinearLayout
+                        android:id="@+id/kbye_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -148,6 +150,7 @@
                 app:sRightIconRes="@mipmap/icon_youjiantou"
                 app:sRightMaxEms="11"
                 app:sRightTextColor="@color/c999999"
+                app:sRightTextSize="14sp"
                 app:sRightTextString="查看更多订单" />
             <!--我的订单    待发货  待付款  评价等-->
             <LinearLayout
@@ -168,10 +171,11 @@
                         android:id="@+id/wait_pay_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawablePadding="15dp"
+                        android:drawablePadding="5dp"
                         android:drawableTop="@mipmap/dfk_mine_icon"
                         android:gravity="center"
                         android:padding="4dp"
+                        android:textSize="14sp"
                         android:text="待付款" />
 
                     <TextView
@@ -198,10 +202,11 @@
                         android:id="@+id/psz_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawablePadding="15dp"
+                        android:drawablePadding="5dp"
                         android:drawableTop="@mipmap/psz_mine_icon"
                         android:gravity="center"
                         android:padding="4dp"
+                        android:textSize="14sp"
                         android:text="配送中" />
 
                     <TextView
@@ -228,10 +233,11 @@
                         android:id="@+id/dpj_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawablePadding="15dp"
+                        android:drawablePadding="5dp"
                         android:drawableTop="@mipmap/dpj_mine_icon"
                         android:gravity="center"
                         android:padding="4dp"
+                        android:textSize="14sp"
                         android:text="待评价" />
 
                     <TextView
@@ -260,10 +266,11 @@
                         android:id="@+id/tk_sh_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawablePadding="15dp"
+                        android:drawablePadding="5dp"
                         android:drawableTop="@mipmap/tk_mine_icon"
                         android:gravity="center"
                         android:padding="4dp"
+                        android:textSize="14sp"
                         android:text="退款/退货" />
 
                     <TextView
@@ -309,7 +316,11 @@
                 >
 
             </com.dev.customview.MyGridView>
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/whilte"
+                />
 
         </LinearLayout>
 

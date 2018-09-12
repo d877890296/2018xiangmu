@@ -9,7 +9,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.xfkc.caimai.R;
-import com.xfkc.caimai.bean.EmptyBean;
+import com.xfkc.caimai.bean.BigLectureBean;
+import com.xfkc.caimai.util.Utils;
 
 import java.util.ArrayList;
 
@@ -25,7 +26,7 @@ import butterknife.ButterKnife;
 public class BigListAdapter extends BaseAdapter {
 
     private final Context context;
-    private ArrayList<EmptyBean> list;
+    private ArrayList<BigLectureBean.DataBean> list;
 
 
     public BigListAdapter(Context context) {
@@ -33,7 +34,7 @@ public class BigListAdapter extends BaseAdapter {
     }
 
     /*设置数据*/
-    public void setData(ArrayList<EmptyBean> list) {
+    public void setData(ArrayList<BigLectureBean.DataBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -66,10 +67,10 @@ public class BigListAdapter extends BaseAdapter {
             viewHodler = (ViewHolder) convertView.getTag();
         }
 
-
-        viewHodler.titleTv.setText("往期视频"+position);
-        viewHodler.timeTv.setText("2018-08-0"+position);
-        Glide.with(context).load(R.mipmap.error_icon)
+        BigLectureBean.DataBean dataBean = list.get(position);
+        viewHodler.titleTv.setText(dataBean.name);
+        viewHodler.timeTv.setText(Utils.timeStamp2Date(dataBean.createTime, "yyyy-MM-dd"));
+        Glide.with(context).load(dataBean.image)
                 .placeholder(R.mipmap.error_icon)//占位符
                 .error(R.mipmap.error_icon)//加载错误时
                 .into(viewHodler.imgIcon);
@@ -77,6 +78,7 @@ public class BigListAdapter extends BaseAdapter {
                 .placeholder(R.mipmap.nocollect_btn)//占位符
                 .error(R.mipmap.nocollect_btn)//加载错误时
                 .into(viewHodler.heartIv);
+
         return convertView;
     }
 

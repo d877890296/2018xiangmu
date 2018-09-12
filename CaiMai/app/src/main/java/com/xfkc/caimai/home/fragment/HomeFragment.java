@@ -10,13 +10,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.goods.city.GoodsCityActivity;
+import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.ToastUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseFragment;
 import com.xfkc.caimai.bean.BannerBean;
+import com.xfkc.caimai.bean.UserInfoBean;
+import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.home.adapter.ModuleAdapter;
 import com.xfkc.caimai.home.recruitmenthall.RecruitmentHallActivity;
 import com.xfkc.caimai.home.vipcard.VipCardActivity;
+import com.xfkc.caimai.loading.LoadingActivity;
+import com.xfkc.caimai.net.ApiException;
 import com.xfkc.caimai.net.PayFactory;
 import com.xfkc.caimai.net.RxHelper;
 import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
@@ -62,7 +67,7 @@ public class HomeFragment extends BaseFragment {
 
         getBanner();//获取轮播图
         setListClick();
-
+        getData();
     }
 
     /*获取轮播图*/
@@ -116,5 +121,32 @@ public class HomeFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    /*获取个人信息*/
+    private void getData() {
+        String token= SharedPrefUtil.get(mContext, SharedPref.TOKEN);
+        PayFactory.getPayService()
+                .findUserDetByPhone(token)
+                .compose(RxHelper.<UserInfoBean>io_main())
+                .subscribe(new ProgressSubscriber<UserInfoBean>(mContext) {
+                    @Override
+                    public void onNext(UserInfoBean userInfoBean) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        dismissProgressDialog();
+                        ApiException apiException = (ApiException) e;
+                        if (apiException.getMessage().equals("用户已失效,请重新登录")) {
+                            startActivity(new Intent(getActivity(), LoadingActivity.class));
+                            getActivity().finish();
+                        } else {
+                            super.onError(e);
+                        }
+
+                    }
+                });
     }
 }
