@@ -201,6 +201,7 @@ public class GoodsDetailsHeader {
 			ImageView imageView = new ImageView(context);
 			imageView.setBackgroundResource(R.drawable.adi);
 			imageView.setScaleType(ScaleType.FIT_XY);
+			//imageView.setAdjustViewBounds(true);
 			imageView.setClickable(true);
 			imageView.setTag(100 + (i + 1));
 			

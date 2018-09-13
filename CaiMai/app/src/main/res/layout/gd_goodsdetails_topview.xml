@@ -9,12 +9,13 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="260dp">
+        android:background="#000000"
+        android:layout_height="320dp">
 
         <com.dev.customview.AdViewPaper
             android:id="@+id/adViewPager"
             android:layout_width="match_parent"
-            android:layout_height="450dp" />
+            android:layout_height="match_parent" />
 
         <!-- ////////////////////默认顶部视图开始//////////////// -->
 
