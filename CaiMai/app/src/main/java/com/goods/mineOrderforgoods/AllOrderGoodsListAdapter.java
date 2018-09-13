@@ -1,6 +1,7 @@
 package com.goods.mineOrderforgoods;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.RecyclerView;
@@ -27,14 +28,14 @@ public class AllOrderGoodsListAdapter extends RecyclerView.Adapter<AllOrderGoods
     private LayoutInflater mLayoutInflater;
 
     private int baseType = 0;
-private Handler handler;
+    private Handler handler;
     ArrayList<OrderModel> shopsList;
 
     private OnListViewClickLinstener onListViewClickLinstener;
 
     public AllOrderGoodsListAdapter(Context mContext, Handler handler) {
         this.mContext = mContext;
-        this.handler=handler;
+        this.handler = handler;
         mLayoutInflater = LayoutInflater.from(this.mContext);
         shopsList = new ArrayList<OrderModel>();
 
@@ -237,8 +238,10 @@ private Handler handler;
                 tuikuan_textView.setVisibility(View.GONE);
                 pj_textView.setVisibility(View.GONE);
                 lookd_btGoods_textView.setVisibility(View.GONE);
-
-
+                Drawable drawableLeft = mContext.getResources().getDrawable(R.mipmap.dfk_icon);
+                goods_status.setCompoundDrawablesWithIntrinsicBounds(drawableLeft,
+                        null, null, null);
+                goods_status.setCompoundDrawablePadding(5);
             } else if (model.status == 2) {
                 cannelOrder_textView.setVisibility(View.VISIBLE);
                 lookLogistics_textView.setVisibility(View.GONE);
@@ -248,7 +251,10 @@ private Handler handler;
                 tuikuan_textView.setVisibility(View.GONE);
                 pj_textView.setVisibility(View.GONE);
                 lookd_btGoods_textView.setVisibility(View.GONE);
-
+                Drawable drawableLeft = mContext.getResources().getDrawable(R.mipmap.dfh_icon);
+                goods_status.setCompoundDrawablesWithIntrinsicBounds(drawableLeft,
+                        null, null, null);
+                goods_status.setCompoundDrawablePadding(5);
             } else if (model.status == 3) {
                 cannelOrder_textView.setVisibility(View.GONE);
                 lookLogistics_textView.setVisibility(View.VISIBLE);
@@ -259,7 +265,10 @@ private Handler handler;
                 pj_textView.setVisibility(View.GONE);
                 lookd_btGoods_textView.setVisibility(View.GONE);
                 lookd_btGoods_textView.setVisibility(View.GONE);
-
+                Drawable drawableLeft = mContext.getResources().getDrawable(R.mipmap.psz_icon);
+                goods_status.setCompoundDrawablesWithIntrinsicBounds(drawableLeft,
+                        null, null, null);
+                goods_status.setCompoundDrawablePadding(5);
             } else if (model.status == 4 || model.status == 5) {
                 cannelOrder_textView.setVisibility(View.GONE);
                 lookLogistics_textView.setVisibility(View.GONE);
@@ -268,7 +277,10 @@ private Handler handler;
                 tuikuan_textView.setVisibility(View.VISIBLE);
                 pj_textView.setVisibility(View.VISIBLE);
                 lookd_btGoods_textView.setVisibility(View.GONE);
-
+                Drawable drawableLeft = mContext.getResources().getDrawable(R.mipmap.complete_icon);
+                goods_status.setCompoundDrawablesWithIntrinsicBounds(drawableLeft,
+                        null, null, null);
+                goods_status.setCompoundDrawablePadding(5);
             } else if (model.status == 6) {
                 cannelOrder_textView.setVisibility(View.GONE);
                 lookLogistics_textView.setVisibility(View.GONE);
@@ -277,7 +289,10 @@ private Handler handler;
                 tuikuan_textView.setVisibility(View.GONE);
                 pj_textView.setVisibility(View.GONE);
                 lookd_btGoods_textView.setVisibility(View.VISIBLE);
-
+                Drawable drawableLeft = mContext.getResources().getDrawable(R.mipmap.cancle_icon);
+                goods_status.setCompoundDrawablesWithIntrinsicBounds(drawableLeft,
+                        null, null, null);
+                goods_status.setCompoundDrawablePadding(5);
             }
         }
     }
@@ -322,7 +337,7 @@ private Handler handler;
         }
 
         @Override
-        public View getView( int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView, ViewGroup parent) {
             MyOrderHolder myOrderHolder = null;
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.goods_orderchilds_item_layout, null);
@@ -334,21 +349,21 @@ private Handler handler;
             GoodsListModel gModel = itemOrderDetailList.get(position);
             myOrderHolder.setModel(gModel);
 
-            onClickOption(myOrderHolder.itemliner,fatherPosition,position);
+            onClickOption(myOrderHolder.itemliner, fatherPosition, position);
 
             return convertView;
         }
 
-        public void onClickOption(LinearLayout itemliner,final int fatherPosition,final int position) {
+        public void onClickOption(LinearLayout itemliner, final int fatherPosition, final int position) {
             itemliner.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // TODO Auto-generated method stub
 
-                    Message msg=new Message();
-                    msg.arg1=fatherPosition;
-                    msg.arg2=position;
-                    msg.what=90;
+                    Message msg = new Message();
+                    msg.arg1 = fatherPosition;
+                    msg.arg2 = position;
+                    msg.what = 90;
                     handler.sendMessage(msg);
 
 

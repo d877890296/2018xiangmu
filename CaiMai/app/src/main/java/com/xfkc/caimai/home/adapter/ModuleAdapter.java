@@ -1,6 +1,7 @@
 package com.xfkc.caimai.home.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,12 +9,16 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hyf.tdlibrary.view.BannerLayout;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.bean.BannerBean;
+import com.xfkc.caimai.config.Constant;
 import com.xfkc.caimai.customview.ClipViewPager;
 import com.xfkc.caimai.customview.ScalePageTransformer;
+import com.xfkc.caimai.web.TDWebViewActivity;
 import com.zhy.autolayout.AutoRelativeLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -113,7 +118,8 @@ public class ModuleAdapter extends BaseAdapter {
 
         switch (type) {
             case TYPE1://
-                setClipViewpager(viewHolder01);
+//                setClipViewpager(viewHolder01);
+                setBanner(viewHolder01);
                 break;
             case TYPE2:
                 position = position - 1;
@@ -163,6 +169,8 @@ public class ModuleAdapter extends BaseAdapter {
         ClipViewPager clipViewpager;
         @Bind(R.id.page_container)
         AutoRelativeLayout pageContainer;
+        @Bind(R.id.banner)
+        BannerLayout banner;
 
         ViewHolder01(View view) {
             ButterKnife.bind(this, view);
@@ -180,5 +188,23 @@ public class ModuleAdapter extends BaseAdapter {
         ViewHolder02(View view) {
             ButterKnife.bind(this, view);
         }
+    }
+    //顶部图片集合存储
+    private ArrayList<String> urls = new ArrayList<>();
+    /*设置轮播图*/
+    private void setBanner(ViewHolder01 viewHolder01) {
+        urls.clear();
+        for (int i=0;i<list_banner.size();i++){
+            urls.add(list_banner.get(i).image);
+        }
+        viewHolder01.banner.setViewUrls(urls);
+        viewHolder01.banner.setOnBannerItemClickListener(new BannerLayout.OnBannerItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                context.startActivity(new Intent(context, TDWebViewActivity.class)
+                        .putExtra(Constant.WEB_URL, list_banner.get(position).url));
+
+            }
+        });
     }
 }

@@ -24,8 +24,8 @@ public class RevenueBean extends Response {
          * totalCount : 0.0
          */
 
-        public double huiyuanCount;
-        public double shangchengCount;
-        public double totalCount;
+        public String huiyuanCount;
+        public String shangchengCount;
+        public String totalCount;
     }
 }

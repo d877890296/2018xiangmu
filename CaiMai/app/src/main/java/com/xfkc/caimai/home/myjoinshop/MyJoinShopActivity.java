@@ -10,13 +10,16 @@ import com.dev.customview.CustomListView;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
-import com.xfkc.caimai.bean.EmptyBean;
+import com.xfkc.caimai.bean.MyJoinBean;
 import com.xfkc.caimai.config.SharedPref;
+import com.xfkc.caimai.net.PayFactory;
+import com.xfkc.caimai.net.RxHelper;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import rx.Subscriber;
 
 /*我加入的店铺*/
 public class MyJoinShopActivity extends BaseActivity {
@@ -38,7 +41,7 @@ public class MyJoinShopActivity extends BaseActivity {
     CustomListView listview;
 
     private MyJoinListAdapter myJoinListAdapter;
-    private ArrayList<EmptyBean> list_data=new ArrayList<>();
+    private ArrayList<MyJoinBean.DataBean.InrecruiListBean> list_data = new ArrayList<>();
 
     @Override
     protected int getLayoutResource() {
@@ -52,27 +55,34 @@ public class MyJoinShopActivity extends BaseActivity {
         toolbarLeftImg.setImageResource(R.mipmap.back_white);
 
         token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
-        list_data.add(new EmptyBean());
-        list_data.add(new EmptyBean());
-        list_data.add(new EmptyBean());
-
         myJoinListAdapter = new MyJoinListAdapter(this);
-        myJoinListAdapter.setData(list_data);
-        listview.setAdapter(myJoinListAdapter);
+
     }
 
     @Override
     protected void loadData() {
-//        PayFactory.getPayService()
-//                .myjoinshop(token)
-//                .compose(RxHelper.<EmptyBean>io_main())
-//                .subscribe(new ProgressSubscriber<EmptyBean>(this) {
-//                    @Override
-//                    public void onNext(EmptyBean emptyBean) {
-//
-//
-//                    }
-//                });
+        PayFactory.getPayService()
+                .myjoinshop(token)
+                .compose(RxHelper.<MyJoinBean>io_main())
+                .subscribe(new Subscriber<MyJoinBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(MyJoinBean myJoinBean) {
+                        if (myJoinBean.data != null && myJoinBean.data.inrecruiList.size() != 0) {
+                            myJoinListAdapter.setData(myJoinBean.data);
+                            listview.setAdapter(myJoinListAdapter);
+                        }
+                    }
+                });
 
 
     }

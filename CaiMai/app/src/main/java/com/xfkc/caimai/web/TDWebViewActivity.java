@@ -60,8 +60,9 @@ public class TDWebViewActivity extends RxActivity {
                 .go(url);
 //        mAgentWeb.getJsInterfaceHolder().addJavaObject("android",new AndroidInterface(mAgentWeb, mContext));
 
-    }
 
+
+        }
 
     private
     @Nullable

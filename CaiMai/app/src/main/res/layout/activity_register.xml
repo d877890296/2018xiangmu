@@ -39,7 +39,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/register_phone_icon" />
+                android:src="@mipmap/regist_name" />
 
             <EditText
                 android:id="@+id/real_name_edit"

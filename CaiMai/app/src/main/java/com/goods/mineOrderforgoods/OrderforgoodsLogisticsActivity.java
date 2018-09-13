@@ -11,20 +11,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dev.customview.MyListView;
-import com.goods.city.GoodsValue;
 import com.goods.details.GoodsDetailsActivity;
 import com.goods.netrequst.NetRequstAjaxCallBack;
 import com.goods.netrequst.PostRequst;
-import com.goods.sortlsitview.AjaxShopModel;
+import com.google.gson.Gson;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.Tools;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 import com.xfkc.caimai.bean.GoodsKey;
+import com.xfkc.caimai.bean.LogisticsBean;
 import com.xfkc.caimai.config.SharedPref;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,12 +35,13 @@ import static com.goods.netrequst.PostRequst.UPSUCCESS;
 
 public class OrderforgoodsLogisticsActivity extends BaseActivity {
 
-    private List<LogisticsModel> data;
+//    private List<LogisticsModel> data;
+    private List<LogisticsBean.DataBean> data;
     private MyListView timeline_list;
     private GoodsLogisticsAdapter goodsLogisticsAdapter;
-    private String content[] = {"[北京市] 您的订单正在配送途中，请您准备签收（配送员：李元，电话：010-718980或者13141199287），感谢你的耐心等待", "你的订单已经达到[北京站]",
-            "您提交了订单，请等待系统确认"};
-    private String time[] = {"2018-03-02 13:44:23", "2018-03-01 10:24:13", "2018-03-01 08:20:13"};
+//    private String content[] = {"[北京市] 您的订单正在配送途中，请您准备签收（配送员：李元，电话：010-718980或者13141199287），感谢你的耐心等待", "你的订单已经达到[北京站]",
+//            "您提交了订单，请等待系统确认"};
+//    private String time[] = {"2018-03-02 13:44:23", "2018-03-01 10:24:13", "2018-03-01 08:20:13"};
     private String orderNum;
     private PostRequst postRequst;
     private NetRequstAjaxCallBack ajaxCallBack;
@@ -64,7 +62,8 @@ public class OrderforgoodsLogisticsActivity extends BaseActivity {
     public void deaultDataInit() {
         // TODO Auto-generated method stub
         orderNum = getIntent().getStringExtra("orderNum");
-        data = new ArrayList<LogisticsModel>();
+//        data = new ArrayList<LogisticsModel>();
+        data = new ArrayList<LogisticsBean.DataBean>();
         postRequst = new PostRequst(handler);
         ajaxCallBack = new NetRequstAjaxCallBack(mContext);
         ajaxCallBack.setOnNetRequstAjaxCallBack(onNetRequstAjaxCallBack);
@@ -84,12 +83,12 @@ public class OrderforgoodsLogisticsActivity extends BaseActivity {
     }
 
     public void dataInit() {
-        for (int i = 0; i < content.length; i++) {
-            LogisticsModel model = new LogisticsModel();
-            model.setContentInfo(content[i]);
-            model.setTime(time[i]);
-            data.add(model);
-        }
+//        for (int i = 0; i < content.length; i++) {
+//            LogisticsModel model = new LogisticsModel();
+//            model.setContentInfo(content[i]);
+//            model.setTime(time[i]);
+//            data.add(model);
+//        }
         goodsLogisticsAdapter.setData(data);
         timeline_list.setAdapter(goodsLogisticsAdapter);
     }
@@ -165,9 +164,13 @@ public class OrderforgoodsLogisticsActivity extends BaseActivity {
                         }
 
 //                            app.jsonHttp.getJsonObj(jsonObj, AjaxShopModel.class,
-                        //ajaxCallBack.getMyOrder);
+//                        ajaxCallBack.getMyOrder);
+                        Gson gson=new Gson();
+                        LogisticsBean logisticsBean = gson.fromJson(jsonObj,LogisticsBean.class);
+                        if (logisticsBean.data!=null && logisticsBean.data.size()!=0)
+                        data.addAll(logisticsBean.data);
 
-
+                        goodsLogisticsAdapter.setData(data);
                         break;
 
                     }

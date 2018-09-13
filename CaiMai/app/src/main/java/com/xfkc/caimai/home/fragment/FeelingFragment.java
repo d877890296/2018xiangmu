@@ -5,11 +5,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.ToastUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseFragment;
 import com.xfkc.caimai.bean.FeelingBean;
+import com.xfkc.caimai.bean.UserInfoBean;
 import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.home.adapter.FeelingAdapter;
 import com.xfkc.caimai.net.PayFactory;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+import rx.Subscriber;
 
 /**
  * 情怀链
@@ -60,7 +63,7 @@ public class FeelingFragment extends BaseFragment {
 
         feelingAdapter = new FeelingAdapter(mContext);
         String token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
-//        getUserInfo(token);
+        getUserInfo(token);
         PayFactory.getPayService().findChain(token,pageNum,pageSize)
         .compose(RxHelper.<FeelingBean>io_main())
         .subscribe(new ProgressSubscriber<FeelingBean>(mContext) {
@@ -80,22 +83,31 @@ public class FeelingFragment extends BaseFragment {
 
     }
 
-//    /*获取用户信息*/
-//    private void getUserInfo(String token) {
-//        PayFactory.getPayService()
-//                .findUserDetByPhone(token)
-//                .compose(RxHelper.<UserInfoBean>io_main())
-//                .subscribe(new ProgressSubscriber<UserInfoBean>(mContext) {
-//                    @Override
-//                    public void onNext(UserInfoBean userInfoBean) {
-//
-//                        feelingName.setText(userInfoBean.data.nicName);
-//                        Glide.with(mContext).load(userInfoBean.data.userImg).error(R.mipmap.heart_icon).into(accountIv);
-//                        feelingAdapter.setTypeData(userInfoBean.data.nicName,userInfoBean.data.userImg,userInfoBean.data.createTime);
-//                    }
-//                });
-//
-//    }
+    /*获取用户信息*/
+    private void getUserInfo(String token) {
+        PayFactory.getPayService()
+                .findUserDetByPhone(token)
+                .compose(RxHelper.<UserInfoBean>io_main())
+                .subscribe(new Subscriber<UserInfoBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(UserInfoBean userInfoBean) {
+                        feelingName.setText(userInfoBean.data.nicName);
+                        Glide.with(mContext).load(userInfoBean.data.userImg).error(R.mipmap.heart_icon).into(accountIv);
+                        feelingAdapter.setTypeData(userInfoBean.data.nicName,userInfoBean.data.userImg,userInfoBean.data.createTime);
+                    }
+                });
+
+    }
 
 
     @OnClick(R.id.share_iv)

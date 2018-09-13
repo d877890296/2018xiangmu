@@ -7,9 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.xfkc.caimai.R;
-import com.xfkc.caimai.bean.EmptyBean;
-
-import java.util.ArrayList;
+import com.xfkc.caimai.bean.MyJoinBean;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -23,7 +21,7 @@ import butterknife.ButterKnife;
 public class MyJoinListAdapter extends BaseAdapter {
 
     private final Context context;
-    private ArrayList<EmptyBean> list;
+    private MyJoinBean.DataBean list;
 
 
     public MyJoinListAdapter(Context context) {
@@ -31,7 +29,7 @@ public class MyJoinListAdapter extends BaseAdapter {
     }
 
     /*设置数据*/
-    public void setData(ArrayList<EmptyBean> list) {
+    public void setData(MyJoinBean.DataBean list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -39,12 +37,12 @@ public class MyJoinListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return list.size();
+        return 1;
     }
 
     @Override
     public Object getItem(int position) {
-        return list.get(position);
+        return list;
     }
 
     @Override
@@ -64,13 +62,30 @@ public class MyJoinListAdapter extends BaseAdapter {
             viewHodler = (ViewHolder) convertView.getTag();
         }
 
-        viewHodler.aType.setText("A类事业合伙人：20");
-        viewHodler.bType.setText("B类事业合伙人：200");
-        viewHodler.cType.setText("C类事业合伙人：500");
-        viewHodler.aTypeDes.setText("每个季度可获得店铺年营业额0.07%的康币分红");
-        viewHodler.bTypeDes.setText("每个季度可获得店铺年营业额0.03%的康币分红");
-        viewHodler.cTypeDes.setText("每年可获得每年50个康币分红");
 
+        viewHodler.myjoinShopName.setText(list.shopName);
+        viewHodler.myjoinLocation.setText( list.inrecruiList.get(position).shopAddress);
+        viewHodler.myjoinHehuoren.setText(list.joinTypeMsg);
+
+//        viewHodler.aType.setText("A类事业合伙人：20");
+//        viewHodler.bType.setText("B类事业合伙人：200");
+//        viewHodler.cType.setText("C类事业合伙人：500");
+//        viewHodler.aTypeDes.setText("每个季度可获得店铺年营业额0.07%的康币分红");
+//        viewHodler.bTypeDes.setText("每个季度可获得店铺年营业额0.03%的康币分红");
+//        viewHodler.cTypeDes.setText("每年可获得每年50个康币分红");
+
+        for (int i=0;i<list.inrecruiList.size();i++){
+            if (i==0){
+                viewHodler.aType.setText(list.inrecruiList.get(i).partnerType+"类事业合伙人:"+list.inrecruiList.get(i).joinPersonNumber+"(人)/"+list.inrecruiList.get(i).personNumber);
+                viewHodler.aTypeDes.setText("每个季度可获得店铺年营业额0.07%的康币分红");
+            }else if (i==1){
+                viewHodler.bType.setText(list.inrecruiList.get(i).partnerType+"类事业合伙人:"+list.inrecruiList.get(i).joinPersonNumber+"(人)/"+list.inrecruiList.get(i).personNumber);
+                viewHodler.bTypeDes.setText("每个季度可获得店铺年营业额0.03%的康币分红");
+            }else if (i==2){
+                viewHodler.cType.setText(list.inrecruiList.get(i).partnerType+"类事业合伙人:"+list.inrecruiList.get(i).joinPersonNumber+"(人)/"+list.inrecruiList.get(i).personNumber);
+                viewHodler.cTypeDes.setText("每年可获得每年50个康币分红");
+            }
+        }
         return convertView;
     }
 

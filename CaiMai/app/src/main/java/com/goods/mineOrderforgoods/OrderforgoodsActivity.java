@@ -124,7 +124,7 @@ public class OrderforgoodsActivity extends BaseActivity {
         pszOrderGoodsFragment.setStatus(3);
 //待评价
         dpjOrderGoodsFragment = new AllOrderGoodsFragment();
-        pszOrderGoodsFragment.setStatus(4);
+        dpjOrderGoodsFragment.setStatus(4);
         // 完成
         endOrderGoodsFragment = new AllOrderGoodsFragment();
         endOrderGoodsFragment.setStatus(5);

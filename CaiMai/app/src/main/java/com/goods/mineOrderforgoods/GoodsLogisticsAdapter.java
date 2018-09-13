@@ -1,31 +1,29 @@
 package com.goods.mineOrderforgoods;
 
-import java.util.List;
-
-
-
 import android.content.Context;
-import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.LzBaseAdapter;
+import com.xfkc.caimai.bean.LogisticsBean;
+
+import java.util.List;
 
 public class GoodsLogisticsAdapter extends LzBaseAdapter {
-	private List<LogisticsModel> data;
+//	private List<LogisticsModel> data;
+	private List<LogisticsBean.DataBean> data;
 
 	public GoodsLogisticsAdapter(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
 	}
 
-	public void setData(List<LogisticsModel> data) {
+	public void setData(List<LogisticsBean.DataBean> data) {
 		this.data = data;
 		allSize = this.data.size();
 		this.notifyDataSetChanged();
@@ -34,7 +32,7 @@ public class GoodsLogisticsAdapter extends LzBaseAdapter {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return allSize;
+		return data.size();
 	}
 
 	@Override
@@ -60,22 +58,21 @@ public class GoodsLogisticsAdapter extends LzBaseAdapter {
 		} else {
 			viewHolder = (ViewHolder) viewContent.getTag();
 		}
-		LogisticsModel model = data.get(position);
+//		LogisticsModel model = data.get(position);
 //		if(position==0){
 //			viewHolder.father_imgbtn.setImageResource(R.drawable.readed);
 //		}else{
 //			viewHolder.father_imgbtn.setImageResource(R.drawable.guidepoint_red);
 //		}
 //		
-
-		viewHolder.logisticscontent_textView.setText(model.getContentInfo());
+		LogisticsBean.DataBean model = data.get(position);
+		viewHolder.logisticscontent_textView.setText(model.logisticsInfo);
 		// 这句很重要，必须加
 		// viewHolder.logisticscontent_textView.setMovementMethod(LinkMovementMethod.getInstance());
-		viewHolder.logistics_time_textView.setText(model.getTime());
+		viewHolder.logistics_time_textView.setText(model.date);
 		setLineHeight(viewHolder.logisticscontent_textView, viewHolder.lineView);
 		
-		
-		
+
 		return viewContent;
 	}
 

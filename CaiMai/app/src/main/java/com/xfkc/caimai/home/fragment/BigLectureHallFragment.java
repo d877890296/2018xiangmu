@@ -14,13 +14,12 @@ import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseFragment;
 import com.xfkc.caimai.bean.BigLectureBean;
-import com.xfkc.caimai.config.Constant;
 import com.xfkc.caimai.config.SharedPref;
+import com.xfkc.caimai.fileshow.FileShowActivity;
 import com.xfkc.caimai.home.adapter.BigListAdapter;
 import com.xfkc.caimai.net.PayFactory;
 import com.xfkc.caimai.net.RxHelper;
 import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
-import com.xfkc.caimai.web.TDWebViewActivity;
 
 import java.util.ArrayList;
 
@@ -98,8 +97,8 @@ public class BigLectureHallFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 position = position - 1;
-                startActivity(new Intent(mContext, TDWebViewActivity.class)
-                        .putExtra(Constant.WEB_URL, list_data.get(position).url));
+                startActivity(new Intent(mContext, FileShowActivity.class)
+                        .putExtra("data", list_data.get(position).url));
             }
         });
     }

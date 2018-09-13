@@ -181,7 +181,7 @@ public class AllOrderGoodsFragment extends BaseFragment implements RefreshLayout
                     showMbProgress("订单取消中");
                     requstStyle = 1;
                     String orderNum = shopsList.get(position).orderNum;
-                    requstUpdateOrderStatus(orderNum, 0);
+                    requstUpdateOrderStatus(orderNum, 6);
                     //	skip_classView(OrderforgoodsInfoActivity.class, extraMap, false, false);
                     break;
                 case 1://查看物流
@@ -197,10 +197,13 @@ public class AllOrderGoodsFragment extends BaseFragment implements RefreshLayout
                     //MyToast.showMyToast(context, "确认收货", -1);
                     break;
                 case 3:   //  立即支付
+
                     break;
                 case 4:   // 申请退款
+
                     break;
                 case 5:   // 评价
+
                     break;
 
                 case 6:   // 查看详情
@@ -286,6 +289,7 @@ public class AllOrderGoodsFragment extends BaseFragment implements RefreshLayout
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            dissMbProgress();
             switch (msg.what) {
                 case UPSUCCESS://数据获取成功
                     if (msg.arg1 == 1) {//成功
@@ -338,7 +342,7 @@ public class AllOrderGoodsFragment extends BaseFragment implements RefreshLayout
                         }
 
                     } else {//失败
-
+                        dissMbProgress();
                         nodataview_textview.setVisibility(View.VISIBLE);
                         nodataview_textview.setText("购物车空空如也，赶快去商城添加吧！");
                     }

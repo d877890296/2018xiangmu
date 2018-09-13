@@ -51,7 +51,7 @@ public class RecruiHallBean extends Response {
              * inrecruiList : [{"cityId":"北京市","createTime":1536236640000,"joinPersonNumber":0,"kangbiCount":1000,"latitude":39.963839,"longitude":116.374517,"partnerType":"A","personNumber":10,"provinceId":"北京","rate":10,"shopAddress":"北京市北京市海淀区学院南路6号","shopId":22,"shopName":"幸福三号店铺","shopStatus":2,"shopkeeperName":"张先生","status":1,"telephone":"18210987756","type":0,"updateTime":1536478817000,"welfareUnit":1},{"cityId":"北京市","createTime":1536236640000,"joinPersonNumber":0,"kangbiCount":2000,"latitude":39.963839,"longitude":116.374517,"partnerType":"B","personNumber":20,"provinceId":"北京","shopAddress":"北京市北京市海淀区学院南路6号","shopId":22,"shopName":"幸福三号店铺","shopStatus":2,"shopkeeperName":"张先生","status":1,"telephone":"18210987756","type":1,"updateTime":1536478817000,"welfareUnit":1}]
              * shopName : 幸福三号店铺
              */
-
+            public boolean isJoin;
             public String shopName;
             public List<InrecruiListBean> inrecruiList;
 
@@ -99,6 +99,7 @@ public class RecruiHallBean extends Response {
                 public int type;
                 public long updateTime;
                 public int welfareUnit;
+                public String comKangbi;//返佣康币数
             }
         }
     }

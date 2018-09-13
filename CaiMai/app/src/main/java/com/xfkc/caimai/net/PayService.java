@@ -12,6 +12,7 @@ import com.xfkc.caimai.bean.GoodsCityModel;
 import com.xfkc.caimai.bean.GoodsKey;
 import com.xfkc.caimai.bean.LoginInfo;
 import com.xfkc.caimai.bean.MineVipCardBean;
+import com.xfkc.caimai.bean.MyJoinBean;
 import com.xfkc.caimai.bean.ProfitListBean;
 import com.xfkc.caimai.bean.RecruBean;
 import com.xfkc.caimai.bean.RecruiHallBean;
@@ -142,7 +143,7 @@ public interface PayService {
 
     //查询我加入的店铺
     @GET("/api/recruite/myjoinshop")
-    Observable<EmptyBean> myjoinshop(@Query("token") String token);
+    Observable<MyJoinBean> myjoinshop(@Query("token") String token);
 
 
     //查询我的情怀链
@@ -168,7 +169,7 @@ public interface PayService {
     Observable<RevenueBean> findMyRevenue(@Query("token") String token);
 
     //我的总收益
-    @GET("/api/tradeInfo/11.2:findMyRevenueDet")
+    @GET("/api/tradeInfo/findMyRevenueDet")
     Observable<ProfitListBean> findMyRevenueDet(@Query("token") String token, @Query("pageNum") int pageNum,
                                                 @Query("pageSize") int pageSize, @Query("type") String type);
 
@@ -180,4 +181,9 @@ public interface PayService {
     @GET("/api/appPay/recruitOrder")
     Observable<RecruBean> recruitOrder(@Query("token") String token, @Query("shopId") String shopId,
                                        @Query("partnerType") String partnerType, @Query("payAmount") double payAmount);
+
+    //收支明细
+    @GET("/api/tradeInfo/receiptDet")
+    Observable<ProfitListBean> receiptDet(@Query("token") String token,@Query("pageNum") int pageNum,@Query("pageSize") int pageSize);
+
 }

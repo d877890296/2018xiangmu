@@ -2,6 +2,7 @@ package com.xfkc.caimai.home.recruitmenthall;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -78,15 +79,23 @@ public class RecruHallListAdapter extends BaseAdapter {
                 viewHodler.cType.setText(listBean.inrecruiList.get(i).partnerType+"类事业合伙人:"+listBean.inrecruiList.get(i).joinPersonNumber+"(人)/"+listBean.inrecruiList.get(i).personNumber);
             }
         }
-        viewHodler.payBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String shopId=listBean.inrecruiList.get(0).shopId;
-                context.startActivity(new Intent(context,RecruContentActivity.class)
-                .putExtra("shopId",shopId)
-                );
-            }
-        });
+
+        if (listBean.isJoin){
+            viewHodler.payBtn.setPressedBackgroundColor(Color.parseColor("#000"));
+            viewHodler.payBtn.setNormalBackgroundColor(Color.parseColor("#000"));
+        }else {
+            viewHodler.payBtn.setPressedBackgroundColor(Color.parseColor("#ff704d"));
+            viewHodler.payBtn.setNormalBackgroundColor(Color.parseColor("#ff704d"));
+            viewHodler.payBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String shopId=listBean.inrecruiList.get(0).shopId;
+                    context.startActivity(new Intent(context,RecruContentActivity.class)
+                            .putExtra("shopId",shopId)
+                    );
+                }
+            });
+        }
 
         return convertView;
     }
@@ -108,4 +117,5 @@ public class RecruHallListAdapter extends BaseAdapter {
             ButterKnife.bind(this, view);
         }
     }
+
 }

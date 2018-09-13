@@ -63,4 +63,6 @@ dependencies {
     compile files('libs/universal-image-loader-1.9.1.jar')
     compile files('libs/xUtils-2.6.14.jar')
     compile files('libs/org.apache.http.legacy.jar')
+
+//    compile 'es.voghdev.pdfviewpager:library:1.0.1'
 }

@@ -67,6 +67,13 @@
             android:name="design_height"
             android:value="1280" />
 
+        <!-- <meta-data -->
+        <!-- android:name="weixinappid" -->
+        <!-- android:value="wxcec6a77dc03ebf21" /> -->
+        <meta-data
+            android:name="weixinappkey"
+            android:value="b1bea7274ddabdf4ab40f8233874fa46" />
+
         <activity android:name=".MainActivity" />
         <activity android:name=".loading.LoadingActivity" />
         <activity android:name=".loading.RegisterActivity" />
@@ -119,7 +126,7 @@
         <activity android:name="com.goods.sortlsitview.GoodsChooseCityActivity" />
         <activity android:name="com.goods.order.SureOrderActivity" />
         <activity android:name="com.goods.mineOrderforgoods.OrderforgoodsActivity" />
-        <activity android:name="com.goods.mineOrderforgoods.OrderforgoodsLogisticsActivity"/>
+        <activity android:name="com.goods.mineOrderforgoods.OrderforgoodsLogisticsActivity" />
         <activity android:name=".order.OrderActivity" />
         <activity android:name=".order.OrderContentActivity" />
         <activity android:name=".home.vipcard.VipCardActivity" />
@@ -153,7 +160,9 @@
         <activity android:name=".home.comment.ToCommentActivity" />
         <activity android:name=".home.myjoinshop.MyJoinShopActivity" />
         <activity android:name=".web.TDWebViewActivity" />
-        <activity android:name=".home.mineprofit.ProfitListActivity"></activity>
+        <activity android:name=".home.mineprofit.ProfitListActivity" />
+        <activity android:name=".home.wallet.AllLiuShuiActivity" />
+        <activity android:name=".fileshow.FileShowActivity"></activity>
     </application>
 
 </manifest>

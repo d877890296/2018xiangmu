@@ -82,7 +82,7 @@ public class WalletActivity extends BaseActivity {
                 skip_classView(AccountRechargeActivity.class, extraMap, false);
                 break;
             case R.id.szmx_text://收支明细
-
+                skip_classView(AllLiuShuiActivity.class, extraMap, false);
                 break;
             case R.id.update_paypassword_tv://修改支付密码
                 if (Tools.IsEmpty(payPwd)) {

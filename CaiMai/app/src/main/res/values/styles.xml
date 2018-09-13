@@ -84,4 +84,11 @@
         <!--<item name="android:statusBarColor">@android:color/transparent</item>-->
     </style>
 
+
+    <!-- 无标题无黑幕透明背景对话框样式 -->
+    <style name="NoFrameNoDim_Dialog" parent="android:Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
 </resources>

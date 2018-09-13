@@ -24,8 +24,8 @@ public class MineProfitListAdapter extends BaseAdapter {
 
     private final Context context;
     private ArrayList<EmptyBean> list;
-    private double huiyuanCount;
-    private double shangchengCount;
+    private String huiyuanCount;
+    private String shangchengCount;
 
 
     public MineProfitListAdapter(Context context) {
@@ -38,7 +38,7 @@ public class MineProfitListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public void setCount(double huiyuanCount, double shangchengCount) {
+    public void setCount(String huiyuanCount, String shangchengCount) {
         this.huiyuanCount = huiyuanCount;
         this.shangchengCount = shangchengCount;
         notifyDataSetChanged();

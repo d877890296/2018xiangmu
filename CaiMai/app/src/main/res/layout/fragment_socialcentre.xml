@@ -149,7 +149,7 @@
                 app:sLeftTextString="我的订单"
                 app:sRightIconRes="@mipmap/icon_youjiantou"
                 app:sRightMaxEms="11"
-                app:sRightTextColor="@color/c999999"
+                app:sRightTextColor="@color/black"
                 app:sRightTextSize="14sp"
                 app:sRightTextString="查看更多订单" />
             <!--我的订单    待发货  待付款  评价等-->

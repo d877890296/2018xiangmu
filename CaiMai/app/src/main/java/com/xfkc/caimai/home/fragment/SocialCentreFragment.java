@@ -272,7 +272,7 @@ public class SocialCentreFragment extends BaseFragment {
                     @Override
                     public void onNext(MineVipCardBean mineVipCardBean) {
                         if (mineVipCardBean.data != null && mineVipCardBean.data.size() != 0) {
-                            surplusDays.setText(mineVipCardBean.data.get(0).remainDays+"天");
+                            surplusDays.setText("剩余"+mineVipCardBean.data.get(0).remainDays+"天");
                             yearsVip.setText(mineVipCardBean.data.get(0).cardName+"");
                         }
                     }

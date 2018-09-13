@@ -69,7 +69,11 @@ public class ProfitListAdapter extends BaseAdapter {
 
         viewHodler.title.setText(listBean.tradeComment);
         viewHodler.time.setText(Utils.timeStamp2Date(listBean.createTime, "yyyy-MM-dd"));
-        viewHodler.addPrice.setText("+" + listBean.tradeMoney);
+        if (listBean.payType==1){
+            viewHodler.addPrice.setText("+" + listBean.tradeMoney);
+        }else if (listBean.payType==2){
+            viewHodler.addPrice.setText("-" + listBean.tradeMoney);
+        }
         return convertView;
     }
 
