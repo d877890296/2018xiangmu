@@ -16,14 +16,14 @@ import java.util.List;
 
 public class GoodsLogisticsAdapter extends LzBaseAdapter {
 //	private List<LogisticsModel> data;
-	private List<LogisticsBean.DataBean> data;
+	private List<LogisticsBean.DataBean.LogisticsInfoBean> data;
 
 	public GoodsLogisticsAdapter(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
 	}
 
-	public void setData(List<LogisticsBean.DataBean> data) {
+	public void setData(List<LogisticsBean.DataBean.LogisticsInfoBean> data) {
 		this.data = data;
 		allSize = this.data.size();
 		this.notifyDataSetChanged();
@@ -65,7 +65,7 @@ public class GoodsLogisticsAdapter extends LzBaseAdapter {
 //			viewHolder.father_imgbtn.setImageResource(R.drawable.guidepoint_red);
 //		}
 //		
-		LogisticsBean.DataBean model = data.get(position);
+		LogisticsBean.DataBean.LogisticsInfoBean model = data.get(position);
 		viewHolder.logisticscontent_textView.setText(model.logisticsInfo);
 		// 这句很重要，必须加
 		// viewHolder.logisticscontent_textView.setMovementMethod(LinkMovementMethod.getInstance());

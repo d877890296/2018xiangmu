@@ -229,7 +229,6 @@
                     android:id="@+id/goodsNum"
                     android:layout_width="60dp"
                     android:layout_height="30dp"
-                    android:background="#ededed"
                     android:gravity="center"
 
                     android:text="x1"

@@ -1,1 +1,1 @@
-include ':app', ':tdlibrary'
+include ':app', ':tdlibrary', ':android-pdfview'

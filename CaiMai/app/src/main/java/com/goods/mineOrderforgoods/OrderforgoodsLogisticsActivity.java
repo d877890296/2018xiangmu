@@ -36,7 +36,7 @@ import static com.goods.netrequst.PostRequst.UPSUCCESS;
 public class OrderforgoodsLogisticsActivity extends BaseActivity {
 
 //    private List<LogisticsModel> data;
-    private List<LogisticsBean.DataBean> data;
+    private List<LogisticsBean.DataBean.LogisticsInfoBean> data;
     private MyListView timeline_list;
     private GoodsLogisticsAdapter goodsLogisticsAdapter;
 //    private String content[] = {"[北京市] 您的订单正在配送途中，请您准备签收（配送员：李元，电话：010-718980或者13141199287），感谢你的耐心等待", "你的订单已经达到[北京站]",
@@ -45,7 +45,7 @@ public class OrderforgoodsLogisticsActivity extends BaseActivity {
     private String orderNum;
     private PostRequst postRequst;
     private NetRequstAjaxCallBack ajaxCallBack;
-
+    private TextView kuaidi_name,order_status;
     @Override
     protected int getLayoutResource() {
 
@@ -63,7 +63,7 @@ public class OrderforgoodsLogisticsActivity extends BaseActivity {
         // TODO Auto-generated method stub
         orderNum = getIntent().getStringExtra("orderNum");
 //        data = new ArrayList<LogisticsModel>();
-        data = new ArrayList<LogisticsBean.DataBean>();
+        data = new ArrayList<>();
         postRequst = new PostRequst(handler);
         ajaxCallBack = new NetRequstAjaxCallBack(mContext);
         ajaxCallBack.setOnNetRequstAjaxCallBack(onNetRequstAjaxCallBack);
@@ -73,6 +73,8 @@ public class OrderforgoodsLogisticsActivity extends BaseActivity {
     public void viewInit() {
         back_btn = (ImageButton) findViewById(R.id.back_img_btn);
         topbar_title = (TextView) findViewById(R.id.text_title_content);
+        kuaidi_name = (TextView) findViewById(R.id.kuaidi_name);
+        order_status = (TextView) findViewById(R.id.order_status);
         topbar_title.setText("查看物流");
         back_btn.setOnClickListener(onClickListener);
 
@@ -167,9 +169,10 @@ public class OrderforgoodsLogisticsActivity extends BaseActivity {
 //                        ajaxCallBack.getMyOrder);
                         Gson gson=new Gson();
                         LogisticsBean logisticsBean = gson.fromJson(jsonObj,LogisticsBean.class);
-                        if (logisticsBean.data!=null && logisticsBean.data.size()!=0)
-                        data.addAll(logisticsBean.data);
+                        if (logisticsBean.data.logisticsInfo!=null && logisticsBean.data.logisticsInfo.size()!=0)
+                        data.addAll(logisticsBean.data.logisticsInfo);
 
+                        kuaidi_name.setText(logisticsBean.data.courierName+":"+logisticsBean.data.courierNum);
                         goodsLogisticsAdapter.setData(data);
                         break;
 

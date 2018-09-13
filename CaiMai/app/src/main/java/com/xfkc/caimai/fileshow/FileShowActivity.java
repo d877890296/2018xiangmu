@@ -15,9 +15,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hyf.tdlibrary.utils.Tools;
-import com.xfkc.caimai.PdfAndWorldUtils;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
+import com.xfkc.caimai.pdf.PDFActivity;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -145,16 +145,10 @@ public class FileShowActivity extends BaseActivity {
 //            pdfview.setVisibility(View.VISIBLE);
             content.setVisibility(View.GONE);
 //            remotePDFViewPager = new RemotePDFViewPager(this,urlString, this);
-            PdfAndWorldUtils.downLoadFromNet(urlString,"xfkc.pdf","pdf",mContext);
-//        pdfview.fromFile(new File(urlString))
-//                .defaultPage(1)
-//                .onPageChange(new OnPageChangeListener() {
-//                    @Override
-//                    public void onPageChanged(int page, int pageCount) {
-//                        // 当用户在翻页时候将回调。
-//                        Toast.makeText(getApplicationContext(), page + " / " + pageCount, Toast.LENGTH_SHORT).show();
-//                    }
-//                }).load();
+//            PdfAndWorldUtils.downLoadFromNet(urlString,"xfkc.pdf","pdf",mContext);
+        extraMap.put("pdfPath",urlString.substring(0,urlString.length()));
+        extraMap.put("pdfName","pdf");
+      skip_classView(PDFActivity.class,extraMap,true);
 
 //        } else
             // 我在上一个页面已经判断了系统版本，这里不做出来

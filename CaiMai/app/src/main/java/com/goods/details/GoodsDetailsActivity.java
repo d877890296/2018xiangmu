@@ -95,7 +95,7 @@ public class GoodsDetailsActivity extends BaseActivity {
 
     @Override
     protected int getLayoutResource() {
-        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+//        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
@@ -103,8 +103,8 @@ public class GoodsDetailsActivity extends BaseActivity {
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-            window.setNavigationBarColor(Color.TRANSPARENT);
+//            window.setStatusBarColor(Color.TRANSPARENT);
+//            window.setNavigationBarColor(Color.TRANSPARENT);
         }
         return R.layout.gd_goodsdetailsactivity_layout;
     }
@@ -372,6 +372,22 @@ public class GoodsDetailsActivity extends BaseActivity {
                         ToastUtil.showToast("库存量不足");
                     }
                     break;
+                case R.id.type_price:
+                    param = paramBean.params.get(0);
+                    setType(0);
+                    break;
+                case R.id.type_price02:
+                    param = paramBean.params.get(1);
+                    setType(1);
+                    break;
+                case R.id.type_price03:
+                    param = paramBean.params.get(2);
+                    setType(2);
+                    break;
+                case R.id.type_price04:
+                    param = paramBean.params.get(3);
+                    setType(3);
+                    break;
                 default:
                     break;
             }
@@ -415,8 +431,9 @@ public class GoodsDetailsActivity extends BaseActivity {
     private ArrayList<RadioButton> fenqi_radios = new ArrayList<>();
     private int fenqi_type = 0;
     private TextView botoom_typeshopNumber;
-    private String param = "0";
-
+    private String param = "";
+    private ArrayList<TextView> list_type_tv=new ArrayList<>();
+    private ParamBean paramBean;
     /*展示商品规格*/
     private void showGoodsType() {
         final int inventory;
@@ -428,6 +445,18 @@ public class GoodsDetailsActivity extends BaseActivity {
         TextView shop_kc = (TextView) contentView.findViewById(R.id.shop_kc);
         TextView type_name01 = (TextView) contentView.findViewById(R.id.type_name01);
         TextView type_price = (TextView) contentView.findViewById(R.id.type_price);
+        TextView type_price02 = (TextView) contentView.findViewById(R.id.type_price02);
+        TextView type_price03 = (TextView) contentView.findViewById(R.id.type_price03);
+        TextView type_price04 = (TextView) contentView.findViewById(R.id.type_price04);
+        list_type_tv.clear();
+        list_type_tv.add(type_price);
+        list_type_tv.add(type_price02);
+        list_type_tv.add(type_price03);
+        list_type_tv.add(type_price04);
+        type_price.setOnClickListener(onClickListener);
+        type_price02.setOnClickListener(onClickListener);
+        type_price03.setOnClickListener(onClickListener);
+        type_price04.setOnClickListener(onClickListener);
         MyGridView type01_gridview = (MyGridView) contentView.findViewById(R.id.type_gridview);
         TextView type_name02 = (TextView) contentView.findViewById(R.id.type_name02);
         TextView delete_goods_tv = (TextView) contentView.findViewById(R.id.delete_goods_tv);
@@ -439,6 +468,7 @@ public class GoodsDetailsActivity extends BaseActivity {
         TextView addShoppingCar_textView = (TextView) contentView.findViewById(R.id.addShoppingCar_textView);
         TextView buy_textView = (TextView) contentView.findViewById(R.id.buy_textView);
         LinearLayout fenqi_layout = (LinearLayout) contentView.findViewById(R.id.fenqi_layout);
+        LinearLayout type_layout = (LinearLayout) contentView.findViewById(R.id.type_layout01);
         RadioButton fenqi_3 = (RadioButton) contentView.findViewById(R.id.fenqi_3);
         RadioButton fenqi_6 = (RadioButton) contentView.findViewById(R.id.fenqi_6);
         RadioButton fenqi_9 = (RadioButton) contentView.findViewById(R.id.fenqi_9);
@@ -466,25 +496,48 @@ public class GoodsDetailsActivity extends BaseActivity {
             if (Tools.IsEmpty(goodsListModel.paramData)){
                 type_name01.setVisibility(View.GONE);
                 type_price.setVisibility(View.GONE);
+                type_price02.setVisibility(View.GONE);
             }else {
                 type_name01.setVisibility(View.VISIBLE);
                 type_price.setVisibility(View.VISIBLE);
+                type_price02.setVisibility( View.GONE);
                 type_price.setText(goodsListModel.paramData);
             }
         } else {
             if (goodsListModel.allParamData == null || Tools.IsEmpty(goodsListModel.allParamData) || goodsListModel.allParamData.equals("null")) {
                 type_name01.setVisibility(View.GONE);
                 type_price.setVisibility(View.GONE);
+                type_price02.setVisibility(View.GONE);
             } else {
                 type_name01.setVisibility(View.VISIBLE);
                 type_price.setVisibility(View.VISIBLE);
                 Gson gson = new Gson();
-                ParamBean paramBean = gson.fromJson(goodsListModel.allParamData.substring(1, goodsListModel.allParamData.length() - 1), ParamBean.class);
-                type_name01.setText(paramBean.group);
-                if (paramBean.params.size() != 0) {
-                    param = paramBean.params.get(0);
-                    type_price.setText(paramBean.params.get(0));
+                if (!goodsListModel.allParamData.contains("},{")){
+                    paramBean = gson.fromJson(goodsListModel.allParamData.substring(1, goodsListModel.allParamData.length() - 1), ParamBean.class);
+                    type_name01.setText(paramBean.group);
+                    if (paramBean.params.size() != 0) {
+                        param = paramBean.params.get(0);
+                        for (int i=0 ;i<paramBean.params.size();i++ ){
+                            list_type_tv.get(i).setText(paramBean.params.get(i));
+                        }
+                        if (paramBean.params.size()==2){
+                            type_price02.setVisibility( View.VISIBLE);
+                        }  else if (paramBean.params.size()==3 ){
+                            type_layout.setVisibility(View.VISIBLE);
+                            type_price04.setVisibility( View.GONE);
+                        }else if (paramBean.params.size()>3){
+                            type_layout.setVisibility(View.VISIBLE);
+                            type_price04.setVisibility( View.VISIBLE);
+                        }
+
+                    }
+                } else{
+                    type_name01.setVisibility(View.VISIBLE);
+                    type_price.setVisibility(View.VISIBLE);
+                    type_price02.setVisibility( View.GONE);
+                    type_price.setText(goodsListModel.paramData.substring(1,goodsListModel.paramData.length()-1));
                 }
+
             }
         }
         if (goodsListModel.mailType == 0) {
@@ -747,5 +800,15 @@ public class GoodsDetailsActivity extends BaseActivity {
             finish();
         }
 
+    }
+
+    private void setType(int id){
+        for (int i=0;i<list_type_tv.size();i++){
+            if (i==id){
+                list_type_tv.get(i).setBackgroundResource(R.drawable.type_grid_bg02);
+            }else {
+                list_type_tv.get(i).setBackgroundResource(R.drawable.type_grid_bg);
+            }
+        }
     }
 }

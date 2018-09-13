@@ -20,6 +20,7 @@ import com.goods.netrequst.Logger;
 import com.hyf.tdlibrary.utils.Tools;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.LzBaseAdapter;
+import com.xfkc.caimai.util.Utils;
 
 import java.util.ArrayList;
 
@@ -74,6 +75,9 @@ public class AllOrderGoodsListAdapter extends RecyclerView.Adapter<AllOrderGoods
             holder.lookLogistics_textView.setText("查看物流");
             holder.suregetGoods_textView.setText("确认发货");
         }
+
+        holder.order_no.setText("订单编号:"+model.orderNum);
+        holder.order_time.setText("订单时间:"+ Utils.timeStamp2Date(model.createTime, "yyyy-MM-dd"));
 
 //
 //
@@ -193,7 +197,7 @@ public class AllOrderGoodsListAdapter extends RecyclerView.Adapter<AllOrderGoods
         public MyListView order_goodslist;
         public OrderChildAdapter orderChildAdapter;
         public TextView goods_status, goods_allnum, goods_allprice, cannelOrder_textView, lookLogistics_textView, suregetGoods_textView, pay_btGoods_textView;
-        public TextView tuikuan_textView, pj_textView, lookd_btGoods_textView;
+        public TextView tuikuan_textView, pj_textView, lookd_btGoods_textView,order_no,order_time;
         public int position;
 
         public ViewHolder(View itemView) {
@@ -201,7 +205,8 @@ public class AllOrderGoodsListAdapter extends RecyclerView.Adapter<AllOrderGoods
             order_goodslist = (MyListView) itemView.findViewById(R.id.order_goodslist);
             orderChildAdapter = new OrderChildAdapter(mContext);
 
-
+            order_no = (TextView) itemView.findViewById(R.id.order_no);
+            order_time = (TextView) itemView.findViewById(R.id.order_time);
             goods_status = (TextView) itemView.findViewById(R.id.goods_status);
             goods_allnum = (TextView) itemView.findViewById(R.id.goods_allnum);
             goods_allprice = (TextView) itemView.findViewById(R.id.goods_allprice);

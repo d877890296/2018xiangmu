@@ -459,6 +459,9 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
         public void MsgCallBack(boolean isSuccess, String errorMsg, Object object) {
             // TODO Auto-generated method stub
             dissMbProgress();
+            if (goodsData!=null && goodsData.size()!=0){
+                goodsData.clear();
+            }
             if (isSuccess) {
                 ArrayList<GoodsListModel> shopsList = (ArrayList) object;
                 goodsData.addAll(shopsList);

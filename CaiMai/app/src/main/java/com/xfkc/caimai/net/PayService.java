@@ -186,4 +186,15 @@ public interface PayService {
     @GET("/api/tradeInfo/receiptDet")
     Observable<ProfitListBean> receiptDet(@Query("token") String token,@Query("pageNum") int pageNum,@Query("pageSize") int pageSize);
 
+
+    //收藏
+    @GET("/api/vedio/vedioCollect")
+    Observable<EmptyBean> vedioCollect(@Query("token") String token,@Query("vedioId") String vedioId);
+
+    @GET("/api/vedio/cancelVedioCollect")
+    Observable<EmptyBean> novedioCollect(@Query("token") String token,@Query("vedioId") String vedioId);
+
+    //查询我收入的列表
+    @GET("/api/vedio/findMyCollectList")
+    Observable<BigLectureBean> findMyCollectList(@Query("token") String token,@Query("pageNum") int pageNum,@Query("pageSize") int pageSize);
 }

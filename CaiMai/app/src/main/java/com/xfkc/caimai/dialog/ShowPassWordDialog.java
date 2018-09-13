@@ -2,6 +2,9 @@ package com.xfkc.caimai.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
@@ -41,7 +44,9 @@ public class ShowPassWordDialog {
 		this.context = context;
 		mEditList = new ArrayList<EditText>();
 	}
+	public ShowPassWordDialog() {
 
+	}
 
 	/**
 	 * 显示对话框 验证码
@@ -287,5 +292,42 @@ public class ShowPassWordDialog {
 			return false;
 		}
 	};
+
+	public void showPhoneDialog(final FragmentActivity activity) {
+		 final Dialog dialog = new Dialog(activity, R.style.BottomDialog);
+		 View contentView = LayoutInflater.from(activity).inflate(R.layout.phone_layout, null);
+		TextView cancle = (TextView) contentView.findViewById(R.id.cancle);
+		TextView commit = (TextView) contentView.findViewById(R.id.commit);
+
+		cancle.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+
+
+		commit.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(Intent.ACTION_DIAL);
+				Uri data = Uri.parse("tel:" + "400-12345678");
+				intent.setData(data);
+				activity.startActivity(intent);
+				dialog.dismiss();
+			}
+		});
+
+
+		dialog.setContentView(contentView);
+		ViewGroup.LayoutParams layoutParams = contentView.getLayoutParams();
+		layoutParams.width = activity.getResources().getDisplayMetrics().widthPixels;
+		contentView.setLayoutParams(layoutParams);
+		dialog.getWindow().setGravity(Gravity.CENTER);
+		dialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+		dialog.show();
+
+	}
+
 
 }

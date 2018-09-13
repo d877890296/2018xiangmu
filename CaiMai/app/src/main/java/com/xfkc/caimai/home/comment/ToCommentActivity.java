@@ -80,6 +80,7 @@ public class ToCommentActivity extends BaseActivity {
                             try {
                                 Thread.sleep(2000);//休眠3秒
                                 dissMbProgress();
+                                finish();
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }

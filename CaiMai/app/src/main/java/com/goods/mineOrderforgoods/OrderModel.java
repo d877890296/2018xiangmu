@@ -42,5 +42,8 @@ public class OrderModel {
     @NetJsonFiled(objClassName = "com.goods.city.GoodsListModel")
     public ArrayList<GoodsListModel> itemOrderDetailList;//学习列表信息
 
+    @NetJsonFiled
+    public long createTime;//": null,
+
 
 }

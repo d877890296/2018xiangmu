@@ -18,4 +18,5 @@ public class ParamBean {
 
     public String group;
     public ArrayList<String> params;
+
 }

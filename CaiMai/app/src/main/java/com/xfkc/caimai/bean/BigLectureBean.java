@@ -39,5 +39,6 @@ public class BigLectureBean extends Response {
         public long updateTime;
         public int status;
         public int type;
+        public int collect;//1 收藏  2 未收藏
     }
 }

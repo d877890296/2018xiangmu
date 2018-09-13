@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.hyf.tdlibrary.utils.Tools;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.bean.RecruiHallBean;
 
@@ -66,15 +67,19 @@ public class RecruedHallListAdapter extends BaseAdapter {
 
         RecruiHallBean.DataBean.ListBean listBean = list.get(position);
         viewHodler.dianpuTitle.setText(listBean.shopName);
-        viewHodler.aType.setText("A类事业合伙人：20");
-        viewHodler.bType.setText("B类事业合伙人：200");
-        viewHodler.cType.setText("C类事业合伙人：500");
-        viewHodler.aTypeDes.setText("每个季度可获得店铺年营业额0.07%的康币分红");
-        viewHodler.bTypeDes.setText("每个季度可获得店铺年营业额0.03%的康币分红");
-        viewHodler.cTypeDes.setText("每年可获得每年50个康币分红");
-        viewHodler.dianpuTitle.setText(listBean.shopName);
 
-
+        for (int i=0;i<listBean.inrecruiList.size();i++){
+            if (i==0){
+                viewHodler.aType.setText(listBean.inrecruiList.get(i).partnerType+"类事业合伙人:"+listBean.inrecruiList.get(i).joinPersonNumber+"(人)/"+listBean.inrecruiList.get(i).personNumber);
+                showType(listBean.inrecruiList.get(i),viewHodler.aTypeDes);
+            }else if (i==1){
+                viewHodler.bType.setText(listBean.inrecruiList.get(i).partnerType+"类事业合伙人:"+listBean.inrecruiList.get(i).joinPersonNumber+"(人)/"+listBean.inrecruiList.get(i).personNumber);
+                showType(listBean.inrecruiList.get(i),viewHodler.bTypeDes);
+            }else if (i==2){
+                viewHodler.cType.setText(listBean.inrecruiList.get(i).partnerType+"类事业合伙人:"+listBean.inrecruiList.get(i).joinPersonNumber+"(人)/"+listBean.inrecruiList.get(i).personNumber);
+                showType(listBean.inrecruiList.get(i),viewHodler.cTypeDes);
+            }
+        }
         return convertView;
     }
 
@@ -99,6 +104,40 @@ public class RecruedHallListAdapter extends BaseAdapter {
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
+        }
+    }
+
+
+    private void showType(RecruiHallBean.DataBean.ListBean.InrecruiListBean inrecruiListBean, TextView TypeDes){
+        if (inrecruiListBean.type == 0){//按百分比
+            switch (inrecruiListBean.welfareUnit){
+                case 1://月
+                    TypeDes.setText("加入后每个月可获得店铺年营业额" +inrecruiListBean.rate+"%的康币分红");
+                    break;
+                case 2://季度
+                    TypeDes.setText("加入后每个季度可获得店铺年营业额" +inrecruiListBean.rate+"%的康币分红");
+                    break;
+                case 3://年
+                    TypeDes.setText("加入后每年可获得店铺年营业额" +inrecruiListBean.rate+"%的康币分红");
+                    break;
+            }
+        }else if (inrecruiListBean.type == 1){//按定额
+            String comKangbi ="0";
+            if(!Tools.IsEmpty(inrecruiListBean.comKangbi)){
+                comKangbi = inrecruiListBean.comKangbi;
+            }
+            switch (inrecruiListBean.welfareUnit){
+                case 1://月
+                    TypeDes.setText("加入后每月可获得"+comKangbi+"个康币分红");
+                    break;
+                case 2://季度
+                    TypeDes.setText("加入后每季度可获得"+comKangbi+"个康币分红");
+                    break;
+                case 3://年
+                    TypeDes.setText("加入后每年可获得"+comKangbi+"个康币分红");
+                    break;
+            }
+
         }
     }
 }

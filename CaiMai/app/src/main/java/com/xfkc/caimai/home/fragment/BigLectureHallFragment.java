@@ -3,6 +3,8 @@ package com.xfkc.caimai.home.fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,6 +16,7 @@ import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseFragment;
 import com.xfkc.caimai.bean.BigLectureBean;
+import com.xfkc.caimai.bean.EmptyBean;
 import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.fileshow.FileShowActivity;
 import com.xfkc.caimai.home.adapter.BigListAdapter;
@@ -25,6 +28,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import rx.Subscriber;
 
 /**
  * 大讲堂
@@ -90,6 +94,7 @@ public class BigLectureHallFragment extends BaseFragment {
         list_view.add(mineColectLine);
 
         bigListAdapter = new BigListAdapter(mContext);
+        bigListAdapter.setContext(handler);
         bigListAdapter.setData(list_data);
         listview.setAdapter(bigListAdapter);
         updateShow(0);
@@ -122,7 +127,7 @@ public class BigLectureHallFragment extends BaseFragment {
     }
 
     /*加载数据*/
-    private void loadData() {
+    public void loadData() {
         if (list_data.size() != 0)
             list_data.clear();
 
@@ -140,7 +145,7 @@ public class BigLectureHallFragment extends BaseFragment {
                         }
                     }
                 });
-
+        dissMbProgress();
     }
 
     /*查询线条变化*/
@@ -158,9 +163,91 @@ public class BigLectureHallFragment extends BaseFragment {
             if (list_data.size() != 0){
                 list_data.clear();
                 bigListAdapter.setData(list_data);
+                findMyCollect();
             }
         } else {
             loadData();
         }
+    }
+
+    Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            showMbProgress("正在加载...");
+             int i =msg.arg1;
+            String id= (String) msg.obj;
+            if (i == 1){
+                updatenoCollect(id);
+            }else {
+                updateCollect(id);
+            }
+
+        }
+    };
+
+    public void updateCollect(String videoid){
+        PayFactory.getPayService().vedioCollect(token,videoid)
+                .compose(RxHelper.<EmptyBean>io_main())
+                .subscribe(new Subscriber<EmptyBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(EmptyBean emptyBean) {
+                        loadData();
+                    }
+                });
+
+    }
+    public void updatenoCollect(String videoid){
+        PayFactory.getPayService().novedioCollect(token,videoid)
+                .compose(RxHelper.<EmptyBean>io_main())
+                .subscribe(new Subscriber<EmptyBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(EmptyBean emptyBean) {
+                        loadData();
+                    }
+                });
+
+    }
+
+    private void findMyCollect(){
+        showMbProgress("正在加载...");
+        PayFactory.getPayService().findMyCollectList(token,0,pageSize)
+                .compose(RxHelper.<BigLectureBean>io_main())
+                .subscribe(new Subscriber<BigLectureBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(BigLectureBean bigLectureBean) {
+
+                    }
+                });
     }
 }

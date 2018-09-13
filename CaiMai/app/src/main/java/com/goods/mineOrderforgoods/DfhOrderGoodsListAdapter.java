@@ -1,16 +1,6 @@
 package com.goods.mineOrderforgoods;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.dev.customview.MyGridView;
-import com.goods.details.ShoppingCarModel;
-import com.xfkc.caimai.R;
-import com.xfkc.caimai.application.MyApplication;
-import com.xfkc.caimai.base.LzBaseAdapter;
-
 import android.content.Context;
-import android.drm.ProcessedData;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +9,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.dev.customview.MyGridView;
+import com.goods.details.ShoppingCarModel;
+import com.xfkc.caimai.R;
+import com.xfkc.caimai.application.MyApplication;
+import com.xfkc.caimai.base.LzBaseAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DfhOrderGoodsListAdapter extends RecyclerView.Adapter<DfhOrderGoodsListAdapter.ViewHolder> {
 	public Context mContext;
@@ -70,7 +69,8 @@ public class DfhOrderGoodsListAdapter extends RecyclerView.Adapter<DfhOrderGoods
 		holder.lookLogistics_textView.setVisibility(View.GONE);
 
 		holder.suregetGoods_textView.setText("提醒发货");
-
+//		holder.order_no.setText("订单编号:"+model.orderNum);
+//		holder.order_time.setText("订单时间:"+ Utils.timeStamp2Date(model.createTime, "yyyy-MM-dd"));
 		holder.listitem_liner.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -130,7 +130,7 @@ public class DfhOrderGoodsListAdapter extends RecyclerView.Adapter<DfhOrderGoods
 
 		public LinearLayout singleone_ordergoods_lienr, second_ordergoods_lienr;
 
-		public TextView goodsNumber_textView, totalNumber_textView, totalPrace_textView;
+		public TextView goodsNumber_textView, totalNumber_textView, totalPrace_textView,order_no,order_time;
 
 		public MyGridView second_myGridView;
 		public SecondAdapter secondAdapter;
@@ -138,7 +138,8 @@ public class DfhOrderGoodsListAdapter extends RecyclerView.Adapter<DfhOrderGoods
 
 		public ViewHolder(View itemView) {
 			super(itemView);
-
+			order_no = (TextView) itemView.findViewById(R.id.order_no);
+			order_time = (TextView) itemView.findViewById(R.id.order_time);
 			listitem_liner = (LinearLayout) itemView.findViewById(R.id.listitem_liner);
 			goods_image = (ImageView) itemView.findViewById(R.id.goods_image);
 			goods_name = (TextView) itemView.findViewById(R.id.goods_name);

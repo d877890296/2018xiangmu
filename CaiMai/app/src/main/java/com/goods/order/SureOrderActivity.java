@@ -411,8 +411,11 @@ public class SureOrderActivity extends BaseActivity {
                             extraMap.put("type","1");
                             skip_classView(PaySuccessActivity.class, extraMap, false,101);
                         } else {
-                            ToastUtil.showToast(addOrderBean.message);
-                            skip_classView(SettingPayPasswordActivity.class, extraMap, false);
+                            if (Tools.IsEmpty(pwdword)){
+                                skip_classView(SettingPayPasswordActivity.class, extraMap, false);
+                            }else {
+                                ToastUtil.showToast(addOrderBean.message);
+                            }
                         }
                         dissMbProgress();
                     }
@@ -472,6 +475,7 @@ public class SureOrderActivity extends BaseActivity {
 
 
     private double kbAmount;
+    private String pwdword;
     /*获取个人信息*/
     private void getData() {
         PayFactory.getPayService()
@@ -481,7 +485,7 @@ public class SureOrderActivity extends BaseActivity {
                     @Override
                     public void onNext(UserInfoBean userInfoBean) {
                         kbAmount = userInfoBean.data.kbAmount;
-
+                        pwdword = userInfoBean.data.payPwd;
                     }
                 });
     }

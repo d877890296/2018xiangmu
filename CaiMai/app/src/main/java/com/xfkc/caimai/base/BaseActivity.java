@@ -34,31 +34,38 @@ public abstract class BaseActivity extends AppCompatActivity {
     public Map<String, Object> extraMap;
     public String userToken, userid, usercode, username;
 
-    public String token ;//用户登录
+    public String token;//用户登录
     public Context mContext;
     public MyApplication app;
 
     public MbProgress mbProgress;
     public PublicRelativeLayout publicRelativeLayout;
-    /** 没有数据 */
+    /**
+     * 没有数据
+     */
     public TextView nodataview_textview;
     public LinearLayout net_error_liner, progress_liner, loadfail_liner;
 
     // 起始的下标
-    public int pageNum = 0, pageSize =20;
+    public int pageNum = 0, pageSize = 20;
 
     // 是否第一次加载数据/是否有更多数据
     public boolean isfristLoadData, isMoreData = true;
     // 刷新数据和加载更多的数据
     public int REFUSH_LOADMORE_DATA = -1;
     public int REFRESH_OR_LOADMORE_STATE = -1, REFRESH_DATA_ISSUCCESS = -1, LOADMORE_DATA_ISSUCCESS = -1;
-    /** list刷新 **/
+    /**
+     * list刷新
+     **/
     public static final int LIST_REFUSH_WHAT = 0;
-    /** list加载更多数据 **/
+    /**
+     * list加载更多数据
+     **/
     public static final int LIST_LOADMORE_WHAT = 1;
-    public TextView topbar_img_title,topbar_title;
-    public ImageButton back_btn,other_btn;
+    public TextView topbar_img_title, topbar_title;
+    public ImageButton back_btn, other_btn;
     public Button other_morbtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +96,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 //    public void setChangeBarColor(String barColor) {
 //        publicRelativeLayout.setChangeBarColor(barColor);
 //    }
+
     /**
      * 初始化变量，包括Intent带的数据和activity内的变量
      */
@@ -229,12 +237,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
 
     }
-    /** 设置输入法弹起时页面不动 */
+
+    /**
+     * 设置输入法弹起时页面不动
+     */
     public void setSoftInputMode() {
         // 设置输入法弹起时页面不动
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
     }
+
     /**
      * 判断是否是平板
      *

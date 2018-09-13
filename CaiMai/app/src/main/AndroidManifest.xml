@@ -163,6 +163,8 @@
         <activity android:name=".home.mineprofit.ProfitListActivity" />
         <activity android:name=".home.wallet.AllLiuShuiActivity" />
         <activity android:name=".fileshow.FileShowActivity"></activity>
+
+        <activity android:name=".pdf.PDFActivity"></activity>
     </application>
 
 </manifest>

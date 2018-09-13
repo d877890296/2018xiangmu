@@ -24,6 +24,8 @@ import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseFragment;
 import com.xfkc.caimai.bean.GoodsKey;
 import com.xfkc.caimai.config.SharedPref;
+import com.xfkc.caimai.dialog.ShowPassWordDialog;
+import com.xfkc.caimai.home.comment.ToCommentActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -200,12 +202,12 @@ public class AllOrderGoodsFragment extends BaseFragment implements RefreshLayout
 
                     break;
                 case 4:   // 申请退款
-
+                    ShowPassWordDialog showPassWordDialog=new ShowPassWordDialog();
+                    showPassWordDialog.showPhoneDialog(getActivity());
                     break;
                 case 5:   // 评价
-
+                    skip_classView(ToCommentActivity.class,extraMap,false,true);
                     break;
-
                 case 6:   // 查看详情
                     break;
 

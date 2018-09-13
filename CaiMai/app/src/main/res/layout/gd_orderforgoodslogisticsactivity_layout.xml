@@ -45,6 +45,7 @@
                     android:orientation="vertical" >
 
                     <TextView
+                        android:id="@+id/order_status"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="已签收"
@@ -52,6 +53,7 @@
                         android:textSize="15sp" />
 
                     <TextView
+                        android:id="@+id/kuaidi_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
