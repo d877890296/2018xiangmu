@@ -69,7 +69,7 @@
                 android:layout_height="45dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:inputType="number"
+                android:inputType="numberPassword"
                 android:maxLength="1"
                 android:textColor="#000" />
 
@@ -84,7 +84,7 @@
                 android:layout_height="45dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:inputType="number"
+                android:inputType="numberPassword"
                 android:maxLength="1"
                 android:textColor="#000" />
 
@@ -99,7 +99,7 @@
                 android:layout_height="45dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:inputType="number"
+                android:inputType="numberPassword"
                 android:maxLength="1"
                 android:textColor="#000" />
 
@@ -114,7 +114,7 @@
                 android:layout_height="45dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:inputType="number"
+                android:inputType="numberPassword"
                 android:maxLength="1"
                 android:textColor="#000" />
 
@@ -129,7 +129,7 @@
                 android:layout_height="45dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:inputType="number"
+                android:inputType="numberPassword"
                 android:maxLength="1"
                 android:textColor="#000" />
 
@@ -144,7 +144,7 @@
                 android:layout_height="45dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:inputType="number"
+                android:inputType="numberPassword"
                 android:maxLength="1"
                 android:textColor="#000" />
 

@@ -59,7 +59,7 @@
         android:layout_height="48dp"
         app:sDividerLineType="both"
         app:sLeftTextColor="@color/color_text"
-        app:sLeftTextString="个人昵称"
+        app:sLeftTextString="姓名"
         app:sRightTextColor="@color/color_text"
         app:sRightTextString="昵称"
         android:paddingRight="15dp"

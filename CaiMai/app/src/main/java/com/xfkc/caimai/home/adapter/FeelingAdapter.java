@@ -103,7 +103,7 @@ public class FeelingAdapter extends BaseAdapter {
             case TYPE2:
                 Glide.with(context).load(listBean.userImg).error(R.mipmap.heart_icon).into(viewHolder.feelingUserIv);
                 viewHolder.feelingUserName.setText(listBean.realName);
-                viewHolder.feelingTime.setText(Utils.timeStamp2Date(listBean.createTime, "yyyy-MM-dd"));
+                viewHolder.feelingTime.setText(Utils.timeStamp2Date(listBean.createTime, "yyyy-MM-dd hh:ss"));
                 viewHolder.feelingPeopleNumber.setText("情怀链" + listBean.nextNum + "人");
                 viewHolder.kbNumber.setText("贡献康币" + listBean.nextMoney);
                 break;

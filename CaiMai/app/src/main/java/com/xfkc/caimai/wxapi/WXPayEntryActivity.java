@@ -53,6 +53,8 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
             switch (resp.errCode) {
                 case 0://成功
                     ToastUtil.showToast("支付成功");
+//                    getWXBack();
+//                    startActivityForResult(new Intent(this,PaySuccessActivity.class).putExtra("type","2"),1003);
                     break;
                 case -1://错误  可能的原因：签名错误、未注册APPID、项目设置APPID不正确、注册的APPID与设置的不匹配、其他异常等
                     ToastUtil.showToast("支付失败");
@@ -82,6 +84,9 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 //        ShareRequst.getInstance().unregister();
         super.onDestroy();
     }
-
+//    /*微信成功回调*/
+//    private void getWXBack() {
+//        /api/WXPay/alipay/notify
+//    }
 
 }

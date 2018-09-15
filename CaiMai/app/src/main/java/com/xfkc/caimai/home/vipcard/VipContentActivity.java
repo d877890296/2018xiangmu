@@ -22,7 +22,6 @@ import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 import com.xfkc.caimai.bean.WXBean;
 import com.xfkc.caimai.bean.ZfbBean;
-import com.xfkc.caimai.config.Constant;
 import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.customview.StateButton;
 import com.xfkc.caimai.net.PayFactory;
@@ -69,7 +68,7 @@ public class VipContentActivity extends BaseActivity {
     //支付方式 0微信  1支付宝
     private int PAY_WAY = 0;
     //会员卡类别
-    private int cartype = 0;
+    private String cartype ="0";
 
     private String name = "", car_price="" , carid="";
 
@@ -91,7 +90,7 @@ public class VipContentActivity extends BaseActivity {
         name = getIntent().getStringExtra("name");
         car_price = getIntent().getStringExtra("price");
         carid = getIntent().getStringExtra("carid");
-        cartype = getIntent().getIntExtra("cartype", 0);
+        cartype = getIntent().getStringExtra("cartype");
         token = SharedPrefUtil.get(this, SharedPref.TOKEN);
 
         setVipCardType();
@@ -106,17 +105,17 @@ public class VipContentActivity extends BaseActivity {
         vipCardNo.setText("VIP 123456789");
 
 
-        switch (cartype) {
-            case 0:
+//        switch (cartype) {
+//            case "0":
                 imageBg.setBackgroundResource(R.mipmap.vip01);
-                break;
-            case 1:
-                imageBg.setBackgroundResource(R.mipmap.vip03);
-                break;
-            case 2:
-                imageBg.setBackgroundResource(R.mipmap.vip02);
-                break;
-        }
+//                break;
+//            case "1":
+//                imageBg.setBackgroundResource(R.mipmap.vip03);
+//                break;
+//            case "2":
+//                imageBg.setBackgroundResource(R.mipmap.vip02);
+//                break;
+//        }
 
     }
 
@@ -282,8 +281,7 @@ public class VipContentActivity extends BaseActivity {
 
         iwxapi = WXAPIFactory.createWXAPI(this, null);
 //        初始化微信api
-        iwxapi.registerApp(Constant.APP_ID);
-        iwxapi.registerApp(wxPayBean.data.appId);
+        iwxapi.registerApp(wxPayBean.data.appid);
 
 //        注册appid appid可以在开发平台获取
         Runnable payRunnable = new Runnable() {
@@ -293,13 +291,13 @@ public class VipContentActivity extends BaseActivity {
                 PayReq request = new PayReq();
 //                调起微信APP的对象
 //                 下面是设置必要的参数，也就是前面说的参数,这几个参数从何而来请看上面说明
-                request.appId = Constant.APP_ID;
-                request.appId = wxPayBean.data.appId;
+                request.appId = wxPayBean.data.appid;
                 request.partnerId = wxPayBean.data.partnerid;
-                request.prepayId = wxPayBean.data.prepay_id;
-                request.packageValue = "Sign=WXPay";
-                request.nonceStr = wxPayBean.data.nonceStr;
-                request.timeStamp = wxPayBean.data.timeStamp+"";
+                request.prepayId = wxPayBean.data.prepayid;
+//                request.packageValue = wxPayBean.data.packageX;
+                request.packageValue ="Sign=WXPay";
+                request.nonceStr = wxPayBean.data.noncestr;
+                request.timeStamp = wxPayBean.data.timestamp;
                 request.sign = wxPayBean.data.sign;
                 iwxapi.sendReq(request);
 //                发送调起微信的请求

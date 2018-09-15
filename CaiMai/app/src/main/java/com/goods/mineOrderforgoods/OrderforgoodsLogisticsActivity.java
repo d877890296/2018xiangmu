@@ -77,7 +77,6 @@ public class OrderforgoodsLogisticsActivity extends BaseActivity {
         order_status = (TextView) findViewById(R.id.order_status);
         topbar_title.setText("查看物流");
         back_btn.setOnClickListener(onClickListener);
-
         timeline_list = (MyListView) findViewById(R.id.timeline_list);
         goodsLogisticsAdapter = new GoodsLogisticsAdapter(mContext);
 
@@ -173,6 +172,7 @@ public class OrderforgoodsLogisticsActivity extends BaseActivity {
                         data.addAll(logisticsBean.data.logisticsInfo);
 
                         kuaidi_name.setText(logisticsBean.data.courierName+":"+logisticsBean.data.courierNum);
+                        order_status.setText(logisticsBean.data.stateDesc);
                         goodsLogisticsAdapter.setData(data);
                         break;
 

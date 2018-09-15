@@ -81,8 +81,14 @@ public class RecruHallListAdapter extends BaseAdapter {
         }
 
         if (listBean.isJoin){
-            viewHodler.payBtn.setPressedBackgroundColor(Color.parseColor("#000"));
-            viewHodler.payBtn.setNormalBackgroundColor(Color.parseColor("#000"));
+            viewHodler.payBtn.setPressedBackgroundColor(Color.parseColor("#909090"));
+            viewHodler.payBtn.setNormalBackgroundColor(Color.parseColor("#909090"));
+            viewHodler.payBtn.setUnableBackgroundColor(Color.parseColor("#909090"));
+            viewHodler.payBtn.setUnableTextColor(Color.parseColor("#ffffff"));
+            viewHodler.payBtn.setClickable(false);
+            viewHodler.payBtn.setFocusable(false);
+            viewHodler.payBtn.setEnabled(false);
+            viewHodler.payBtn.setText("已加入");
         }else {
             viewHodler.payBtn.setPressedBackgroundColor(Color.parseColor("#ff704d"));
             viewHodler.payBtn.setNormalBackgroundColor(Color.parseColor("#ff704d"));

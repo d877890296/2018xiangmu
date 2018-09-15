@@ -31,7 +31,7 @@
                 android:layout_height="163dp"
                 android:padding="15dp"
                 android:orientation="vertical"
-                android:background="@mipmap/vip01"
+                android:background="@mipmap/vip02"
                 >
 
                 <TextView
@@ -74,10 +74,10 @@
                     android:textColor="@color/whilte"
                     android:text="VIP 12345678"
                     android:gravity="center_vertical"
+                    android:visibility="invisible"
                     />
 
             </com.zhy.autolayout.AutoLinearLayout>
-            <!--会员权益-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -91,6 +91,7 @@
                     android:text="会员特权:"
                     android:textSize="16sp"
                     android:textColor="@color/black"
+                    android:textStyle="bold"
                     />
 
                 <LinearLayout
@@ -104,7 +105,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:textSize="14sp"
-                        android:text="1.用卡可享受9.9折优惠"
+                        android:text="1.购卡可成为幸福康城社员"
                         />
 
                     <TextView
@@ -112,7 +113,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:textSize="14sp"
-                        android:text="2.可享受生日优惠"
+                        android:text="2.购卡可享受优惠活动"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
                         />
@@ -121,7 +122,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:textSize="14sp"
-                        android:text="3.所有商品免配送费"
+                        android:text="3.更多优惠，敬请期待"
                         />
                 </LinearLayout>
 
@@ -140,6 +141,7 @@
                     android:text="使用须知:"
                     android:textSize="16sp"
                     android:textColor="@color/black"
+                    android:textStyle="bold"
                     />
 
                 <LinearLayout
@@ -153,7 +155,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:textSize="14sp"
-                        android:text="1.没人限购一张，不可与其他注册会员卡同时使用"
+                        android:text="1.每人限购一张"
                         />
 
                     <TextView
@@ -166,10 +168,17 @@
                         android:layout_marginBottom="10dp"
                         />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:text="3.更多优惠，敬请期待"
+                        android:layout_marginBottom="10dp"
+                        />
                 </LinearLayout>
 
             </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
 

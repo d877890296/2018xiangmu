@@ -28,6 +28,7 @@ public class LogisticsBean {
          */
 
         public String courierName;
+        public String stateDesc;
         public String courierNum;
         public List<LogisticsInfoBean> logisticsInfo;
 

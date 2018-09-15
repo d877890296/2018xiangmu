@@ -10,26 +10,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.goods.city.GoodsCityActivity;
-import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.ToastUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseFragment;
 import com.xfkc.caimai.bean.BannerBean;
-import com.xfkc.caimai.bean.UserInfoBean;
-import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.home.adapter.ModuleAdapter;
 import com.xfkc.caimai.home.recruitmenthall.RecruitmentHallActivity;
 import com.xfkc.caimai.home.vipcard.VipCardActivity;
-import com.xfkc.caimai.loading.LoadingActivity;
-import com.xfkc.caimai.net.ApiException;
 import com.xfkc.caimai.net.PayFactory;
 import com.xfkc.caimai.net.RxHelper;
-import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Subscriber;
 
 /**
  * 大仓库
@@ -67,7 +62,6 @@ public class HomeFragment extends BaseFragment {
 
         getBanner();//获取轮播图
         setListClick();
-        getData();
     }
 
     /*获取轮播图*/
@@ -75,10 +69,19 @@ public class HomeFragment extends BaseFragment {
         PayFactory.getPayService()
                 .getBannerData("0", "10")
                 .compose(RxHelper.<BannerBean>io_main())
-                .subscribe(new ProgressSubscriber<BannerBean>(mContext) {
+                .subscribe(new Subscriber<BannerBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
                     @Override
                     public void onNext(BannerBean bannerBean) {
-
                         moduleAdapter = new ModuleAdapter(mContext);
                         moduleAdapter.setData(listData, bannerBean.data.list);
                         homeList.setAdapter(moduleAdapter);
@@ -123,30 +126,4 @@ public class HomeFragment extends BaseFragment {
         ButterKnife.unbind(this);
     }
 
-    /*获取个人信息*/
-    private void getData() {
-        String token= SharedPrefUtil.get(mContext, SharedPref.TOKEN);
-        PayFactory.getPayService()
-                .findUserDetByPhone(token)
-                .compose(RxHelper.<UserInfoBean>io_main())
-                .subscribe(new ProgressSubscriber<UserInfoBean>(mContext) {
-                    @Override
-                    public void onNext(UserInfoBean userInfoBean) {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        dismissProgressDialog();
-                        ApiException apiException = (ApiException) e;
-                        if (apiException.getMessage().equals("用户已失效,请重新登录")) {
-                            startActivity(new Intent(getActivity(), LoadingActivity.class));
-                            getActivity().finish();
-                        } else {
-                            super.onError(e);
-                        }
-
-                    }
-                });
-    }
 }

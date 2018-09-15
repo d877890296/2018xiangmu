@@ -1,6 +1,7 @@
 package com.xfkc.caimai;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -22,17 +23,25 @@ import com.goods.sortlsitview.SortModel;
 import com.hyf.tdlibrary.utils.ActivityUtil;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.ToastUtil;
+import com.hyf.tdlibrary.utils.Tools;
+import com.xfkc.caimai.bean.UserInfoBean;
 import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.home.fragment.BigLectureHallFragment;
 import com.xfkc.caimai.home.fragment.FeelingFragment;
 import com.xfkc.caimai.home.fragment.HomeFragment;
 import com.xfkc.caimai.home.fragment.SocialCentreFragment;
+import com.xfkc.caimai.info.MainPerfectInforActivity;
+import com.xfkc.caimai.loading.LoadingActivity;
+import com.xfkc.caimai.net.ApiException;
+import com.xfkc.caimai.net.PayFactory;
+import com.xfkc.caimai.net.RxHelper;
 import com.xfkc.caimai.rx.activity.RxActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import rx.Subscriber;
 
 public class MainActivity extends RxActivity {
 
@@ -59,7 +68,7 @@ public class MainActivity extends RxActivity {
     protected void initViews(Bundle savedInstanceState) {
         token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
         initTabHost();
-
+        getData();
         if (Build.VERSION.SDK_INT >= 23) {
             List<String> permissions = null;
             if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -288,6 +297,46 @@ private DefaultRequstLocation.OnLocationCallBack onLocationCallBack=new DefaultR
         }
 
     }
+    /*获取个人信息*/
+    private void getData() {
+        String token= SharedPrefUtil.get(mContext, SharedPref.TOKEN);
+        PayFactory.getPayService()
+                .findUserDetByPhone(token)
+                .compose(RxHelper.<UserInfoBean>io_main())
+                .subscribe(new Subscriber<UserInfoBean>() {
+                    @Override
+                    public void onCompleted() {
 
+                    }
 
+                    @Override
+                    public void onError(Throwable e) {
+                        ApiException apiException = (ApiException) e;
+                        if (apiException.getMessage().equals("用户已失效,请重新登录")) {
+                            startActivity(new Intent(MainActivity.this, LoadingActivity.class));
+                            finish();
+                        } else {
+                            ToastUtil.showToast(apiException.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onNext(UserInfoBean userInfoBean) {
+
+                        if (Tools.IsEmpty(userInfoBean.data.detailAdress)){
+                            extraMap.put("phone",userInfoBean.data.phone);
+                            skip_classView(MainPerfectInforActivity.class,extraMap,false,1009);
+                        }
+                    }
+                });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1009 && resultCode == 1010){
+            SharedPrefUtil.put(mContext,SharedPref.TOKEN,"");
+            finish();
+        }
+    }
 }

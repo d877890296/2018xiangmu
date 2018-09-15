@@ -62,6 +62,7 @@ public class MyJoinBean extends Response {
              * type : 0
              * personNumber : 20
              * joinPersonNumber : 4
+             * comKangbi
              */
 
             public int shopId;
@@ -93,6 +94,7 @@ public class MyJoinBean extends Response {
             public int type;
             public int personNumber;
             public int joinPersonNumber;
+            public String comKangbi;
         }
     }
 }

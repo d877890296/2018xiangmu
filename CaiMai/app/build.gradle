@@ -25,6 +25,14 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        mybuildType {
+            debuggable false
+            jniDebuggable false
+            signingConfig signingConfigs.myconfig
+            renderscriptDebuggable false
+            minifyEnabled false
+            zipAlignEnabled true
+        }
         debug {
             signingConfig signingConfigs.myconfig
         }
@@ -87,4 +95,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
 //        compile 'com.joanzapata.pdfview:android-pdfview:1.0.4@aar'
     compile project(':android-pdfview')
+//    compile 'liji.library.dev:citypickerview:3.1.13'
 }

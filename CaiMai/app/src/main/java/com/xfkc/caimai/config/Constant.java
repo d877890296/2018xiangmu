@@ -10,9 +10,7 @@ public class Constant {
 
     public static final String TAG = "---幸福康城---";
     public static final String BASE_URL = "http://47.105.126.49:9999";
-//    public static final String BASE_URL = "http://09e0d45b.ngrok.io";
-//    public static final String BASE_URL = "http://ec460390.ngrok.io";
-//    public static final String BASE_URL = "http://e120e980.ngrok.io";
+//    public static final String BASE_URL = "http://e790debb.ngrok.io";
 
 
     //关于我们

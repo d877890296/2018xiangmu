@@ -21,9 +21,9 @@ import com.xfkc.caimai.customview.StateButton;
 import com.xfkc.caimai.net.PayFactory;
 import com.xfkc.caimai.net.RxHelper;
 import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
+import com.xfkc.caimai.util.StringUtils;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /***
@@ -139,8 +139,9 @@ public class RegisterActivity extends BaseActivity {
         again_password = againPasswordEdit.getText().toString().trim();
         yq_code = yaoqingEdit.getText().toString().trim();
 
-        if (TextUtils.isEmpty(realName)) {
-            ToastUtil.showToast("手机号码不能为空!");
+        if (StringUtils.isHave(realName)||TextUtils.isEmpty(realName)) {
+            ToastUtil.showToast("请填写正确姓名!");
+            realNameEdit.setText("");
             return;
         }
         if (TextUtils.isEmpty(phone)) {
@@ -238,12 +239,5 @@ public class RegisterActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         timer.cancel();
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 }

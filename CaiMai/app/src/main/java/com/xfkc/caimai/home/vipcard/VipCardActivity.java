@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dev.customview.CustomListView;
+import com.hyf.tdlibrary.utils.ToastUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 import com.xfkc.caimai.bean.VipCardBean;
@@ -91,7 +92,7 @@ public class VipCardActivity extends BaseActivity {
                 extraMap.put("price", listBean.cardPrice);
                 extraMap.put("name", listBean.cardName);
                 extraMap.put("carid", listBean.id);
-                extraMap.put("cartype", position % 3);
+                extraMap.put("cartype", (position % 3)+"");
                 skip_classView(VipContentActivity.class, extraMap, false);
             }
         });
@@ -132,7 +133,8 @@ public class VipCardActivity extends BaseActivity {
                 updateShow(0);
                 break;
             case R.id.jkhyk:
-                updateShow(1);
+                ToastUtil.showToast("暂未开放");
+//                updateShow(1);
                 break;
         }
     }

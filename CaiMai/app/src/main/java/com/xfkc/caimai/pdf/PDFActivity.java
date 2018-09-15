@@ -145,6 +145,7 @@ public class PDFActivity extends BaseActivity implements OnPageChangeListener, O
 					.defaultPage(pageNumber).showMinimap(false)
 					//.onLoad(this)
 					// .onDraw(this)
+					.swipeVertical(true)
 					.enableSwipe(true).onPageChange(PDFActivity.this).load();
 		} else {
 			nodataview_textview.setText("文档下载失败。");

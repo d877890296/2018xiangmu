@@ -23,6 +23,7 @@ import com.goods.shoppingcar.ShoppingCarActivity;
 import com.goods.sortlsitview.AjaxShopModel;
 import com.goods.sortlsitview.GoodsChooseCityActivity;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
+import com.hyf.tdlibrary.utils.ToastUtil;
 import com.hyf.tdlibrary.utils.Tools;
 import com.recycle.view.MyRecyclerView;
 import com.refushView.RefreshLayout;
@@ -302,55 +303,58 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
                     }, 2000);
                     break;
                 case R.id.socle_textView:
-                    sidx = "";
-                    isFristLoadData = true;
-                    setBarTextColor(1);
-                    barLineSetting.Amination(1);
-                    showMbProgress("数据加载中...");
-//                    app.netRequst.shoppingGoodsRequst("1", "1", "100", "", goodclassid,
-//                            netRequstAjaxCallBack.shoppShowGoodsCallback);
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            dissMbProgress();
-                        }
-                    }, 2000);
-                    topCategoryId = "2";
-                    requstNetData();
+                    ToastUtil.showToast("该功能暂未开放!");
+//                    sidx = "";
+//                    isFristLoadData = true;
+//                    setBarTextColor(1);
+//                    barLineSetting.Amination(1);
+//                    showMbProgress("数据加载中...");
+////                    app.netRequst.shoppingGoodsRequst("1", "1", "100", "", goodclassid,
+////                            netRequstAjaxCallBack.shoppShowGoodsCallback);
+//                    new Handler().postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            dissMbProgress();
+//                        }
+//                    }, 2000);
+//                    topCategoryId = "2";
+//                    requstNetData();
                     break;
                 case R.id.prace_textView:
-                    sidx = "";
-                    isFristLoadData = true;
-                    setBarTextColor(2);
-                    barLineSetting.Amination(2);
-                    showMbProgress("数据加载中...");
-//                    app.netRequst.shoppingGoodsRequst("1", "1", "100", "", goodclassid,
-//                            netRequstAjaxCallBack.shoppShowGoodsCallback);
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            dissMbProgress();
-                        }
-                    }, 2000);
-                    topCategoryId ="3";
-                    requstNetData();
+                    ToastUtil.showToast("该功能暂未开放!");
+//                    sidx = "";
+//                    isFristLoadData = true;
+//                    setBarTextColor(2);
+//                    barLineSetting.Amination(2);
+//                    showMbProgress("数据加载中...");
+////                    app.netRequst.shoppingGoodsRequst("1", "1", "100", "", goodclassid,
+////                            netRequstAjaxCallBack.shoppShowGoodsCallback);
+//                    new Handler().postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            dissMbProgress();
+//                        }
+//                    }, 2000);
+//                    topCategoryId ="3";
+//                    requstNetData();
                     break;
                 case R.id.more_textView:
-                    sidx = "";
-                    isFristLoadData = true;
-                    setBarTextColor(3);
-                    barLineSetting.Amination(3);
-                    showMbProgress("数据加载中...");
-//                    app.netRequst.shoppingGoodsRequst("1", "1", "100", "", goodclassid,
-//                            netRequstAjaxCallBack.shoppShowGoodsCallback);
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            dissMbProgress();
-                        }
-                    }, 2000);
-                    topCategoryId = "4";
-                    requstNetData();
+                    ToastUtil.showToast("该功能暂未开放!");
+//                    sidx = "";
+//                    isFristLoadData = true;
+//                    setBarTextColor(3);
+//                    barLineSetting.Amination(3);
+//                    showMbProgress("数据加载中...");
+////                    app.netRequst.shoppingGoodsRequst("1", "1", "100", "", goodclassid,
+////                            netRequstAjaxCallBack.shoppShowGoodsCallback);
+//                    new Handler().postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            dissMbProgress();
+//                        }
+//                    }, 2000);
+//                    topCategoryId = "4";
+//                    requstNetData();
                     break;
                 case R.id.goods_grid_list_change:
                     //myRecyclerView = null;

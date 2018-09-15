@@ -53,7 +53,10 @@
                 android:textSize="16sp" />
 
         </LinearLayout>
-
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.3dp"
+            android:background="@color/day_line_color" />
         <!--手机号-->
         <LinearLayout
             android:layout_width="match_parent"
@@ -249,7 +252,7 @@
                 android:id="@+id/fwtk_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="《幸福康城用户协议》”"
+                android:text="《幸福康城用户协议》"
                 android:textColor="@color/red"
                 android:textSize="12sp"
                 />

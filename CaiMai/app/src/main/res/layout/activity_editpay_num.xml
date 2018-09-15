@@ -25,7 +25,6 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/type_grid_bg02"
         android:hint="请输入支付金额"
-        android:inputType="number"
         android:paddingLeft="10dp" />
 
     <com.xfkc.caimai.customview.StateButton

@@ -16,13 +16,14 @@ import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseFragment;
 import com.xfkc.caimai.bean.BigLectureBean;
+import com.xfkc.caimai.bean.CollectBean;
 import com.xfkc.caimai.bean.EmptyBean;
 import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.fileshow.FileShowActivity;
+import com.xfkc.caimai.home.adapter.BigCollectListAdapter;
 import com.xfkc.caimai.home.adapter.BigListAdapter;
 import com.xfkc.caimai.net.PayFactory;
 import com.xfkc.caimai.net.RxHelper;
-import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
 
 import java.util.ArrayList;
 
@@ -67,7 +68,9 @@ public class BigLectureHallFragment extends BaseFragment {
     private ArrayList<View> list_view = new ArrayList<>();
 
     private BigListAdapter bigListAdapter;
+    private BigCollectListAdapter bigCollectListAdapter;
     private ArrayList<BigLectureBean.DataBean> list_data = new ArrayList<>();
+    private ArrayList<CollectBean.DataBean.ListBean> collect_list = new ArrayList<>();
     private String token;
     private int type = 0;
 
@@ -92,7 +95,8 @@ public class BigLectureHallFragment extends BaseFragment {
         list_view.add(wqspLine);
         list_view.add(pptLine);
         list_view.add(mineColectLine);
-
+        bigCollectListAdapter = new BigCollectListAdapter(mContext);
+        bigCollectListAdapter.setContext(handler);
         bigListAdapter = new BigListAdapter(mContext);
         bigListAdapter.setContext(handler);
         bigListAdapter.setData(list_data);
@@ -102,8 +106,14 @@ public class BigLectureHallFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 position = position - 1;
-                startActivity(new Intent(mContext, FileShowActivity.class)
-                        .putExtra("data", list_data.get(position).url));
+                if (type == 2){
+                    startActivity(new Intent(mContext, FileShowActivity.class)
+                            .putExtra("data", collect_list.get(position).url));
+                }else {
+                    startActivity(new Intent(mContext, FileShowActivity.class)
+                            .putExtra("data", list_data.get(position).url));
+                }
+
             }
         });
     }
@@ -114,13 +124,16 @@ public class BigLectureHallFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.wqsp:
                 type = 0;
+                showMbProgress("正在加载...");
                 updateShow(0);
                 break;
             case R.id.ppt:
+                showMbProgress("正在加载...");
                 type = 1;
                 updateShow(1);
                 break;
             case R.id.mine_colect:
+                type = 2;
                 updateShow(2);
                 break;
         }
@@ -134,14 +147,26 @@ public class BigLectureHallFragment extends BaseFragment {
         token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
         PayFactory.getPayService().findVedioByType(token, type + "")
                 .compose(RxHelper.<BigLectureBean>io_main())
-                .subscribe(new ProgressSubscriber<BigLectureBean>(mContext) {
+                .subscribe(new Subscriber<BigLectureBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
                     @Override
                     public void onNext(BigLectureBean bigLectureBean) {
                         if (bigLectureBean.data != null && bigLectureBean.data.size() != 0) {
                             list_data.addAll(bigLectureBean.data);
                             bigListAdapter.setData(list_data);
+                            listview.setAdapter(bigListAdapter);
                         } else {
                             bigListAdapter.setData(list_data);
+                            listview.setAdapter(bigListAdapter);
                         }
                     }
                 });
@@ -178,9 +203,11 @@ public class BigLectureHallFragment extends BaseFragment {
              int i =msg.arg1;
             String id= (String) msg.obj;
             if (i == 1){
-                updatenoCollect(id);
-            }else {
+                updatenoCollect(id,1);
+            }else if (i == 2){
                 updateCollect(id);
+            }else {
+                updatenoCollect(id,3);
             }
 
         }
@@ -207,7 +234,7 @@ public class BigLectureHallFragment extends BaseFragment {
                 });
 
     }
-    public void updatenoCollect(String videoid){
+    public void updatenoCollect(String videoid, final int i){
         PayFactory.getPayService().novedioCollect(token,videoid)
                 .compose(RxHelper.<EmptyBean>io_main())
                 .subscribe(new Subscriber<EmptyBean>() {
@@ -223,7 +250,11 @@ public class BigLectureHallFragment extends BaseFragment {
 
                     @Override
                     public void onNext(EmptyBean emptyBean) {
-                        loadData();
+                        if (i==1){
+                            loadData();
+                        }else if (i == 3){
+                            findMyCollect();
+                        }
                     }
                 });
 
@@ -231,9 +262,9 @@ public class BigLectureHallFragment extends BaseFragment {
 
     private void findMyCollect(){
         showMbProgress("正在加载...");
-        PayFactory.getPayService().findMyCollectList(token,0,pageSize)
-                .compose(RxHelper.<BigLectureBean>io_main())
-                .subscribe(new Subscriber<BigLectureBean>() {
+        PayFactory.getPayService().findMyCollectList(token,start,pageSize)
+                .compose(RxHelper.<CollectBean>io_main())
+                .subscribe(new Subscriber<CollectBean>() {
                     @Override
                     public void onCompleted() {
 
@@ -245,9 +276,18 @@ public class BigLectureHallFragment extends BaseFragment {
                     }
 
                     @Override
-                    public void onNext(BigLectureBean bigLectureBean) {
-
+                    public void onNext(CollectBean collectBean) {
+                        collect_list.clear();
+                        if (collectBean.data.list != null && collectBean.data.list.size() != 0) {
+                            collect_list.addAll(collectBean.data.list);
+                            bigCollectListAdapter.setData(collect_list);
+                            listview.setAdapter(bigCollectListAdapter);
+                        } else {
+                            bigCollectListAdapter.setData(collect_list);
+                            listview.setAdapter(bigCollectListAdapter);
+                        }
                     }
                 });
+        dissMbProgress();
     }
 }

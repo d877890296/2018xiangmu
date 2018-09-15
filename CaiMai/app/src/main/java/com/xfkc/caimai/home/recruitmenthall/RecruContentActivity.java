@@ -13,7 +13,6 @@ import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.Tools;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
-import com.xfkc.caimai.bean.RecruBean;
 import com.xfkc.caimai.bean.RecruiHallBean;
 import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.customview.StateButton;
@@ -162,16 +161,12 @@ public class RecruContentActivity extends BaseActivity {
 
     /*添加*/
     private void commit() {
-        PayFactory.getPayService().recruitOrder(token,shopId,partnerType,reall_price)
-                .compose(RxHelper.<RecruBean>io_main())
-                .subscribe(new ProgressSubscriber<RecruBean>(this) {
-                    @Override
-                    public void onNext(RecruBean recruBean) {
-                        extraMap.put("orderNum",recruBean.data.orderNum);
-                        extraMap.put("sign",recruBean.data.sign);
-                        skip_classView(PayWAyActivity.class,extraMap,true);
-                    }
-                });
+        extraMap.put("token",token);
+        extraMap.put("shopId",shopId);
+        extraMap.put("partnerType",partnerType);
+        extraMap.put("reall_price",reall_price+"");
+        skip_classView(PayWAyActivity.class,extraMap,true);
+
     }
 
 

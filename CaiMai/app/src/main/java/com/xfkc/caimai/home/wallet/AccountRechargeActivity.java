@@ -16,8 +16,12 @@ import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
+import com.xfkc.caimai.bean.WXBean;
 import com.xfkc.caimai.bean.ZfbBean;
 import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.customview.StateButton;
@@ -92,6 +96,7 @@ public class AccountRechargeActivity extends BaseActivity {
 
         list_radio.add(weixinRb);
         list_radio.add(zhifubaoRb);
+        token = SharedPrefUtil.get(mContext,SharedPref.TOKEN);
     }
 
     @Override
@@ -131,7 +136,7 @@ public class AccountRechargeActivity extends BaseActivity {
                 if (PAY_WAY == 1) {
                     getPayData();
                 } else {
-
+                    getWeiXinData();
                 }
                 break;
         }
@@ -268,6 +273,53 @@ public class AccountRechargeActivity extends BaseActivity {
             priceEt.setText( PRICE_NUMBER);
         }
 
+    }
+
+    /*获取微信支付数据*/
+    private void getWeiXinData() {
+        PayFactory.getPayService()
+                .wxmemCharge(token,PRICE_NUMBER)
+                .compose(RxHelper.<WXBean>io_main())
+                .subscribe(new ProgressSubscriber<WXBean>(this) {
+                    @Override
+                    public void onNext(WXBean wxPayBean) {
+                        toWXPay(wxPayBean);
+                    }
+                });
+
+    }
+
+    private IWXAPI iwxapi;
+
+    //微信支付api
+    /** *调起微信支付的方法 **/
+    private void toWXPay(final WXBean wxPayBean) {
+
+        iwxapi = WXAPIFactory.createWXAPI(this, null);
+//        初始化微信api
+        iwxapi.registerApp(wxPayBean.data.appid);
+
+//        注册appid appid可以在开发平台获取
+        Runnable payRunnable = new Runnable() {
+            //            这里注意要放在子线程
+            @Override
+            public void run() {
+                PayReq request = new PayReq();
+//                调起微信APP的对象
+//                 下面是设置必要的参数，也就是前面说的参数,这几个参数从何而来请看上面说明
+                request.appId = wxPayBean.data.appid;
+                request.partnerId = wxPayBean.data.partnerid;
+                request.prepayId = wxPayBean.data.prepayid;
+                request.packageValue = wxPayBean.data.packageX;
+                request.nonceStr = wxPayBean.data.noncestr;
+                request.timeStamp = wxPayBean.data.timestamp;
+                request.sign = wxPayBean.data.sign;
+                iwxapi.sendReq(request);
+//                发送调起微信的请求
+            }
+        };
+        Thread payThread = new Thread(payRunnable);
+        payThread.start();
     }
 }
 

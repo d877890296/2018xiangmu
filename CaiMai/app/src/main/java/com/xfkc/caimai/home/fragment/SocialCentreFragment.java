@@ -31,7 +31,6 @@ import com.xfkc.caimai.home.wallet.WalletActivity;
 import com.xfkc.caimai.loading.LoadingActivity;
 import com.xfkc.caimai.net.PayFactory;
 import com.xfkc.caimai.net.RxHelper;
-import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
 
 import java.util.ArrayList;
 
@@ -132,22 +131,30 @@ public class SocialCentreFragment extends BaseFragment {
         PayFactory.getPayService()
                 .findUserDetByPhone(token)
                 .compose(RxHelper.<UserInfoBean>io_main())
-                .subscribe(new ProgressSubscriber<UserInfoBean>(mContext) {
+                .subscribe(new Subscriber<UserInfoBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
                     @Override
                     public void onNext(UserInfoBean userInfoBean) {
-
                         setInfo(userInfoBean);
-
                     }
                 });
     }
 
     /*设置用户信息*/
     private void setInfo(UserInfoBean userInfoBean) {
-        if (Tools.IsEmpty(userInfoBean.data.nicName)) {
+        if (Tools.IsEmpty(userInfoBean.data.realName)) {
             mineName.setText("昵称");
         } else {
-            mineName.setText(userInfoBean.data.nicName);
+            mineName.setText(userInfoBean.data.realName);
         }
         Glide.with(mContext).load(userInfoBean.data.userImg).error(R.mipmap.heart_icon).into(accountIv);
         userData = userInfoBean.data;
@@ -198,7 +205,7 @@ public class SocialCentreFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.account_iv:
                 extraMap.put("imageUrl", userData.userImg + "");
-                extraMap.put("nickName", userData.nicName + "");
+                extraMap.put("nickName", userData.realName + "");
                 extraMap.put("phone", userData.phone + "");
                 extraMap.put("detailAdress", userData.detailAdress + "");
                 skip_classView(MineInfoActivity.class, extraMap, false, true);

@@ -125,42 +125,50 @@ public class StringUtils {
 
     /**
      * 隐藏执照编号3-6位
+     *
      * @param licNo
      * @return
      */
-    public static String getLicNo(String licNo){
-        return licNo.substring(0,2)+"***"+licNo.substring(6);
+    public static String getLicNo(String licNo) {
+        return licNo.substring(0, 2) + "***" + licNo.substring(6);
     }
+
     /**
      * 隐藏执照全称3-6位
+     *
      * @param custName
      * @return
      */
-    public static String getCustName(String custName){
-        if (custName.length()<=6){
-            return custName.substring(0,2)+"***";
+    public static String getCustName(String custName) {
+        if (custName.length() <= 6) {
+            return custName.substring(0, 2) + "***";
         }
-        return custName.substring(0,2)+"***"+custName.substring(6);
+        return custName.substring(0, 2) + "***" + custName.substring(6);
     }
+
     /**
      * 隐藏经营地址3-6位
+     *
      * @param companyAdress
      * @return
      */
-    public static String getcompanyAdress(String companyAdress){
-        if (companyAdress.length()<=6){
-            return companyAdress.substring(0,2)+"***";
+    public static String getcompanyAdress(String companyAdress) {
+        if (companyAdress.length() <= 6) {
+            return companyAdress.substring(0, 2) + "***";
         }
-        return companyAdress.substring(0,2)+"***"+companyAdress.substring(6);
+        return companyAdress.substring(0, 2) + "***" + companyAdress.substring(6);
     }
+
     /**
      * 隐藏身份证7-16位
+     *
      * @param idNum
      * @return
      */
-    public static String getIdNum(String idNum){
-        return idNum.substring(0,6)+"***"+idNum.substring(idNum.length()-2, idNum.length());
+    public static String getIdNum(String idNum) {
+        return idNum.substring(0, 6) + "***" + idNum.substring(idNum.length() - 2, idNum.length());
     }
+
     /**
      * 显示日期后四位 10-16
      */
@@ -206,17 +214,34 @@ public class StringUtils {
 
     /**
      * 去除字符串中的空格、回车、换行符、制表符等
+     *
      * @param str
      * @return
      */
     public static String replaceSpecialStr(String str) {
         String repl = "";
-        if (str!=null) {
+        if (str != null) {
             Pattern p = Pattern.compile("\\s*|\t|\r|\n");
             Matcher m = p.matcher(str);
             repl = m.replaceAll("");
         }
         return repl;
+    }
+
+    public static boolean isHave(String str) {
+        boolean isDigit = false;//定义一个boolean值，用来表示是否包含数字
+//        boolean isLetter = false;//定义一个boolean值，用来表示是否包含字母
+        for (int i = 0; i < str.length(); i++) {
+            if (Character.isDigit(str.charAt(i))) {   //用char包装类中的判断数字的方法判断每一个字符
+                isDigit = true;
+            }
+            if (Character.isLetter(str.charAt(i))) {  //用char包装类中的判断字母的方法判断每一个字符
+                isDigit = true;
+            }
+        }
+        String regex = "^[a-zA-Z0-9]+$";
+        boolean isRight = isDigit && isDigit && str.matches(regex);
+        return isRight;
     }
 
 }

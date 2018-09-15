@@ -3,6 +3,7 @@ package com.xfkc.caimai.home.wallet;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -46,7 +47,6 @@ public class EditPayNumActivity extends BaseActivity {
         toolbarTitle.setTextColor(Color.BLACK);
         toolbarLeftImg.setImageResource(R.mipmap.back_white);
 
-
     }
 
     @Override
@@ -55,15 +55,20 @@ public class EditPayNumActivity extends BaseActivity {
     }
 
 
-    @OnClick(R.id.commit)
-    public void onViewClicked() {
-
-        String paynumber = payEt.getText().toString();
-        if (Tools.IsEmpty(paynumber)){
-            paynumber = "0";
+    @OnClick({R.id.toolbar_left_img, R.id.commit})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.toolbar_left_img:
+                finish();
+                break;
+            case R.id.commit:
+                String paynumber = payEt.getText().toString();
+                if (Tools.IsEmpty(paynumber)) {
+                    paynumber = "0";
+                }
+                extraMap.put("paynum", paynumber);
+                backHistory(1008, true, true, extraMap);
+                break;
         }
-        extraMap.put("paynum",paynumber);
-        backHistory(1008,true,true,extraMap);
-
     }
 }

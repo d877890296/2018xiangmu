@@ -32,6 +32,7 @@ public class ProfitListBean extends Response {
          * pages : 1
          * prePage : 0
          * nextPage : 0
+         * tradeMoneyStr
          */
 
         public int total;
@@ -59,6 +60,7 @@ public class ProfitListBean extends Response {
              * rebateMemUserId : 16
              * rebateType : 2
              * rebateWay : 1
+             * tradeMoneyStr
              */
 
             public int id;
@@ -69,6 +71,7 @@ public class ProfitListBean extends Response {
             public double tradeMoney;
             public long createTime;
             public String tradeComment;
+            public String tradeMoneyStr;
             public int payType;
             public int rebateMemUserId;
             public int rebateType;

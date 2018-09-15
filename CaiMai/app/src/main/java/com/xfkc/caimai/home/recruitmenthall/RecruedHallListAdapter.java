@@ -140,4 +140,5 @@ public class RecruedHallListAdapter extends BaseAdapter {
 
         }
     }
+
 }

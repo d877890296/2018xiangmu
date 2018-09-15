@@ -19,6 +19,7 @@ import com.foamtrace.photopicker.PhotoPreviewActivity;
 import com.foamtrace.photopicker.SelectModel;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.ToastUtil;
+import com.hyf.tdlibrary.utils.Tools;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 import com.xfkc.caimai.bean.EmptyBean;
@@ -99,7 +100,8 @@ public class MineInfoActivity extends BaseActivity {
         personName.setRightString(nickName);
         phone.setRightString(user_phone);
         personRegistAddress.setRightString(detailAdress);
-        getGoodsAddress.setRightString(detailAdress);
+        if (Tools.IsEmpty(detailAdress) || detailAdress.equals("null"))
+        getGoodsAddress.setRightString("请选择收货地址");
         personDialog = new ShowPersonDialog(this);
         personDialog.setActivity(this);
     }

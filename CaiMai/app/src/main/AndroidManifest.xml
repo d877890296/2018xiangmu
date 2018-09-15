@@ -70,9 +70,9 @@
         <!-- <meta-data -->
         <!-- android:name="weixinappid" -->
         <!-- android:value="wxcec6a77dc03ebf21" /> -->
-        <meta-data
-            android:name="weixinappkey"
-            android:value="b1bea7274ddabdf4ab40f8233874fa46" />
+        <!--<meta-data-->
+            <!--android:name="weixinappkey"-->
+            <!--android:value="baed6bdb751b16df0114b76a9d6f08da" />-->
 
         <activity android:name=".MainActivity" />
         <activity android:name=".loading.LoadingActivity" />
@@ -100,7 +100,13 @@
             android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="wxa42ad5697b6659a2"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -165,6 +171,7 @@
         <activity android:name=".fileshow.FileShowActivity"></activity>
 
         <activity android:name=".pdf.PDFActivity"></activity>
+        <activity android:name=".info.MainPerfectInforActivity"/>
     </application>
 
 </manifest>

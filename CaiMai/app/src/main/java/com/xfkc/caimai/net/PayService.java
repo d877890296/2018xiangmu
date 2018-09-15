@@ -5,6 +5,7 @@ import com.xfkc.caimai.bean.AddressBean;
 import com.xfkc.caimai.bean.AllShopsModel;
 import com.xfkc.caimai.bean.BannerBean;
 import com.xfkc.caimai.bean.BigLectureBean;
+import com.xfkc.caimai.bean.CollectBean;
 import com.xfkc.caimai.bean.EmptyBean;
 import com.xfkc.caimai.bean.FeelingBean;
 import com.xfkc.caimai.bean.GoodsCarNumBean;
@@ -180,7 +181,7 @@ public interface PayService {
     //加入招募
     @GET("/api/appPay/recruitOrder")
     Observable<RecruBean> recruitOrder(@Query("token") String token, @Query("shopId") String shopId,
-                                       @Query("partnerType") String partnerType, @Query("payAmount") double payAmount);
+                                       @Query("partnerType") String partnerType, @Query("payAmount") String payAmount);
 
     //收支明细
     @GET("/api/tradeInfo/receiptDet")
@@ -196,5 +197,15 @@ public interface PayService {
 
     //查询我收入的列表
     @GET("/api/vedio/findMyCollectList")
-    Observable<BigLectureBean> findMyCollectList(@Query("token") String token,@Query("pageNum") int pageNum,@Query("pageSize") int pageSize);
+    Observable<CollectBean> findMyCollectList(@Query("token") String token, @Query("pageNum") int pageNum, @Query("pageSize") int pageSize);
+
+    //微信充值支付
+    @GET("/api/WXPay/memCharge")
+    Observable<WXBean> wxmemCharge(@Query("token") String token, @Query("price") String price);
+
+    //招募微信充值支付
+    @GET("/api/WXPay/recruitOrder")
+    Observable<WXBean> wxrecruitOrder(@Query("token") String token, @Query("shopId") String shopId,
+                                    @Query("partnerType") String partnerType, @Query("payAmount") String payAmount);
+
 }
