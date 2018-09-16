@@ -208,6 +208,7 @@ public class GoodsStyleActivity extends BaseActivity {
                             model.setGoodsName(shopsList.get(i).sname);
                             model.setStyleId(shopsList.get(i).id + "");
                             model.setCategoryId(shopsList.get(i).categoryId + "");
+                            model.setImage(shopsList.get(i).image);
                             data.add(model);
                         }
 //                        goodsStyleContentAdapter.setData(data);

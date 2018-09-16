@@ -13,7 +13,7 @@ public class GoodsStyleModel {
     /** 店中分类 **/
     public String goodsName;
     public String headImg;
-
+    public String image;
 
     public void setGoodsName(String goodsName) {
         this.goodsName = goodsName;
@@ -53,5 +53,13 @@ public class GoodsStyleModel {
 
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

@@ -106,7 +106,7 @@ public class MainPerfectInforActivity extends BaseActivity {
             return;
         }
         PayFactory.getPayService()
-                .certification(realName, userIdCard, province, city, district, detailAdress, "18701546674")
+                .certification(realName, userIdCard, province, city, district, detailAdress, phone)
                 .compose(RxHelper.<EmptyBean>io_main())
                 .subscribe(new ProgressSubscriber<EmptyBean>(this) {
                     @Override
@@ -155,6 +155,7 @@ public class MainPerfectInforActivity extends BaseActivity {
 //                address.setText(province.trim() + "-" + city.trim() + "-" + district.trim());
 //
 //                code.setText(pro_code + "");
+                chooseAddress.setLeftString("");
                 chooseAddress.setRightString(province.trim() + "-" + city.trim() + "-" + district.trim());
                 address_content = province.trim() +  city.trim() + district.trim();
 //                addressContent.setText(province.trim() + "-" + city.trim() + "-" + district.trim());

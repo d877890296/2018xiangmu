@@ -377,8 +377,12 @@ public class SureOrderActivity extends BaseActivity {
                         Gson gson = new Gson();
                         AddOrderBean addOrderBean = gson.fromJson(s, AddOrderBean.class);
                         if (addOrderBean.retCode == 1) {
-                            message = addOrderBean.message;
-                            showPassWordDialog.showTimeDialog02(SureOrderActivity.this, reall_price, kbAmount+"");
+                            if ( kbAmount > 0 || reall_price > kbAmount){
+                                message = addOrderBean.message;
+                                showPassWordDialog.showTimeDialog02(SureOrderActivity.this, reall_price, kbAmount+"");
+                            }else {
+                                ToastUtil.showToast("余额不足!");
+                            }
                         } else {
                             ToastUtil.showToast(addOrderBean.message);
                         }

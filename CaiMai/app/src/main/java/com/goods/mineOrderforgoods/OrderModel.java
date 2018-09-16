@@ -45,5 +45,6 @@ public class OrderModel {
     @NetJsonFiled
     public long createTime;//": null,
 
-
+    @NetJsonFiled
+    public long paymentEndTime;//": null,
 }

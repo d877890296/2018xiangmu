@@ -90,5 +90,7 @@ public class GoodsListModel {
     public Integer categoryId;
     @NetJsonFiled
     public String shippingPrice;
+    @NetJsonFiled
+    public String image;
 
 }

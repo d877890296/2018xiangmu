@@ -106,14 +106,14 @@ public class RecruContentActivity extends BaseActivity {
                             RecruiHallBean.DataBean.ListBean listBean = recruiHallBean.data.list.get(0);
                             dianpuTitle.setText(listBean.shopName);
                             for (int i = 0; i < listBean.inrecruiList.size(); i++) {
-                                if (i == 0) {
+                                if (listBean.inrecruiList.get(i).partnerType.equals("A")) {
                                     aLayout.setVisibility(View.VISIBLE);
                                     aType.setText(listBean.inrecruiList.get(i).partnerType + "类事业合伙人:" + listBean.inrecruiList.get(i).joinPersonNumber + "(人)/" + listBean.inrecruiList.get(i).personNumber);
                                     a_price = listBean.inrecruiList.get(i).kangbiCount ;
                                     reall_price = a_price;
                                     aTypePrice.setText("￥" + a_price);
                                     showType(listBean.inrecruiList.get(i),aTypeDes);
-                                } else if (i == 1) {
+                                } else if (listBean.inrecruiList.get(i).partnerType.equals("B")) {
                                     bLayout.setVisibility(View.VISIBLE);
                                     bType.setText(listBean.inrecruiList.get(i).partnerType + "类事业合伙人:" + listBean.inrecruiList.get(i).joinPersonNumber + "(人)/" + listBean.inrecruiList.get(i).personNumber);
                                     b_price = listBean.inrecruiList.get(i).kangbiCount ;

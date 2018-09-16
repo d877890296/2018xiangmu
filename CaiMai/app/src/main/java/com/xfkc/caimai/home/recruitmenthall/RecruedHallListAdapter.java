@@ -69,13 +69,13 @@ public class RecruedHallListAdapter extends BaseAdapter {
         viewHodler.dianpuTitle.setText(listBean.shopName);
 
         for (int i=0;i<listBean.inrecruiList.size();i++){
-            if (i==0){
+            if (listBean.inrecruiList.get(i).partnerType.equals("A")){
                 viewHodler.aType.setText(listBean.inrecruiList.get(i).partnerType+"类事业合伙人:"+listBean.inrecruiList.get(i).joinPersonNumber+"(人)/"+listBean.inrecruiList.get(i).personNumber);
                 showType(listBean.inrecruiList.get(i),viewHodler.aTypeDes);
-            }else if (i==1){
+            }else if (listBean.inrecruiList.get(i).partnerType.equals("B")){
                 viewHodler.bType.setText(listBean.inrecruiList.get(i).partnerType+"类事业合伙人:"+listBean.inrecruiList.get(i).joinPersonNumber+"(人)/"+listBean.inrecruiList.get(i).personNumber);
                 showType(listBean.inrecruiList.get(i),viewHodler.bTypeDes);
-            }else if (i==2){
+            }else if (listBean.inrecruiList.get(i).partnerType.equals("C")){
                 viewHodler.cType.setText(listBean.inrecruiList.get(i).partnerType+"类事业合伙人:"+listBean.inrecruiList.get(i).joinPersonNumber+"(人)/"+listBean.inrecruiList.get(i).personNumber);
                 showType(listBean.inrecruiList.get(i),viewHodler.cTypeDes);
             }

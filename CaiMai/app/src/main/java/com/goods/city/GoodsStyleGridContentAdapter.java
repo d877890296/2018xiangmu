@@ -86,7 +86,7 @@ public class GoodsStyleGridContentAdapter extends LzBaseAdapter {
 //        }
         viewHolder.fristWord.setVisibility(View.GONE);
         viewHolder.testTitle.setText(model.getGoodsName());
-        Glide.with(context).load(model.headImg).error(R.mipmap.error_icon).into(viewHolder.imageView);
+        Glide.with(context).load(model.getImage()).error(R.mipmap.error_icon).into(viewHolder.imageView);
         return convertView;
     }
 

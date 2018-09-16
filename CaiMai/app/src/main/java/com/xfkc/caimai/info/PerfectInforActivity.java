@@ -103,7 +103,7 @@ public class PerfectInforActivity extends BaseActivity {
             return;
         }
         PayFactory.getPayService()
-                .certification(realName,userIdCard,province,city,district,detailAdress,"18701546674")
+                .certification(realName,userIdCard,province,city,district,detailAdress,phone)
                 .compose(RxHelper.<EmptyBean>io_main())
                 .subscribe(new ProgressSubscriber<EmptyBean>(this) {
                     @Override
