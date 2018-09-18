@@ -17,11 +17,24 @@
             android:layout_weight="1"
             android:orientation="vertical" >
 
-            <com.dev.customview.CustomListView
-                android:id="@+id/mine_myListView"
+
+
+            <com.refushView.RefreshLayout
+                android:id="@+id/define_sliding_bga"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
-            </com.dev.customview.CustomListView>
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/mine_myListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="4dp"
+                    android:layout_weight="1"
+                    android:scrollbars="none" />
+            </com.refushView.RefreshLayout>
+
+
             
             <include layout="@layout/public_nodata_liner"/>
             

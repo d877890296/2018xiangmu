@@ -3,6 +3,7 @@ package com.goods.shoppingcar;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,6 +27,9 @@ import com.goods.order.SureOrderActivity;
 import com.goods.shoppingcar.ShoppingCarAdapter.OnCheckBoxBack;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.Tools;
+import com.recycle.view.MyRecyclerView;
+import com.refushView.RefreshLayout;
+import com.refushView.holder.DefineBAGRefreshWithLoadView;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 import com.xfkc.caimai.bean.GoodsKey;
@@ -46,9 +50,18 @@ import static com.goods.netrequst.PostRequst.UPSUCCESS;
  * @author
  *
  */
-public class ShoppingCarActivity extends BaseActivity {
+public class ShoppingCarActivity extends BaseActivity  implements RefreshLayout.RefreshLayoutDelegate , ShoppingCarAdapter.IonSlidingViewClickListener{
     private String goodsStoreId;
-    private CustomListView mine_myListView;
+    private RecyclerView mine_myListView;
+    private RefreshLayout mBGARefreshLayout;
+    /**
+     * 设置刷新和加载
+     */
+    private DefineBAGRefreshWithLoadView mDefineBAGRefreshWithLoadView = null;
+    private MyRecyclerView myRecyclerView;
+
+
+
     private ShoppingCarAdapter tradeIntegralAdapter;
     private List<GoodsListModel> data;
 
@@ -108,16 +121,23 @@ public class ShoppingCarActivity extends BaseActivity {
         other_btn = (ImageButton) findViewById(R.id.other_btn);
         other_btn.setVisibility(View.GONE);
         other_morbtn = (Button) findViewById(R.id.other_morbtn);
-        other_morbtn.setVisibility(View.GONE);
+        other_morbtn.setVisibility(View.VISIBLE);
         other_morbtn.setText("编辑");
         back_btn.setOnClickListener(onClickListener);
         other_morbtn.setOnClickListener(onClickListener);
 
         nodataview_textview = (TextView) findViewById(R.id.nodataview_textview);
 
-        mine_myListView = (CustomListView) findViewById(R.id.mine_myListView);
+        mBGARefreshLayout = (RefreshLayout) findViewById(R.id.define_sliding_bga);
 
-        mine_myListView.setOnItemClickListener(onItemClickListener);
+        mine_myListView = (RecyclerView) findViewById(R.id.mine_myListView);
+        // 设置刷新和加载监听
+        mBGARefreshLayout.setDelegate(this);
+        setBgaRefreshLayout();
+        if (myRecyclerView == null) {
+            myRecyclerView = new MyRecyclerView(this, mine_myListView);
+        }
+        myRecyclerView.setListView(true);
 
         showcountinfo_liner = (LinearLayout) findViewById(R.id.showcountinfo_liner);
         allPrace_textView = (TextView) findViewById(R.id.allPrace_textView);
@@ -132,23 +152,13 @@ public class ShoppingCarActivity extends BaseActivity {
 
     public void dataInit() {
 
-        // data = ShoppingCar.get().getCarData();
-        // if (data != null && data.size() != 0) {
-        // tradeIntegralAdapter = new ShoppingCarAdapter(mContext);
-        // tradeIntegralAdapter.setOnCheckBoxBack(onCheckBoxBack);
-        // tradeIntegralAdapter.setData(data);
-        // mine_myListView.setAdapter(tradeIntegralAdapter);
-        // } else {
         tradeIntegralAdapter = new ShoppingCarAdapter(mContext);
         tradeIntegralAdapter.setOnCheckBoxBack(onCheckBoxBack);
+        tradeIntegralAdapter.setDeleteLister(this);
         tradeIntegralAdapter.setData(data);
         mine_myListView.setAdapter(tradeIntegralAdapter);
-        // }
 
         isRemove = false;
-//        showMbProgress("数据加载中...");
-//		app.netRequst.shoppingCartsDtasRequst(acc.getUserId(), goodsStoreId, "0", "20",
-//				netRequstAjaxCallBack.shopingCarDataCallback);
         requstNetData(0);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -166,7 +176,6 @@ public class ShoppingCarActivity extends BaseActivity {
         @Override
         public void backState(int index, String position, boolean check) {
             // TODO Auto-generated method stub
-
             SureCarValue.getInstance().setAddressData(data.get(index));
             if (isRepeateData(position) == false) {
                 deleteArray.add(position);
@@ -346,16 +355,7 @@ public class ShoppingCarActivity extends BaseActivity {
 
     }
 
-    private OnItemClickListener onItemClickListener = new OnItemClickListener() {
 
-        @Override
-        public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-            // TODO Auto-generated method stub
-
-            GoodsValue.getInstance().setGoodsListModel(data.get(arg2 - 1));
-            skip_classView(GoodsDetailsActivity.class, extraMap, false);
-        }
-    };
 
     private OnClickListener onClickListener = new OnClickListener() {
 
@@ -595,6 +595,87 @@ public class ShoppingCarActivity extends BaseActivity {
         return false;
     }
 
-//    private
 
+    /**
+     * 设置 BGARefreshLayout刷新和加载
+     */
+    public void setBgaRefreshLayout() {
+        mDefineBAGRefreshWithLoadView = new DefineBAGRefreshWithLoadView(this, true, true);
+        // 设置刷新样式
+        mBGARefreshLayout.setRefreshViewHolder(mDefineBAGRefreshWithLoadView);
+        mDefineBAGRefreshWithLoadView.updateLoadingMoreText("自定义加载更多");
+        // mBGARefreshLayout.beginRefreshing();
+        // onBGARefreshLayoutBeginRefreshing(mBGARefreshLayout);
+
+    }
+
+    @Override
+    public void onBGARefreshLayoutBeginRefreshing(RefreshLayout refreshLayout) {
+        // TODO Auto-generated method stub
+        mDefineBAGRefreshWithLoadView.updateLoadingMoreText("自定义加载更多");
+        mDefineBAGRefreshWithLoadView.showLoadingMoreImg();
+        msgHandler.sendEmptyMessage(LIST_REFUSH_WHAT);
+        mBGARefreshLayout.endRefreshing();
+
+    }
+
+    @Override
+    public boolean onBGARefreshLayoutBeginLoadingMore(RefreshLayout refreshLayout) {
+        // TODO Auto-generated method stub
+        if (isMoreData == false) {
+            mDefineBAGRefreshWithLoadView.updateLoadingMoreText("没有更多数据");
+            mDefineBAGRefreshWithLoadView.hideLoadingMoreImg();
+            msgHandler.sendEmptyMessage(LIST_LOADMORE_WHAT);
+            return true;
+        } else {
+            msgHandler.sendEmptyMessage(LIST_LOADMORE_WHAT);
+        }
+        mBGARefreshLayout.endLoadingMore();
+        return true;
+    }
+
+
+
+
+
+    private Handler msgHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case LIST_REFUSH_WHAT:// 刷新
+                    // reSetData(true);
+                    break;
+                case LIST_LOADMORE_WHAT:// 加载更多
+                    // reSetData(false);
+                    break;
+                case 2:
+                    mBGARefreshLayout.endLoadingMore();
+                    break;
+            }
+        }
+    };
+
+    /** 点击事件 */
+    @Override
+    public void onItemClick(View view, int position) {
+        GoodsValue.getInstance().setGoodsListModel(data.get(position));
+        skip_classView(GoodsDetailsActivity.class, extraMap, false);
+
+    }
+
+    /** 长点击事件 */
+    @Override
+    public void onLongItemClick(View view, int position) {
+        Toast.makeText(mContext, "长点击了 " + position, Toast.LENGTH_SHORT).show();
+    }
+
+    /** 删除事件 */
+    @Override
+    public void onDeleteBtnCilck(View view, int position) {
+       // Toast.makeText(mContext, "删除" + position, Toast.LENGTH_SHORT).show();
+        GoodsListModel model = data.get(position);
+        showMbProgress("数据加载中...");
+        requstNetDataEditNum(model, "0");
+    }
 }
