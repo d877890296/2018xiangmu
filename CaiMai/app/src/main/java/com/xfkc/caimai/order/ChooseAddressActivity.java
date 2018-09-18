@@ -255,8 +255,6 @@ public class ChooseAddressActivity extends RxActivity {
                     }
                 });
 
-
-
     }
 
     public int dp2px(float dipValue) {

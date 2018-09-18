@@ -33,20 +33,19 @@
                         android:id="@+id/account_iv"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
+                        android:layout_centerInParent="true"
                         android:clickable="true"
                         android:src="@mipmap/heart_icon"
                         app:civ_border_color="@color/color_grey"
-                        app:civ_border_width="2dp"
-                        android:layout_centerInParent="true"
-                        />
+                        app:civ_border_width="2dp" />
+
                     <ImageView
                         android:id="@+id/setting_iv"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@mipmap/setting_icon"
                         android:layout_alignParentEnd="true"
                         android:layout_marginRight="20dp"
-                        />
+                        android:src="@mipmap/setting_icon" />
 
                 </RelativeLayout>
 
@@ -89,7 +88,7 @@
                             android:id="@+id/surplus_days"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0天"
+                            android:text="非会员"
                             android:textColor="@color/white"
                             android:textSize="16sp" />
 
@@ -175,8 +174,8 @@
                         android:drawableTop="@mipmap/dfk_mine_icon"
                         android:gravity="center"
                         android:padding="4dp"
-                        android:textSize="14sp"
-                        android:text="待付款" />
+                        android:text="待付款"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/wait_goods_number_tv"
@@ -206,8 +205,8 @@
                         android:drawableTop="@mipmap/psz_mine_icon"
                         android:gravity="center"
                         android:padding="4dp"
-                        android:textSize="14sp"
-                        android:text="配送中" />
+                        android:text="配送中"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/dsh_number_tv"
@@ -237,8 +236,8 @@
                         android:drawableTop="@mipmap/dpj_mine_icon"
                         android:gravity="center"
                         android:padding="4dp"
-                        android:textSize="14sp"
-                        android:text="待评价" />
+                        android:text="待评价"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/dpj_number_tv"
@@ -270,8 +269,8 @@
                         android:drawableTop="@mipmap/tk_mine_icon"
                         android:gravity="center"
                         android:padding="4dp"
-                        android:textSize="14sp"
-                        android:text="退款/退货" />
+                        android:text="退款/退货"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tksh_number_tv"
@@ -295,32 +294,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:text="更多服务"
-                android:textSize="16sp"
-               android:textColor="@color/black"
                 android:padding="10dp"
-                />
+                android:text="更多服务"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/f1f1f1"
-                />
+                android:background="@color/f1f1f1" />
 
             <com.dev.customview.MyGridView
                 android:id="@+id/gridview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:numColumns="4"
                 android:background="@color/whilte"
-                >
+                android:numColumns="4">
 
             </com.dev.customview.MyGridView>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/whilte"
-                />
+                android:background="@color/whilte" />
 
         </LinearLayout>
 
