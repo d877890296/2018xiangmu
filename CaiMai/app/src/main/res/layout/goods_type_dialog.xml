@@ -172,6 +172,16 @@
                 android:layout_marginBottom="10dp"
                 />
         </LinearLayout>
+
+        <com.xfkc.caimai.shopselect.ShoppingSelectView
+            android:id="@+id/v"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginBottom="5dp"
+            >
+
+        </com.xfkc.caimai.shopselect.ShoppingSelectView>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

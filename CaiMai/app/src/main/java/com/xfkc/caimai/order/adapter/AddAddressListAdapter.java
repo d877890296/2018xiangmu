@@ -54,12 +54,13 @@ public class AddAddressListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
         ViewHolder viewHodler;
+
         if (convertView == null) {
             convertView = View.inflate(context, R.layout.address_item, null);
             viewHodler = new ViewHolder(convertView);
             convertView.setTag(viewHodler);
+
         } else {
             viewHodler = (ViewHolder) convertView.getTag();
         }
@@ -70,9 +71,9 @@ public class AddAddressListAdapter extends BaseAdapter {
         viewHodler.phone.setText(dataBean.phone);
         viewHodler.addressContent.setText(dataBean.detailAdress);
 
-        if (dataBean.acquiesce == 1){
+        if (dataBean.acquiesce == 1) {
             viewHodler.status.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             viewHodler.status.setVisibility(View.GONE);
         }
 

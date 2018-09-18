@@ -3,7 +3,6 @@ package com.xfkc.caimai.home.wallet;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -47,7 +46,7 @@ public class WalletActivity extends BaseActivity {
     @Bind(R.id.update_paypassword_tv)
     SuperTextView updatePaypasswordTv;
 
-    private String payPwd = "", kbAmount = "";
+    private String payPwd = "", kbAmount = "",cashCoupon = "";
 
     @Override
     protected int getLayoutResource() {
@@ -61,9 +60,10 @@ public class WalletActivity extends BaseActivity {
         toolbarLeftImg.setImageResource(R.mipmap.back_white);
         kbAmount = getIntent().getStringExtra("kbAmount");
         payPwd = getIntent().getStringExtra("payPwd");
+        cashCoupon = getIntent().getStringExtra("cashCoupon");
 
-        Log.e("kab---",kbAmount);
         kbyeTv.setText(kbAmount+"");
+        djbTv.setText(cashCoupon+"");
     }
 
     @Override

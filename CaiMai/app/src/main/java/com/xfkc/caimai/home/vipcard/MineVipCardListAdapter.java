@@ -70,7 +70,7 @@ public class MineVipCardListAdapter extends BaseAdapter {
         viewHodler.days.setText("剩余有效期:"+listBean.remainDays+"天");
         viewHodler.title.setText(listBean.cardName);
         viewHodler.price.setText("");
-        viewHodler.imageBg.setBackgroundResource(R.mipmap.vip02);
+        viewHodler.imageBg.setBackgroundResource(R.mipmap.vip01);
 
 
         return convertView;

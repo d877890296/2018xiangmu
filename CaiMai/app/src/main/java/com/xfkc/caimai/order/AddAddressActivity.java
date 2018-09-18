@@ -94,7 +94,7 @@ public class AddAddressActivity extends RxActivity {
 
     private ArrayList<TextView> list_location = new ArrayList<>();
     private int location = 0;//0家  1公司  2学校
-    private int MOREN = 1; //1默认  2非默认
+    private int MOREN = 2; //1默认  2非默认
 
     @Override
     protected int getLayoutResource() {
@@ -120,6 +120,7 @@ public class AddAddressActivity extends RxActivity {
         list_location.add(company);
         list_location.add(school);
 
+        token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
 
     }
 
@@ -270,7 +271,6 @@ public class AddAddressActivity extends RxActivity {
 
     /*新增收货地址*/
     private void addAddress(String name, String phone_number, String addr_content) {
-        token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
 
         PayFactory.getPayService()
                 .AddWstAddress(name, phone_number, token, province, city, district, addr_content, MOREN)
@@ -321,14 +321,16 @@ public class AddAddressActivity extends RxActivity {
                 //区县（如果设定了两级联动，那么该项返回空）
                 district = citySelected[2];
                 //邮编
-                pro_code = citySelected[3];
+//                pro_code = citySelected[3];
 
                 //为TextView赋值
 //                address.setText(province.trim() + "-" + city.trim() + "-" + district.trim());
 //
 //                code.setText(pro_code + "");
 
-                addressContent.setText(province.trim() + "-" + city.trim() + "-" + district.trim());
+                addressQuyu.setRightString(province.trim() + "-" + city.trim() + "-" + district.trim());
+
+//                addressContent.setText(province.trim() + "-" + city.trim() + "-" + district.trim());
             }
         });
     }

@@ -41,30 +41,42 @@ import com.google.gson.Gson;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.ToastUtil;
 import com.hyf.tdlibrary.utils.Tools;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.HttpParams;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 import com.xfkc.caimai.bean.GoodsCarNumBean;
 import com.xfkc.caimai.bean.GoodsKey;
 import com.xfkc.caimai.bean.ParamBean;
+import com.xfkc.caimai.bean.ParamPriceBean;
+import com.xfkc.caimai.config.Constant;
 import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.net.PayFactory;
 import com.xfkc.caimai.net.RxHelper;
+import com.xfkc.caimai.shopselect.BigClassification;
+import com.xfkc.caimai.shopselect.OnSelectedListener;
+import com.xfkc.caimai.shopselect.ShoppingSelectView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.Call;
+import okhttp3.Response;
 import rx.Subscriber;
 
 import static com.goods.netrequst.PostRequst.UPSUCCESS;
+import static com.xfkc.caimai.R.id.shop_price;
 
 /**
  * Created by 10835 on 2018/8/26.
  */
 
-public class GoodsDetailsActivity extends BaseActivity {
+public class GoodsDetailsActivity extends BaseActivity implements OnSelectedListener {
     public GoodsListModel goodsListModel;
     private String goodsImg, goodsName, goodsStoreId, goodsId;
     private String count, specInfo, price;
@@ -161,7 +173,11 @@ public class GoodsDetailsActivity extends BaseActivity {
         goods_add_bt = (ImageView) topHeadView.findViewById(R.id.goods_add_btn);
         goods_num_tv = (TextView) topHeadView.findViewById(R.id.goodsNum);
         youfei_tv = (TextView) topHeadView.findViewById(R.id.youfei_tv);
-        youfei_tv.setText(goodsListModel.shippingPrice + "康币");
+        if (Tools.IsEmpty(goodsListModel.shippingPrice)){
+            youfei_tv.setText(0 + "康币");
+        }else {
+            youfei_tv.setText(goodsListModel.shippingPrice + "康币");
+        }
         top_frameLayout = (FrameLayout) topHeadView.findViewById(R.id.top_frameLayout);
         top_frameLayout.setVisibility(View.VISIBLE);
 
@@ -375,18 +391,22 @@ public class GoodsDetailsActivity extends BaseActivity {
                 case R.id.type_price:
                     param = paramBean.params.get(0);
                     setType(0);
+                    getParamPrice();
                     break;
                 case R.id.type_price02:
                     param = paramBean.params.get(1);
                     setType(1);
+                    getParamPrice();
                     break;
                 case R.id.type_price03:
                     param = paramBean.params.get(2);
                     setType(2);
+                    getParamPrice();
                     break;
                 case R.id.type_price04:
                     param = paramBean.params.get(3);
                     setType(3);
+                    getParamPrice();
                     break;
                 default:
                     break;
@@ -429,25 +449,30 @@ public class GoodsDetailsActivity extends BaseActivity {
     }
 
     private ArrayList<RadioButton> fenqi_radios = new ArrayList<>();
-    private int fenqi_type = 0;
+    private int fenqi_type = 0, inventory = 0;
     private TextView botoom_typeshopNumber;
     private String param = "";
-    private ArrayList<TextView> list_type_tv=new ArrayList<>();
+    private ArrayList<TextView> list_type_tv = new ArrayList<>();
     private ParamBean paramBean;
+    private TextView dialog_shop_price, shop_kc;
+    private String unit;
+
     /*展示商品规格*/
     private void showGoodsType() {
-        final int inventory;
         final Dialog dialog = new Dialog(this, R.style.BottomDialog);
         View contentView = LayoutInflater.from(this).inflate(R.layout.goods_type_dialog, null);
         ImageView shop_iv = (ImageView) contentView.findViewById(R.id.shop_iv);
         ImageView close_iv = (ImageView) contentView.findViewById(R.id.close_iv);
-        TextView shop_price = (TextView) contentView.findViewById(R.id.shop_price);
-        TextView shop_kc = (TextView) contentView.findViewById(R.id.shop_kc);
+        dialog_shop_price = (TextView) contentView.findViewById(shop_price);
+        shop_kc = (TextView) contentView.findViewById(R.id.shop_kc);
         TextView type_name01 = (TextView) contentView.findViewById(R.id.type_name01);
         TextView type_price = (TextView) contentView.findViewById(R.id.type_price);
         TextView type_price02 = (TextView) contentView.findViewById(R.id.type_price02);
         TextView type_price03 = (TextView) contentView.findViewById(R.id.type_price03);
         TextView type_price04 = (TextView) contentView.findViewById(R.id.type_price04);
+        ShoppingSelectView shpSelectView = (ShoppingSelectView) contentView.findViewById(R.id.v);
+        //设置监听需要在设置数据源之前
+        shpSelectView.setOnSelectedListener(this);
         list_type_tv.clear();
         list_type_tv.add(type_price);
         list_type_tv.add(type_price02);
@@ -480,27 +505,31 @@ public class GoodsDetailsActivity extends BaseActivity {
         setAllPrice(number, show_goodsnum_tv);
         botoom_typeshopNumber.setText(goodsCarNum + "");
         String picture = "";
-        if (!Tools.IsEmpty(goodsListModel.pic)) {
-            picture = goodsListModel.pic;
+        if (!Tools.IsEmpty(goodsListModel.pic) && goodsListModel.pic.contains(",")) {
+            String[] imges = goodsListModel.pic.split(",");
+           picture = imges[0];
+        }else {
+            picture = goodsListModel.pic+"";
         }
         Glide.with(this).load(picture).error(R.mipmap.error_icon).into(shop_iv);
 
-        shop_price.setText(goodsListModel.itemPrice + "康币");
+        dialog_shop_price.setText(goodsListModel.itemPrice + "康币");
         if (Tools.IsEmpty(goodsListModel.inventory + "")) {
             inventory = 0;
         } else {
             inventory = Integer.parseInt(goodsListModel.inventory + "");
         }
+        unit = goodsListModel.unit;
         shop_kc.setText("库存 " + inventory + " " + goodsListModel.unit);
         if (goodsListModel.itemType == 0) {
-            if (Tools.IsEmpty(goodsListModel.paramData)){
+            if (Tools.IsEmpty(goodsListModel.paramData)) {
                 type_name01.setVisibility(View.GONE);
                 type_price.setVisibility(View.GONE);
                 type_price02.setVisibility(View.GONE);
-            }else {
+            } else {
                 type_name01.setVisibility(View.VISIBLE);
                 type_price.setVisibility(View.VISIBLE);
-                type_price02.setVisibility( View.GONE);
+                type_price02.setVisibility(View.GONE);
                 type_price.setText(goodsListModel.paramData);
             }
         } else {
@@ -512,30 +541,32 @@ public class GoodsDetailsActivity extends BaseActivity {
                 type_name01.setVisibility(View.VISIBLE);
                 type_price.setVisibility(View.VISIBLE);
                 Gson gson = new Gson();
-                if (!goodsListModel.allParamData.contains("},{")){
+                if (!goodsListModel.allParamData.contains("},{")) {
                     paramBean = gson.fromJson(goodsListModel.allParamData.substring(1, goodsListModel.allParamData.length() - 1), ParamBean.class);
                     type_name01.setText(paramBean.group);
                     if (paramBean.params.size() != 0) {
                         param = paramBean.params.get(0);
-                        for (int i=0 ;i<paramBean.params.size();i++ ){
+                        for (int i = 0; i < paramBean.params.size(); i++) {
                             list_type_tv.get(i).setText(paramBean.params.get(i));
                         }
-                        if (paramBean.params.size()==2){
-                            type_price02.setVisibility( View.VISIBLE);
-                        }  else if (paramBean.params.size()==3 ){
+                        if (paramBean.params.size() == 2) {
+                            type_price02.setVisibility(View.VISIBLE);
+                        } else if (paramBean.params.size() == 3) {
                             type_layout.setVisibility(View.VISIBLE);
-                            type_price04.setVisibility( View.GONE);
-                        }else if (paramBean.params.size()>3){
+                            type_price04.setVisibility(View.GONE);
+                        } else if (paramBean.params.size() > 3) {
                             type_layout.setVisibility(View.VISIBLE);
-                            type_price04.setVisibility( View.VISIBLE);
+                            type_price04.setVisibility(View.VISIBLE);
                         }
 
                     }
-                } else{
-                    type_name01.setVisibility(View.VISIBLE);
-                    type_price.setVisibility(View.VISIBLE);
-                    type_price02.setVisibility( View.GONE);
-                    type_price.setText(goodsListModel.paramData.substring(1,goodsListModel.paramData.length()-1));
+                } else {
+                    type_name01.setVisibility(View.GONE);
+                    type_price.setVisibility(View.GONE);
+                    type_price02.setVisibility(View.GONE);
+                    shpSelectView.setVisibility(View.VISIBLE);
+                    getJsonData(goodsListModel.allParamData, shpSelectView);
+//                    type_price.setText(goodsListModel.paramData.substring(1, goodsListModel.paramData.length() - 1));
                 }
 
             }
@@ -601,7 +632,7 @@ public class GoodsDetailsActivity extends BaseActivity {
                 goodsListModel.buyNum = 1;
                 goodsListModel.paramData = param;
                 SureCarValue.getInstance().setAddressData(goodsListModel);
-                skip_classView(SureOrderActivity.class, extraMap, false,104);
+                skip_classView(SureOrderActivity.class, extraMap, false, 104);
                 dissMbProgress();
                 dialog.dismiss();
             }
@@ -609,6 +640,7 @@ public class GoodsDetailsActivity extends BaseActivity {
         close_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dissMbProgress();
                 dialog.dismiss();
             }
         });
@@ -796,19 +828,97 @@ public class GoodsDetailsActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 104 &&resultCode == 103){
+        if (requestCode == 104 && resultCode == 103) {
             finish();
         }
 
     }
 
-    private void setType(int id){
-        for (int i=0;i<list_type_tv.size();i++){
-            if (i==id){
+    private void setType(int id) {
+        for (int i = 0; i < list_type_tv.size(); i++) {
+            if (i == id) {
                 list_type_tv.get(i).setBackgroundResource(R.drawable.type_grid_bg02);
-            }else {
+            } else {
                 list_type_tv.get(i).setBackgroundResource(R.drawable.type_grid_bg);
             }
         }
+    }
+
+    private JSONArray jsonArray;
+
+    /*解析所有规格*/
+    private void getJsonData(String str, ShoppingSelectView shpSelectView) {
+        param = "";
+        try {
+            List<BigClassification> bigList = new ArrayList<>();
+            jsonArray = new JSONArray(str);
+            Gson gson = new Gson();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                ParamBean bigbean = gson.fromJson(jsonArray.get(i).toString(), ParamBean.class);
+                BigClassification big = new BigClassification();
+                big.setTitle(bigbean.group);
+                List<BigClassification.SmallClassification> smallList = new ArrayList<>();
+                param += bigbean.params.get(0) + ",";
+                for (int j = 0; j < bigbean.params.size(); j++) {
+                    BigClassification.SmallClassification small = new BigClassification.SmallClassification();
+                    small.setName(bigbean.params.get(j));
+                    smallList.add(small);
+                }
+                big.setList(smallList);
+                bigList.add(big);
+            }
+            //最终数据
+            shpSelectView.setData(bigList);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        param = param.substring(0, param.length() - 1);
+    }
+
+    @Override
+    public void onSelected(int postion, String title, String smallTitle) {
+        String[] strs = param.split(",");
+        String typeStr = "";
+        for (int i = 0; i < strs.length; i++) {
+            if (postion == i) {
+                strs[i] = smallTitle;
+            }
+            typeStr += strs[i] + ",";
+        }
+        param = typeStr.substring(0, typeStr.length() - 1);
+
+        getParamPrice();
+    }
+
+    /*获取取商品库存  价格*/
+    private void getParamPrice() {
+        showMbProgress("正在加载...");
+        HttpParams params = new HttpParams();
+        params.put("token", token);
+        params.put("shopId", goodsListModel.shopId);//店铺id
+        params.put("itemId", goodsListModel.itemId);//商品id
+        params.put("paramData", param);//商品参数
+
+        OkGo.post(Constant.BASE_URL + "/api/happycommune/getInventory")
+                .tag(this)//url请求地址
+                .params(params)
+                .isMultipart(true)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        Gson gson = new Gson();
+                        ParamPriceBean paramPriceBean = gson.fromJson(s, ParamPriceBean.class);
+
+                        if (paramPriceBean.retCode == 1) {
+                            dialog_shop_price.setText(paramPriceBean.data.price + "康币");
+                            inventory = paramPriceBean.data.inventory;
+                            shop_kc.setText("库存 " + inventory + unit);
+                        } else {
+                            ToastUtil.showToast(paramPriceBean.message);
+                        }
+                        dissMbProgress();
+                    }
+                });
+
     }
 }

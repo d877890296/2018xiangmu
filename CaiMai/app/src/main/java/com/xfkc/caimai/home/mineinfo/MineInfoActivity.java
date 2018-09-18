@@ -19,9 +19,9 @@ import com.foamtrace.photopicker.PhotoPreviewActivity;
 import com.foamtrace.photopicker.SelectModel;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.ToastUtil;
-import com.hyf.tdlibrary.utils.Tools;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
+import com.xfkc.caimai.bean.AddressBean;
 import com.xfkc.caimai.bean.EmptyBean;
 import com.xfkc.caimai.camera.MyImageCaptureManager;
 import com.xfkc.caimai.camera.MyPhotoPickerIntent;
@@ -100,15 +100,14 @@ public class MineInfoActivity extends BaseActivity {
         personName.setRightString(nickName);
         phone.setRightString(user_phone);
         personRegistAddress.setRightString(detailAdress);
-        if (Tools.IsEmpty(detailAdress) || detailAdress.equals("null"))
-        getGoodsAddress.setRightString("请选择收货地址");
+
         personDialog = new ShowPersonDialog(this);
         personDialog.setActivity(this);
     }
 
     @Override
     protected void loadData() {
-
+        getaddress();
     }
 
 
@@ -135,7 +134,7 @@ public class MineInfoActivity extends BaseActivity {
             case R.id.person_regist_address:
                 break;
             case R.id.get_goods_address:
-                skip_classView(ChooseAddressActivity.class, extraMap, false);
+                skip_classView(ChooseAddressActivity.class, extraMap, false, 1011);
                 break;
             case R.id.toolbar_right_text:
                 ToastUtil.showToast("保存成功");
@@ -194,6 +193,13 @@ public class MineInfoActivity extends BaseActivity {
                 case REQUEST_PREVIEW_CODE:
                     refreshAdpater(data.getStringArrayListExtra(PhotoPreviewActivity.EXTRA_RESULT));
                     break;
+            }
+        } else if (requestCode == 1011 && resultCode == 1005) {
+            String address = data.getStringExtra("address");
+            if (address.length() > 10) {
+                getGoodsAddress.setRightString(address.substring(0, 10) + "...");
+            } else {
+                getGoodsAddress.setRightString(address);
             }
         }
     }
@@ -265,5 +271,35 @@ public class MineInfoActivity extends BaseActivity {
 //                    }
 //                });
 //    }
+
+    private void getaddress() {
+        PayFactory.getPayService().getReceiveAdress(token)
+                .compose(RxHelper.<AddressBean>io_main())
+                .subscribe(new Subscriber<AddressBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(AddressBean addressBean) {
+                        if (addressBean.data != null && addressBean.data.size() != 0) {
+                            if (addressBean.data.get(0).detailAdress.length() > 10) {
+                                getGoodsAddress.setRightString(addressBean.data.get(0).detailAdress.substring(0, 10) + "...");
+                            } else {
+                                getGoodsAddress.setRightString(addressBean.data.get(0).detailAdress);
+                            }
+                        } else {
+                            getGoodsAddress.setRightString("请选择收货地址");
+                        }
+                    }
+                });
+
+    }
 
 }

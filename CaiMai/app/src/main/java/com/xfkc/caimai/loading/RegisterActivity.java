@@ -224,7 +224,7 @@ public class RegisterActivity extends BaseActivity {
 
         @Override
         public void onTick(long millisUntilFinished) {
-            getYanzhengBtn.setText((millisUntilFinished / 1000) + "秒后可重发");
+            getYanzhengBtn.setText((millisUntilFinished / 1000) + "S后重发");
         }
 
         @Override

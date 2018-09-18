@@ -116,7 +116,9 @@
         app:sLeftTextString="我的收货地址"
         app:sRightIconRes="@mipmap/icon_youjiantou"
         app:sRightTextColor="@color/time_text_color"
-        app:sRightTextString="北京市朝阳区...." />
+        app:sRightTextString="请选择收货地址"
+
+        />
 
 
 </com.zhy.autolayout.AutoLinearLayout>

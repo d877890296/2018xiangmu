@@ -20,9 +20,7 @@ import com.dev.customview.MyToast;
 import com.goods.city.GoodsListModel;
 import com.goods.city.GoodsValue;
 import com.goods.details.GoodsDetailsActivity;
-import com.goods.details.ShoppingCarModel;
 import com.goods.netrequst.Logger;
-import com.goods.netrequst.NetRequstAjaxCallBack;
 import com.goods.netrequst.PostRequst;
 import com.goods.order.SureOrderActivity;
 import com.goods.shoppingcar.ShoppingCarAdapter.OnCheckBoxBack;
@@ -65,7 +63,7 @@ public class ShoppingCarActivity extends BaseActivity {
     private LinearLayout showcountinfo_liner;
 
     private PostRequst postRequst;
-
+    private ArrayList<Integer> list_shopid = new ArrayList<>();
 
     public void deaultDataInit() {
         // TODO Auto-generated method stub
@@ -148,7 +146,7 @@ public class ShoppingCarActivity extends BaseActivity {
         // }
 
         isRemove = false;
-        showMbProgress("数据加载中...");
+//        showMbProgress("数据加载中...");
 //		app.netRequst.shoppingCartsDtasRequst(acc.getUserId(), goodsStoreId, "0", "20",
 //				netRequstAjaxCallBack.shopingCarDataCallback);
         requstNetData(0);
@@ -170,12 +168,13 @@ public class ShoppingCarActivity extends BaseActivity {
             // TODO Auto-generated method stub
 
             SureCarValue.getInstance().setAddressData(data.get(index));
-
             if (isRepeateData(position) == false) {
                 deleteArray.add(position);
+                list_shopid .add(data.get(index).shopId);
             } else {
                 int id_ = isRepeate(position);
                 if (id_ != -1) {
+                    list_shopid .remove(id_);
                     deleteArray.remove(id_);
                 }
             }
@@ -189,7 +188,7 @@ public class ShoppingCarActivity extends BaseActivity {
             // TODO Auto-generated method stub
             isClear = true;
             GoodsListModel model = data.get(position);
-            String shopGoodsNumber = model.buyNum+"";
+            String shopGoodsNumber = model.buyNum + "";
             if (Tools.IsEmpty(shopGoodsNumber)) {
                 shopGoodsNumber = "0";
             }
@@ -226,8 +225,8 @@ public class ShoppingCarActivity extends BaseActivity {
         userToken = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
         GoodsKey goodsKey = new GoodsKey();
         goodsKey.token = userToken;
-        goodsKey.shopId = model.id+"";
-        goodsKey.itemId = model.itemId+"";
+        goodsKey.shopId = model.shopId + "";
+        goodsKey.itemId = model.itemId + "";
         goodsKey.buyNum = num;
         postRequst.editCartItemsNum(handler, goodsKey);
 
@@ -296,7 +295,7 @@ public class ShoppingCarActivity extends BaseActivity {
             String id = deleteArray.get(i);
             ids += id + ",";
             for (int j = 0; j < data.size(); j++) {
-                String tempId = data.get(j).id+"";
+                String tempId = data.get(j).id + "";
                 if (id.equals(tempId)) {
 
                     int num = data.get(j).buyNum;
@@ -353,7 +352,7 @@ public class ShoppingCarActivity extends BaseActivity {
         public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
             // TODO Auto-generated method stub
 
-            GoodsValue.getInstance().setGoodsListModel(data.get(arg2-1));
+            GoodsValue.getInstance().setGoodsListModel(data.get(arg2 - 1));
             skip_classView(GoodsDetailsActivity.class, extraMap, false);
         }
     };
@@ -385,11 +384,11 @@ public class ShoppingCarActivity extends BaseActivity {
                     if (isCheckAll == false) {
                         deleteArray.clear();
                         for (int i = 0; i < data.size(); i++) {
-                            deleteArray.add(data.get(i).id+"");
+                            deleteArray.add(data.get(i).id + "");
                         }
                         SureCarValue.getInstance().setAllData(data);
                     } else {
-                      SureCarValue.getInstance().removeAllData();
+                        SureCarValue.getInstance().removeAllData();
                         deleteArray.clear();
                     }
 
@@ -423,8 +422,12 @@ public class ShoppingCarActivity extends BaseActivity {
                         if (allPrace == 0) {
                             MyToast.showMyToast(mContext, "请选择商品", -1);
                         } else {
-                            extraMap.put("allPrace", allPrace + "");
-                            skip_classView(SureOrderActivity.class, extraMap, false);
+//                            if (ischeck_shopId){
+//                                ToastUtil.showToast("请单个店铺购买商品!");
+//                            }else {
+                                extraMap.put("allPrace", allPrace + "");
+                                skip_classView(SureOrderActivity.class, extraMap, false);
+//                            }
                         }
 
                     }
@@ -459,7 +462,6 @@ public class ShoppingCarActivity extends BaseActivity {
 
         }
     }
-
 
 
     private Handler handler = new Handler() {
@@ -528,46 +530,44 @@ public class ShoppingCarActivity extends BaseActivity {
                 for (int i = 0; i < woquArr.length(); i++) {
                     JSONObject obj = woquArr.getJSONObject(i);
 
-                 //   ShoppingCarModel model = new ShoppingCarModel();
+                    //   ShoppingCarModel model = new ShoppingCarModel();
 
-                    GoodsListModel  model= new  GoodsListModel();
-                    model.shopName=shopName;
+                    GoodsListModel model = new GoodsListModel();
+                    model.shopName = shopName;
 
-                    model.id=obj.getInt("id") ;
-                    model.itemId=obj.getInt("itemId") ;
-                    model.title=obj.getString("title");
-                    model.sellPoint=obj.getString("sellPoint");
+                    model.id = obj.getInt("id");
+                    model.itemId = obj.getInt("itemId");
+                    model.title = obj.getString("title");
+                    model.sellPoint = obj.getString("sellPoint");
                     //model.category=obj.getString("category");
-                    model.pic=obj.getString("pic");
-                    model.status=obj.getInt("status") ;
+                    model.pic = obj.getString("pic");
+                    model.status = obj.getInt("status");
 
 //                    "createTime": null,
 //                     "updateTime": null,
-                    model.scid=obj.getInt("scid") ;
-                    model.mailType=obj.getInt("mailType") ;
-                    model.itemType=obj.getInt("itemType") ;
-                    model.itemPrice=obj.getInt("itemPrice") ;
+                    model.scid = obj.getInt("scid");
+                    model.mailType = obj.getInt("mailType");
+                    model.itemType = obj.getInt("itemType");
+                    model.itemPrice = obj.getInt("itemPrice");
 
-                    model.allParamData=obj.getString("allParamData");
-                    model.paramData=obj.getString("paramData");
-                    model.buyNum=obj.getInt("buyNum") ;
-                    model.shopId=obj.getInt("shopId") ;
-                    model.  mailPrice=obj.getDouble("mailPrice");
-                    model.  inventory=obj.getInt("inventory") ;
-                    model.  receiveProvince=obj.getString("receiveProvince");
-                    model.unit=obj.getString("unit");
-                    model.  cid=obj.getInt("cid") ;
-                    model.  topCategoryId=obj.getInt("topCategoryId") ;
-                    model.  periodTime=obj.getInt("periodTime") ;
-                    model.  backSelf=obj.getDouble("backSelf");
-                    model.  saleType=obj.getInt("saleType") ;
-                    model.  backType=obj.getInt("backType") ;
-                    model.  firstBack=obj.getDouble("firstBack");
-                    model.  secondBack=obj.getDouble("secondBack");
-                    model.  useType=obj.getInt("useType");
-                    model.content=obj.getString("content");
-
-
+                    model.allParamData = obj.getString("allParamData");
+                    model.paramData = obj.getString("paramData");
+                    model.buyNum = obj.getInt("buyNum");
+                    model.shopId = obj.getInt("shopId");
+//                    model.mailPrice = obj.getDouble("mailPrice");
+                    model.inventory = obj.getInt("inventory");
+                    model.receiveProvince = obj.getString("receiveProvince");
+                    model.unit = obj.getString("unit");
+                    model.cid = obj.getInt("cid");
+                    model.topCategoryId = obj.getInt("topCategoryId");
+                    model.periodTime = obj.getInt("periodTime");
+                    model.backSelf = obj.getDouble("backSelf");
+                    model.saleType = obj.getInt("saleType");
+                    model.backType = obj.getInt("backType");
+                    model.firstBack = obj.getDouble("firstBack");
+                    model.secondBack = obj.getDouble("secondBack");
+                    model.useType = obj.getInt("useType");
+                    model.content = obj.getString("content");
 
                     data.add(model);
                 }
@@ -595,13 +595,6 @@ public class ShoppingCarActivity extends BaseActivity {
         return false;
     }
 
-    @Override
-    public void onDestroy() {
-        // TODO Auto-generated method stub
-        super.onDestroy();
-        SureCarValue.getInstance().removeAllData();
-        SureCarValue.getInstance().reSet();
-    }
-
+//    private
 
 }

@@ -112,7 +112,7 @@ public class ForgetPassWordActivity extends BaseActivity {
         @Override
         public void onTick(long millisUntilFinished) {
             getYanzhengBtn.setBackgroundColor(Color.GRAY);
-            getYanzhengBtn.setText((millisUntilFinished / 1000) + "秒后可重发");
+            getYanzhengBtn.setText((millisUntilFinished / 1000) + "S后重发");
         }
 
         @Override

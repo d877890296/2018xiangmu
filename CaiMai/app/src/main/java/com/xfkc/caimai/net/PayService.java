@@ -208,4 +208,8 @@ public interface PayService {
     Observable<WXBean> wxrecruitOrder(@Query("token") String token, @Query("shopId") String shopId,
                                     @Query("partnerType") String partnerType, @Query("payAmount") String payAmount);
 
+
+    @GET("/api/receiveAdress/rmReceiveAdress")
+    Observable<EmptyBean> rmReceiveAdress(@Query("token") String token, @Query("id") String id);
+
 }

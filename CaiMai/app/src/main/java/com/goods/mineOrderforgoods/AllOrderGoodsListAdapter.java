@@ -392,10 +392,15 @@ public class AllOrderGoodsListAdapter extends RecyclerView.Adapter<AllOrderGoods
             }
 
             public void setModel(GoodsListModel model) {
+
                 if (Tools.IsEmpty(model.pic)) {
                     goods_image.setImageResource(R.mipmap.error_icon);
                 } else {
-                    app.imageLoader.displayImage(model.pic, goods_image);
+                    if (model.pic.contains(",")){
+                        app.imageLoader.displayImage(model.pic.split(",")[0], goods_image);
+                    }else {
+                        app.imageLoader.displayImage(model.pic, goods_image);
+                    }
                 }
                 goods_name.setText(model.title + "");
                 goods_des.setText(model.sellPoint + "");

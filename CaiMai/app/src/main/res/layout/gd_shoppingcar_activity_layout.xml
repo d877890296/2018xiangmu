@@ -85,7 +85,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="#ff0000"
+                    android:background="@color/ff704d"
                     android:gravity="center"
                     android:text="结算(0)"
                     android:textColor="#fff"

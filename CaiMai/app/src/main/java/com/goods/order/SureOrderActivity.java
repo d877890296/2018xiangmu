@@ -289,11 +289,21 @@ public class SureOrderActivity extends BaseActivity {
                     WAY = 1;
                     setWay(0);
                     peisongTv.setText("邮寄");
+                    yunfei.setText("￥" + freight);
+                    reall_price = Double.parseDouble(allPrace) + freight;
+                    reall_price = (double) (Math.round(reall_price * 10000)) / 10000;
+                    allPrace_textView.setText("￥" + reall_price);
+                    reallyPay.setText("￥" + reall_price);
                     break;
                 case R.id.way_ziqu:
                     WAY = 2;
                     setWay(1);
                     peisongTv.setText("自取");
+                    yunfei.setText("￥" + 0);
+                    reall_price = Double.parseDouble(allPrace);
+                    reall_price = (double) (Math.round(reall_price * 10000)) / 10000;
+                    allPrace_textView.setText("￥" + reall_price);
+                    reallyPay.setText("￥" + reall_price);
                     break;
                 case R.id.peisongway:
                     if (wayLayout.getVisibility() == View.GONE) {
