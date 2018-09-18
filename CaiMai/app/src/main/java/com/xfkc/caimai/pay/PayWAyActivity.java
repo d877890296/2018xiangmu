@@ -76,7 +76,7 @@ public class PayWAyActivity extends BaseActivity {
         toolbarLeftImg.setImageResource(R.mipmap.back_white);
 
         orderNum = getIntent().getStringExtra("orderNum");
-        sign = getIntent().getStringExtra("sign");
+//        sign = getIntent().getStringExtra("sign");
         token = getIntent().getStringExtra("token");
         shopId = getIntent().getStringExtra("shopId");
         partnerType = getIntent().getStringExtra("partnerType");
@@ -234,7 +234,7 @@ public class PayWAyActivity extends BaseActivity {
                 .subscribe(new ProgressSubscriber<RecruBean>(this) {
                     @Override
                     public void onNext(RecruBean recruBean) {
-                        getPay(sign);
+                        getPay(recruBean.data.sign);
                     }
                 });
     }

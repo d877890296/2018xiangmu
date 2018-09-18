@@ -19,15 +19,21 @@
             android:layout_height="1dp"
             android:background="@color/bg_color" />
 
-        <com.dev.customview.CustomListView
+        <!--<com.dev.customview.CustomListView-->
+            <!--android:id="@+id/choose_address_listview"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:divider="@color/bg_color"-->
+            <!--android:dividerHeight="10dp"-->
+
+            <!--&gt;-->
+        <!--</com.dev.customview.CustomListView>-->
+        <com.baoyz.swipemenulistview.SwipeMenuListView
             android:id="@+id/choose_address_listview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:divider="@color/bg_color"
-            android:dividerHeight="10dp"
-
-            >
-        </com.dev.customview.CustomListView>
+            android:dividerHeight="10dp"/>
     </com.zhy.autolayout.AutoLinearLayout>
 
     <com.xfkc.caimai.customview.StateButton

@@ -97,7 +97,7 @@ public class SocialCentreFragment extends BaseFragment {
     private ArrayList<EmptyBean> button_listInfo = new ArrayList();
     private String token;
 
-    private String payPwd = "", kbAmount = "";
+    private String payPwd = "", kbAmount = "",cashCoupon = "";
     private UserInfoBean.DataBean userData;
 
     @Override
@@ -162,6 +162,7 @@ public class SocialCentreFragment extends BaseFragment {
         mineId.setText("幸福ID:" + userInfoBean.data.kcId);
         payPwd = userInfoBean.data.payPwd;
         kbAmount = userInfoBean.data.kbAmount + "";
+        cashCoupon = userInfoBean.data.cashCoupon+"";
         kbNumber.setText(kbAmount + "康币");
 
     }
@@ -175,6 +176,7 @@ public class SocialCentreFragment extends BaseFragment {
                     case 0://康币钱包
                         extraMap.put("payPwd", payPwd + "");
                         extraMap.put("kbAmount", kbAmount + "");
+                        extraMap.put("cashCoupon", cashCoupon + "");
                         skip_classView(WalletActivity.class, extraMap, false, true);
                         break;
                     case 1://我的会员卡
@@ -207,7 +209,7 @@ public class SocialCentreFragment extends BaseFragment {
                 extraMap.put("imageUrl", userData.userImg + "");
                 extraMap.put("nickName", userData.realName + "");
                 extraMap.put("phone", userData.phone + "");
-                extraMap.put("detailAdress", userData.detailAdress + "");
+                extraMap.put("detailAdress",userData.province+userData.city+userData.area+ userData.detailAdress + "");
                 skip_classView(MineInfoActivity.class, extraMap, false, true);
                 break;
             case R.id.setting_iv:

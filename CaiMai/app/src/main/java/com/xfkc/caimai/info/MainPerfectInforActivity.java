@@ -19,7 +19,6 @@ import com.xfkc.caimai.customview.StateButton;
 import com.xfkc.caimai.net.PayFactory;
 import com.xfkc.caimai.net.RxHelper;
 import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
-import com.xfkc.caimai.util.StringUtils;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -55,6 +54,7 @@ public class MainPerfectInforActivity extends BaseActivity {
 
     private String phone;
     private String address_content;
+
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_perfectinfor;
@@ -92,17 +92,21 @@ public class MainPerfectInforActivity extends BaseActivity {
         String realName = name.getText().toString();
         String userIdCard = idCard.getText().toString();
         String detailAdress = addressContent.getText().toString();
-        if (Tools.IsEmpty(realName) || StringUtils.isHave(realName)) {
-            ToastUtil.showToast("请填写真实姓名!");
-            return;
-        }
+//        if (Tools.IsEmpty(realName) || StringUtils.isHave(realName)) {
+//            ToastUtil.showToast("请填写真实姓名!");
+//            return;
+//        }
         if (Tools.IsEmpty(userIdCard)) {
             ToastUtil.showToast("请输入身份证号!");
             return;
         }
+        if (userIdCard.length() != 18) {
+            ToastUtil.showToast("请输入正确身份证号!");
+            return;
+        }
         if (Tools.IsEmpty(detailAdress)) {
             ToastUtil.showToast("请输入详细地址!");
-            detailAdress = address_content+detailAdress;
+            detailAdress = address_content + detailAdress;
             return;
         }
         PayFactory.getPayService()
@@ -143,7 +147,10 @@ public class MainPerfectInforActivity extends BaseActivity {
             @Override
             public void onSelected(String... citySelected) {
                 //省份
-                province = citySelected[0];
+//                province = citySelected[0];
+                if (province.contains("市")) {
+                    province = province.replace("市", "");
+                }
                 //城市
                 city = citySelected[1];
                 //区县（如果设定了两级联动，那么该项返回空）
@@ -156,8 +163,8 @@ public class MainPerfectInforActivity extends BaseActivity {
 //
 //                code.setText(pro_code + "");
                 chooseAddress.setLeftString("");
-                chooseAddress.setRightString(province.trim() + "-" + city.trim() + "-" + district.trim());
-                address_content = province.trim() +  city.trim() + district.trim();
+                chooseAddress.setLeftString(province.trim() + "-" + city.trim() + "-" + district.trim());
+                address_content = province.trim() + city.trim() + district.trim();
 //                addressContent.setText(province.trim() + "-" + city.trim() + "-" + district.trim());
             }
         });

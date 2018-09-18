@@ -72,17 +72,17 @@ public class MineVipContentActivity extends BaseActivity {
     private void setVipCardType() {
         days.setText("剩余有效期:"+remainDays+"天");
         title.setText(cardTypeName);
-        switch (TYPE) {
-            case 1:
+//        switch (TYPE) {
+//            case 1:
                 imageBg.setBackgroundResource(R.mipmap.vip01);
-                break;
-            case 2:
-                imageBg.setBackgroundResource(R.mipmap.vip03);
-                break;
-            case 3:
-                imageBg.setBackgroundResource(R.mipmap.vip02);
-                break;
-        }
+//                break;
+//            case 2:
+//                imageBg.setBackgroundResource(R.mipmap.vip03);
+//                break;
+//            case 3:
+//                imageBg.setBackgroundResource(R.mipmap.vip02);
+//                break;
+//        }
 
     }
 

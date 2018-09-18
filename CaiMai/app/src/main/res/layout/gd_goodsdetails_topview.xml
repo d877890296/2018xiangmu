@@ -111,7 +111,7 @@
                 android:id="@+id/goodsStyleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="140-180*4个"
+                android:text=""
                 android:textColor="#000000"
                 android:textSize="15sp" />
 
@@ -221,7 +221,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/remove_img"
+                    android:background="@mipmap/delete"
                     android:focusable="false"
                     android:textColor="#000000" />
 
@@ -241,7 +241,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
-                    android:background="@drawable/add_img"
+                    android:background="@mipmap/add"
                     android:focusable="false"
                     android:textColor="#000000" />
             </LinearLayout>

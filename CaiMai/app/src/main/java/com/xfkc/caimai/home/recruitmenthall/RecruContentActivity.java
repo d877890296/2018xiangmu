@@ -119,7 +119,7 @@ public class RecruContentActivity extends BaseActivity {
                                     b_price = listBean.inrecruiList.get(i).kangbiCount ;
                                     bTypePrice.setText("￥" + b_price);
                                     showType(listBean.inrecruiList.get(i),bTypeDes);
-                                } else if (i == 2) {
+                                } else if (listBean.inrecruiList.get(i).partnerType.equals("C")) {
                                     cLayout.setVisibility(View.VISIBLE);
                                     c_price = listBean.inrecruiList.get(i).kangbiCount ;
                                     cTypePrice.setText("￥" + c_price);

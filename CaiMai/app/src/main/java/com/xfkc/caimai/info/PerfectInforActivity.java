@@ -22,6 +22,8 @@ import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
 import butterknife.Bind;
 import butterknife.OnClick;
 
+import static com.xfkc.caimai.R.id.address_content;
+
 /**
  * 完善信息
  */
@@ -38,7 +40,7 @@ public class PerfectInforActivity extends BaseActivity {
     EditText idCard;
     @Bind(R.id.choose_address)
     SuperTextView chooseAddress;
-    @Bind(R.id.address_content)
+    @Bind(address_content)
     EditText addressContent;
     @Bind(R.id.commit)
     StateButton commit;
@@ -87,23 +89,28 @@ public class PerfectInforActivity extends BaseActivity {
     }
 
     private void getUserData() {
-        String realName= name.getText().toString();
+        String realName = name.getText().toString();
         String userIdCard = idCard.getText().toString();
         String detailAdress = addressContent.getText().toString();
-        if (Tools.IsEmpty(realName)){
-            ToastUtil.showToast("请填写真实姓名!");
-            return;
-        }
-        if (Tools.IsEmpty(userIdCard)){
+//        if (Tools.IsEmpty(realName)) {
+//            ToastUtil.showToast("请填写真实姓名!");
+//            return;
+//        }
+        if (Tools.IsEmpty(userIdCard)) {
             ToastUtil.showToast("请输入身份证号!");
             return;
         }
-        if (Tools.IsEmpty(userIdCard)){
+        if (userIdCard.length() != 18) {
+            ToastUtil.showToast("请输入正确身份证号!");
+            return;
+        }
+        if (Tools.IsEmpty(userIdCard)) {
             ToastUtil.showToast("请输入详细地址!");
+            detailAdress = address_content + detailAdress;
             return;
         }
         PayFactory.getPayService()
-                .certification(realName,userIdCard,province,city,district,detailAdress,phone)
+                .certification(realName, userIdCard, province, city, district, detailAdress, phone)
                 .compose(RxHelper.<EmptyBean>io_main())
                 .subscribe(new ProgressSubscriber<EmptyBean>(this) {
                     @Override
@@ -140,7 +147,10 @@ public class PerfectInforActivity extends BaseActivity {
             @Override
             public void onSelected(String... citySelected) {
                 //省份
-                province = citySelected[0];
+                if (province.contains("市")){
+                    province = province.replace("市","");
+                }
+//                province = citySelected[0];
                 //城市
                 city = citySelected[1];
                 //区县（如果设定了两级联动，那么该项返回空）
@@ -152,8 +162,8 @@ public class PerfectInforActivity extends BaseActivity {
 //                address.setText(province.trim() + "-" + city.trim() + "-" + district.trim());
 //
 //                code.setText(pro_code + "");
-
-                addressContent.setText(province.trim() + "-" + city.trim() + "-" + district.trim());
+                chooseAddress.setLeftString(province.trim() + "-" + city.trim() + "-" + district.trim());
+//                addressContent.setText(province.trim() + "-" + city.trim() + "-" + district.trim());
             }
         });
     }

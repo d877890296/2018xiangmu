@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.dev.customview.CustomListView;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
+import com.hyf.tdlibrary.utils.ToastUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseFragment;
 import com.xfkc.caimai.bean.BigLectureBean;
@@ -72,7 +73,7 @@ public class BigLectureHallFragment extends BaseFragment {
     private ArrayList<BigLectureBean.DataBean> list_data = new ArrayList<>();
     private ArrayList<CollectBean.DataBean.ListBean> collect_list = new ArrayList<>();
     private String token;
-    private int type = 0;
+    private int type = 1;
 
     @Override
     protected int getLayoutResource() {
@@ -101,7 +102,7 @@ public class BigLectureHallFragment extends BaseFragment {
         bigListAdapter.setContext(handler);
         bigListAdapter.setData(list_data);
         listview.setAdapter(bigListAdapter);
-        updateShow(0);
+        updateShow(1);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -123,9 +124,10 @@ public class BigLectureHallFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.wqsp:
-                type = 0;
-                showMbProgress("正在加载...");
-                updateShow(0);
+//                type = 0;
+//                showMbProgress("正在加载...");
+//                updateShow(0);
+                ToastUtil.showToast("该功能暂未开放!");
                 break;
             case R.id.ppt:
                 showMbProgress("正在加载...");
