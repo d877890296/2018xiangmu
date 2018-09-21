@@ -1,5 +1,6 @@
 package com.goods.shoppingcar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -7,8 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
@@ -16,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dev.customview.CustomListView;
 import com.dev.customview.MyToast;
 import com.goods.city.GoodsListModel;
 import com.goods.city.GoodsValue;
@@ -426,7 +424,7 @@ public class ShoppingCarActivity extends BaseActivity  implements RefreshLayout.
 //                                ToastUtil.showToast("请单个店铺购买商品!");
 //                            }else {
                                 extraMap.put("allPrace", allPrace + "");
-                                skip_classView(SureOrderActivity.class, extraMap, false);
+                                skip_classView(SureOrderActivity.class, extraMap, false,1012);
 //                            }
                         }
 
@@ -519,7 +517,10 @@ public class ShoppingCarActivity extends BaseActivity  implements RefreshLayout.
 
     //15295180301
     public void analysisData(JSONArray jsonObjData) {
-        if (jsonObjData != null && jsonObjData.length() > 0) {
+//        if (jsonObjData != null && jsonObjData.length() > 0) {
+//            data.clear();
+//        }
+        if (data != null && data.size() >0) {
             data.clear();
         }
         for (int j = 0; j < jsonObjData.length(); j++) {
@@ -677,5 +678,13 @@ public class ShoppingCarActivity extends BaseActivity  implements RefreshLayout.
         GoodsListModel model = data.get(position);
         showMbProgress("数据加载中...");
         requstNetDataEditNum(model, "0");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1012 && resultCode == 103){
+            requstNetData(0);
+        }
     }
 }

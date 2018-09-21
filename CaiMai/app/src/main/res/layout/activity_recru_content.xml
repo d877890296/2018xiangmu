@@ -8,287 +8,367 @@
     android:orientation="vertical"
     tools:context="com.xfkc.caimai.home.recruitmenthall.RecruContentActivity">
 
-    <include layout="@layout/widget_toolbar" />
-
-    <View
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/f1f1f1" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="15dp">
-
+        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="15dp"
-            android:gravity="center_vertical">
+            android:orientation="vertical"
+            >
+            <include layout="@layout/widget_toolbar" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/dianpu_icon" />
-
-            <TextView
-                android:id="@+id/dianpu_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="北京1号店"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/f1f1f1" />
-
-        <LinearLayout
-            android:id="@+id/a_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-
-            android:visibility="gone">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="●" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/f1f1f1" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingLeft="15dp">
 
-                <TextView
-                    android:id="@+id/a_type"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="A类事业合伙人：3(人)/20"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center_vertical">
 
-                <TextView
-                    android:id="@+id/a_type_des"
-                    android:layout_width="wrap_content"
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/dianpu_icon" />
+
+                    <TextView
+                        android:id="@+id/dianpu_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="北京1号店"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/f1f1f1" />
+
+                <LinearLayout
+                    android:id="@+id/a_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="加入后每个季度可获得店铺年营业额
+                    android:orientation="horizontal"
+
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="●" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/a_type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="A类事业合伙人：3(人)/20"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/a_type_des"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="加入后每个季度可获得店铺年营业额
 0.07%的康币分红"
-                    android:textColor="@color/time_text_color"
-                    android:textSize="14sp" />
+                            android:textColor="@color/time_text_color"
+                            android:textSize="14sp" />
 
-                <TextView
-                    android:id="@+id/a_type_price"
-                    android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/a_type_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="￥2000.00"
+                            android:textColor="@color/ff704d"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+
+                        <RadioButton
+                            android:id="@+id/a_rb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/radio"
+                            android:button="@null"
+                            android:checked="true" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/b_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="￥2000.00"
-                    android:textColor="@color/ff704d"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
-            <LinearLayout
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="●" />
 
-                <RadioButton
-                    android:id="@+id/a_rb"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/radio"
-                    android:button="@null"
-                    android:checked="true" />
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
+                        <TextView
+                            android:id="@+id/b_type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="B类事业合伙人：3(人)/20"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
 
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/b_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="●" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/b_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="B类事业合伙人：3(人)/20"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/b_type_des"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="加入后每个季度可获得店铺年营业额
+                        <TextView
+                            android:id="@+id/b_type_des"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="加入后每个季度可获得店铺年营业额
 0.03%的康币分红"
-                    android:textColor="@color/time_text_color"
-                    android:textSize="14sp" />
+                            android:textColor="@color/time_text_color"
+                            android:textSize="14sp" />
 
-                <TextView
-                    android:id="@+id/b_type_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                        <TextView
+                            android:id="@+id/b_type_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="￥1000.00"
+                            android:textColor="@color/ff704d"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+
+                        <RadioButton
+                            android:id="@+id/b_rb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/radio"
+                            android:button="@null"
+                            android:checked="false" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
                     android:layout_marginTop="10dp"
-                    android:text="￥1000.00"
-                    android:textColor="@color/ff704d"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                    android:background="@color/f1f1f1" />
 
-            <LinearLayout
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:gravity="center">
-
-                <RadioButton
-                    android:id="@+id/b_rb"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/c_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/radio"
-                    android:button="@null"
-                    android:checked="false" />
-            </LinearLayout>
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
-        </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="●" />
 
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/f1f1f1" />
+                        <TextView
+                            android:id="@+id/c_type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C类事业合伙人：3(人)/200"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
 
-        <LinearLayout
-            android:id="@+id/c_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            android:visibility="gone">
+                        <TextView
+                            android:id="@+id/c_type_des"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="加入后每年可获得50个康币分红"
+                            android:textColor="@color/time_text_color"
+                            android:textSize="14sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="●" />
+                        <TextView
+                            android:id="@+id/c_type_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="￥500.00"
+                            android:textColor="@color/ff704d"
+                            android:textSize="16sp" />
+                    </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
 
-                <TextView
-                    android:id="@+id/c_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="C类事业合伙人：3(人)/200"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                        <RadioButton
+                            android:id="@+id/c_rb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/radio"
+                            android:button="@null"
+                            android:checked="false" />
+                    </LinearLayout>
 
-                <TextView
-                    android:id="@+id/c_type_des"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
                     android:layout_marginTop="10dp"
-                    android:text="加入后每年可获得50个康币分红"
-                    android:textColor="@color/time_text_color"
-                    android:textSize="14sp" />
+                    android:background="@color/f1f1f1" />
 
-                <TextView
-                    android:id="@+id/c_type_price"
-                    android:layout_width="wrap_content"
+                <!--d-->
+                <LinearLayout
+                    android:id="@+id/d_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="●" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/d_type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C类事业合伙人：3(人)/200"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/d_type_des"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="加入后每年可获得50个康币分红"
+                            android:textColor="@color/time_text_color"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/d_type_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="￥500.00"
+                            android:textColor="@color/ff704d"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+
+                        <RadioButton
+                            android:id="@+id/d_rb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/radio"
+                            android:button="@null"
+                            android:checked="false" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
                     android:layout_marginTop="10dp"
-                    android:text="￥500.00"
-                    android:textColor="@color/ff704d"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:gravity="center">
-
-                <RadioButton
-                    android:id="@+id/c_rb"
-                    android:layout_width="wrap_content"
+                    android:background="@color/f1f1f1" />
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/radio"
-                    android:button="@null"
-                    android:checked="false" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/f1f1f1" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="* 充值的金额将等价作为定级币，可在幸福商城消费，
+                    android:text="* 充值的金额将等价作为定级币，可在幸福商城消费，
   但不参与返佣。"
-            android:textColor="@color/time_text_color"
-            android:textSize="14sp" />
+                    android:textColor="@color/time_text_color"
+                    android:textSize="14sp" />
 
 
-        <com.xfkc.caimai.customview.StateButton
-            android:id="@+id/commit"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_margin="20dp"
-            android:layout_marginTop="30dp"
-            android:text="立即加入"
-            android:textSize="20dp"
-            app:normalBackgroundColor="@color/ff704d"
-            app:normalTextColor="@color/white"
-            app:pressedBackgroundColor="@color/ff704d_90"
-            app:pressedTextColor="@color/white"
-            app:radius="20dp" />
+                <com.xfkc.caimai.customview.StateButton
+                    android:id="@+id/commit"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_margin="20dp"
+                    android:layout_marginTop="30dp"
+                    android:text="立即加入"
+                    android:textSize="20dp"
+                    app:normalBackgroundColor="@color/ff704d"
+                    app:normalTextColor="@color/white"
+                    app:pressedBackgroundColor="@color/ff704d_90"
+                    app:pressedTextColor="@color/white"
+                    app:radius="20dp" />
 
-    </LinearLayout>
+            </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/f1f1f1" />
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/f1f1f1" />
+        </LinearLayout>
+    </ScrollView>
 
 </com.zhy.autolayout.AutoLinearLayout>

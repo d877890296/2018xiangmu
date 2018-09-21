@@ -78,6 +78,9 @@ public class RecruedHallListAdapter extends BaseAdapter {
             }else if (listBean.inrecruiList.get(i).partnerType.equals("C")){
                 viewHodler.cType.setText(listBean.inrecruiList.get(i).partnerType+"类事业合伙人:"+listBean.inrecruiList.get(i).joinPersonNumber+"(人)/"+listBean.inrecruiList.get(i).personNumber);
                 showType(listBean.inrecruiList.get(i),viewHodler.cTypeDes);
+            }else if (listBean.inrecruiList.get(i).partnerType.equals("D")){
+                viewHodler.dType.setText(listBean.inrecruiList.get(i).partnerType+"类事业合伙人:"+listBean.inrecruiList.get(i).joinPersonNumber+"(人)/"+listBean.inrecruiList.get(i).personNumber);
+                showType(listBean.inrecruiList.get(i),viewHodler.dTypeDes);
             }
         }
         return convertView;
@@ -101,7 +104,10 @@ public class RecruedHallListAdapter extends BaseAdapter {
         TextView cType;
         @Bind(R.id.c_type_des)
         TextView cTypeDes;
-
+        @Bind(R.id.d_type)
+        TextView dType;
+        @Bind(R.id.d_type_des)
+        TextView dTypeDes;
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }

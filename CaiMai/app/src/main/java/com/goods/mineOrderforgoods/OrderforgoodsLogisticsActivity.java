@@ -35,17 +35,18 @@ import static com.goods.netrequst.PostRequst.UPSUCCESS;
 
 public class OrderforgoodsLogisticsActivity extends BaseActivity {
 
-//    private List<LogisticsModel> data;
+    //    private List<LogisticsModel> data;
     private List<LogisticsBean.DataBean.LogisticsInfoBean> data;
     private MyListView timeline_list;
     private GoodsLogisticsAdapter goodsLogisticsAdapter;
-//    private String content[] = {"[北京市] 您的订单正在配送途中，请您准备签收（配送员：李元，电话：010-718980或者13141199287），感谢你的耐心等待", "你的订单已经达到[北京站]",
+    //    private String content[] = {"[北京市] 您的订单正在配送途中，请您准备签收（配送员：李元，电话：010-718980或者13141199287），感谢你的耐心等待", "你的订单已经达到[北京站]",
 //            "您提交了订单，请等待系统确认"};
 //    private String time[] = {"2018-03-02 13:44:23", "2018-03-01 10:24:13", "2018-03-01 08:20:13"};
     private String orderNum;
     private PostRequst postRequst;
     private NetRequstAjaxCallBack ajaxCallBack;
-    private TextView kuaidi_name,order_status;
+    private TextView kuaidi_name, order_status;
+
     @Override
     protected int getLayoutResource() {
 
@@ -166,14 +167,16 @@ public class OrderforgoodsLogisticsActivity extends BaseActivity {
 
 //                            app.jsonHttp.getJsonObj(jsonObj, AjaxShopModel.class,
 //                        ajaxCallBack.getMyOrder);
-                        Gson gson=new Gson();
-                        LogisticsBean logisticsBean = gson.fromJson(jsonObj,LogisticsBean.class);
-                        if (logisticsBean.data.logisticsInfo!=null && logisticsBean.data.logisticsInfo.size()!=0)
-                        data.addAll(logisticsBean.data.logisticsInfo);
+                        Gson gson = new Gson();
+                        LogisticsBean logisticsBean = gson.fromJson(jsonObj, LogisticsBean.class);
+                        if (logisticsBean.data!=null){
+                            if (logisticsBean.data.logisticsInfo != null && logisticsBean.data.logisticsInfo.size() != 0)
+                                data.addAll(logisticsBean.data.logisticsInfo);
 
-                        kuaidi_name.setText(logisticsBean.data.courierName+":"+logisticsBean.data.courierNum);
-                        order_status.setText(logisticsBean.data.stateDesc);
-                        goodsLogisticsAdapter.setData(data);
+                            kuaidi_name.setText(logisticsBean.data.courierName + ":" + logisticsBean.data.courierNum);
+                            order_status.setText(logisticsBean.data.stateDesc);
+                            goodsLogisticsAdapter.setData(data);
+                        }
                         break;
 
                     }

@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,7 +23,6 @@ import com.dev.customview.MyToast;
 import com.goods.order.SureOrderActivity;
 import com.hyf.tdlibrary.utils.Tools;
 import com.xfkc.caimai.R;
-import com.xfkc.caimai.base.BaseActivity;
 
 import java.util.ArrayList;
 
@@ -34,13 +35,13 @@ import java.util.ArrayList;
 public class ShowPassWordDialog {
 
 	private ArrayList<EditText> mEditList;
-	private BaseActivity context;
+	private Context context;
 	boolean b = true;
 	/**
 	 * 未识别到相应信息   提示继续扫描   或  联系管理员  获取验证码
 	 * @param context
 	 */
-	public ShowPassWordDialog(BaseActivity context) {
+	public ShowPassWordDialog(Context context) {
 		this.context = context;
 		mEditList = new ArrayList<EditText>();
 	}
@@ -327,6 +328,117 @@ public class ShowPassWordDialog {
 		dialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
 		dialog.show();
 
+	}
+
+	public void orderShowTimeDialog(final Context context, final double price, final String kangbiyue, final Handler handler) {
+		final Dialog dialog = new Dialog(context, R.style.BottomDialog);
+		View contentView = LayoutInflater.from(context).inflate(R.layout.verification_code_layout, null);
+
+
+		editText0 = (EditText) contentView.findViewById(R.id.ed_code0);
+		editText1 = (EditText) contentView.findViewById(R.id.ed_code1);
+		editText2 = (EditText) contentView.findViewById(R.id.ed_code2);
+		editText3 = (EditText) contentView.findViewById(R.id.ed_code3);
+		editText4 = (EditText) contentView.findViewById(R.id.ed_code4);
+		editText5 = (EditText) contentView.findViewById(R.id.ed_code5);
+
+		TextView cancle = (TextView) contentView.findViewById(R.id.cancle);
+		TextView commit = (TextView) contentView.findViewById(R.id.commit);
+		TextView price_tv = (TextView) contentView.findViewById(R.id.price);
+		TextView kbye_tv = (TextView) contentView.findViewById(R.id.kbye_tv);
+
+		price_tv.setText(price+"康币");
+		kbye_tv.setText("康币余额: "+kangbiyue);
+
+		// 获取输入框内容
+		int one = editText0.getText().toString().replace(" ", "").length();
+		int Two = editText1.getText().toString().replace(" ", "").length();
+		int Three = editText2.getText().toString().replace(" ", "").length();
+		int Four = editText3.getText().toString().replace(" ", "").length();
+		int Five = editText4.getText().toString().replace(" ", "").length();
+		int Six = editText5.getText().toString().replace(" ", "").length();
+		// 输入框内容都为0时，默认焦点在第一个
+		if (one == 0 && Two == 0 && Three == 0 && Four == 0 && Five == 0 && Six == 0) {
+//			Logger.e("lengh=======", "------空空空-----");
+			editText0.setFocusable(true);
+			editText1.setFocusable(false);
+			editText2.setFocusable(false);
+			editText3.setFocusable(false);
+			editText4.setFocusable(false);
+			editText5.setFocusable(false);
+		}
+		// 为输入框设置输入监听
+		editText0.addTextChangedListener(mTextWatcher);
+		editText1.addTextChangedListener(mTextWatcher);
+		editText2.addTextChangedListener(mTextWatcher);
+		editText3.addTextChangedListener(mTextWatcher);
+		editText4.addTextChangedListener(mTextWatcher);
+		editText5.addTextChangedListener(mTextWatcher);
+		// 为输入框设置删除监听
+		editText0.setOnKeyListener(onKeyListener);
+		editText1.setOnKeyListener(onKeyListener);
+		editText2.setOnKeyListener(onKeyListener);
+		editText3.setOnKeyListener(onKeyListener);
+		editText4.setOnKeyListener(onKeyListener);
+		editText5.setOnKeyListener(onKeyListener);
+
+		cancle.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+
+
+		commit.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String code = getEditNumber();
+
+				if (Tools.IsEmpty(code)) {
+					MyToast.showMyToast(context, "密码不能为空", 0);
+				} else {
+//					context.payOrder(code);
+					Message msg = new Message();
+					msg.what = 1;
+					msg.obj = code;
+					handler.handleMessage(msg);
+				}
+				dialog.dismiss();
+			}
+		});
+
+
+		dialog.setContentView(contentView);
+		ViewGroup.LayoutParams layoutParams = contentView.getLayoutParams();
+		layoutParams.width = context.getResources().getDisplayMetrics().widthPixels;
+		contentView.setLayoutParams(layoutParams);
+		dialog.getWindow().setGravity(Gravity.CENTER);
+		dialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
+		dialog.show();
+
+//		LayoutInflater inflater = context.getLayoutInflater();
+//		View view = inflater.inflate(R.layout.verification_code_layout, null);
+//		// 通过AlertDialog.Builder这个类来实例化我们的一个AlertDialog的对象
+//		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//		builder.setCancelable(false);
+//		// 设置Title的内容
+//		builder.setTitle("请输入验证码");
+//		// 设置Content来显示一个信息
+//		builder.setView(view);
+		// 获取对话框上输入框
+
+
+
+//		// 设置一个PositiveButton
+//		builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+//			@Override
+//			public void onClick(DialogInterface dialog, int which) {
+//				dialog.dismiss();
+//			}
+//		});
+//		// 显示出该对话框
+//		builder.show();
 	}
 
 

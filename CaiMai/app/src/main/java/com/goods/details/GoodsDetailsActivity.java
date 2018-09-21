@@ -251,8 +251,14 @@ public class GoodsDetailsActivity extends BaseActivity implements OnSelectedList
     }
 
     @Override
-    protected void loadData() {
+    protected void onResume() {
+        super.onResume();
         updateCarNum();
+    }
+
+    @Override
+    protected void loadData() {
+//        updateCarNum();
 
     }
 
@@ -629,7 +635,7 @@ public class GoodsDetailsActivity extends BaseActivity implements OnSelectedList
                 extraMap.put("allPrace", allPrice + "");
                 extraMap.put("sourceType", 1);
                 SureCarValue.getInstance().init();
-                goodsListModel.buyNum = 1;
+                goodsListModel.buyNum = number;
                 goodsListModel.paramData = param;
                 SureCarValue.getInstance().setAddressData(goodsListModel);
                 skip_classView(SureOrderActivity.class, extraMap, false, 104);

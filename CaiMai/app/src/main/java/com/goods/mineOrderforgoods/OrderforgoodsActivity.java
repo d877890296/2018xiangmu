@@ -96,7 +96,7 @@ public class OrderforgoodsActivity extends BaseActivity {
         barView.add(radio_2);
         barView.add(radio_3);
         barView.add(radio_4);
-        barView.add(radio_5);
+//        barView.add(radio_5);
         // 设置barline
         barLineSetting = new BarLineSetting(barLine);
         barLineSetting.setCurSelectBarTextColor(curSelectBarTextColor);
@@ -141,7 +141,7 @@ public class OrderforgoodsActivity extends BaseActivity {
         listData.add(dfhOrderGoodsFragment);
         listData.add(pszOrderGoodsFragment);
         listData.add(dpjOrderGoodsFragment);
-        listData.add(endOrderGoodsFragment);
+//        listData.add(endOrderGoodsFragment);
         adapter.setListData(listData);
         orderGoods_pager.setAdapter(adapter);
         if (baseType == 1) {//全部

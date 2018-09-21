@@ -15,22 +15,37 @@ import com.goods.mineOrderforgoods.AllOrderGoodsListAdapter.OnListViewClickLinst
 import com.goods.netrequst.NetRequstAjaxCallBack;
 import com.goods.netrequst.PostRequst;
 import com.goods.sortlsitview.AjaxShopModel;
+import com.google.gson.Gson;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
+import com.hyf.tdlibrary.utils.ToastUtil;
 import com.hyf.tdlibrary.utils.Tools;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.HttpParams;
 import com.recycle.view.MyRecyclerView;
 import com.refushView.RefreshLayout;
 import com.refushView.holder.DefineBAGRefreshWithLoadView;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseFragment;
+import com.xfkc.caimai.bean.AddOrderBean;
 import com.xfkc.caimai.bean.GoodsKey;
+import com.xfkc.caimai.bean.UserInfoBean;
+import com.xfkc.caimai.config.Constant;
 import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.dialog.ShowPassWordDialog;
 import com.xfkc.caimai.home.comment.ToCommentActivity;
+import com.xfkc.caimai.net.PayFactory;
+import com.xfkc.caimai.net.RxHelper;
+import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
+import com.xfkc.caimai.pay.SettingPayPasswordActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import okhttp3.Call;
+import okhttp3.Response;
 
 import static com.goods.netrequst.PostRequst.UPSUCCESS;
 
@@ -55,7 +70,7 @@ public class AllOrderGoodsFragment extends BaseFragment implements RefreshLayout
     private PostRequst postRequst;
     private NetRequstAjaxCallBack ajaxCallBack;
     private int requstStyle = 0;
-
+    private ShowPassWordDialog showPassWordDialog;
 
     public void baseDataInit() {
         // TODO Auto-generated method stub
@@ -66,6 +81,7 @@ public class AllOrderGoodsFragment extends BaseFragment implements RefreshLayout
         postRequst = new PostRequst(handler);
         ajaxCallBack = new NetRequstAjaxCallBack(mContext);
         ajaxCallBack.setOnNetRequstAjaxCallBack(onNetRequstAjaxCallBack);
+        showPassWordDialog = new ShowPassWordDialog(mContext);
     }
 
     @Override
@@ -188,7 +204,7 @@ public class AllOrderGoodsFragment extends BaseFragment implements RefreshLayout
                     break;
                 case 1://查看物流
                     String orderNum_ = shopsList.get(position).orderNum;
-                    extraMap.put("orderNum",orderNum_);
+                    extraMap.put("orderNum", orderNum_);
                     skip_classView(OrderforgoodsLogisticsActivity.class, extraMap, false, -1);
                     break;
                 case 2://确认收货
@@ -199,14 +215,14 @@ public class AllOrderGoodsFragment extends BaseFragment implements RefreshLayout
                     //MyToast.showMyToast(context, "确认收货", -1);
                     break;
                 case 3:   //  立即支付
-
+                    getData(position);
                     break;
                 case 4:   // 申请退款
-                    ShowPassWordDialog showPassWordDialog=new ShowPassWordDialog();
+                    ShowPassWordDialog showPassWordDialog = new ShowPassWordDialog();
                     showPassWordDialog.showPhoneDialog(getActivity());
                     break;
                 case 5:   // 评价
-                    skip_classView(ToCommentActivity.class,extraMap,false,true);
+                    skip_classView(ToCommentActivity.class, extraMap, false, true);
                     break;
                 case 6:   // 查看详情
                     break;
@@ -357,8 +373,71 @@ public class AllOrderGoodsFragment extends BaseFragment implements RefreshLayout
                     skip_classView(GoodsDetailsActivity.class, extraMap, false, -1);
 
                     break;
+                case 1:
+                    String code = (String) msg.obj;
+                    payOrder(code);
+                    break;
             }
         }
     };
 
+    /*支付订单*/
+    public void payOrder(String pwd) {
+        HttpParams params = new HttpParams();
+        params.put("orderNum", message);
+        params.put("paymentWay", PAY_WAY);
+        params.put("orderPrice", reall_price);
+        params.put("payPwd", pwd);
+        params.put("token", token);
+
+        OkGo.post(Constant.BASE_URL + "/api/order/actualPayment")
+                .tag(this)//url请求地址
+                .params(params)
+                .isMultipart(true)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+//                        Log.e("----------", s);
+                        Gson gson = new Gson();
+                        AddOrderBean addOrderBean = gson.fromJson(s, AddOrderBean.class);
+                        if (addOrderBean.retCode == 1) {
+//                            extraMap.put("type", "1");
+//                            skip_classView(PaySuccessActivity.class, extraMap, false, 101);
+                            requstGetMyOrder(0);
+                        } else {
+                            if (Tools.IsEmpty(pwdword)) {
+                                skip_classView(SettingPayPasswordActivity.class, extraMap, false, true);
+                            } else {
+                                ToastUtil.showToast(addOrderBean.message);
+                            }
+                        }
+                        dissMbProgress();
+                    }
+
+                });
+    }
+
+    private String pwdword, token, message;
+    private int PAY_WAY = 1;
+    private double reall_price = 0;
+
+    /*获取个人信息*/
+    private void getData(final int position) {
+        message = shopsList.get(position).orderNum;
+        PAY_WAY = shopsList.get(position).paymentWay;
+        reall_price = shopsList.get(position).freight + shopsList.get(position).price;
+        token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
+        PayFactory.getPayService()
+                .findUserDetByPhone(token)
+                .compose(RxHelper.<UserInfoBean>io_main())
+                .subscribe(new ProgressSubscriber<UserInfoBean>(mContext) {
+                    @Override
+                    public void onNext(UserInfoBean userInfoBean) {
+                        double kbAmount = userInfoBean.data.kbAmount;
+                        pwdword = userInfoBean.data.payPwd;
+                        showPassWordDialog.orderShowTimeDialog(mContext, (shopsList.get(position).freight + shopsList.get(position).price), kbAmount + "", handler);
+
+                    }
+                });
+    }
 }

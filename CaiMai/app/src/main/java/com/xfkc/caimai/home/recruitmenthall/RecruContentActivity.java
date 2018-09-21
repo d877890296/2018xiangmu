@@ -72,10 +72,21 @@ public class RecruContentActivity extends BaseActivity {
     LinearLayout bLayout;
     @Bind(R.id.c_layout)
     LinearLayout cLayout;
+    @Bind(R.id.d_type)
+    TextView dType;
+    @Bind(R.id.d_type_des)
+    TextView dTypeDes;
+    @Bind(R.id.d_type_price)
+    TextView dTypePrice;
+    @Bind(R.id.d_rb)
+    RadioButton dRb;
+    @Bind(R.id.d_layout)
+    LinearLayout dLayout;
     private ArrayList<RadioButton> list_radio = new ArrayList<>();
     private String shopId;
     private String partnerType = "A";
-    private double a_price = 0, b_price = 0, c_price = 0,reall_price= 0;
+    private double a_price = 0, b_price = 0, c_price = 0,d_price = 0, reall_price = 0;
+
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_recru_content;
@@ -90,6 +101,7 @@ public class RecruContentActivity extends BaseActivity {
         list_radio.add(aRb);
         list_radio.add(bRb);
         list_radio.add(cRb);
+        list_radio.add(dRb);
         shopId = getIntent().getStringExtra("shopId");
 
     }
@@ -109,22 +121,28 @@ public class RecruContentActivity extends BaseActivity {
                                 if (listBean.inrecruiList.get(i).partnerType.equals("A")) {
                                     aLayout.setVisibility(View.VISIBLE);
                                     aType.setText(listBean.inrecruiList.get(i).partnerType + "类事业合伙人:" + listBean.inrecruiList.get(i).joinPersonNumber + "(人)/" + listBean.inrecruiList.get(i).personNumber);
-                                    a_price = listBean.inrecruiList.get(i).kangbiCount ;
+                                    a_price = listBean.inrecruiList.get(i).kangbiCount;
                                     reall_price = a_price;
                                     aTypePrice.setText("￥" + a_price);
-                                    showType(listBean.inrecruiList.get(i),aTypeDes);
+                                    showType(listBean.inrecruiList.get(i), aTypeDes);
                                 } else if (listBean.inrecruiList.get(i).partnerType.equals("B")) {
                                     bLayout.setVisibility(View.VISIBLE);
                                     bType.setText(listBean.inrecruiList.get(i).partnerType + "类事业合伙人:" + listBean.inrecruiList.get(i).joinPersonNumber + "(人)/" + listBean.inrecruiList.get(i).personNumber);
-                                    b_price = listBean.inrecruiList.get(i).kangbiCount ;
+                                    b_price = listBean.inrecruiList.get(i).kangbiCount;
                                     bTypePrice.setText("￥" + b_price);
-                                    showType(listBean.inrecruiList.get(i),bTypeDes);
+                                    showType(listBean.inrecruiList.get(i), bTypeDes);
                                 } else if (listBean.inrecruiList.get(i).partnerType.equals("C")) {
                                     cLayout.setVisibility(View.VISIBLE);
-                                    c_price = listBean.inrecruiList.get(i).kangbiCount ;
+                                    c_price = listBean.inrecruiList.get(i).kangbiCount;
                                     cTypePrice.setText("￥" + c_price);
                                     cType.setText(listBean.inrecruiList.get(i).partnerType + "类事业合伙人:" + listBean.inrecruiList.get(i).joinPersonNumber + "(人)/" + listBean.inrecruiList.get(i).personNumber);
-                                    showType(listBean.inrecruiList.get(i),cTypeDes);
+                                    showType(listBean.inrecruiList.get(i), cTypeDes);
+                                } else if (listBean.inrecruiList.get(i).partnerType.equals("D")) {
+                                    dLayout.setVisibility(View.VISIBLE);
+                                    d_price = listBean.inrecruiList.get(i).kangbiCount;
+                                    dTypePrice.setText("￥" + d_price);
+                                    dType.setText(listBean.inrecruiList.get(i).partnerType + "类事业合伙人:" + listBean.inrecruiList.get(i).joinPersonNumber + "(人)/" + listBean.inrecruiList.get(i).personNumber);
+                                    showType(listBean.inrecruiList.get(i), dTypeDes);
                                 }
                             }
                         }
@@ -132,7 +150,7 @@ public class RecruContentActivity extends BaseActivity {
                 });
     }
 
-    @OnClick({R.id.toolbar_left_img, R.id.commit, R.id.a_rb, R.id.b_rb, R.id.c_rb})
+    @OnClick({R.id.toolbar_left_img, R.id.commit, R.id.a_rb, R.id.b_rb, R.id.c_rb,R.id.d_rb})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_left_img:
@@ -156,16 +174,21 @@ public class RecruContentActivity extends BaseActivity {
                 reall_price = c_price;
                 setRadioButton(2);
                 break;
+            case R.id.d_rb:
+                partnerType = "D";
+                reall_price = d_price;
+                setRadioButton(3);
+                break;
         }
     }
 
     /*添加*/
     private void commit() {
-        extraMap.put("token",token);
-        extraMap.put("shopId",shopId);
-        extraMap.put("partnerType",partnerType);
-        extraMap.put("reall_price",reall_price+"");
-        skip_classView(PayWAyActivity.class,extraMap,true);
+        extraMap.put("token", token);
+        extraMap.put("shopId", shopId);
+        extraMap.put("partnerType", partnerType);
+        extraMap.put("reall_price", reall_price + "");
+        skip_classView(PayWAyActivity.class, extraMap, true);
 
     }
 
@@ -181,36 +204,37 @@ public class RecruContentActivity extends BaseActivity {
         }
     }
 
-    private void showType(RecruiHallBean.DataBean.ListBean.InrecruiListBean inrecruiListBean, TextView TypeDes){
-        if (inrecruiListBean.type == 0){//按百分比
-            switch (inrecruiListBean.welfareUnit){
+    private void showType(RecruiHallBean.DataBean.ListBean.InrecruiListBean inrecruiListBean, TextView TypeDes) {
+        if (inrecruiListBean.type == 0) {//按百分比
+            switch (inrecruiListBean.welfareUnit) {
                 case 1://月
-                    TypeDes.setText("加入后每个月可获得店铺年营业额" +inrecruiListBean.rate+"%的康币分红");
+                    TypeDes.setText("加入后每个月可获得店铺年营业额" + inrecruiListBean.rate + "%的康币分红");
                     break;
                 case 2://季度
-                    TypeDes.setText("加入后每个季度可获得店铺年营业额" +inrecruiListBean.rate+"%的康币分红");
+                    TypeDes.setText("加入后每个季度可获得店铺年营业额" + inrecruiListBean.rate + "%的康币分红");
                     break;
                 case 3://年
-                    TypeDes.setText("加入后每年可获得店铺年营业额" +inrecruiListBean.rate+"%的康币分红");
+                    TypeDes.setText("加入后每年可获得店铺年营业额" + inrecruiListBean.rate + "%的康币分红");
                     break;
             }
-        }else if (inrecruiListBean.type == 1){//按定额
-            String comKangbi ="0";
-            if(!Tools.IsEmpty(inrecruiListBean.comKangbi)){
+        } else if (inrecruiListBean.type == 1) {//按定额
+            String comKangbi = "0";
+            if (!Tools.IsEmpty(inrecruiListBean.comKangbi)) {
                 comKangbi = inrecruiListBean.comKangbi;
             }
-            switch (inrecruiListBean.welfareUnit){
+            switch (inrecruiListBean.welfareUnit) {
                 case 1://月
-                    TypeDes.setText("加入后每月可获得"+comKangbi+"个康币分红");
+                    TypeDes.setText("加入后每月可获得" + comKangbi + "个康币分红");
                     break;
                 case 2://季度
-                    TypeDes.setText("加入后每季度可获得"+comKangbi+"个康币分红");
+                    TypeDes.setText("加入后每季度可获得" + comKangbi + "个康币分红");
                     break;
                 case 3://年
-                    TypeDes.setText("加入后每年可获得"+comKangbi+"个康币分红");
+                    TypeDes.setText("加入后每年可获得" + comKangbi + "个康币分红");
                     break;
             }
 
         }
     }
+
 }

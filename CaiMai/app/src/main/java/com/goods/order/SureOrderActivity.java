@@ -207,6 +207,9 @@ public class SureOrderActivity extends BaseActivity {
 
     /*获取邮费信息*/
     private void requstFreight() {
+        itemId = "";
+        buyNum = "";
+        paramData = "";
         for (GoodsListModel mdoel : goodsData) {
             itemId += mdoel.itemId + ",";
             buyNum += mdoel.buyNum + ",";
@@ -214,7 +217,7 @@ public class SureOrderActivity extends BaseActivity {
             if (Tools.IsEmpty(mdoel.paramData)) {
                 mdoel.paramData = "0";
             }
-            paramData += mdoel.paramData + ",";
+            paramData += mdoel.paramData + "`";
 
         }
 
@@ -222,6 +225,10 @@ public class SureOrderActivity extends BaseActivity {
         buyNum = buyNum.substring(0, buyNum.length() - 1);
         itemPrice = itemPrice.substring(0, itemPrice.length() - 1);
         paramData = paramData.substring(0, paramData.length() - 1);
+
+        if (Tools.IsEmpty(paramData) || paramData.equals("0")) {
+            paramData = "";
+        }
 
         HttpParams params = new HttpParams();
         params.put("token", token);
@@ -250,7 +257,12 @@ public class SureOrderActivity extends BaseActivity {
                             allPrace_textView.setText("￥" + reall_price);
                             reallyPay.setText("￥" + reall_price);
                         } else {
-                            ToastUtil.showToast(freightBean.message);
+                            Log.e("---", "====" + freightBean.message);
+//                            ToastUtil.showToast(freightBean.message);
+                            reall_price = Double.parseDouble(allPrace);
+                            reall_price = (double) (Math.round(reall_price * 10000)) / 10000;
+                            allPrace_textView.setText("￥" + reall_price);
+                            reallyPay.setText("￥" + reall_price);
                         }
                         dissMbProgress();
                     }
@@ -387,10 +399,10 @@ public class SureOrderActivity extends BaseActivity {
                         Gson gson = new Gson();
                         AddOrderBean addOrderBean = gson.fromJson(s, AddOrderBean.class);
                         if (addOrderBean.retCode == 1) {
-                            if ( kbAmount > 0 || reall_price > kbAmount){
+                            if (kbAmount > 0 || reall_price > kbAmount) {
                                 message = addOrderBean.message;
-                                showPassWordDialog.showTimeDialog02(SureOrderActivity.this, reall_price, kbAmount+"");
-                            }else {
+                                showPassWordDialog.showTimeDialog02(SureOrderActivity.this, reall_price, kbAmount + "");
+                            } else {
                                 ToastUtil.showToast("余额不足!");
                             }
                         } else {
@@ -422,12 +434,12 @@ public class SureOrderActivity extends BaseActivity {
                         Gson gson = new Gson();
                         AddOrderBean addOrderBean = gson.fromJson(s, AddOrderBean.class);
                         if (addOrderBean.retCode == 1) {
-                            extraMap.put("type","1");
-                            skip_classView(PaySuccessActivity.class, extraMap, false,101);
+                            extraMap.put("type", "1");
+                            skip_classView(PaySuccessActivity.class, extraMap, false, 101);
                         } else {
-                            if (Tools.IsEmpty(pwdword)){
+                            if (Tools.IsEmpty(pwdword)) {
                                 skip_classView(SettingPayPasswordActivity.class, extraMap, false);
-                            }else {
+                            } else {
                                 ToastUtil.showToast(addOrderBean.message);
                             }
                         }
@@ -475,21 +487,24 @@ public class SureOrderActivity extends BaseActivity {
             String phone = data.getStringExtra("phone");
             String address = data.getStringExtra("address");
             province = data.getStringExtra("province");
+            if (province.contains("市")) {
+                province = province.replace("市", "");
+            }
             getGoods_pople.setText(name);
             getGoods_phone.setText(phone);
             getGoods_address.setText(address);
             requstFreight();
 //            addAddressIv.setVisibility(View.GONE);
 //            shouhuoAddress.setVisibility(View.VISIBLE);
-        }else if (requestCode == 101 && resultCode == 102){
-            backHistory(103,true,true,extraMap);
+        } else if (requestCode == 101 && resultCode == 102) {
+            backHistory(103, true, true, extraMap);
         }
     }
 
 
-
     private double kbAmount;
     private String pwdword;
+
     /*获取个人信息*/
     private void getData() {
         PayFactory.getPayService()

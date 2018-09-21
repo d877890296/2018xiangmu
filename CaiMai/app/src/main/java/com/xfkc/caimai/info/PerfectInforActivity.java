@@ -22,8 +22,6 @@ import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-import static com.xfkc.caimai.R.id.address_content;
-
 /**
  * 完善信息
  */
@@ -40,7 +38,7 @@ public class PerfectInforActivity extends BaseActivity {
     EditText idCard;
     @Bind(R.id.choose_address)
     SuperTextView chooseAddress;
-    @Bind(address_content)
+    @Bind(R.id.address_content)
     EditText addressContent;
     @Bind(R.id.commit)
     StateButton commit;
@@ -106,7 +104,6 @@ public class PerfectInforActivity extends BaseActivity {
         }
         if (Tools.IsEmpty(userIdCard)) {
             ToastUtil.showToast("请输入详细地址!");
-            detailAdress = address_content + detailAdress;
             return;
         }
         PayFactory.getPayService()

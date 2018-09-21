@@ -80,6 +80,9 @@ public class RecruHallListAdapter extends BaseAdapter {
             }else if (listBean.inrecruiList.get(i).partnerType.equals("C")){
                 viewHodler.cType.setVisibility(View.VISIBLE);
                 viewHodler.cType.setText(listBean.inrecruiList.get(i).partnerType+"类事业合伙人:"+listBean.inrecruiList.get(i).joinPersonNumber+"(人)/"+listBean.inrecruiList.get(i).personNumber);
+            }else if (listBean.inrecruiList.get(i).partnerType.equals("D")){
+                viewHodler.dType.setVisibility(View.VISIBLE);
+                viewHodler.dType.setText(listBean.inrecruiList.get(i).partnerType+"类事业合伙人:"+listBean.inrecruiList.get(i).joinPersonNumber+"(人)/"+listBean.inrecruiList.get(i).personNumber);
             }
         }
 
@@ -119,6 +122,8 @@ public class RecruHallListAdapter extends BaseAdapter {
         TextView bType;
         @Bind(R.id.c_type)
         TextView cType;
+        @Bind(R.id.d_type)
+        TextView dType;
         @Bind(R.id.pay_btn)
         StateButton payBtn;
 

@@ -37,23 +37,23 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        >
+        android:padding="10dp">
+
         <TextView
             android:id="@+id/order_no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="@color/black"
             android:text="订单编号:"
-            />
+            android:textColor="@color/black"
+            android:textSize="14sp" />
 
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/f1f1f1"
-        />
+        android:background="@color/f1f1f1" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -72,7 +72,16 @@
 
 
     </LinearLayout>
-
+    <TextView
+        android:id="@+id/goods_allnum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="共计1件商品"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:gravity="right"
+        android:padding="5dp"
+        />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -88,25 +97,29 @@
             android:gravity="center_vertical"
             android:text="配送中"
             android:textColor="#000000"
-            android:textSize="15sp" />
+            android:textSize="14sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true">
 
+
+
             <TextView
-                android:id="@+id/goods_allnum"
+                android:id="@id/yunfei"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="共计1件商品"
-                android:textColor="@color/black"
-                android:textSize="15sp" />
+                android:layout_marginLeft="5dp"
+                android:text="运费:"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+
             <TextView
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:text="合计:"
                 android:textColor="#000000"
                 android:textSize="15sp" />
@@ -117,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:text="49.00"
                 android:textColor="@color/ff704d"
-                android:textSize="15sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/goods_unit"
@@ -125,9 +138,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="康币"
-                android:visibility="gone"
                 android:textColor="@color/ff704d"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:visibility="gone" />
 
         </LinearLayout>
 
@@ -147,111 +160,116 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="8dp">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/order_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textColor="@color/black"
-        android:text="订单时间"
-        android:layout_gravity="left"
-        />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="right"
-        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/cannelOrder_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/cannel_pay_shape"
-            android:clickable="true"
-            android:padding="5dp"
-            android:text="取消订单"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp" />
-        <TextView
-            android:id="@+id/tuikuan_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/cannel_pay_shape"
-            android:clickable="true"
-            android:padding="5dp"
-            android:text="申请退款"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/order_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:text="订单时间"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/cannelOrder_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/cannel_pay_shape"
+                    android:clickable="true"
+                    android:padding="5dp"
+                    android:text="取消订单"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tuikuan_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/cannel_pay_shape"
+                    android:clickable="true"
+                    android:padding="5dp"
+                    android:text="申请退款"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp" />
 
 
-        <TextView
-            android:id="@+id/pj_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/orange_pay_shape"
-            android:clickable="true"
-            android:padding="5dp"
-            android:layout_marginLeft="10dp"
-            android:text="去评价"
-            android:textColor="#FFFFFF"
-            android:visibility="visible"
-            android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/pj_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/orange_pay_shape"
+                    android:clickable="true"
+                    android:padding="5dp"
+                    android:text="去评价"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:visibility="visible" />
 
-        <TextView
-            android:id="@+id/lookLogistics_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/orange_pay_shape"
-            android:clickable="true"
-            android:padding="5dp"
-            android:layout_marginLeft="10dp"
-            android:text="查看物流"
-            android:textColor="#FFFFFF"
-            android:visibility="visible"
-            android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/lookLogistics_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/orange_pay_shape"
+                    android:clickable="true"
+                    android:padding="5dp"
+                    android:text="查看物流"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:visibility="visible" />
 
-        <TextView
-            android:id="@+id/suregetGoods_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/orange_pay_shape"
-            android:clickable="true"
-            android:padding="5dp"
-            android:text="确认收货"
-            android:textColor="#FFFFFF"
-            android:visibility="visible"
-            android:textSize="12sp" />
-        <TextView
-            android:id="@+id/pay_btGoods_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/orange_pay_shape"
-            android:clickable="true"
-            android:padding="5dp"
+                <TextView
+                    android:id="@+id/suregetGoods_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/orange_pay_shape"
+                    android:clickable="true"
+                    android:padding="5dp"
+                    android:text="确认收货"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:visibility="visible" />
 
-            android:text="立即支付"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp" />
-        <TextView
-            android:id="@+id/lookd_btGoods_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/orange_pay_shape"
-            android:clickable="true"
-            android:padding="5dp"
+                <TextView
+                    android:id="@+id/pay_btGoods_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/orange_pay_shape"
+                    android:clickable="true"
+                    android:padding="5dp"
 
-            android:text="查看详情"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp" />
+                    android:text="立即支付"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp" />
 
-    </LinearLayout>
-</RelativeLayout>
+                <TextView
+                    android:id="@+id/lookd_btGoods_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/orange_pay_shape"
+                    android:clickable="true"
+                    android:padding="5dp"
+
+                    android:text="查看详情"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+        </RelativeLayout>
 
     </FrameLayout>
 

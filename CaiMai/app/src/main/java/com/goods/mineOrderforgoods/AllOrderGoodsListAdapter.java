@@ -197,7 +197,7 @@ public class AllOrderGoodsListAdapter extends RecyclerView.Adapter<AllOrderGoods
         public MyListView order_goodslist;
         public OrderChildAdapter orderChildAdapter;
         public TextView goods_status, goods_allnum, goods_allprice, cannelOrder_textView, lookLogistics_textView, suregetGoods_textView, pay_btGoods_textView;
-        public TextView tuikuan_textView, pj_textView, lookd_btGoods_textView,order_no,order_time;
+        public TextView tuikuan_textView, pj_textView, lookd_btGoods_textView,order_no,order_time,yunfei;
         public int position;
 
         public ViewHolder(View itemView) {
@@ -222,6 +222,7 @@ public class AllOrderGoodsListAdapter extends RecyclerView.Adapter<AllOrderGoods
             tuikuan_textView = (TextView) itemView.findViewById(R.id.tuikuan_textView);
             pj_textView = (TextView) itemView.findViewById(R.id.pj_textView);
             lookd_btGoods_textView = (TextView) itemView.findViewById(R.id.lookd_btGoods_textView);
+            yunfei = (TextView) itemView.findViewById(R.id.yunfei);
 
         }
 
@@ -230,8 +231,9 @@ public class AllOrderGoodsListAdapter extends RecyclerView.Adapter<AllOrderGoods
             order_goodslist.setAdapter(orderChildAdapter);
 
             goods_status.setText(backStatusContent(model.status));
+            yunfei.setText("运费:"+model.freight);
             goods_allnum.setText("共计" + model.itemOrderDetailList.size() + "件商品");
-            goods_allprice.setText(model.price + "康币");
+            goods_allprice.setText((model.price+model.freight) + "康币");
             setSitis(goods_allprice);
             //status` int  1待支付 2待发货 3配送中 4待评价 5已评价 6已取消
             if (model.status == 1) {

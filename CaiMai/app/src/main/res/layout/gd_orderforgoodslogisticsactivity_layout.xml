@@ -48,7 +48,7 @@
                         android:id="@+id/order_status"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="已签收"
+                        android:text="暂无物流信息"
                         android:textColor="#FFDE29"
                         android:textSize="15sp" />
 
@@ -57,7 +57,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="韵达快递：789900000099878"
+                        android:text="快递种类:"
                         android:textColor="#525252"
                         android:textSize="12sp" />
 
@@ -67,7 +67,9 @@
                         android:layout_marginTop="10dp"
                         android:text="管网电话：95546"
                         android:textColor="#525252"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:visibility="gone"
+                        />
                 </LinearLayout>
             </LinearLayout>
 
