@@ -43,7 +43,8 @@ public class ModuleAdapter extends BaseAdapter {
     private List<String> moduleList;
     //其他模块适配器
 //    private OthersModuleAdapter othersModuleAdapter;
-    private String[] titls = {"各种会员商品任君挑选", "加入我们成为我们的一员", "购买会员享受会员权益", "暂未开放 敬请期待"};
+//    private String[] titls = {"各种会员商品任君挑选", "加入我们成为我们的一员", "购买会员享受会员权益", "暂未开放 敬请期待"};
+    private String[] titls = {"预约预订 团购众筹 同频共振 大家获益", "社员和团长都是我们的事业合伙人", "衣食住行康乐 样样都能省钱", "暂未开放 敬请期待"};
     private int[] images = {R.mipmap.xingfu, R.mipmap.zhaomudating, R.mipmap.vip_car, R.mipmap.every_8};
     private List<BannerBean.DataBean.ListBean> list_banner;
 

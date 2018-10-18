@@ -10,13 +10,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.goods.city.GoodsCityActivity;
-import com.hyf.tdlibrary.utils.ToastUtil;
+import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseFragment;
 import com.xfkc.caimai.bean.BannerBean;
+import com.xfkc.caimai.bean.MineVipCardBean;
+import com.xfkc.caimai.config.SharedPref;
+import com.xfkc.caimai.dialog.CommonDialog;
 import com.xfkc.caimai.home.adapter.ModuleAdapter;
 import com.xfkc.caimai.home.recruitmenthall.RecruitmentHallActivity;
 import com.xfkc.caimai.home.vipcard.VipCardActivity;
+import com.xfkc.caimai.loading.LoadingActivity;
 import com.xfkc.caimai.net.PayFactory;
 import com.xfkc.caimai.net.RxHelper;
 
@@ -25,6 +29,8 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Subscriber;
+
+import static com.hyf.tdlibrary.utils.ToastUtil.showToast;
 
 /**
  * 大仓库
@@ -54,9 +60,11 @@ public class HomeFragment extends BaseFragment {
         toolbarTitle.setTextColor(Color.WHITE);
         listData.clear();
 
-        listData.add("幸福公社");
+//        listData.add("幸福公社");
+        listData.add("公社仓库");
         listData.add("招募大厅");
-        listData.add("会员卡");
+//        listData.add("会员卡");
+        listData.add("专项服务卡");
         listData.add("每晚8点直播");
 
 
@@ -108,7 +116,7 @@ public class HomeFragment extends BaseFragment {
                         skip_classView(VipCardActivity.class, extraMap, false, false);
                         break;
                     case 3:
-                        ToastUtil.showToast("该功能暂未开放");
+                        showToast("该功能暂未开放");
                         break;
                     default:
 
@@ -126,4 +134,52 @@ public class HomeFragment extends BaseFragment {
         ButterKnife.unbind(this);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getMineVipCard();
+    }
+
+    private void getMineVipCard() {
+        String token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
+        PayFactory.getPayService()
+                .getUserVipCard(token)
+                .compose(RxHelper.<MineVipCardBean>io_main())
+                .subscribe(new Subscriber<MineVipCardBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onNext(MineVipCardBean mineVipCardBean) {
+                        if (mineVipCardBean.data != null && mineVipCardBean.data.size() != 0) {
+                        } else {
+                            new CommonDialog(mContext).builder().setTitle("提示")
+                                    .setContentMsg("新用户请购买会员卡")
+                                    .setCancelable(false)
+//                                    .setCanceledOnTouchOutside(false)
+                                    .setPositiveBtn("确定", new CommonDialog.OnPositiveListener() {
+                                        @Override
+                                        public void onPositive(View view) {
+                                            skip_classView(VipCardActivity.class, extraMap, false, true);
+                                        }
+                                    })
+                                    .setNegativeBtn("切换账号", new CommonDialog.OnNegativeListener() {
+                                        @Override
+                                        public void onNegative(View view) {
+                                            SharedPrefUtil.put(mContext, SharedPref.TOKEN, "");
+                                            skip_classView(LoadingActivity.class, extraMap, true, true);
+                                        }
+                                    })
+                                    .show();
+                        }
+                    }
+                });
+
+    }
 }

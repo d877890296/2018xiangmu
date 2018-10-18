@@ -312,7 +312,7 @@ public class ShowPassWordDialog {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(Intent.ACTION_DIAL);
-				Uri data = Uri.parse("tel:" + "400-12345678");
+				Uri data = Uri.parse("tel:" + "186 7483 5888");
 				intent.setData(data);
 				activity.startActivity(intent);
 				dialog.dismiss();

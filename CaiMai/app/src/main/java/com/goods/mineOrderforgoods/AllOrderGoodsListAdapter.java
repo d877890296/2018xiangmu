@@ -231,9 +231,15 @@ public class AllOrderGoodsListAdapter extends RecyclerView.Adapter<AllOrderGoods
             order_goodslist.setAdapter(orderChildAdapter);
 
             goods_status.setText(backStatusContent(model.status));
-            yunfei.setText("运费:"+model.freight);
             goods_allnum.setText("共计" + model.itemOrderDetailList.size() + "件商品");
-            goods_allprice.setText((model.price+model.freight) + "康币");
+
+            if (model.pickupWay == 1){
+                yunfei.setText("运费:"+model.freight);
+                goods_allprice.setText((model.price+model.freight) + "康币");
+            }else if (model.pickupWay == 2){
+                yunfei.setText("运费: 0.00");
+                goods_allprice.setText(model.price+ "康币");
+            }
             setSitis(goods_allprice);
             //status` int  1待支付 2待发货 3配送中 4待评价 5已评价 6已取消
             if (model.status == 1) {
@@ -265,6 +271,14 @@ public class AllOrderGoodsListAdapter extends RecyclerView.Adapter<AllOrderGoods
             } else if (model.status == 3) {
                 cannelOrder_textView.setVisibility(View.GONE);
                 lookLogistics_textView.setVisibility(View.VISIBLE);
+                if (model.pickupWay == 1){
+                    lookLogistics_textView.setText("查看物流");
+                }else if (model.pickupWay == 2){
+                    lookLogistics_textView.setText("  自提  ");
+                    lookLogistics_textView.setFocusable(false);
+                    lookLogistics_textView.setEnabled(false);
+                    lookLogistics_textView.setClickable(false);
+                }
                 suregetGoods_textView.setText("确认收货");
                 suregetGoods_textView.setVisibility(View.VISIBLE);
                 pay_btGoods_textView.setVisibility(View.GONE);
@@ -282,7 +296,7 @@ public class AllOrderGoodsListAdapter extends RecyclerView.Adapter<AllOrderGoods
                 suregetGoods_textView.setVisibility(View.GONE);
                 pay_btGoods_textView.setVisibility(View.GONE);
                 tuikuan_textView.setVisibility(View.VISIBLE);
-                pj_textView.setVisibility(View.VISIBLE);
+                pj_textView.setVisibility(View.GONE);
                 lookd_btGoods_textView.setVisibility(View.GONE);
                 Drawable drawableLeft = mContext.getResources().getDrawable(R.mipmap.complete_icon);
                 goods_status.setCompoundDrawablesWithIntrinsicBounds(drawableLeft,

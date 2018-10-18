@@ -26,7 +26,6 @@ import com.goods.netrequst.PostRequst;
 import com.goods.sortlsitview.SideBar.OnTouchingLetterChangedListener;
 import com.hyf.tdlibrary.utils.SharedPrefUtil;
 import com.hyf.tdlibrary.utils.Tools;
-import com.json.CommonConvert;
 import com.xfkc.caimai.R;
 import com.xfkc.caimai.base.BaseActivity;
 import com.xfkc.caimai.bean.GoodsKey;
@@ -318,8 +317,6 @@ public class GoodsChooseCityActivity extends BaseActivity {
             Collections.sort(SourceDateList, pinyinComparator);
             adapter = new SortAdapter(mContext, SourceDateList);
             sortListView.setAdapter(adapter);
-
-
         }
 
     };

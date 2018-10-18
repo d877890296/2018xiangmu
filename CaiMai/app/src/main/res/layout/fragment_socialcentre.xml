@@ -41,11 +41,11 @@
 
                     <ImageView
                         android:id="@+id/setting_iv"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginRight="20dp"
-                        android:src="@mipmap/setting_icon" />
+                        android:src="@mipmap/new_setting" />
 
                 </RelativeLayout>
 
@@ -226,7 +226,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:visibility="gone"
+                    >
 
                     <TextView
                         android:id="@+id/dpj_tv"
@@ -266,10 +268,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawablePadding="5dp"
-                        android:drawableTop="@mipmap/tk_mine_icon"
+                        android:drawableTop="@mipmap/new_kefu"
                         android:gravity="center"
                         android:padding="4dp"
-                        android:text="退款/退货"
+                        android:text="联系客服"
                         android:textSize="14sp" />
 
                     <TextView
@@ -316,7 +318,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/whilte" />
+                android:background="@color/whilte"
+                />
 
         </LinearLayout>
 

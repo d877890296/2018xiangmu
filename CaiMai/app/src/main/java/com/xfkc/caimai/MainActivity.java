@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTabHost;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -69,6 +70,17 @@ public class MainActivity extends RxActivity {
         token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
         initTabHost();
         getData();
+//        if (Build.VERSION.SDK_INT >= 23) {
+//            int checkPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
+//            if (checkPermission != PackageManager.PERMISSION_GRANTED) {
+//                //没有获取权限，发起申请
+//                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+//
+//            } else {
+//                //doing everything what you want
+//                setLocation();
+//            }
+//        }
         if (Build.VERSION.SDK_INT >= 23) {
             List<String> permissions = null;
             if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -81,11 +93,18 @@ public class MainActivity extends RxActivity {
                 }
                 permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
             }
+            if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                if (permissions == null) {
+                    permissions = new ArrayList<>();
+                }
+                permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+            }
             if (permissions != null) {
                 String[] permissionArray = new String[permissions.size()];
                 permissions.toArray(permissionArray);
                 requestPermissions(permissionArray, 5);
             }
+
         }
 
         setLocation();
@@ -118,18 +137,19 @@ public class MainActivity extends RxActivity {
         //启动定位
         mLocationClient.startLocation();
         //初始化获取商店信息
-        defaultRequstLocation=new DefaultRequstLocation(mContext);
+        defaultRequstLocation = new DefaultRequstLocation(mContext);
         defaultRequstLocation.setOnLocationCallBack(onLocationCallBack);
 
     }
-private DefaultRequstLocation.OnLocationCallBack onLocationCallBack=new DefaultRequstLocation.OnLocationCallBack(){
-    @Override
-    public void locationCallBack(boolean isSuccess, String errorMsg, SortModel object) {
-        if (isSuccess){
-            app.shopModel=object;
+
+    private DefaultRequstLocation.OnLocationCallBack onLocationCallBack = new DefaultRequstLocation.OnLocationCallBack() {
+        @Override
+        public void locationCallBack(boolean isSuccess, String errorMsg, SortModel object) {
+            if (isSuccess) {
+                app.shopModel = object;
+            }
         }
-    }
-};
+    };
     //可以通过类implement方式实现AMapLocationListener接口，也可以通过创造接口类对象的方法实现
 //以下为后者的举例：
     AMapLocationListener mAMapLocationListener = new AMapLocationListener() {
@@ -140,10 +160,10 @@ private DefaultRequstLocation.OnLocationCallBack onLocationCallBack=new DefaultR
                     //可在其中解析amapLocation获取相应内容。
                     //获取纬度
                     //获取经度
-                    app.latitude = amapLocation.getLatitude()+"";
-                    app.longitude ="" +amapLocation.getLongitude();
+                    app.latitude = amapLocation.getLatitude() + "";
+                    app.longitude = "" + amapLocation.getLongitude();
                     //开始请求商店信息
-                    defaultRequstLocation.startLocation( app.longitude , app.latitude);
+                    defaultRequstLocation.startLocation(app.longitude, app.latitude);
                     mLocationClient.stopLocation();//停止定位后，本地定位服务并不会被销毁
                     mLocationClient.onDestroy();//销毁定位客户端，同时销毁本地定位服务。
                 } else {
@@ -151,6 +171,7 @@ private DefaultRequstLocation.OnLocationCallBack onLocationCallBack=new DefaultR
                     Log.e("AmapError", "location Error, ErrCode:"
                             + amapLocation.getErrorCode() + ", errInfo:"
                             + amapLocation.getErrorInfo());
+//                    LocationUtils.showLocErrorDialog(MainActivity.this, 1);
                 }
             }
         }
@@ -297,9 +318,10 @@ private DefaultRequstLocation.OnLocationCallBack onLocationCallBack=new DefaultR
         }
 
     }
+
     /*获取个人信息*/
     private void getData() {
-        String token= SharedPrefUtil.get(mContext, SharedPref.TOKEN);
+        String token = SharedPrefUtil.get(mContext, SharedPref.TOKEN);
         PayFactory.getPayService()
                 .findUserDetByPhone(token)
                 .compose(RxHelper.<UserInfoBean>io_main())
@@ -323,9 +345,9 @@ private DefaultRequstLocation.OnLocationCallBack onLocationCallBack=new DefaultR
                     @Override
                     public void onNext(UserInfoBean userInfoBean) {
 
-                        if (Tools.IsEmpty(userInfoBean.data.detailAdress)){
-                            extraMap.put("phone",userInfoBean.data.phone);
-                            skip_classView(MainPerfectInforActivity.class,extraMap,false,1009);
+                        if (Tools.IsEmpty(userInfoBean.data.detailAdress)) {
+                            extraMap.put("phone", userInfoBean.data.phone);
+                            skip_classView(MainPerfectInforActivity.class, extraMap, false, 1009);
                         }
                     }
                 });
@@ -334,9 +356,25 @@ private DefaultRequstLocation.OnLocationCallBack onLocationCallBack=new DefaultR
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1009 && resultCode == 1010){
-            SharedPrefUtil.put(mContext,SharedPref.TOKEN,"");
+        if (requestCode == 1009 && resultCode == 1010) {
+            SharedPrefUtil.put(mContext, SharedPref.TOKEN, "");
             finish();
         }
     }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 1) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //发起定位
+//                initLocation();
+                setLocation();
+            } else {
+                ToastUtil.showToast("您拒绝了定位权限");
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
 }

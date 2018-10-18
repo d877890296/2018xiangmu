@@ -75,7 +75,7 @@ public class AccountRechargeActivity extends BaseActivity {
     private ArrayList<TextView> list_tv = new ArrayList<>();
     //支付方式 0微信  1支付宝
     private int PAY_WAY = 0;
-    private String  PRICE_NUMBER = "1000";
+    private String  PRICE_NUMBER = "300";
     //选择支付方式集合
     private ArrayList<RadioButton> list_radio = new ArrayList<>();
 
@@ -112,11 +112,11 @@ public class AccountRechargeActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.price_1000:
-                PRICE_NUMBER = "1000";
+                PRICE_NUMBER = "300";
                 updateShow(0);
                 break;
             case R.id.price_2000:
-                PRICE_NUMBER = "2000";
+                PRICE_NUMBER = "1000";
                 updateShow(1);
                 break;
             case price_et:

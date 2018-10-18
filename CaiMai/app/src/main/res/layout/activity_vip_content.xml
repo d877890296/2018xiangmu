@@ -89,7 +89,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="会员特权:"
+                    android:text="社员特权:"
                     android:textSize="16sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
@@ -106,7 +106,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:textSize="14sp"
-                        android:text="1.购卡可成为幸福康城社员"
+                        android:text="1.购这个消费卡即可成为正式社员，享受365天私家采购买手服务;"
                         />
 
                     <TextView
@@ -114,7 +114,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:textSize="14sp"
-                        android:text="2.购卡可享受优惠活动"
+                        android:text="2.可以在《生活必须品首期目录》里面选择300元实价产品;"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
                         />
@@ -123,7 +123,15 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:textSize="14sp"
-                        android:text="3.更多优惠，敬请期待"
+                        android:text="3.可参与团购和众筹活动;"
+                        android:layout_marginBottom="10dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:text="4.有机会成为幸福公社的供应商。"
                         />
                 </LinearLayout>
 
@@ -156,7 +164,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:textSize="14sp"
-                        android:text="1.每人限购一张"
+                        android:text="1.物流发货到社区，到社区后社员到团长门店或家中自提;"
                         />
 
                     <TextView
@@ -164,7 +172,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:textSize="14sp"
-                        android:text="2.请在消费前出示此卡"
+                        android:text="2.发展新社员，引荐人可以获得一定的康币激励。"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
                         />
@@ -176,6 +184,7 @@
                         android:textSize="14sp"
                         android:text="3.更多优惠，敬请期待"
                         android:layout_marginBottom="10dp"
+                        android:visibility="gone"
                         />
                 </LinearLayout>
 

@@ -267,7 +267,8 @@ public class GoodsDetailsActivity extends BaseActivity implements OnSelectedList
             goodsTitle_textView.setText(goodsListModel.title);
 
             goods_discroubTitle_textView.setText(goodsListModel.sellPoint + "");
-            goodsPrace_textView.setText(goodsListModel.itemPrice + "康币");
+            itemPrice = goodsListModel.itemPrice;
+            goodsPrace_textView.setText( itemPrice + "康币");
             setSitis(goodsPrace_textView);
         }
 
@@ -433,6 +434,7 @@ public class GoodsDetailsActivity extends BaseActivity implements OnSelectedList
 
 //            GoodsValue.getInstance().getGoodsListModel().buyNum = 1;
 //            GoodsValue.getInstance().getGoodsListModel().paramData = param;
+            GoodsValue.getInstance().getGoodsListModel().itemPrice = itemPrice;
             postRequst.addProduct(handler, goodsKey, number, param);
         }
 
@@ -462,7 +464,7 @@ public class GoodsDetailsActivity extends BaseActivity implements OnSelectedList
     private ParamBean paramBean;
     private TextView dialog_shop_price, shop_kc;
     private String unit;
-
+    private double itemPrice;
     /*展示商品规格*/
     private void showGoodsType() {
         final Dialog dialog = new Dialog(this, R.style.BottomDialog);
@@ -518,8 +520,8 @@ public class GoodsDetailsActivity extends BaseActivity implements OnSelectedList
             picture = goodsListModel.pic+"";
         }
         Glide.with(this).load(picture).error(R.mipmap.error_icon).into(shop_iv);
-
-        dialog_shop_price.setText(goodsListModel.itemPrice + "康币");
+        itemPrice = goodsListModel.itemPrice;
+        dialog_shop_price.setText(itemPrice + "康币");
         if (Tools.IsEmpty(goodsListModel.inventory + "")) {
             inventory = 0;
         } else {
@@ -659,12 +661,12 @@ public class GoodsDetailsActivity extends BaseActivity implements OnSelectedList
         dialog.show();
     }
 
-    private float allPrice;
+    private double allPrice;
 
     private void setAllPrice(int number, TextView show_goodsnum_tv) {
         show_goodsnum_tv.setText(number + "");
-        float price = number * goodsListModel.itemPrice;
-        allPrice = (float) (Math.round(price * 10000)) / 10000;
+        double price = number * goodsListModel.itemPrice;
+        allPrice = (double) (Math.round(price * 10000)) / 10000;
 //        noebuytvPrice.setText("￥" + decimalFormat.format(allPrice + mpmodityFreight));
     }
 
@@ -916,7 +918,8 @@ public class GoodsDetailsActivity extends BaseActivity implements OnSelectedList
                         ParamPriceBean paramPriceBean = gson.fromJson(s, ParamPriceBean.class);
 
                         if (paramPriceBean.retCode == 1) {
-                            dialog_shop_price.setText(paramPriceBean.data.price + "康币");
+                            itemPrice = paramPriceBean.data.price;
+                            dialog_shop_price.setText(itemPrice + "康币");
                             inventory = paramPriceBean.data.inventory;
                             shop_kc.setText("库存 " + inventory + unit);
                         } else {

@@ -21,6 +21,7 @@ import com.xfkc.caimai.bean.EmptyBean;
 import com.xfkc.caimai.bean.MineVipCardBean;
 import com.xfkc.caimai.bean.UserInfoBean;
 import com.xfkc.caimai.config.SharedPref;
+import com.xfkc.caimai.dialog.ShowPassWordDialog;
 import com.xfkc.caimai.home.SettingActivity;
 import com.xfkc.caimai.home.adapter.MyGridAdapter;
 import com.xfkc.caimai.home.mineinfo.MineInfoActivity;
@@ -240,9 +241,10 @@ public class SocialCentreFragment extends BaseFragment {
                 break;
             case R.id.tk_sh_tv:
                 //   startActivity(new Intent(mContext, OrderActivity.class).putExtra(Constant.CATEGORY_ID,"4"));
-                extraMap.put("baseType", 4);
-                skip_classView(OrderforgoodsActivity.class, extraMap, false, false);
-
+//                extraMap.put("baseType", 4);
+//                skip_classView(OrderforgoodsActivity.class, extraMap, false, false);
+                ShowPassWordDialog showPassWordDialog = new ShowPassWordDialog();
+                showPassWordDialog.showPhoneDialog(getActivity());
                 break;
             case R.id.vip_year_layout:
                 break;

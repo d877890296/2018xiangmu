@@ -34,7 +34,7 @@ public class GoodsListModel {
     @NetJsonFiled
     public Integer itemType;//": 1,
     @NetJsonFiled
-    public Integer itemPrice;
+    public double itemPrice;
     @NetJsonFiled
     public String allParamData;
     @NetJsonFiled

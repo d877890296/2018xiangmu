@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.StrictMode;
 import android.support.multidex.MultiDex;
@@ -41,7 +43,7 @@ public class MyApplication extends RootApplication {
     private RefWatcher refWatcher;
     // 全局的网络请求
     public JsonHttp jsonHttp;
-    public  GetJson getJson;
+    public GetJson getJson;
     public ImageLoader imageLoader;
 
     // 手机分辨率的宽
@@ -50,7 +52,7 @@ public class MyApplication extends RootApplication {
     public SortModel shopModel;
 
     /*经纬度*/
-    public  String longitude = "",latitude="";
+    public String longitude = "", latitude = "";
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -64,7 +66,7 @@ public class MyApplication extends RootApplication {
         super.onCreate();
         refWatcher = LeakCanary.install(this);
         queueList = new ArrayList<Activity>();
-       imageLoader=ImageLoader.getInstance();
+        imageLoader = ImageLoader.getInstance();
         imageLoader.init(ImageLoaderConfiguration.createDefault(getApplicationContext()));
         jsonHttp = new JsonHttp();
         getJson = GetJson.getInstance();
@@ -78,6 +80,7 @@ public class MyApplication extends RootApplication {
         //设置拍照权限
         setCameraPremiss();
     }
+
     /*设置拍照权限*/
     private void setCameraPremiss() {
         //拍照权限处理
@@ -86,8 +89,6 @@ public class MyApplication extends RootApplication {
             StrictMode.setVmPolicy(builder.build());
         }
     }
-
-
 
 
     public MyApplication() {
@@ -250,5 +251,21 @@ public class MyApplication extends RootApplication {
         return Build.VERSION.RELEASE;
     }
 
+    /*应对字体变化*/
+    @Override
+    public Resources getResources() {
+        Resources res = super.getResources();
+        Configuration config = new Configuration();
+        config.setToDefaults();
+        res.updateConfiguration(config, res.getDisplayMetrics());
+        return res;
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        if (newConfig.fontScale != 1)//非默认值
+            getResources();
+        super.onConfigurationChanged(newConfig);
+    }
 
 }

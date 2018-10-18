@@ -17,8 +17,9 @@
         android:id="@+id/tv_icon_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
+        android:textSize="14dp"
         android:textColor="#333333"
+        android:text="dgds"
         />
 
 </com.zhy.autolayout.AutoLinearLayout>

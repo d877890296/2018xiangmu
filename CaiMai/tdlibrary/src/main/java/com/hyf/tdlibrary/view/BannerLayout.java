@@ -62,7 +62,7 @@ public class BannerLayout extends RelativeLayout {
     private int indicatorSpace = 3;
     private int indicatorMargin = 10;
 
-    private int defaultImage;
+    private int defaultImage = R.drawable.error_icon ;
 
     private enum Shape {
         rect, oval
@@ -216,7 +216,9 @@ public class BannerLayout extends RelativeLayout {
         itemCount = urls.size();
         //主要是解决当item为小于3个的时候滑动有问题，这里将其拼凑成3个以上
         if (itemCount < 1) {//当item个数0
-            throw new IllegalStateException("item count not equal zero");
+//            throw new IllegalStateException("item count not equal zero");
+            itemCount = 1;
+            views.add(getImageView("", 0));
         } else if (itemCount < 2) { //当item个数为1
             views.add(getImageView(urls.get(0), 0));
             views.add(getImageView(urls.get(0), 0));
@@ -245,7 +247,7 @@ public class BannerLayout extends RelativeLayout {
                 }
             }
         });
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         if (defaultImage != 0){
             Glide.with(getContext()).load(url).placeholder(defaultImage).centerCrop().into(imageView);
         }else {

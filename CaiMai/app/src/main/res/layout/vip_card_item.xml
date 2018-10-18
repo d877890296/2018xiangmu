@@ -16,7 +16,7 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="18dp"
             android:textColor="@color/white"
             />
 
@@ -24,7 +24,7 @@
             android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="16dp"
             android:textColor="@color/white"
             android:text="￥0.00"
             android:paddingTop="15dp"
@@ -37,7 +37,7 @@
             android:id="@+id/days"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="16dp"
             android:textColor="@color/white"
             android:text="有效期: 365天"
             android:paddingBottom="15dp"
@@ -48,9 +48,9 @@
             android:id="@+id/vip_qy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="16dp"
             android:textColor="@color/forget_password"
-            android:text="查看会员权益>>"
+            android:text="查看社员权益>>"
             android:gravity="center_vertical"
             />
 

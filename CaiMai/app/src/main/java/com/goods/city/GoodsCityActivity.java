@@ -124,7 +124,8 @@ public class GoodsCityActivity extends BaseActivity implements RefreshLayout.Ref
         if (app.shopModel != null) {
             topbar_img_title.setText(app.shopModel.getName());
         } else {
-            topbar_img_title.setText("点击获取");
+//            topbar_img_title.setText("点击获取");
+            topbar_img_title.setText("选择门店");
         }
         topbar_img_title.setOnClickListener(onClickListener);
         other_btn = (ImageButton) findViewById(R.id.other_btn);

@@ -198,7 +198,7 @@
                     android:background="@drawable/cannel_pay_shape"
                     android:clickable="true"
                     android:padding="5dp"
-                    android:text="申请退款"
+                    android:text="咨询客服"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp" />
 

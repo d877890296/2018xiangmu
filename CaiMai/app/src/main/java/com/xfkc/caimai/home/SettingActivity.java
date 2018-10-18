@@ -17,6 +17,7 @@ import com.xfkc.caimai.base.BaseActivity;
 import com.xfkc.caimai.config.SharedPref;
 import com.xfkc.caimai.home.comment.ToCommentActivity;
 import com.xfkc.caimai.loading.ForgetPassWordActivity;
+import com.xfkc.caimai.util.Utils;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -63,6 +64,10 @@ public class SettingActivity extends BaseActivity {
         toolbarTitle.setTextColor(Color.BLACK);
         toolbarLeftImg.setImageResource(R.mipmap.back_white);
 
+
+        String versionName = Utils.getVersion(mContext);
+        vertionNum.setRightString(versionName);
+
     }
 
     @Override
@@ -72,25 +77,30 @@ public class SettingActivity extends BaseActivity {
 
     @OnClick({R.id.toolbar_left_img, R.id.update_password_tv,
             R.id.yjfk_text, R.id.gy_mine_tv, R.id.use_xy_tv, R.id.lxwm_tv,
-            R.id.vertion_num ,R.id.commit})
+            R.id.vertion_num, R.id.commit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_left_img:
                 finish();
                 break;
             case R.id.update_password_tv:
-                skip_classView(ForgetPassWordActivity.class,extraMap,false);
+                skip_classView(ForgetPassWordActivity.class, extraMap, false);
                 break;
             case R.id.yjfk_text://意见反馈
-                skip_classView(ToCommentActivity.class,extraMap,false);
+                skip_classView(ToCommentActivity.class, extraMap, false);
                 break;
             case R.id.gy_mine_tv://关于我们
+                skip_classView(GYMineActivity.class, extraMap, false);
+//                String path = "file:///android_asset/gywm.docx";
+//                startActivity(new Intent(mContext, FileShowActivity.class)
+//                        .putExtra("data", path));
                 break;
             case R.id.use_xy_tv://用户协议
+                skip_classView(UserXYActivity.class, extraMap, false);
                 break;
             case R.id.lxwm_tv://联系我们
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                Uri data = Uri.parse("tel:" + "400-12345678");
+                Uri data = Uri.parse("tel:" + "186 7483 5888");
                 intent.setData(data);
                 startActivity(intent);
                 break;
@@ -98,8 +108,8 @@ public class SettingActivity extends BaseActivity {
                 ToastUtil.showToast("当前已是最新版本");
                 break;
             case R.id.commit://退出登录
-                SharedPrefUtil.put(mContext, SharedPref.TOKEN,"");
-                backHistory(1006,true,true,extraMap);
+                SharedPrefUtil.put(mContext, SharedPref.TOKEN, "");
+                backHistory(1006, true, true, extraMap);
                 break;
         }
     }

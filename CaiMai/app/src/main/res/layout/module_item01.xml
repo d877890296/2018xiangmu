@@ -29,7 +29,7 @@
     <com.hyf.tdlibrary.view.BannerLayout
         android:id="@+id/banner"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="160dp"
         app:autoPlayDuration="5000"
         app:indicatorPosition="centerBottom"
         app:indicatorShape="oval"

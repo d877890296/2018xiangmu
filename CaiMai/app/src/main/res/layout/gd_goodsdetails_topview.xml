@@ -149,7 +149,9 @@
                 android:layout_height="wrap_content"
                 android:text="已售4"
                 android:textColor="#8f000000"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:visibility="invisible"
+                />
         </LinearLayout>
 
         <View

@@ -69,7 +69,7 @@
         app:sLeftTextColor="@color/color_text"
         app:sLeftTextString="联系我们"
         app:sRightTextColor="#007aff"
-        app:sRightTextString="400-12345678"
+        app:sRightTextString="186 7483 5888"
         android:paddingRight="15dp"
         />
     <com.allen.library.SuperTextView

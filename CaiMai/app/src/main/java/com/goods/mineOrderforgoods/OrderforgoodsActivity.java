@@ -95,7 +95,7 @@ public class OrderforgoodsActivity extends BaseActivity {
         barView.add(radio_1);
         barView.add(radio_2);
         barView.add(radio_3);
-        barView.add(radio_4);
+//        barView.add(radio_4);
 //        barView.add(radio_5);
         // 设置barline
         barLineSetting = new BarLineSetting(barLine);
@@ -140,7 +140,7 @@ public class OrderforgoodsActivity extends BaseActivity {
         listData.add(dfkOrderGoodsFragment);
         listData.add(dfhOrderGoodsFragment);
         listData.add(pszOrderGoodsFragment);
-        listData.add(dpjOrderGoodsFragment);
+//        listData.add(dpjOrderGoodsFragment);
 //        listData.add(endOrderGoodsFragment);
         adapter.setListData(listData);
         orderGoods_pager.setAdapter(adapter);

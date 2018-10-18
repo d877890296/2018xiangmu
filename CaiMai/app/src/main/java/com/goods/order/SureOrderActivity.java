@@ -32,7 +32,9 @@ import com.xfkc.caimai.bean.FreightBean;
 import com.xfkc.caimai.bean.UserInfoBean;
 import com.xfkc.caimai.config.Constant;
 import com.xfkc.caimai.config.SharedPref;
+import com.xfkc.caimai.dialog.CommonDialog;
 import com.xfkc.caimai.dialog.ShowPassWordDialog;
+import com.xfkc.caimai.home.wallet.AccountRechargeActivity;
 import com.xfkc.caimai.net.PayFactory;
 import com.xfkc.caimai.net.RxHelper;
 import com.xfkc.caimai.net.subscriber.ProgressSubscriber;
@@ -399,11 +401,12 @@ public class SureOrderActivity extends BaseActivity {
                         Gson gson = new Gson();
                         AddOrderBean addOrderBean = gson.fromJson(s, AddOrderBean.class);
                         if (addOrderBean.retCode == 1) {
-                            if (kbAmount > 0 || reall_price > kbAmount) {
+                            if (kbAmount > 0 && kbAmount > reall_price) {
                                 message = addOrderBean.message;
                                 showPassWordDialog.showTimeDialog02(SureOrderActivity.this, reall_price, kbAmount + "");
                             } else {
-                                ToastUtil.showToast("余额不足!");
+//                                ToastUtil.showToast("余额不足!");
+                                goChongZhi();
                             }
                         } else {
                             ToastUtil.showToast(addOrderBean.message);
@@ -451,6 +454,12 @@ public class SureOrderActivity extends BaseActivity {
 
     @Override
     protected void loadData() {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getData();
     }
 
@@ -519,5 +528,16 @@ public class SureOrderActivity extends BaseActivity {
                 });
     }
 
-
+    /*去充值页面*/
+    private void goChongZhi() {
+        new CommonDialog(mContext).builder().setTitle("提示")
+                .setContentMsg("当前康币不足,请去充值")
+                .setCanceledOnTouchOutside(false)
+                .setPositiveBtn("确定", new CommonDialog.OnPositiveListener() {
+                    @Override
+                    public void onPositive(View view) {
+                        skip_classView(AccountRechargeActivity.class, extraMap, false);
+                    }
+                }).show();
+    }
 }

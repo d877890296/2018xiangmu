@@ -251,7 +251,7 @@
                     android:layout_weight="1"
                     android:background="#fd8300"
                     android:gravity="center"
-                    android:text="加入购物车"
+                    android:text="加入搬运车"
                     android:textColor="#fff"
                     android:textSize="15sp" />
 
@@ -269,7 +269,7 @@
                     android:layout_weight="1"
                     android:background="#fd8300"
                     android:gravity="center"
-                    android:text="立即购买"
+                    android:text="康币预订"
                     android:textColor="#fff"
                     android:textSize="15sp" />
             </LinearLayout>

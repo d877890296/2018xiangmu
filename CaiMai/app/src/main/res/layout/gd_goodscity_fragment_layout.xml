@@ -39,7 +39,7 @@
                         android:button="@null"
                         android:gravity="center"
                         android:padding="5dp"
-                        android:text="幸福仓库"
+                        android:text="公社仓库"
                         android:textColor="#000000"
                         android:textSize="16sp" />
 
@@ -52,7 +52,7 @@
                         android:button="@null"
                         android:gravity="center"
                         android:padding="5dp"
-                        android:text="药品市场"
+                        android:text="康养服务"
                         android:textColor="#525252"
                         android:textSize="16sp" />
 
@@ -118,12 +118,12 @@
 
                 <TextView
                     android:id="@+id/goods_grid_list_change"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:layout_weight="0"
-                    android:background="@drawable/gd_goodscity_style"
+                    android:background="@mipmap/new_fenlei"
                     android:gravity="center" />
             </LinearLayout>
 
